@@ -36,6 +36,48 @@ public class PuppetController : MonoBehaviour
 
     [Space]
 
+    public float airborneAcceleration;
+    [Range(0, 1)]
+    [Tooltip("This is only used for decreasing speed when it's over the maximum")]
+    public float airborneDeceleration;
+    [Range(0, 1)]
+    [Tooltip("This is the natural drag that's always applied")]
+    public float airborneDecay;
+    [Range(0, 20)]
+    public float airborneMaxSpeed;
+
+    [Space]
+
+    [Tooltip("How string the inital force of the jump should be, affects the shortest possible jump")]
+    public float initalJumpVelocity;
+    [Tooltip("How strong the boost from holding up as they are jumping will be")]
+    public float jumpBoostForce;
+    [Tooltip("How long the puppet will have an upwards boost from holding jump")]
+    public float jumpBoostTime;
+    float jumpBoostTimer; // how much time we have left of the jump boost, set to 0 when jump is released
+    [Tooltip("The force applied upwards when jump is held, be careful not to set too high or the puppet will be able to fly")]
+    [Range(0, 20)]
+    public float jumpHoldForce;
+    [Tooltip("The force applied downwards when jump is not held")]
+    [Range(-20, 0)]
+    public float jumpReleaseForce;
+    [Tooltip("The drag applied to the puppet during the rise when jump is not held")]
+    [Range(0, 1)]
+    public float jumpReleaseRisingDrag;
+    public float maxFallSpeed = 100;
+
+    [Space]
+    [Range(0, 50)]
+    public float gravity = 9.8f;
+
+    [Space]
+
+    [Tooltip("Time in second that you can be off the ground before while still being able to jump")]
+    [Range(0, 1)]
+    public float coyoteTime;
+
+    [Space]
+
     [Header("Minor Variables")]
 
     [Tooltip("If this is true, grounded speed can't go past the max speed, if false, the puppet just decelerate using the deceleration variables when past max speed")]
@@ -61,6 +103,8 @@ public class PuppetController : MonoBehaviour
     // Private
 
     float forceAirborneTimer;
+    float timeSinceGrounded;
+    bool hasJumped;
 
     // Start is called before the first frame update
     void Start()
@@ -82,23 +126,35 @@ public class PuppetController : MonoBehaviour
 
         GroundDetection();
 
+        Vector2 input = Vector2.zero;
+
         // Getting the player input and putting it inside a variable to reduce points of variance between the two player input possibilities
-        Vector2 input = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+        if (secondPlayer)
+        {
+            input = new Vector2(Input.GetAxis("Horizontal2"), Input.GetAxis("Vertical2"));
+        }
+        else
+        {
+            input = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+        }
 
         if (grounded)
         {
+            hasJumped = false;
+
             // grounded movement
 
             // force calculation stuff is done on each axis independantly for this enviroment for the time being, I might change it later idk
 
-            if (input.x != 0) {
+            if (input.x != 0)
+            {
                 if (input.normalized.x * groundedMaxSpeed > rb.velocity.x) // tl;dr we want to move faster right than we are already moving
                 {
-                    rb.velocity = rb.velocity + Vector3.right * groundedAcceleration;
+                    rb.velocity = rb.velocity + Vector3.right * groundedAcceleration * Time.fixedDeltaTime * 100;
                 }
                 else if (input.normalized.x * groundedMaxSpeed < rb.velocity.x) // tl;dr we want to move faster left than we are already moving
                 {
-                    rb.velocity = rb.velocity + Vector3.left * groundedAcceleration;
+                    rb.velocity = rb.velocity + Vector3.left * groundedAcceleration * Time.fixedDeltaTime * 100;
                 }
                 else
                 {
@@ -114,11 +170,11 @@ public class PuppetController : MonoBehaviour
             {
                 if (input.normalized.y * groundedMaxSpeed > rb.velocity.z) // tl;dr we want to move faster forward than we are already moving
                 {
-                    rb.velocity = rb.velocity + Vector3.forward * groundedAcceleration;
+                    rb.velocity = rb.velocity + Vector3.forward * groundedAcceleration * Time.fixedDeltaTime * 100;
                 }
                 else if (input.normalized.y * groundedMaxSpeed < rb.velocity.z) // tl;dr we want to move faster back than we are already moving
                 {
-                    rb.velocity = rb.velocity + Vector3.back * groundedAcceleration;
+                    rb.velocity = rb.velocity + Vector3.back * groundedAcceleration * Time.fixedDeltaTime * 100;
                 }
                 else
                 {
@@ -144,8 +200,36 @@ public class PuppetController : MonoBehaviour
                 }
             }
 
+        }
+        else
+        {
+            // Air movement stuff, using simpler calculations since precision isn't as important
+
+            rb.AddForce(new Vector3(input.normalized.x, 0, input.normalized.y) * airborneAcceleration, ForceMode.Acceleration);
+
+            // deceleration (force soft, hard stopping in the air sounds ugly, but I can add if it if nessassary)
+
+            if (new Vector2(rb.velocity.x, rb.velocity.z).magnitude >= airborneMaxSpeed)
+            {
+                rb.velocity = new Vector3(rb.velocity.x * (1 - airborneDeceleration), rb.velocity.y, rb.velocity.z * (1 - airborneDeceleration)); // Uses 1 - groundedDeceleration to make the variable more intuitive for designers to adjust
+            }
+
+            // Timer increment
+            timeSinceGrounded = timeSinceGrounded + Time.fixedDeltaTime;
 
         }
+
+        // Jump
+
+        if (forceAirborneTimer > 0)
+        {
+            forceAirborneTimer = forceAirborneTimer - Time.fixedDeltaTime;
+        }
+        else {
+            Jump();
+        }
+
+        rb.AddForce(Vector3.down * gravity, ForceMode.Acceleration);
 
     }
 
@@ -237,7 +321,82 @@ public class PuppetController : MonoBehaviour
                 grounded = false;
             }
         }
+
+        if (grounded) {
+            timeSinceGrounded = 0;
+        }
     }
 
+    public void Jump() {
+
+        string txtadd = "";
+
+        // Side note: this is a really stupid way of doing this
+
+        if (secondPlayer == true)
+        {
+            txtadd = "2";
+        }
+
+        if (Input.GetAxis("Jump" + txtadd) > 0)
+        {
+
+            bool canJump = false;
+
+            if (grounded) {
+                canJump = true;
+            }
+
+            if (timeSinceGrounded <= coyoteTime && hasJumped == false) {
+                canJump = true;
+            }
+
+            if (canJump == true) {
+                hasJumped = true;
+
+                rb.velocity = new Vector3(rb.velocity.x, initalJumpVelocity, rb.velocity.z);
+                grounded = false;
+                gameObject.transform.position = transform.position + Vector3.up * 0.05f;
+                forceAirborneTimer = 0.1f;
+                jumpBoostTimer = jumpBoostTime;
+
+            }
+
+        }
+
+        // Jump specific
+
+        if (jumpBoostTimer > 0) {
+            if (Input.GetAxis("Jump" + txtadd) > 0)
+            {
+                jumpBoostTimer = jumpBoostTimer - Time.fixedDeltaTime;
+                rb.AddForce(Vector3.up * Mathf.Lerp(0, jumpBoostForce, jumpBoostTimer / jumpBoostTime));
+            }
+            else
+            {
+                // Once jump is released, you can no longer continue rising
+                jumpBoostTimer = 0;
+            }
+        }
+
+        // General airborne
+
+        if (Input.GetAxis("Jump" + txtadd) > 0)
+        {
+            rb.AddForce(Vector3.up * jumpHoldForce);
+        }
+        else
+        {
+            rb.AddForce(Vector3.up * jumpReleaseForce);
+            if (rb.velocity.y > 0) {
+                rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y * (1 - jumpReleaseRisingDrag * Time.fixedDeltaTime * 100), rb.velocity.z);
+            }
+        }
+
+        if (rb.velocity.y < -maxFallSpeed) {
+            rb.AddForce(Vector3.up * jumpReleaseForce);
+        }
+
+    }
 
 }
