@@ -1,14 +1,14 @@
 
-=== Sat Mar 26 11:18:20 2022
+=== Tue Mar 29 15:37:22 2022
 
 Packages were changed.
-Update Mode: mergeDefaultDependencies
+Update Mode: resetToDefaultDependencies
 
 The following packages were added:
-  com.unity.collab-proxy@1.15.12
+  com.unity.collab-proxy@1.15.13
   com.unity.ide.rider@2.0.7
   com.unity.ide.visualstudio@2.0.14
-  com.unity.ide.vscode@1.2.4
+  com.unity.ide.vscode@1.2.5
   com.unity.modules.ai@1.0.0
   com.unity.modules.androidjni@1.0.0
   com.unity.modules.animation@1.0.0
@@ -40,17 +40,7 @@ The following packages were added:
   com.unity.modules.vr@1.0.0
   com.unity.modules.wind@1.0.0
   com.unity.modules.xr@1.0.0
-  com.unity.test-framework@1.1.29
+  com.unity.test-framework@1.1.31
   com.unity.textmeshpro@3.0.6
   com.unity.timeline@1.4.8
   com.unity.ugui@1.0.0
-
-=== Mon Mar 28 13:51:24 2022
-
-Packages were changed.
-Update Mode: updateDependencies
-
-The following packages were updated:
-  com.unity.collab-proxy from version 1.15.12 to 1.15.13
-  com.unity.ide.vscode from version 1.2.4 to 1.2.5
-  com.unity.test-framework from version 1.1.29 to 1.1.31
