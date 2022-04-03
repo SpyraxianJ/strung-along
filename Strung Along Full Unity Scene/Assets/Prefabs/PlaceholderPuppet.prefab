@@ -83,12 +83,12 @@ MonoBehaviour:
   coyoteTime: 0.2
   groundedMaxSpeedHardCap: 0
   groundedRayNumber: 20
-  groundRayLength: 0.75
+  groundRayLength: 1
   groundedRayRadius: 0.5
   groundMask:
     serializedVersion: 2
     m_Bits: 55
-  groundedDownPerFrame: 0.5
+  groundedDownPerFrame: 0.3
 --- !u!54 &8461784611382557434
 Rigidbody:
   m_ObjectHideFlags: 0
