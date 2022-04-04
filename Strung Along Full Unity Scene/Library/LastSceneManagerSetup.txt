@@ -1,5 +1,5 @@
 sceneSetups:
-- path: Assets/Scenes/Debug/CharacterControllerPlayground/CharacterControllerPlayground.unity
+- path: Assets/Scenes/StageScene.unity
   isLoaded: 1
   isActive: 1
   isSubScene: 0
