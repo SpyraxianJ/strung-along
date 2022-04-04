@@ -1,335 +1,33 @@
 m_ProjectFiles:
   m_ManifestFileStatus:
-    m_FilePath: E:/Users/Tim/Desktop/Git/strung-along3/Strung Along Full Unity Scene/Packages/manifest.json
+    m_FilePath: E:/Users/Tim/Desktop/Git/strung-along4/Strung Along Full Unity Scene/Packages/manifest.json
     m_PathExists: 1
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 637846853700670392
-    m_Hash: 3850210542
+      ticks: 637846883300229520
+    m_Hash: 416000670
   m_LockFileStatus:
-    m_FilePath: E:/Users/Tim/Desktop/Git/strung-along3/Strung Along Full Unity Scene/Packages/packages-lock.json
+    m_FilePath: E:/Users/Tim/Desktop/Git/strung-along4/Strung Along Full Unity Scene/Packages/packages-lock.json
     m_PathExists: 1
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 637846854222677620
-    m_Hash: 1148518013
+      ticks: 637846883679173000
+    m_Hash: 4090782298
 m_EmbeddedPackageManifests:
   m_ManifestsStatus: {}
 m_LocalPackages:
   m_LocalFileStatus: []
-m_ProjectPath: E:/Users/Tim/Desktop/Git/strung-along3/Strung Along Full Unity Scene/Packages
+m_ProjectPath: E:/Users/Tim/Desktop/Git/strung-along4/Strung Along Full Unity Scene/Packages
 m_EditorVersion: 2021.2.8f1 (d0e5f0a7b06a)
 m_ResolvedPackages:
-- packageId: com.unity.2d.sprite@1.0.0
-  testable: 0
-  isDirectDependency: 1
-  version: 1.0.0
-  source: 2
-  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along3\Strung Along Full Unity Scene\Library\PackageCache\com.unity.2d.sprite@1.0.0
-  assetPath: Packages/com.unity.2d.sprite
-  name: com.unity.2d.sprite
-  displayName: 2D Sprite
-  author:
-    name: 
-    email: 
-    url: 
-  category: 2D
-  type: 
-  description: Use Unity Sprite Editor Window to create and edit Sprite asset properties
-    like pivot, borders and Physics shape
-  status: 4
-  errors: []
-  versions:
-    all:
-    - 1.0.0
-    compatible:
-    - 1.0.0
-    verified: 1.0.0
-  dependencies: []
-  resolvedDependencies: []
-  keywords:
-  - 2d
-  - sprite
-  - sprite editor window
-  registry:
-    id: main
-    name: 
-    url: https://packages.unity.com
-    scopes: []
-    isDefault: 1
-    capabilities: 7
-  hideInEditor: 1
-  isAssetStorePackage: 0
-  datePublishedTicks: 0
-  documentationUrl: 
-  hasRepository: 0
-  repository:
-    type: 
-    url: 
-    revision: 
-    path: 
-  unityLifecycle:
-    version: 1.0.0
-    nextVersion: 
-- packageId: com.unity.2d.tilemap@1.0.0
-  testable: 0
-  isDirectDependency: 1
-  version: 1.0.0
-  source: 2
-  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along3\Strung Along Full Unity Scene\Library\PackageCache\com.unity.2d.tilemap@1.0.0
-  assetPath: Packages/com.unity.2d.tilemap
-  name: com.unity.2d.tilemap
-  displayName: 2D Tilemap Editor
-  author:
-    name: 
-    email: 
-    url: 
-  category: 2D
-  type: 
-  description: 2D Tilemap Editor is a package that contains editor functionalities
-    for editing Tilemaps.
-  status: 4
-  errors: []
-  versions:
-    all:
-    - 1.0.0
-    compatible:
-    - 1.0.0
-    verified: 1.0.0
-  dependencies: []
-  resolvedDependencies: []
-  keywords:
-  - 2d
-  - Tilemap
-  registry:
-    id: main
-    name: 
-    url: https://packages.unity.com
-    scopes: []
-    isDefault: 1
-    capabilities: 7
-  hideInEditor: 1
-  isAssetStorePackage: 0
-  datePublishedTicks: 0
-  documentationUrl: 
-  hasRepository: 0
-  repository:
-    type: 
-    url: 
-    revision: 
-    path: 
-  unityLifecycle:
-    version: 1.0.0
-    nextVersion: 
-- packageId: com.unity.ads@3.7.5
-  testable: 0
-  isDirectDependency: 1
-  version: 3.7.5
-  source: 1
-  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along3\Strung Along Full Unity Scene\Library\PackageCache\com.unity.ads@3.7.5
-  assetPath: Packages/com.unity.ads
-  name: com.unity.ads
-  displayName: Advertisement
-  author:
-    name: 
-    email: 
-    url: 
-  category: 
-  type: 
-  description: Unity Ads is a video ad network for iOS and Android that allows you
-    to quickly and effectively monetize your games.
-  status: 4
-  errors: []
-  versions:
-    all:
-    - 0.0.3
-    - 0.0.4
-    - 0.0.5
-    - 0.0.6
-    - 0.0.7
-    - 0.0.8
-    - 0.0.10
-    - 0.0.11
-    - 0.0.12
-    - 0.0.13
-    - 0.0.14
-    - 0.0.15
-    - 0.0.16
-    - 2.0.0
-    - 2.0.3
-    - 2.0.4
-    - 2.0.7
-    - 2.0.8
-    - 2.3.1
-    - 2.3.2
-    - 3.0.1
-    - 3.0.2
-    - 3.0.3
-    - 3.1.1
-    - 3.2.0
-    - 3.3.0
-    - 3.3.1
-    - 3.4.0
-    - 3.4.1
-    - 3.4.2
-    - 3.4.4
-    - 3.4.5
-    - 3.4.7
-    - 3.4.9
-    - 3.5.0
-    - 3.5.2
-    - 3.6.1
-    - 3.7.0
-    - 3.7.1
-    - 3.7.3
-    - 3.7.5
-    - 4.0.0
-    - 4.0.1
-    - 4.1.0
-    compatible:
-    - 3.7.5
-    - 4.0.0
-    - 4.0.1
-    - 4.1.0
-    verified: 3.7.5
-  dependencies:
-  - name: com.unity.ugui
-    version: 1.0.0
-  resolvedDependencies:
-  - name: com.unity.ugui
-    version: 1.0.0
-  - name: com.unity.modules.ui
-    version: 1.0.0
-  - name: com.unity.modules.imgui
-    version: 1.0.0
-  keywords:
-  - ads
-  - unity
-  registry:
-    id: main
-    name: 
-    url: https://packages.unity.com
-    scopes: []
-    isDefault: 1
-    capabilities: 7
-  hideInEditor: 1
-  isAssetStorePackage: 0
-  datePublishedTicks: 637635162230000000
-  documentationUrl: 
-  hasRepository: 1
-  repository:
-    type: git
-    url: https://github.cds.internal.unity3d.com/unity/com.unity.ads.git
-    revision: 0e92fa56fc4e4cd1fa305e76a911acdae6386b96
-    path: 
-  unityLifecycle:
-    version: 3.7.5
-    nextVersion: 
-- packageId: com.unity.analytics@3.6.12
-  testable: 0
-  isDirectDependency: 1
-  version: 3.6.12
-  source: 1
-  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along3\Strung Along Full Unity Scene\Library\PackageCache\com.unity.analytics@3.6.12
-  assetPath: Packages/com.unity.analytics
-  name: com.unity.analytics
-  displayName: Analytics Library
-  author:
-    name: 
-    email: 
-    url: 
-  category: 
-  type: 
-  description: The Unity Analytics Library contains the Analytics Event Tracker component,
-    the Data Privacy plug-in, and the Standard Events API.
-  status: 4
-  errors: []
-  versions:
-    all:
-    - 0.0.3
-    - 0.0.4
-    - 0.0.5
-    - 0.0.7
-    - 0.0.8
-    - 0.0.9
-    - 0.0.10
-    - 0.0.11
-    - 0.0.12
-    - 0.0.13
-    - 0.0.14
-    - 0.0.15
-    - 0.0.16
-    - 0.0.17
-    - 0.0.19
-    - 2.0.5
-    - 2.0.11
-    - 2.0.13
-    - 2.0.14
-    - 2.0.15
-    - 2.0.16
-    - 3.0.5
-    - 3.0.9
-    - 3.1.1
-    - 3.2.0
-    - 3.2.2
-    - 3.2.3
-    - 3.3.0
-    - 3.3.2-preview
-    - 3.3.2
-    - 3.3.4
-    - 3.3.5
-    - 3.4.0
-    - 3.5.3
-    - 3.6.11
-    - 3.6.12
-    - 3.7.1
-    - 3.8.1
-    compatible:
-    - 3.6.12
-    - 3.7.1
-    - 3.8.1
-    verified: 3.6.12
-  dependencies:
-  - name: com.unity.ugui
-    version: 1.0.0
-  resolvedDependencies:
-  - name: com.unity.ugui
-    version: 1.0.0
-  - name: com.unity.modules.ui
-    version: 1.0.0
-  - name: com.unity.modules.imgui
-    version: 1.0.0
-  keywords:
-  - analytics
-  - unity
-  registry:
-    id: main
-    name: 
-    url: https://packages.unity.com
-    scopes: []
-    isDefault: 1
-    capabilities: 7
-  hideInEditor: 1
-  isAssetStorePackage: 0
-  datePublishedTicks: 637692274360000000
-  documentationUrl: 
-  hasRepository: 1
-  repository:
-    type: git
-    url: https://github.cds.internal.unity3d.com/unity/com.unity.analytics.git
-    revision: 16fe75b69f168b066926595ade9b0473c3b32c5f
-    path: 
-  unityLifecycle:
-    version: 3.6.12
-    nextVersion: 
 - packageId: com.unity.collab-proxy@1.15.7
   testable: 0
   isDirectDependency: 1
   version: 1.15.7
   source: 1
-  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along3\Strung Along Full Unity Scene\Library\PackageCache\com.unity.collab-proxy@1.15.7
+  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along4\Strung Along Full Unity Scene\Library\PackageCache\com.unity.collab-proxy@1.15.7
   assetPath: Packages/com.unity.collab-proxy
   name: com.unity.collab-proxy
   displayName: Version Control
@@ -461,44 +159,72 @@ m_ResolvedPackages:
   unityLifecycle:
     version: 1.15.7
     nextVersion: 
-- packageId: com.unity.ext.nunit@1.0.6
+- packageId: com.unity.feature.development@1.0.1
   testable: 0
   isDirectDependency: 1
-  version: 1.0.6
-  source: 1
-  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along3\Strung Along Full Unity Scene\Library\PackageCache\com.unity.ext.nunit@1.0.6
-  assetPath: Packages/com.unity.ext.nunit
-  name: com.unity.ext.nunit
-  displayName: Custom NUnit
+  version: 1.0.1
+  source: 2
+  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along4\Strung Along Full Unity Scene\Library\PackageCache\com.unity.feature.development@1.0.1
+  assetPath: Packages/com.unity.feature.development
+  name: com.unity.feature.development
+  displayName: Engineering
   author:
     name: 
     email: 
     url: 
-  category: Libraries
-  type: 
-  description: Custom version of the nunit package build to work with Unity. Used
-    by the Unity Test Framework.
+  category: 
+  type: feature
+  description: "Optimize your development experience in Unity with the Dev Tools
+    feature set. Enable support for multiple integrated development environments
+    (IDE) for editing your Unity code. Get access to development tools to help you
+    test and analyze your project\u2019s performance."
   status: 4
   errors: []
   versions:
     all:
-    - 0.1.5-preview
-    - 0.1.6-preview
-    - 0.1.9-preview
-    - 1.0.0
-    - 1.0.5
-    - 1.0.6
-    - 2.0.2
+    - 1.0.1
     compatible:
-    - 1.0.6
-    - 2.0.2
-    verified: 1.0.6
-  dependencies: []
-  resolvedDependencies: []
-  keywords:
-  - nunit
-  - unittest
-  - test
+    - 1.0.1
+    verified: 1.0.1
+  dependencies:
+  - name: com.unity.ide.visualstudio
+    version: default
+  - name: com.unity.ide.rider
+    version: default
+  - name: com.unity.ide.vscode
+    version: default
+  - name: com.unity.editorcoroutines
+    version: default
+  - name: com.unity.performance.profile-analyzer
+    version: default
+  - name: com.unity.test-framework
+    version: default
+  - name: com.unity.testtools.codecoverage
+    version: default
+  resolvedDependencies:
+  - name: com.unity.ide.visualstudio
+    version: 2.0.12
+  - name: com.unity.test-framework
+    version: 1.1.29
+  - name: com.unity.ext.nunit
+    version: 1.0.6
+  - name: com.unity.modules.imgui
+    version: 1.0.0
+  - name: com.unity.modules.jsonserialize
+    version: 1.0.0
+  - name: com.unity.ide.rider
+    version: 3.0.9
+  - name: com.unity.ide.vscode
+    version: 1.2.4
+  - name: com.unity.editorcoroutines
+    version: 1.0.0
+  - name: com.unity.performance.profile-analyzer
+    version: 1.1.1
+  - name: com.unity.testtools.codecoverage
+    version: 1.0.1
+  - name: com.unity.settings-manager
+    version: 1.0.3
+  keywords: []
   registry:
     id: main
     name: 
@@ -506,25 +232,25 @@ m_ResolvedPackages:
     scopes: []
     isDefault: 1
     capabilities: 7
-  hideInEditor: 1
+  hideInEditor: 0
   isAssetStorePackage: 0
-  datePublishedTicks: 637429759280000000
+  datePublishedTicks: 0
   documentationUrl: 
-  hasRepository: 1
+  hasRepository: 0
   repository:
-    type: git
-    url: https://github.cds.internal.unity3d.com/unity/com.unity.ext.nunit.git
-    revision: 29ea4d6504a5f58fb3a6934db839aa80ae6d9d88
+    type: 
+    url: 
+    revision: 
     path: 
   unityLifecycle:
-    version: 1.0.6
+    version: 1.0.1
     nextVersion: 
 - packageId: com.unity.ide.rider@3.0.9
   testable: 0
   isDirectDependency: 1
   version: 3.0.9
   source: 1
-  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along3\Strung Along Full Unity Scene\Library\PackageCache\com.unity.ide.rider@3.0.9
+  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along4\Strung Along Full Unity Scene\Library\PackageCache\com.unity.ide.rider@3.0.9
   assetPath: Packages/com.unity.ide.rider
   name: com.unity.ide.rider
   displayName: JetBrains Rider Editor
@@ -608,7 +334,7 @@ m_ResolvedPackages:
   isDirectDependency: 1
   version: 2.0.12
   source: 1
-  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along3\Strung Along Full Unity Scene\Library\PackageCache\com.unity.ide.visualstudio@2.0.12
+  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along4\Strung Along Full Unity Scene\Library\PackageCache\com.unity.ide.visualstudio@2.0.12
   assetPath: Packages/com.unity.ide.visualstudio
   name: com.unity.ide.visualstudio
   displayName: Visual Studio Editor
@@ -686,7 +412,7 @@ m_ResolvedPackages:
   isDirectDependency: 1
   version: 1.2.4
   source: 1
-  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along3\Strung Along Full Unity Scene\Library\PackageCache\com.unity.ide.vscode@1.2.4
+  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along4\Strung Along Full Unity Scene\Library\PackageCache\com.unity.ide.vscode@1.2.4
   assetPath: Packages/com.unity.ide.vscode
   name: com.unity.ide.vscode
   displayName: Visual Studio Code Editor
@@ -743,276 +469,12 @@ m_ResolvedPackages:
   unityLifecycle:
     version: 1.2.4
     nextVersion: 
-- packageId: com.unity.purchasing@4.1.2
-  testable: 0
-  isDirectDependency: 1
-  version: 4.1.2
-  source: 1
-  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along3\Strung Along Full Unity Scene\Library\PackageCache\com.unity.purchasing@4.1.2
-  assetPath: Packages/com.unity.purchasing
-  name: com.unity.purchasing
-  displayName: In App Purchasing
-  author:
-    name: 
-    email: 
-    url: 
-  category: 
-  type: 
-  description: "IMPORTANT UPGRADE NOTES:\n\nIf updating from Unity IAP (com.unity.purchasing
-    + the Asset Store plugin) versions 2.x to version 3.x, complete the following
-    actions in order to resolve compilation errors:\n 1. Move IAPProductCatalog.json
-    and BillingMode.json\n\tFROM: Assets/Plugins/UnityPurchasing/Resources/\n\tTO:
-    Assets/Resources/.\n 2. Move AppleTangle.cs and GooglePlayTangle.cs\n\tFROM:
-    Assets/Plugins/UnityPurchasing/generated\n\tTO: Assets/Scripts/UnityPurchasing/generated.\n
-    3. Remove all remaining Asset Store plugin folders and files in Assets/Plugins/UnityPurchasing
-    from your project.\n\nPACKAGE DESCRIPTION:\n\nWith Unity IAP, setting up in-app
-    purchases for your game across multiple app stores has never been easier.\n\nThis
-    package provides:\n\n \u25AA One common API to access all stores for free so
-    you can fully understand and optimize your in-game economy\n \u25AA Automatic
-    coupling with Unity Analytics to enable monitoring and decision-making based
-    on trends in your revenue and purchase data across multiple platforms\n \u25AA
-    Support for iOS, Mac, tvOS, Google Play, Windows, and Amazon app stores(*).\n
-    \u25AA Support to work with the Unity Distribution Portal to synchronize catalogs
-    and transactions with other app stores\n \u25AA Client-side receipt validation
-    for Apple App Store and Google Play\n\nAfter installing this package, open the
-    Services Window to enable In-App Purchasing to use these features."
-  status: 4
-  errors: []
-  versions:
-    all:
-    - 0.0.3
-    - 0.0.4
-    - 0.0.5
-    - 0.0.6
-    - 0.0.7
-    - 0.0.8
-    - 0.0.9
-    - 0.0.10
-    - 0.0.11
-    - 0.0.12
-    - 0.0.13
-    - 0.0.14
-    - 0.0.15
-    - 0.0.16
-    - 0.0.17
-    - 0.0.18
-    - 0.0.19
-    - 2.0.0
-    - 2.0.1
-    - 2.0.3
-    - 2.0.5
-    - 2.0.6
-    - 2.1.0
-    - 2.1.1
-    - 2.2.0
-    - 2.2.1
-    - 2.2.2
-    - 3.0.0-pre.3
-    - 3.0.0-pre.4
-    - 3.0.0-pre.5
-    - 3.0.0-pre.6
-    - 3.0.1
-    - 3.0.2
-    - 3.1.0
-    - 3.2.1
-    - 3.2.2
-    - 3.2.3
-    - 4.0.0
-    - 4.0.3
-    - 4.1.0
-    - 4.1.1
-    - 4.1.2
-    - 4.1.3
-    compatible:
-    - 4.1.2
-    - 4.1.3
-    verified: 4.1.3
-  dependencies:
-  - name: com.unity.ugui
-    version: 1.0.0
-  - name: com.unity.modules.unityanalytics
-    version: 1.0.0
-  - name: com.unity.modules.unitywebrequest
-    version: 1.0.0
-  - name: com.unity.modules.jsonserialize
-    version: 1.0.0
-  - name: com.unity.modules.androidjni
-    version: 1.0.0
-  - name: com.unity.services.core
-    version: 1.0.1
-  resolvedDependencies:
-  - name: com.unity.ugui
-    version: 1.0.0
-  - name: com.unity.modules.ui
-    version: 1.0.0
-  - name: com.unity.modules.imgui
-    version: 1.0.0
-  - name: com.unity.modules.unityanalytics
-    version: 1.0.0
-  - name: com.unity.modules.unitywebrequest
-    version: 1.0.0
-  - name: com.unity.modules.jsonserialize
-    version: 1.0.0
-  - name: com.unity.modules.androidjni
-    version: 1.0.0
-  - name: com.unity.services.core
-    version: 1.0.1
-  keywords:
-  - purchasing
-  - iap
-  - unity
-  registry:
-    id: main
-    name: 
-    url: https://packages.unity.com
-    scopes: []
-    isDefault: 1
-    capabilities: 7
-  hideInEditor: 0
-  isAssetStorePackage: 0
-  datePublishedTicks: 637738064760000000
-  documentationUrl: 
-  hasRepository: 1
-  repository:
-    type: git
-    url: https://github.cds.internal.unity3d.com/unity/com.unity.purchasing.git
-    revision: c73a3b5ce4e0a8eb429214ad6702ceb8ece5fabe
-    path: 
-  unityLifecycle:
-    version: 4.1.2
-    nextVersion: 
-- packageId: com.unity.render-pipelines.universal@12.1.3
-  testable: 0
-  isDirectDependency: 1
-  version: 12.1.3
-  source: 2
-  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along3\Strung Along Full Unity Scene\Library\PackageCache\com.unity.render-pipelines.universal@12.1.3
-  assetPath: Packages/com.unity.render-pipelines.universal
-  name: com.unity.render-pipelines.universal
-  displayName: Universal RP
-  author:
-    name: 
-    email: 
-    url: 
-  category: 
-  type: 
-  description: The Universal Render Pipeline (URP) is a prebuilt Scriptable Render
-    Pipeline, made by Unity. URP provides artist-friendly workflows that let you
-    quickly and easily create optimized graphics across a range of platforms, from
-    mobile to high-end consoles and PCs.
-  status: 4
-  errors: []
-  versions:
-    all:
-    - 7.0.0
-    - 7.0.1
-    - 7.1.1
-    - 7.1.2
-    - 7.1.5
-    - 7.1.6
-    - 7.1.7
-    - 7.1.8
-    - 7.2.0
-    - 7.2.1
-    - 7.3.1
-    - 7.4.1
-    - 7.4.2
-    - 7.4.3
-    - 7.5.1
-    - 7.5.2
-    - 7.5.3
-    - 7.6.0
-    - 7.7.0
-    - 7.7.1
-    - 8.0.1
-    - 8.1.0
-    - 8.2.0
-    - 8.3.1
-    - 9.0.0-preview.14
-    - 9.0.0-preview.35
-    - 9.0.0-preview.55
-    - 9.0.0-preview.72
-    - 10.0.0-preview.26
-    - 10.1.0
-    - 10.2.0
-    - 10.2.1
-    - 10.2.2
-    - 10.3.1
-    - 10.3.2
-    - 10.4.0
-    - 10.5.0
-    - 10.5.1
-    - 10.6.0
-    - 10.7.0
-    - 10.8.0
-    - 10.8.1
-    - 12.1.3
-    compatible:
-    - 12.1.3
-    verified: 12.1.3
-  dependencies:
-  - name: com.unity.mathematics
-    version: 1.2.1
-  - name: com.unity.burst
-    version: 1.5.0
-  - name: com.unity.render-pipelines.core
-    version: 12.1.3
-  - name: com.unity.shadergraph
-    version: 12.1.3
-  resolvedDependencies:
-  - name: com.unity.mathematics
-    version: 1.2.5
-  - name: com.unity.burst
-    version: 1.6.0
-  - name: com.unity.render-pipelines.core
-    version: 12.1.3
-  - name: com.unity.ugui
-    version: 1.0.0
-  - name: com.unity.modules.ui
-    version: 1.0.0
-  - name: com.unity.modules.imgui
-    version: 1.0.0
-  - name: com.unity.modules.physics
-    version: 1.0.0
-  - name: com.unity.modules.jsonserialize
-    version: 1.0.0
-  - name: com.unity.shadergraph
-    version: 12.1.3
-  - name: com.unity.searcher
-    version: 4.9.1
-  keywords:
-  - graphics
-  - performance
-  - rendering
-  - mobile
-  - render
-  - pipeline
-  registry:
-    id: main
-    name: 
-    url: https://packages.unity.com
-    scopes: []
-    isDefault: 1
-    capabilities: 7
-  hideInEditor: 1
-  isAssetStorePackage: 0
-  datePublishedTicks: 0
-  documentationUrl: 
-  hasRepository: 0
-  repository:
-    type: 
-    url: 
-    revision: 
-    path: 
-  unityLifecycle:
-    version: 12.1.3
-    nextVersion: 
 - packageId: com.unity.test-framework@1.1.29
   testable: 0
   isDirectDependency: 1
   version: 1.1.29
   source: 1
-  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along3\Strung Along Full Unity Scene\Library\PackageCache\com.unity.test-framework@1.1.29
+  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along4\Strung Along Full Unity Scene\Library\PackageCache\com.unity.test-framework@1.1.29
   assetPath: Packages/com.unity.test-framework
   name: com.unity.test-framework
   displayName: Test Framework
@@ -1111,7 +573,7 @@ m_ResolvedPackages:
   isDirectDependency: 1
   version: 3.0.6
   source: 1
-  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along3\Strung Along Full Unity Scene\Library\PackageCache\com.unity.textmeshpro@3.0.6
+  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along4\Strung Along Full Unity Scene\Library\PackageCache\com.unity.textmeshpro@3.0.6
   assetPath: Packages/com.unity.textmeshpro
   name: com.unity.textmeshpro
   displayName: TextMeshPro
@@ -1276,7 +738,7 @@ m_ResolvedPackages:
   isDirectDependency: 1
   version: 1.6.3
   source: 1
-  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along3\Strung Along Full Unity Scene\Library\PackageCache\com.unity.timeline@1.6.3
+  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along4\Strung Along Full Unity Scene\Library\PackageCache\com.unity.timeline@1.6.3
   assetPath: Packages/com.unity.timeline
   name: com.unity.timeline
   displayName: Timeline
@@ -1421,7 +883,7 @@ m_ResolvedPackages:
   isDirectDependency: 1
   version: 1.0.0
   source: 2
-  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along3\Strung Along Full Unity Scene\Library\PackageCache\com.unity.ugui@1.0.0
+  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along4\Strung Along Full Unity Scene\Library\PackageCache\com.unity.ugui@1.0.0
   assetPath: Packages/com.unity.ugui
   name: com.unity.ugui
   displayName: Unity UI
@@ -1483,7 +945,7 @@ m_ResolvedPackages:
   isDirectDependency: 1
   version: 1.7.6
   source: 1
-  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along3\Strung Along Full Unity Scene\Library\PackageCache\com.unity.visualscripting@1.7.6
+  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along4\Strung Along Full Unity Scene\Library\PackageCache\com.unity.visualscripting@1.7.6
   assetPath: Packages/com.unity.visualscripting
   name: com.unity.visualscripting
   displayName: Visual Scripting
@@ -1568,7 +1030,7 @@ m_ResolvedPackages:
   isDirectDependency: 1
   version: 1.0.0
   source: 2
-  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along3\Strung Along Full Unity Scene\Library\PackageCache\com.unity.modules.ai@1.0.0
+  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along4\Strung Along Full Unity Scene\Library\PackageCache\com.unity.modules.ai@1.0.0
   assetPath: Packages/com.unity.modules.ai
   name: com.unity.modules.ai
   displayName: AI
@@ -1616,7 +1078,7 @@ m_ResolvedPackages:
   isDirectDependency: 1
   version: 1.0.0
   source: 2
-  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along3\Strung Along Full Unity Scene\Library\PackageCache\com.unity.modules.androidjni@1.0.0
+  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along4\Strung Along Full Unity Scene\Library\PackageCache\com.unity.modules.androidjni@1.0.0
   assetPath: Packages/com.unity.modules.androidjni
   name: com.unity.modules.androidjni
   displayName: Android JNI
@@ -1663,7 +1125,7 @@ m_ResolvedPackages:
   isDirectDependency: 1
   version: 1.0.0
   source: 2
-  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along3\Strung Along Full Unity Scene\Library\PackageCache\com.unity.modules.animation@1.0.0
+  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along4\Strung Along Full Unity Scene\Library\PackageCache\com.unity.modules.animation@1.0.0
   assetPath: Packages/com.unity.modules.animation
   name: com.unity.modules.animation
   displayName: Animation
@@ -1711,7 +1173,7 @@ m_ResolvedPackages:
   isDirectDependency: 1
   version: 1.0.0
   source: 2
-  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along3\Strung Along Full Unity Scene\Library\PackageCache\com.unity.modules.assetbundle@1.0.0
+  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along4\Strung Along Full Unity Scene\Library\PackageCache\com.unity.modules.assetbundle@1.0.0
   assetPath: Packages/com.unity.modules.assetbundle
   name: com.unity.modules.assetbundle
   displayName: Asset Bundle
@@ -1759,7 +1221,7 @@ m_ResolvedPackages:
   isDirectDependency: 1
   version: 1.0.0
   source: 2
-  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along3\Strung Along Full Unity Scene\Library\PackageCache\com.unity.modules.audio@1.0.0
+  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along4\Strung Along Full Unity Scene\Library\PackageCache\com.unity.modules.audio@1.0.0
   assetPath: Packages/com.unity.modules.audio
   name: com.unity.modules.audio
   displayName: Audio
@@ -1807,7 +1269,7 @@ m_ResolvedPackages:
   isDirectDependency: 1
   version: 1.0.0
   source: 2
-  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along3\Strung Along Full Unity Scene\Library\PackageCache\com.unity.modules.cloth@1.0.0
+  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along4\Strung Along Full Unity Scene\Library\PackageCache\com.unity.modules.cloth@1.0.0
   assetPath: Packages/com.unity.modules.cloth
   name: com.unity.modules.cloth
   displayName: Cloth
@@ -1859,7 +1321,7 @@ m_ResolvedPackages:
   isDirectDependency: 1
   version: 1.0.0
   source: 2
-  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along3\Strung Along Full Unity Scene\Library\PackageCache\com.unity.modules.director@1.0.0
+  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along4\Strung Along Full Unity Scene\Library\PackageCache\com.unity.modules.director@1.0.0
   assetPath: Packages/com.unity.modules.director
   name: com.unity.modules.director
   displayName: Director
@@ -1915,7 +1377,7 @@ m_ResolvedPackages:
   isDirectDependency: 1
   version: 1.0.0
   source: 2
-  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along3\Strung Along Full Unity Scene\Library\PackageCache\com.unity.modules.imageconversion@1.0.0
+  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along4\Strung Along Full Unity Scene\Library\PackageCache\com.unity.modules.imageconversion@1.0.0
   assetPath: Packages/com.unity.modules.imageconversion
   name: com.unity.modules.imageconversion
   displayName: Image Conversion
@@ -1964,7 +1426,7 @@ m_ResolvedPackages:
   isDirectDependency: 1
   version: 1.0.0
   source: 2
-  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along3\Strung Along Full Unity Scene\Library\PackageCache\com.unity.modules.imgui@1.0.0
+  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along4\Strung Along Full Unity Scene\Library\PackageCache\com.unity.modules.imgui@1.0.0
   assetPath: Packages/com.unity.modules.imgui
   name: com.unity.modules.imgui
   displayName: IMGUI
@@ -2012,7 +1474,7 @@ m_ResolvedPackages:
   isDirectDependency: 1
   version: 1.0.0
   source: 2
-  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along3\Strung Along Full Unity Scene\Library\PackageCache\com.unity.modules.jsonserialize@1.0.0
+  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along4\Strung Along Full Unity Scene\Library\PackageCache\com.unity.modules.jsonserialize@1.0.0
   assetPath: Packages/com.unity.modules.jsonserialize
   name: com.unity.modules.jsonserialize
   displayName: JSONSerialize
@@ -2060,7 +1522,7 @@ m_ResolvedPackages:
   isDirectDependency: 1
   version: 1.0.0
   source: 2
-  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along3\Strung Along Full Unity Scene\Library\PackageCache\com.unity.modules.particlesystem@1.0.0
+  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along4\Strung Along Full Unity Scene\Library\PackageCache\com.unity.modules.particlesystem@1.0.0
   assetPath: Packages/com.unity.modules.particlesystem
   name: com.unity.modules.particlesystem
   displayName: Particle System
@@ -2108,7 +1570,7 @@ m_ResolvedPackages:
   isDirectDependency: 1
   version: 1.0.0
   source: 2
-  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along3\Strung Along Full Unity Scene\Library\PackageCache\com.unity.modules.physics@1.0.0
+  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along4\Strung Along Full Unity Scene\Library\PackageCache\com.unity.modules.physics@1.0.0
   assetPath: Packages/com.unity.modules.physics
   name: com.unity.modules.physics
   displayName: Physics
@@ -2156,7 +1618,7 @@ m_ResolvedPackages:
   isDirectDependency: 1
   version: 1.0.0
   source: 2
-  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along3\Strung Along Full Unity Scene\Library\PackageCache\com.unity.modules.physics2d@1.0.0
+  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along4\Strung Along Full Unity Scene\Library\PackageCache\com.unity.modules.physics2d@1.0.0
   assetPath: Packages/com.unity.modules.physics2d
   name: com.unity.modules.physics2d
   displayName: Physics 2D
@@ -2204,7 +1666,7 @@ m_ResolvedPackages:
   isDirectDependency: 1
   version: 1.0.0
   source: 2
-  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along3\Strung Along Full Unity Scene\Library\PackageCache\com.unity.modules.screencapture@1.0.0
+  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along4\Strung Along Full Unity Scene\Library\PackageCache\com.unity.modules.screencapture@1.0.0
   assetPath: Packages/com.unity.modules.screencapture
   name: com.unity.modules.screencapture
   displayName: Screen Capture
@@ -2256,7 +1718,7 @@ m_ResolvedPackages:
   isDirectDependency: 1
   version: 1.0.0
   source: 2
-  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along3\Strung Along Full Unity Scene\Library\PackageCache\com.unity.modules.terrain@1.0.0
+  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along4\Strung Along Full Unity Scene\Library\PackageCache\com.unity.modules.terrain@1.0.0
   assetPath: Packages/com.unity.modules.terrain
   name: com.unity.modules.terrain
   displayName: Terrain
@@ -2304,7 +1766,7 @@ m_ResolvedPackages:
   isDirectDependency: 1
   version: 1.0.0
   source: 2
-  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along3\Strung Along Full Unity Scene\Library\PackageCache\com.unity.modules.terrainphysics@1.0.0
+  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along4\Strung Along Full Unity Scene\Library\PackageCache\com.unity.modules.terrainphysics@1.0.0
   assetPath: Packages/com.unity.modules.terrainphysics
   name: com.unity.modules.terrainphysics
   displayName: Terrain Physics
@@ -2360,7 +1822,7 @@ m_ResolvedPackages:
   isDirectDependency: 1
   version: 1.0.0
   source: 2
-  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along3\Strung Along Full Unity Scene\Library\PackageCache\com.unity.modules.tilemap@1.0.0
+  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along4\Strung Along Full Unity Scene\Library\PackageCache\com.unity.modules.tilemap@1.0.0
   assetPath: Packages/com.unity.modules.tilemap
   name: com.unity.modules.tilemap
   displayName: Tilemap
@@ -2411,7 +1873,7 @@ m_ResolvedPackages:
   isDirectDependency: 1
   version: 1.0.0
   source: 2
-  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along3\Strung Along Full Unity Scene\Library\PackageCache\com.unity.modules.ui@1.0.0
+  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along4\Strung Along Full Unity Scene\Library\PackageCache\com.unity.modules.ui@1.0.0
   assetPath: Packages/com.unity.modules.ui
   name: com.unity.modules.ui
   displayName: UI
@@ -2459,7 +1921,7 @@ m_ResolvedPackages:
   isDirectDependency: 1
   version: 1.0.0
   source: 2
-  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along3\Strung Along Full Unity Scene\Library\PackageCache\com.unity.modules.uielements@1.0.0
+  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along4\Strung Along Full Unity Scene\Library\PackageCache\com.unity.modules.uielements@1.0.0
   assetPath: Packages/com.unity.modules.uielements
   name: com.unity.modules.uielements
   displayName: UIElements
@@ -2523,7 +1985,7 @@ m_ResolvedPackages:
   isDirectDependency: 1
   version: 1.0.0
   source: 2
-  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along3\Strung Along Full Unity Scene\Library\PackageCache\com.unity.modules.umbra@1.0.0
+  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along4\Strung Along Full Unity Scene\Library\PackageCache\com.unity.modules.umbra@1.0.0
   assetPath: Packages/com.unity.modules.umbra
   name: com.unity.modules.umbra
   displayName: Umbra
@@ -2571,7 +2033,7 @@ m_ResolvedPackages:
   isDirectDependency: 1
   version: 1.0.0
   source: 2
-  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along3\Strung Along Full Unity Scene\Library\PackageCache\com.unity.modules.unityanalytics@1.0.0
+  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along4\Strung Along Full Unity Scene\Library\PackageCache\com.unity.modules.unityanalytics@1.0.0
   assetPath: Packages/com.unity.modules.unityanalytics
   name: com.unity.modules.unityanalytics
   displayName: Unity Analytics
@@ -2627,7 +2089,7 @@ m_ResolvedPackages:
   isDirectDependency: 1
   version: 1.0.0
   source: 2
-  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along3\Strung Along Full Unity Scene\Library\PackageCache\com.unity.modules.unitywebrequest@1.0.0
+  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along4\Strung Along Full Unity Scene\Library\PackageCache\com.unity.modules.unitywebrequest@1.0.0
   assetPath: Packages/com.unity.modules.unitywebrequest
   name: com.unity.modules.unitywebrequest
   displayName: Unity Web Request
@@ -2675,7 +2137,7 @@ m_ResolvedPackages:
   isDirectDependency: 1
   version: 1.0.0
   source: 2
-  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along3\Strung Along Full Unity Scene\Library\PackageCache\com.unity.modules.unitywebrequestassetbundle@1.0.0
+  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along4\Strung Along Full Unity Scene\Library\PackageCache\com.unity.modules.unitywebrequestassetbundle@1.0.0
   assetPath: Packages/com.unity.modules.unitywebrequestassetbundle
   name: com.unity.modules.unitywebrequestassetbundle
   displayName: Unity Web Request Asset Bundle
@@ -2731,7 +2193,7 @@ m_ResolvedPackages:
   isDirectDependency: 1
   version: 1.0.0
   source: 2
-  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along3\Strung Along Full Unity Scene\Library\PackageCache\com.unity.modules.unitywebrequestaudio@1.0.0
+  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along4\Strung Along Full Unity Scene\Library\PackageCache\com.unity.modules.unitywebrequestaudio@1.0.0
   assetPath: Packages/com.unity.modules.unitywebrequestaudio
   name: com.unity.modules.unitywebrequestaudio
   displayName: Unity Web Request Audio
@@ -2787,7 +2249,7 @@ m_ResolvedPackages:
   isDirectDependency: 1
   version: 1.0.0
   source: 2
-  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along3\Strung Along Full Unity Scene\Library\PackageCache\com.unity.modules.unitywebrequesttexture@1.0.0
+  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along4\Strung Along Full Unity Scene\Library\PackageCache\com.unity.modules.unitywebrequesttexture@1.0.0
   assetPath: Packages/com.unity.modules.unitywebrequesttexture
   name: com.unity.modules.unitywebrequesttexture
   displayName: Unity Web Request Texture
@@ -2843,7 +2305,7 @@ m_ResolvedPackages:
   isDirectDependency: 1
   version: 1.0.0
   source: 2
-  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along3\Strung Along Full Unity Scene\Library\PackageCache\com.unity.modules.unitywebrequestwww@1.0.0
+  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along4\Strung Along Full Unity Scene\Library\PackageCache\com.unity.modules.unitywebrequestwww@1.0.0
   assetPath: Packages/com.unity.modules.unitywebrequestwww
   name: com.unity.modules.unitywebrequestwww
   displayName: Unity Web Request WWW
@@ -2915,7 +2377,7 @@ m_ResolvedPackages:
   isDirectDependency: 1
   version: 1.0.0
   source: 2
-  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along3\Strung Along Full Unity Scene\Library\PackageCache\com.unity.modules.vehicles@1.0.0
+  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along4\Strung Along Full Unity Scene\Library\PackageCache\com.unity.modules.vehicles@1.0.0
   assetPath: Packages/com.unity.modules.vehicles
   name: com.unity.modules.vehicles
   displayName: Vehicles
@@ -2967,7 +2429,7 @@ m_ResolvedPackages:
   isDirectDependency: 1
   version: 1.0.0
   source: 2
-  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along3\Strung Along Full Unity Scene\Library\PackageCache\com.unity.modules.video@1.0.0
+  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along4\Strung Along Full Unity Scene\Library\PackageCache\com.unity.modules.video@1.0.0
   assetPath: Packages/com.unity.modules.video
   name: com.unity.modules.video
   displayName: Video
@@ -3027,7 +2489,7 @@ m_ResolvedPackages:
   isDirectDependency: 1
   version: 1.0.0
   source: 2
-  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along3\Strung Along Full Unity Scene\Library\PackageCache\com.unity.modules.vr@1.0.0
+  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along4\Strung Along Full Unity Scene\Library\PackageCache\com.unity.modules.vr@1.0.0
   assetPath: Packages/com.unity.modules.vr
   name: com.unity.modules.vr
   displayName: VR
@@ -3089,7 +2551,7 @@ m_ResolvedPackages:
   isDirectDependency: 1
   version: 1.0.0
   source: 2
-  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along3\Strung Along Full Unity Scene\Library\PackageCache\com.unity.modules.wind@1.0.0
+  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along4\Strung Along Full Unity Scene\Library\PackageCache\com.unity.modules.wind@1.0.0
   assetPath: Packages/com.unity.modules.wind
   name: com.unity.modules.wind
   displayName: Wind
@@ -3137,7 +2599,7 @@ m_ResolvedPackages:
   isDirectDependency: 1
   version: 1.0.0
   source: 2
-  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along3\Strung Along Full Unity Scene\Library\PackageCache\com.unity.modules.xr@1.0.0
+  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along4\Strung Along Full Unity Scene\Library\PackageCache\com.unity.modules.xr@1.0.0
   assetPath: Packages/com.unity.modules.xr
   name: com.unity.modules.xr
   displayName: XR
@@ -3197,7 +2659,7 @@ m_ResolvedPackages:
   isDirectDependency: 0
   version: 1.0.0
   source: 2
-  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along3\Strung Along Full Unity Scene\Library\PackageCache\com.unity.modules.subsystems@1.0.0
+  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along4\Strung Along Full Unity Scene\Library\PackageCache\com.unity.modules.subsystems@1.0.0
   assetPath: Packages/com.unity.modules.subsystems
   name: com.unity.modules.subsystems
   displayName: Subsystems
@@ -3249,7 +2711,7 @@ m_ResolvedPackages:
   isDirectDependency: 0
   version: 1.0.0
   source: 2
-  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along3\Strung Along Full Unity Scene\Library\PackageCache\com.unity.modules.uielementsnative@1.0.0
+  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along4\Strung Along Full Unity Scene\Library\PackageCache\com.unity.modules.uielementsnative@1.0.0
   assetPath: Packages/com.unity.modules.uielementsnative
   name: com.unity.modules.uielementsnative
   displayName: UIElements Native
@@ -3303,52 +2765,44 @@ m_ResolvedPackages:
   unityLifecycle:
     version: 
     nextVersion: 
-- packageId: com.unity.mathematics@1.2.5
+- packageId: com.unity.ext.nunit@1.0.6
   testable: 0
   isDirectDependency: 0
-  version: 1.2.5
+  version: 1.0.6
   source: 1
-  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along3\Strung Along Full Unity Scene\Library\PackageCache\com.unity.mathematics@1.2.5
-  assetPath: Packages/com.unity.mathematics
-  name: com.unity.mathematics
-  displayName: Mathematics
+  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along4\Strung Along Full Unity Scene\Library\PackageCache\com.unity.ext.nunit@1.0.6
+  assetPath: Packages/com.unity.ext.nunit
+  name: com.unity.ext.nunit
+  displayName: Custom NUnit
   author:
     name: 
     email: 
     url: 
-  category: 
+  category: Libraries
   type: 
-  description: Unity's C# SIMD math library providing vector types and math functions
-    with a shader like syntax.
+  description: Custom version of the nunit package build to work with Unity. Used
+    by the Unity Test Framework.
   status: 4
   errors: []
   versions:
     all:
-    - 0.0.12-preview.2
-    - 0.0.12-preview.5
-    - 0.0.12-preview.8
-    - 0.0.12-preview.10
-    - 0.0.12-preview.11
-    - 0.0.12-preview.13
-    - 0.0.12-preview.17
-    - 0.0.12-preview.19
-    - 0.0.12-preview.20
-    - 1.0.0-preview.1
-    - 1.0.1
-    - 1.1.0-preview.1
-    - 1.1.0
-    - 1.2.1
-    - 1.2.4
-    - 1.2.5
-    - 1.2.6
+    - 0.1.5-preview
+    - 0.1.6-preview
+    - 0.1.9-preview
+    - 1.0.0
+    - 1.0.5
+    - 1.0.6
+    - 2.0.2
     compatible:
-    - 1.2.5
-    - 1.2.6
-    verified: 1.2.6
+    - 1.0.6
+    - 2.0.2
+    verified: 1.0.6
   dependencies: []
   resolvedDependencies: []
   keywords:
-  - unity
+  - nunit
+  - unittest
+  - test
   registry:
     id: main
     name: 
@@ -3358,164 +2812,55 @@ m_ResolvedPackages:
     capabilities: 7
   hideInEditor: 1
   isAssetStorePackage: 0
-  datePublishedTicks: 637719892670000000
+  datePublishedTicks: 637429759280000000
   documentationUrl: 
   hasRepository: 1
   repository:
     type: git
-    url: https://github.com/Unity-Technologies/Unity.Mathematics.git
-    revision: 53b0c4756c3c0dff3746285a8b83e858c26cdb06
+    url: https://github.cds.internal.unity3d.com/unity/com.unity.ext.nunit.git
+    revision: 29ea4d6504a5f58fb3a6934db839aa80ae6d9d88
     path: 
   unityLifecycle:
-    version: 1.2.5
+    version: 1.0.6
     nextVersion: 
-- packageId: com.unity.burst@1.6.0
+- packageId: com.unity.editorcoroutines@1.0.0
   testable: 0
   isDirectDependency: 0
-  version: 1.6.0
+  version: 1.0.0
   source: 1
-  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along3\Strung Along Full Unity Scene\Library\PackageCache\com.unity.burst@1.6.0
-  assetPath: Packages/com.unity.burst
-  name: com.unity.burst
-  displayName: Burst
+  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along4\Strung Along Full Unity Scene\Library\PackageCache\com.unity.editorcoroutines@1.0.0
+  assetPath: Packages/com.unity.editorcoroutines
+  name: com.unity.editorcoroutines
+  displayName: Editor Coroutines
   author:
     name: 
     email: 
     url: 
   category: 
   type: 
-  description: Burst is a compiler that translates from IL/.NET bytecode to highly
-    optimized native code using LLVM.
+  description: 'The editor coroutines package allows developers to start constructs
+    similar to Unity''s monobehaviour based coroutines within the editor using abitrary
+    objects. '
   status: 4
   errors: []
   versions:
     all:
-    - 0.2.4-preview.5
-    - 0.2.4-preview.7
-    - 0.2.4-preview.11
-    - 0.2.4-preview.12
-    - 0.2.4-preview.13
-    - 0.2.4-preview.14
-    - 0.2.4-preview.15
-    - 0.2.4-preview.16
-    - 0.2.4-preview.17
-    - 0.2.4-preview.18
-    - 0.2.4-preview.19
-    - 0.2.4-preview.20
-    - 0.2.4-preview.21
-    - 0.2.4-preview.22
-    - 0.2.4-preview.23
-    - 0.2.4-preview.24
-    - 0.2.4-preview.25
-    - 0.2.4-preview.30
-    - 0.2.4-preview.31
-    - 0.2.4-preview.33
-    - 0.2.4-preview.34
-    - 0.2.4-preview.37
-    - 0.2.4-preview.41
-    - 0.2.4-preview.45
-    - 0.2.4-preview.48
-    - 0.2.4-preview.50
-    - 1.1.0-preview.2
-    - 1.1.0-preview.3
-    - 1.1.0-preview.4
-    - 1.1.1
-    - 1.1.2
-    - 1.1.3-preview.3
-    - 1.2.0-preview.1
-    - 1.2.0-preview.5
-    - 1.2.0-preview.6
-    - 1.2.0-preview.8
-    - 1.2.0-preview.9
-    - 1.2.0-preview.10
-    - 1.2.0-preview.11
-    - 1.2.0-preview.12
-    - 1.2.0
-    - 1.2.1
-    - 1.2.2
-    - 1.2.3
-    - 1.3.0-preview.1
-    - 1.3.0-preview.2
-    - 1.3.0-preview.3
-    - 1.3.0-preview.4
-    - 1.3.0-preview.5
-    - 1.3.0-preview.6
-    - 1.3.0-preview.7
-    - 1.3.0-preview.8
-    - 1.3.0-preview.9
-    - 1.3.0-preview.10
-    - 1.3.0-preview.11
-    - 1.3.0-preview.12
-    - 1.3.0-preview.13
-    - 1.3.0
-    - 1.3.1
-    - 1.3.2
-    - 1.3.3
-    - 1.3.4
-    - 1.3.5
-    - 1.3.6
-    - 1.3.7
-    - 1.3.8
-    - 1.3.9
-    - 1.4.0-pre.1
-    - 1.4.0-preview.1
-    - 1.4.0-preview.2
-    - 1.4.0-preview.3
-    - 1.4.0-preview.4
-    - 1.4.0-preview.5
-    - 1.4.1-pre.1
-    - 1.4.1-pre.2
-    - 1.4.1
-    - 1.4.2
-    - 1.4.3
-    - 1.4.4-preview.1
-    - 1.4.4-preview.2
-    - 1.4.4
-    - 1.4.5
-    - 1.4.6
-    - 1.4.7
-    - 1.4.8
-    - 1.4.9
-    - 1.4.11
-    - 1.5.0-pre.3
-    - 1.5.0-pre.4
-    - 1.5.0-pre.5
-    - 1.5.0
-    - 1.5.1
-    - 1.5.2
-    - 1.5.3
-    - 1.5.4
-    - 1.5.5
-    - 1.5.6-preview.1
-    - 1.5.6
-    - 1.6.0-pre.2
-    - 1.6.0-pre.3
-    - 1.6.0-pre.4
-    - 1.6.0
-    - 1.6.1
-    - 1.6.2
-    - 1.6.3
-    - 1.6.4
-    - 1.6.5
-    - 1.7.0-pre.1
-    - 1.7.0
+    - 0.0.1-preview.3
+    - 0.0.1-preview.4
+    - 0.0.1-preview.5
+    - 0.0.2-preview.1
+    - 0.1.0-preview.1
+    - 0.1.0-preview.2
+    - 1.0.0
     compatible:
-    - 1.6.0
-    - 1.6.1
-    - 1.6.2
-    - 1.6.3
-    - 1.6.4
-    - 1.6.5
-    - 1.7.0-pre.1
-    - 1.7.0
-    verified: 1.6.5
-  dependencies:
-  - name: com.unity.mathematics
-    version: 1.2.1
-  resolvedDependencies:
-  - name: com.unity.mathematics
-    version: 1.2.5
-  keywords: []
+    - 1.0.0
+    verified: 1.0.0
+  dependencies: []
+  resolvedDependencies: []
+  keywords:
+  - coroutine
+  - coroutines
+  - editor
   registry:
     id: main
     name: 
@@ -3525,160 +2870,59 @@ m_ResolvedPackages:
     capabilities: 7
   hideInEditor: 1
   isAssetStorePackage: 0
-  datePublishedTicks: 637661043940000000
+  datePublishedTicks: 637232611380000000
   documentationUrl: 
   hasRepository: 1
   repository:
     type: git
-    url: https://github.cds.internal.unity3d.com/unity/burst.git
-    revision: 405e9582b7e75a1a9e6f8dcaf4c2dc97d441ae68
+    url: https://github.cds.internal.unity3d.com/unity/com.unity.editorcoroutines.git
+    revision: f67fc9992bbc7a553b17375de53a8b2db136528e
     path: 
   unityLifecycle:
-    version: 1.6.0
+    version: 1.0.0
     nextVersion: 
-- packageId: com.unity.render-pipelines.core@12.1.3
+- packageId: com.unity.performance.profile-analyzer@1.1.1
   testable: 0
   isDirectDependency: 0
-  version: 12.1.3
-  source: 2
-  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along3\Strung Along Full Unity Scene\Library\PackageCache\com.unity.render-pipelines.core@12.1.3
-  assetPath: Packages/com.unity.render-pipelines.core
-  name: com.unity.render-pipelines.core
-  displayName: Core RP Library
+  version: 1.1.1
+  source: 1
+  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along4\Strung Along Full Unity Scene\Library\PackageCache\com.unity.performance.profile-analyzer@1.1.1
+  assetPath: Packages/com.unity.performance.profile-analyzer
+  name: com.unity.performance.profile-analyzer
+  displayName: Profile Analyzer
   author:
     name: 
     email: 
     url: 
   category: 
   type: 
-  description: SRP Core makes it easier to create or customize a Scriptable Render
-    Pipeline (SRP). SRP Core contains reusable code, including boilerplate code for
-    working with platform-specific graphics APIs, utility functions for common rendering
-    operations, and  shader libraries. The code in SRP Core is use by the High Definition
-    Render Pipeline (HDRP) and Universal Render Pipeline (URP). If you are creating
-    a custom SRP from scratch or customizing a prebuilt SRP, using SRP Core will
-    save you time.
+  description: "The Profile Analyzer tool supports the standard Unity Profiler. You
+    can use it to analyze multiple frames and multiple data sets of the CPU data
+    in the Profiler.\n\nMain features: \n\u25AA Multi-frame analysis of a single
+    set of Profiler CPU data \n\u25AA Comparison of two multi-frame profile scans
+    \n\n"
   status: 4
   errors: []
   versions:
     all:
-    - 0.1.21
-    - 0.1.27
-    - 0.1.28
-    - 1.0.0-beta
-    - 1.0.1-beta
-    - 1.1.1-preview
-    - 1.1.2-preview
-    - 1.1.4-preview
-    - 1.1.5-preview
-    - 1.1.8-preview
-    - 1.1.10-preview
-    - 1.1.11-preview
-    - 2.0.1-preview
-    - 2.0.3-preview
-    - 2.0.4-preview
-    - 2.0.4-preview.1
-    - 2.0.5-preview
-    - 2.0.6-preview
-    - 2.0.7-preview
-    - 2.0.8-preview
-    - 3.0.0-preview
-    - 3.1.0-preview
-    - 3.3.0-preview
-    - 4.0.0-preview
-    - 4.0.1-preview
-    - 4.1.0-preview
-    - 4.2.0-preview
-    - 4.3.0-preview
-    - 4.6.0-preview
-    - 4.8.0-preview
-    - 4.9.0-preview
-    - 4.10.0-preview
-    - 5.0.0-preview
-    - 5.1.0
-    - 5.2.0
-    - 5.2.1
-    - 5.2.2
-    - 5.2.3
-    - 5.3.1
-    - 5.6.1
-    - 5.7.2
-    - 5.8.2
-    - 5.9.0
-    - 5.10.0
-    - 5.13.0
-    - 5.16.1
-    - 6.5.2
-    - 6.5.3
-    - 6.7.1
-    - 6.9.0
-    - 6.9.1
-    - 6.9.2
-    - 7.0.0
-    - 7.0.1
-    - 7.1.1
-    - 7.1.2
-    - 7.1.5
-    - 7.1.6
-    - 7.1.7
-    - 7.1.8
-    - 7.2.0
-    - 7.2.1
-    - 7.3.1
-    - 7.4.1
-    - 7.4.2
-    - 7.4.3
-    - 7.5.1
-    - 7.5.2
-    - 7.5.3
-    - 7.6.0
-    - 7.7.0
-    - 7.7.1
-    - 8.0.1
-    - 8.1.0
-    - 8.2.0
-    - 8.3.1
-    - 9.0.0-preview.13
-    - 9.0.0-preview.35
-    - 9.0.0-preview.38
-    - 9.0.0-preview.60
-    - 9.0.0-preview.77
-    - 10.0.0-preview.30
-    - 10.1.0
-    - 10.2.0
-    - 10.2.1
-    - 10.2.2
-    - 10.3.1
-    - 10.3.2
-    - 10.4.0
-    - 10.5.0
-    - 10.5.1
-    - 10.6.0
-    - 10.7.0
-    - 10.8.0
-    - 10.8.1
-    - 12.1.3
+    - 0.4.0-preview.3
+    - 0.4.0-preview.5
+    - 0.4.0-preview.6
+    - 0.5.0-preview.1
+    - 0.6.0-preview.1
+    - 0.7.0-preview.4
+    - 1.0.0
+    - 1.0.1
+    - 1.0.2
+    - 1.0.3
+    - 1.1.0-pre.2
+    - 1.1.0
+    - 1.1.1
     compatible:
-    - 12.1.3
-    verified: 12.1.3
-  dependencies:
-  - name: com.unity.ugui
-    version: 1.0.0
-  - name: com.unity.modules.physics
-    version: 1.0.0
-  - name: com.unity.modules.jsonserialize
-    version: 1.0.0
-  resolvedDependencies:
-  - name: com.unity.ugui
-    version: 1.0.0
-  - name: com.unity.modules.ui
-    version: 1.0.0
-  - name: com.unity.modules.imgui
-    version: 1.0.0
-  - name: com.unity.modules.physics
-    version: 1.0.0
-  - name: com.unity.modules.jsonserialize
-    version: 1.0.0
+    - 1.1.1
+    verified: 1.1.1
+  dependencies: []
+  resolvedDependencies: []
   keywords: []
   registry:
     id: main
@@ -3689,159 +2933,167 @@ m_ResolvedPackages:
     capabilities: 7
   hideInEditor: 1
   isAssetStorePackage: 0
-  datePublishedTicks: 0
+  datePublishedTicks: 637705021060000000
   documentationUrl: 
-  hasRepository: 0
+  hasRepository: 1
   repository:
-    type: 
-    url: 
-    revision: 
+    type: git
+    url: https://github.cds.internal.unity3d.com/unity/com.unity.performance.profile-analyzer.git
+    revision: 6dcda6aee96901e98a4f01b85589054b9274ba74
     path: 
   unityLifecycle:
-    version: 12.1.3
+    version: 1.1.1
     nextVersion: 
-- packageId: com.unity.shadergraph@12.1.3
+- packageId: com.unity.testtools.codecoverage@1.0.1
   testable: 0
   isDirectDependency: 0
-  version: 12.1.3
-  source: 2
-  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along3\Strung Along Full Unity Scene\Library\PackageCache\com.unity.shadergraph@12.1.3
-  assetPath: Packages/com.unity.shadergraph
-  name: com.unity.shadergraph
-  displayName: Shader Graph
+  version: 1.0.1
+  source: 1
+  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along4\Strung Along Full Unity Scene\Library\PackageCache\com.unity.testtools.codecoverage@1.0.1
+  assetPath: Packages/com.unity.testtools.codecoverage
+  name: com.unity.testtools.codecoverage
+  displayName: Code Coverage
   author:
     name: 
     email: 
     url: 
   category: 
   type: 
-  description: The Shader Graph package adds a visual Shader editing tool to Unity.
-    You can use this tool to create Shaders in a visual way instead of writing code.
-    Specific render pipelines can implement specific graph features. Currently, both
-    the High Definition Rendering Pipeline and the Universal Rendering Pipeline support
-    Shader Graph.
+  description: Use this package to export code coverage data and reports from your
+    automated tests. Additionally, the Code Coverage package offers a Coverage Recording
+    feature which allows capturing coverage data on demand, for manual testing or
+    when there are no automated tests in the project.
   status: 4
   errors: []
   versions:
     all:
-    - 0.1.8
-    - 0.1.9
-    - 0.1.17
-    - 1.0.0-beta
-    - 1.1.1-preview
-    - 1.1.2-preview
-    - 1.1.3-preview
-    - 1.1.4-preview
-    - 1.1.5-preview
-    - 1.1.6-preview
-    - 1.1.8-preview
-    - 1.1.9-preview
-    - 2.0.1-preview
-    - 2.0.3-preview
-    - 2.0.4-preview
-    - 2.0.4-preview.1
-    - 2.0.5-preview
-    - 2.0.6-preview
-    - 2.0.7-preview
-    - 2.0.8-preview
-    - 3.0.0-preview
-    - 3.1.0-preview
-    - 3.3.0-preview
-    - 4.0.0-preview
-    - 4.0.1-preview
-    - 4.1.0-preview
-    - 4.2.0-preview
-    - 4.3.0-preview
-    - 4.6.0-preview
-    - 4.8.0-preview
-    - 4.9.0-preview
-    - 4.10.0-preview
-    - 5.0.0-preview
-    - 5.1.0
-    - 5.2.0
-    - 5.2.1
-    - 5.2.2
-    - 5.2.3
-    - 5.3.1
-    - 5.6.1
-    - 5.7.2
-    - 5.8.2
-    - 5.9.0
-    - 5.10.0
-    - 5.13.0
-    - 5.16.1
-    - 6.5.2
-    - 6.5.3
-    - 6.7.1
-    - 6.9.0
-    - 6.9.1
-    - 6.9.2
-    - 7.0.0
-    - 7.0.1
-    - 7.1.1
-    - 7.1.2
-    - 7.1.5
-    - 7.1.6
-    - 7.1.7
-    - 7.1.8
-    - 7.2.0
-    - 7.2.1
-    - 7.3.1
-    - 7.4.1
-    - 7.4.2
-    - 7.4.3
-    - 7.5.1
-    - 7.5.2
-    - 7.5.3
-    - 7.6.0
-    - 7.7.0
-    - 7.7.1
-    - 8.0.1
-    - 8.1.0
-    - 8.2.0
-    - 8.3.1
-    - 9.0.0-preview.14
-    - 9.0.0-preview.34
-    - 9.0.0-preview.55
-    - 9.0.0-preview.72
-    - 10.0.0-preview.27
-    - 10.1.0
-    - 10.2.0
-    - 10.2.1
-    - 10.2.2
-    - 10.3.1
-    - 10.3.2
-    - 10.4.0
-    - 10.5.0
-    - 10.5.1
-    - 10.6.0
-    - 10.7.0
-    - 10.8.0
-    - 10.8.1
-    - 12.1.3
+    - 0.2.0-preview
+    - 0.2.1-preview
+    - 0.2.2-preview
+    - 0.2.3-preview
+    - 0.3.0-preview
+    - 0.3.1-preview
+    - 0.4.0-preview
+    - 0.4.1-preview
+    - 0.4.2-preview
+    - 0.4.3-preview
+    - 1.0.0-pre.1
+    - 1.0.0-pre.2
+    - 1.0.0-pre.3
+    - 1.0.0-pre.4
+    - 1.0.0
+    - 1.0.1
+    - 1.1.0
+    - 1.1.1
+    - 1.2.0-exp.1
+    - 1.2.0-exp.2
+    - 1.2.0-exp.3
+    - 1.2.0-exp.4
+    - 1.2.0-exp.5
+    - 1.2.0-exp.6
+    - 1.2.0-exp.7
     compatible:
-    - 12.1.3
-    verified: 12.1.3
+    - 1.0.1
+    - 1.1.0
+    - 1.1.1
+    - 1.2.0-exp.1
+    - 1.2.0-exp.2
+    - 1.2.0-exp.3
+    - 1.2.0-exp.4
+    - 1.2.0-exp.5
+    - 1.2.0-exp.6
+    - 1.2.0-exp.7
+    verified: 1.0.1
   dependencies:
-  - name: com.unity.render-pipelines.core
-    version: 12.1.3
-  - name: com.unity.searcher
-    version: 4.9.1
+  - name: com.unity.test-framework
+    version: 1.0.16
+  - name: com.unity.settings-manager
+    version: 1.0.1
   resolvedDependencies:
-  - name: com.unity.render-pipelines.core
-    version: 12.1.3
-  - name: com.unity.ugui
-    version: 1.0.0
-  - name: com.unity.modules.ui
-    version: 1.0.0
+  - name: com.unity.test-framework
+    version: 1.1.29
+  - name: com.unity.ext.nunit
+    version: 1.0.6
   - name: com.unity.modules.imgui
-    version: 1.0.0
-  - name: com.unity.modules.physics
     version: 1.0.0
   - name: com.unity.modules.jsonserialize
     version: 1.0.0
-  - name: com.unity.searcher
-    version: 4.9.1
+  - name: com.unity.settings-manager
+    version: 1.0.3
+  keywords:
+  - test
+  - coverage
+  - testing
+  - opencover
+  registry:
+    id: main
+    name: 
+    url: https://packages.unity.com
+    scopes: []
+    isDefault: 1
+    capabilities: 7
+  hideInEditor: 1
+  isAssetStorePackage: 0
+  datePublishedTicks: 637594767130000000
+  documentationUrl: 
+  hasRepository: 1
+  repository:
+    type: git
+    url: https://github.cds.internal.unity3d.com/unity/com.unity.testtools.codecoverage.git
+    revision: 2777556fc6ade4006a02ea7febbae1dd3257eb7d
+    path: 
+  unityLifecycle:
+    version: 1.0.1
+    nextVersion: 
+- packageId: com.unity.nuget.newtonsoft-json@2.0.0
+  testable: 0
+  isDirectDependency: 0
+  version: 2.0.0
+  source: 1
+  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along4\Strung Along Full Unity Scene\Library\PackageCache\com.unity.nuget.newtonsoft-json@2.0.0
+  assetPath: Packages/com.unity.nuget.newtonsoft-json
+  name: com.unity.nuget.newtonsoft-json
+  displayName: Newtonsoft Json
+  author:
+    name: 
+    email: 
+    url: 
+  category: 
+  type: 
+  description: 'Newtonsoft Json for use in Unity projects and Unity packages. Currently
+    synced to version 12.0.2.
+
+
+    This package is used for advanced json serialization
+    and deserialization. Most Unity users will be better suited using the existing
+    json tools built into Unity.
+
+    To avoid assembly clashes, please use this
+    package if you intend to use Newtonsoft Json.'
+  status: 4
+  errors: []
+  versions:
+    all:
+    - 1.0.0-preview.2
+    - 1.0.0-preview.3
+    - 1.0.0-preview.4
+    - 1.0.1-preview.1
+    - 1.1.2
+    - 2.0.0-preview
+    - 2.0.0-preview.1
+    - 2.0.0-preview.2
+    - 2.0.0
+    - 2.0.1-preview.1
+    - 2.0.2
+    - 3.0.1
+    compatible:
+    - 2.0.0
+    - 2.0.1-preview.1
+    - 2.0.2
+    - 3.0.1
+    verified: 2.0.2
+  dependencies: []
+  resolvedDependencies: []
   keywords: []
   registry:
     id: main
@@ -3852,23 +3104,23 @@ m_ResolvedPackages:
     capabilities: 7
   hideInEditor: 1
   isAssetStorePackage: 0
-  datePublishedTicks: 0
+  datePublishedTicks: 637237898320000000
   documentationUrl: 
-  hasRepository: 0
+  hasRepository: 1
   repository:
-    type: 
-    url: 
-    revision: 
+    type: git
+    url: https://github.cds.internal.unity3d.com/unity/com.unity.nuget.newtonsoft-json.git
+    revision: d2fd6ed876261bbd82f59199ad711e7667bf633a
     path: 
   unityLifecycle:
-    version: 12.1.3
+    version: 2.0.0
     nextVersion: 
 - packageId: com.unity.services.core@1.0.1
   testable: 0
   isDirectDependency: 0
   version: 1.0.1
   source: 1
-  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along3\Strung Along Full Unity Scene\Library\PackageCache\com.unity.services.core@1.0.1
+  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along4\Strung Along Full Unity Scene\Library\PackageCache\com.unity.services.core@1.0.1
   assetPath: Packages/com.unity.services.core
   name: com.unity.services.core
   displayName: Services Core
@@ -3934,53 +3186,40 @@ m_ResolvedPackages:
   unityLifecycle:
     version: 1.0.1
     nextVersion: 1.1.0-pre.8
-- packageId: com.unity.nuget.newtonsoft-json@2.0.0
+- packageId: com.unity.settings-manager@1.0.3
   testable: 0
   isDirectDependency: 0
-  version: 2.0.0
+  version: 1.0.3
   source: 1
-  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along3\Strung Along Full Unity Scene\Library\PackageCache\com.unity.nuget.newtonsoft-json@2.0.0
-  assetPath: Packages/com.unity.nuget.newtonsoft-json
-  name: com.unity.nuget.newtonsoft-json
-  displayName: Newtonsoft Json
+  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along4\Strung Along Full Unity Scene\Library\PackageCache\com.unity.settings-manager@1.0.3
+  assetPath: Packages/com.unity.settings-manager
+  name: com.unity.settings-manager
+  displayName: Settings Manager
   author:
     name: 
     email: 
     url: 
   category: 
   type: 
-  description: 'Newtonsoft Json for use in Unity projects and Unity packages. Currently
-    synced to version 12.0.2.
-
-
-    This package is used for advanced json serialization
-    and deserialization. Most Unity users will be better suited using the existing
-    json tools built into Unity.
-
-    To avoid assembly clashes, please use this
-    package if you intend to use Newtonsoft Json.'
+  description: A framework for making any serializable field a setting, complete
+    with a pre-built settings interface.
   status: 4
   errors: []
   versions:
     all:
-    - 1.0.0-preview.2
-    - 1.0.0-preview.3
-    - 1.0.0-preview.4
-    - 1.0.1-preview.1
-    - 1.1.2
-    - 2.0.0-preview
-    - 2.0.0-preview.1
-    - 2.0.0-preview.2
+    - 0.1.0-preview.4
+    - 0.1.0-preview.8
+    - 1.0.0
+    - 1.0.1
+    - 1.0.2
+    - 1.0.3
     - 2.0.0
-    - 2.0.1-preview.1
-    - 2.0.2
-    - 3.0.1
+    - 2.0.1
     compatible:
+    - 1.0.3
     - 2.0.0
-    - 2.0.1-preview.1
-    - 2.0.2
-    - 3.0.1
-    verified: 2.0.2
+    - 2.0.1
+    verified: 1.0.3
   dependencies: []
   resolvedDependencies: []
   keywords: []
@@ -3993,80 +3232,14 @@ m_ResolvedPackages:
     capabilities: 7
   hideInEditor: 1
   isAssetStorePackage: 0
-  datePublishedTicks: 637237898320000000
+  datePublishedTicks: 637300096300000000
   documentationUrl: 
   hasRepository: 1
   repository:
     type: git
-    url: https://github.cds.internal.unity3d.com/unity/com.unity.nuget.newtonsoft-json.git
-    revision: d2fd6ed876261bbd82f59199ad711e7667bf633a
+    url: git+https://github.com/Unity-Technologies/com.unity.settings-manager.git
+    revision: 473664ccba1496294b741cf169740a5d54b3d0b6
     path: 
   unityLifecycle:
-    version: 2.0.0
-    nextVersion: 
-- packageId: com.unity.searcher@4.9.1
-  testable: 0
-  isDirectDependency: 0
-  version: 4.9.1
-  source: 1
-  resolvedPath: E:\Users\Tim\Desktop\Git\strung-along3\Strung Along Full Unity Scene\Library\PackageCache\com.unity.searcher@4.9.1
-  assetPath: Packages/com.unity.searcher
-  name: com.unity.searcher
-  displayName: Searcher
-  author:
-    name: 
-    email: 
-    url: 
-  category: 
-  type: 
-  description: General search window for use in the Editor. First target use is for
-    GraphView node search.
-  status: 4
-  errors: []
-  versions:
-    all:
-    - 4.0.0-preview
-    - 4.0.0
-    - 4.0.7-preview
-    - 4.0.7
-    - 4.0.8-preview
-    - 4.0.9
-    - 4.1.0-preview
-    - 4.1.0
-    - 4.2.0
-    - 4.3.0
-    - 4.3.1
-    - 4.3.2
-    - 4.6.0-preview
-    - 4.7.0-preview
-    - 4.9.1
-    - 4.9.2
-    compatible:
-    - 4.9.1
-    - 4.9.2
-    verified: 4.9.2
-  dependencies: []
-  resolvedDependencies: []
-  keywords:
-  - search
-  - searcher
-  registry:
-    id: main
-    name: 
-    url: https://packages.unity.com
-    scopes: []
-    isDefault: 1
-    capabilities: 7
-  hideInEditor: 1
-  isAssetStorePackage: 0
-  datePublishedTicks: 637695653650000000
-  documentationUrl: 
-  hasRepository: 1
-  repository:
-    type: git
-    url: https://github.cds.internal.unity3d.com/unity/com.unity.searcher.git
-    revision: 9e68a2a9ba29bd6783bc91d15ff82bbd459f2163
-    path: 
-  unityLifecycle:
-    version: 4.9.1
+    version: 1.0.3
     nextVersion: 
