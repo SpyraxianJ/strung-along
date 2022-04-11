@@ -21,6 +21,10 @@ public class PuppetController : MonoBehaviour
 
     [Tooltip("Used to determine if this puppet is the second player, if true it will use the second player's controls and other play-specific things")]
     public bool secondPlayer;
+    //private variables to be changed depening on player
+    private string playerHorizontalInput;
+    private string playerVerticalInput;
+    private string playerJumpInput;
     [Tooltip("Determines if the puppet is currently on the ground or not, public for unity inspector debugging purposes, can be made private later without issue")]
     public bool grounded;
 
@@ -118,6 +122,18 @@ public class PuppetController : MonoBehaviour
                 Debug.LogWarning("The other puppet connected to " + this + " is using the same controls as it's assigned other puppet, consider changing one of them or reassigning the other puppet");
             }
         }
+
+        string txt = "";
+
+        // define control schemes for player 1 or 2
+        if (this.secondPlayer)
+        {
+            txt = "2";
+        }
+        
+        playerHorizontalInput = "Horizontal" + txt;
+        playerVerticalInput = "Vertical" + txt;
+        playerJumpInput = "Jump" + txt;
     }
 
     // Update is called once per frame
@@ -129,14 +145,7 @@ public class PuppetController : MonoBehaviour
         Vector2 input = Vector2.zero;
 
         // Getting the player input and putting it inside a variable to reduce points of variance between the two player input possibilities
-        if (secondPlayer)
-        {
-            input = new Vector2(Input.GetAxis("Horizontal2"), Input.GetAxis("Vertical2"));
-        }
-        else
-        {
-            input = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-        }
+        input = new Vector2(Input.GetAxis(playerHorizontalInput), Input.GetAxis(playerVerticalInput));
 
         if (grounded)
         {
@@ -237,11 +246,6 @@ public class PuppetController : MonoBehaviour
     {
         // Ground Detection
 
-        if (forceAirborneTimer > 0)
-        {
-            forceAirborneTimer = forceAirborneTimer - Time.fixedDeltaTime;
-        }
-
         if (grounded)
         {
             transform.position = transform.position - transform.up * groundedDownPerFrame;
@@ -250,6 +254,7 @@ public class PuppetController : MonoBehaviour
         if (forceAirborneTimer > 0)
         {
             // Ground detection is not allowed
+            forceAirborneTimer = forceAirborneTimer - Time.fixedDeltaTime;
             grounded = false;
         }
         else
@@ -282,18 +287,15 @@ public class PuppetController : MonoBehaviour
 
             if (groundRays.Count > 0)
             {
+                bool lastGrounded = false;
 
                 if (grounded)
                 {
                     // Reverse the downwards from being grounded, ONLY if we were grounded earlier, thus can confirm we did this earlier this frame
                     transform.position = transform.position + transform.up * groundedDownPerFrame;
-                }
-
-                bool lastGrounded = false;
-                if (grounded)
-                {
                     lastGrounded = true;
                 }
+
                 grounded = true;
                 float avg = 0;
                 for (int i = 0; i < groundRays.Count; i++)
@@ -328,30 +330,15 @@ public class PuppetController : MonoBehaviour
     }
 
     public void Jump() {
-
-        string txtadd = "";
-
-        // Side note: this is a really stupid way of doing this
-
-        if (secondPlayer == true)
+        if (Input.GetAxis(playerJumpInput) > 0)
         {
-            txtadd = "2";
-        }
-
-        if (Input.GetAxis("Jump" + txtadd) > 0)
-        {
-
             bool canJump = false;
 
-            if (grounded) {
+            if (grounded || (timeSinceGrounded <= coyoteTime && hasJumped == false)) {
                 canJump = true;
             }
 
-            if (timeSinceGrounded <= coyoteTime && hasJumped == false) {
-                canJump = true;
-            }
-
-            if (canJump == true) {
+            if (canJump) {
                 hasJumped = true;
 
                 rb.velocity = new Vector3(rb.velocity.x, initalJumpVelocity, rb.velocity.z);
@@ -361,13 +348,12 @@ public class PuppetController : MonoBehaviour
                 jumpBoostTimer = jumpBoostTime;
 
             }
-
         }
 
         // Jump specific
 
         if (jumpBoostTimer > 0) {
-            if (Input.GetAxis("Jump" + txtadd) > 0)
+            if (Input.GetAxis(playerJumpInput) > 0)
             {
                 jumpBoostTimer = jumpBoostTimer - Time.fixedDeltaTime;
                 rb.AddForce(Vector3.up * Mathf.Lerp(0, jumpBoostForce, jumpBoostTimer / jumpBoostTime));
@@ -381,7 +367,7 @@ public class PuppetController : MonoBehaviour
 
         // General airborne
 
-        if (Input.GetAxis("Jump" + txtadd) > 0)
+        if (Input.GetAxis(playerJumpInput) > 0)
         {
             rb.AddForce(Vector3.up * jumpHoldForce);
         }
