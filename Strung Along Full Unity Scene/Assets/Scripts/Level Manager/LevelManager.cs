@@ -11,10 +11,10 @@ public class LevelManager : MonoBehaviour
 	private static Level currentLevel;
 	private static Act currentAct;
 	
-	public const float TOP_BOUNDARY = 7.0f; // the "top" of the level. Y coordinate.
+	public const float TOP_BOUNDARY = 20.0f; // the "top" of the level. Y coordinate.
 	public const float SIDE_BOUNDARY = 0f; // the "side" of the level. X coordinate.
-	public const float EXIT_SPEED = 8.0f; // exit speed when props leave the stage.
-	public const float ENTRY_SPEED = 8.0f; // entry speed when props enter the stage.
+	public const float EXIT_SPEED = 16.0f; // exit speed when props leave the stage.
+	public const float ENTRY_SPEED = 16.0f; // entry speed when props enter the stage.
 	
 	
     // Start is called before the first frame update
