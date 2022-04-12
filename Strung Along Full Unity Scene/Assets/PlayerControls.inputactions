@@ -119,6 +119,34 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "UI",
+            "id": "01af9219-95de-432c-be91-5b4116b2681b",
+            "actions": [
+                {
+                    "name": "Pause",
+                    "type": "Button",
+                    "id": "74eef98a-e12a-4f9b-80b0-27b3047d7f5a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "ae509318-deab-4a85-80d2-dfbfac9d3fa1",
+                    "path": "<Gamepad>/select",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []

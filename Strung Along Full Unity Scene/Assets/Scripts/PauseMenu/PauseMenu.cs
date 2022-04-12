@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class PauseMenu : MonoBehaviour
 {
-    UIControls controls;
+    PlayerControls controls;
     bool pausePressed;
     bool gamePaused = false;
     public GameObject pauseMenuUI;
@@ -13,7 +13,7 @@ public class PauseMenu : MonoBehaviour
 
     private void Awake()
     {
-        controls = new UIControls();
+        controls = new PlayerControls();
         pauseMenuUI.SetActive(false);
 
         controls.UI.Pause.performed += ctx =>

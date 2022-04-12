@@ -141,6 +141,34 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""UI"",
+            ""id"": ""01af9219-95de-432c-be91-5b4116b2681b"",
+            ""actions"": [
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""74eef98a-e12a-4f9b-80b0-27b3047d7f5a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""ae509318-deab-4a85-80d2-dfbfac9d3fa1"",
+                    ""path"": ""<Gamepad>/select"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -152,6 +180,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_Grab = m_Player.FindAction("Grab", throwIfNotFound: true);
         m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
+        // UI
+        m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
+        m_UI_Pause = m_UI.FindAction("Pause", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -272,6 +303,39 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         }
     }
     public PlayerActions @Player => new PlayerActions(this);
+
+    // UI
+    private readonly InputActionMap m_UI;
+    private IUIActions m_UIActionsCallbackInterface;
+    private readonly InputAction m_UI_Pause;
+    public struct UIActions
+    {
+        private @PlayerControls m_Wrapper;
+        public UIActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Pause => m_Wrapper.m_UI_Pause;
+        public InputActionMap Get() { return m_Wrapper.m_UI; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(UIActions set) { return set.Get(); }
+        public void SetCallbacks(IUIActions instance)
+        {
+            if (m_Wrapper.m_UIActionsCallbackInterface != null)
+            {
+                @Pause.started -= m_Wrapper.m_UIActionsCallbackInterface.OnPause;
+                @Pause.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnPause;
+                @Pause.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnPause;
+            }
+            m_Wrapper.m_UIActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Pause.started += instance.OnPause;
+                @Pause.performed += instance.OnPause;
+                @Pause.canceled += instance.OnPause;
+            }
+        }
+    }
+    public UIActions @UI => new UIActions(this);
     public interface IPlayerActions
     {
         void OnMove(InputAction.CallbackContext context);
@@ -279,5 +343,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         void OnJump(InputAction.CallbackContext context);
         void OnGrab(InputAction.CallbackContext context);
         void OnAttack(InputAction.CallbackContext context);
+    }
+    public interface IUIActions
+    {
+        void OnPause(InputAction.CallbackContext context);
     }
 }

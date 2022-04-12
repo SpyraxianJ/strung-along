@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -122,7 +123,7 @@ public class PuppetController : MonoBehaviour
         controls.Player.Jump.performed += ctx =>
         {
             jumpPressed = ctx.ReadValueAsButton();
-            Debug.Log(ctx.ReadValueAsButton());
+            //Debug.Log(ctx.ReadValueAsButton());
             if (jumpPressed)
             {
                 Jump();
@@ -132,13 +133,13 @@ public class PuppetController : MonoBehaviour
         {
             move = ctx.ReadValue<Vector2>();
             movePressed = true; //move.x != 0 || move.y != 0;
-            Debug.Log(movePressed);
+            //Debug.Log(movePressed);
         };
         controls.Player.Move.canceled += ctx =>
         {
             move = Vector2.zero;
             movePressed = false;
-            Debug.Log(movePressed);
+            //Debug.Log(movePressed);
         };
     }
     void OnEnable()
@@ -170,6 +171,7 @@ public class PuppetController : MonoBehaviour
         GroundDetection();
         handleMovement();
         handleJump();
+        //Debug.Log(move.x + " " + move.y);
 
         rb.AddForce(Vector3.down * gravity, ForceMode.Acceleration);
     }
@@ -261,20 +263,9 @@ public class PuppetController : MonoBehaviour
     }
     void handleMovement()
     {
-        Vector2 m = new Vector2(move.x, move.y) * groundedMaxSpeed * Time.deltaTime;
-        if (movePressed)
-        {
-            transform.Translate(m.x, 0, m.y);
-        }
-        else
-        {
-            if (rb.velocity.x > 0 || rb.velocity.z > 0)
-            {
+        float relativeMaxSpeedX = Math.Abs(groundedMaxSpeed * move.x);
+        float relativeMaxSpeedY = Math.Abs(groundedMaxSpeed * move.y);
 
-            }
-        }
-        
-        /*
         if (grounded)
         {
             hasJumped = false;
@@ -285,13 +276,13 @@ public class PuppetController : MonoBehaviour
 
             if (move.x != 0)
             {
-                if (move.normalized.x * groundedMaxSpeed > rb.velocity.x) // tl;dr we want to move faster right than we are already moving
+                if (move.normalized.x * relativeMaxSpeedX > rb.velocity.x) // tl;dr we want to move faster right than we are already moving
                 {
-                    rb.velocity = rb.velocity + Vector3.right * groundedAcceleration * Time.fixedDeltaTime * 100;
+                    rb.velocity += Vector3.right * groundedAcceleration * Time.fixedDeltaTime * 100;
                 }
-                else if (move.normalized.x * groundedMaxSpeed < rb.velocity.x) // tl;dr we want to move faster left than we are already moving
+                else if (move.normalized.x * relativeMaxSpeedX < rb.velocity.x) // tl;dr we want to move faster left than we are already moving
                 {
-                    rb.velocity = rb.velocity + Vector3.left * groundedAcceleration * Time.fixedDeltaTime * 100;
+                    rb.velocity += Vector3.left * groundedAcceleration * Time.fixedDeltaTime * 100;
                 }
                 else
                 {
@@ -305,11 +296,11 @@ public class PuppetController : MonoBehaviour
 
             if (move.y != 0)
             {
-                if (move.normalized.y * groundedMaxSpeed > rb.velocity.z) // tl;dr we want to move faster forward than we are already moving
+                if (move.normalized.y * relativeMaxSpeedY > rb.velocity.z) // tl;dr we want to move faster forward than we are already moving
                 {
                     rb.velocity = rb.velocity + Vector3.forward * groundedAcceleration * Time.fixedDeltaTime * 100;
                 }
-                else if (move.normalized.y * groundedMaxSpeed < rb.velocity.z) // tl;dr we want to move faster back than we are already moving
+                else if (move.normalized.y * relativeMaxSpeedY < rb.velocity.z) // tl;dr we want to move faster back than we are already moving
                 {
                     rb.velocity = rb.velocity + Vector3.back * groundedAcceleration * Time.fixedDeltaTime * 100;
                 }
@@ -354,7 +345,7 @@ public class PuppetController : MonoBehaviour
             // Timer increment
             timeSinceGrounded = timeSinceGrounded + Time.fixedDeltaTime;
 
-        }*/
+        }
     }
     void handleJump()
     {
