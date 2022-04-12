@@ -442,7 +442,6 @@ GameObject:
   m_Component:
   - component: {fileID: 163892272}
   - component: {fileID: 163892271}
-  - component: {fileID: 163892270}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -450,25 +449,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &163892270
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 163892269}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_HorizontalAxis: Horizontal
-  m_VerticalAxis: Vertical
-  m_SubmitButton: Submit
-  m_CancelButton: Cancel
-  m_InputActionsPerSecond: 10
-  m_RepeatDelay: 0.5
-  m_ForceModuleActive: 0
 --- !u!114 &163892271
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1215,7 +1195,7 @@ MeshCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1654696005}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: fa67a029ebb0da64bab5c1223662227a, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 4
@@ -1731,6 +1711,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlaceholderPuppet
       objectReference: {fileID: 0}
+    - target: {fileID: 8461784611382557435, guid: cffebe66f5b0dc24989f0862e3ab1787, type: 3}
+      propertyPath: jumpBoostTime
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8461784611382557435, guid: cffebe66f5b0dc24989f0862e3ab1787, type: 3}
+      propertyPath: jumpBoostForce
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 8461784611382557435, guid: cffebe66f5b0dc24989f0862e3ab1787, type: 3}
+      propertyPath: initalJumpVelocity
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 8461784611382557436, guid: cffebe66f5b0dc24989f0862e3ab1787, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -1775,5 +1767,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8461784611382557439, guid: cffebe66f5b0dc24989f0862e3ab1787, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 13400000, guid: fa67a029ebb0da64bab5c1223662227a, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cffebe66f5b0dc24989f0862e3ab1787, type: 3}

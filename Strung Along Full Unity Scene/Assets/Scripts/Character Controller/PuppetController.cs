@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PuppetController : MonoBehaviour
 {
+    PlayerControls controls;
 
     [Header("References")]
 
@@ -33,8 +35,8 @@ public class PuppetController : MonoBehaviour
     [Header("Movement Attributes")]
 
     public float groundedAcceleration;
-    [Range(0, 1)]
     public float groundedDeceleration;
+
     [Range(0, 20)]
     public float groundedMaxSpeed;
 
@@ -110,6 +112,44 @@ public class PuppetController : MonoBehaviour
     float timeSinceGrounded;
     bool hasJumped;
 
+    bool movePressed;
+    Vector2 move;
+    bool jumpPressed;
+
+    void Awake()
+    {
+        controls = new PlayerControls();
+        controls.Player.Jump.performed += ctx =>
+        {
+            jumpPressed = ctx.ReadValueAsButton();
+            Debug.Log(ctx.ReadValueAsButton());
+            if (jumpPressed)
+            {
+                Jump();
+            }
+        };
+        controls.Player.Move.performed += ctx =>
+        {
+            move = ctx.ReadValue<Vector2>();
+            movePressed = true; //move.x != 0 || move.y != 0;
+            Debug.Log(movePressed);
+        };
+        controls.Player.Move.canceled += ctx =>
+        {
+            move = Vector2.zero;
+            movePressed = false;
+            Debug.Log(movePressed);
+        };
+    }
+    void OnEnable()
+    {
+        controls.Player.Enable();
+    }
+    void OnDisable()
+    {
+        controls.Player.Disable();
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -122,126 +162,17 @@ public class PuppetController : MonoBehaviour
                 Debug.LogWarning("The other puppet connected to " + this + " is using the same controls as it's assigned other puppet, consider changing one of them or reassigning the other puppet");
             }
         }
-
-        string txt = "";
-
-        // define control schemes for player 1 or 2
-        if (this.secondPlayer)
-        {
-            txt = "2";
-        }
-        
-        playerHorizontalInput = "Horizontal" + txt;
-        playerVerticalInput = "Vertical" + txt;
-        playerJumpInput = "Jump" + txt;
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-
         GroundDetection();
-
-        Vector2 input = Vector2.zero;
-
-        // Getting the player input and putting it inside a variable to reduce points of variance between the two player input possibilities
-        input = new Vector2(Input.GetAxis(playerHorizontalInput), Input.GetAxis(playerVerticalInput));
-
-        if (grounded)
-        {
-            hasJumped = false;
-
-            // grounded movement
-
-            // force calculation stuff is done on each axis independantly for this enviroment for the time being, I might change it later idk
-
-            if (input.x != 0)
-            {
-                if (input.normalized.x * groundedMaxSpeed > rb.velocity.x) // tl;dr we want to move faster right than we are already moving
-                {
-                    rb.velocity = rb.velocity + Vector3.right * groundedAcceleration * Time.fixedDeltaTime * 100;
-                }
-                else if (input.normalized.x * groundedMaxSpeed < rb.velocity.x) // tl;dr we want to move faster left than we are already moving
-                {
-                    rb.velocity = rb.velocity + Vector3.left * groundedAcceleration * Time.fixedDeltaTime * 100;
-                }
-                else
-                {
-                    rb.velocity = new Vector3(rb.velocity.x * (1 - groundedDeceleration), rb.velocity.y, rb.velocity.z);
-                }
-            }
-            else
-            {
-                rb.velocity = new Vector3(rb.velocity.x * (1 - groundedDeceleration), rb.velocity.y, rb.velocity.z);
-            }
-
-            if (input.y != 0)
-            {
-                if (input.normalized.y * groundedMaxSpeed > rb.velocity.z) // tl;dr we want to move faster forward than we are already moving
-                {
-                    rb.velocity = rb.velocity + Vector3.forward * groundedAcceleration * Time.fixedDeltaTime * 100;
-                }
-                else if (input.normalized.y * groundedMaxSpeed < rb.velocity.z) // tl;dr we want to move faster back than we are already moving
-                {
-                    rb.velocity = rb.velocity + Vector3.back * groundedAcceleration * Time.fixedDeltaTime * 100;
-                }
-                else
-                {
-                    rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, rb.velocity.z * (1 - groundedDeceleration));
-                }
-            }
-            else
-            {
-                rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, rb.velocity.z * (1 - groundedDeceleration));
-            }
-
-            // Max speed calculation
-
-            if (new Vector2(rb.velocity.x, rb.velocity.y).magnitude >= groundedMaxSpeed)
-            {
-                if (groundedMaxSpeedHardCap)
-                {
-                    rb.velocity = rb.velocity.normalized * groundedMaxSpeed;
-                }
-                else
-                {
-                    rb.velocity = rb.velocity * (1 - groundedDeceleration); // Uses 1 - groundedDeceleration to make the variable more intuitive for designers to adjust
-                }
-            }
-
-        }
-        else
-        {
-            // Air movement stuff, using simpler calculations since precision isn't as important
-
-            rb.AddForce(new Vector3(input.normalized.x, 0, input.normalized.y) * airborneAcceleration, ForceMode.Acceleration);
-
-            // deceleration (force soft, hard stopping in the air sounds ugly, but I can add if it if nessassary)
-
-            if (new Vector2(rb.velocity.x, rb.velocity.z).magnitude >= airborneMaxSpeed)
-            {
-                rb.velocity = new Vector3(rb.velocity.x * (1 - airborneDeceleration), rb.velocity.y, rb.velocity.z * (1 - airborneDeceleration)); // Uses 1 - groundedDeceleration to make the variable more intuitive for designers to adjust
-            }
-
-            // Timer increment
-            timeSinceGrounded = timeSinceGrounded + Time.fixedDeltaTime;
-
-        }
-
-        // Jump
-
-        if (forceAirborneTimer > 0)
-        {
-            forceAirborneTimer = forceAirborneTimer - Time.fixedDeltaTime;
-        }
-        else {
-            Jump();
-        }
+        handleMovement();
+        handleJump();
 
         rb.AddForce(Vector3.down * gravity, ForceMode.Acceleration);
-
     }
-
     public void GroundDetection()
     {
         // Ground Detection
@@ -328,32 +259,132 @@ public class PuppetController : MonoBehaviour
             timeSinceGrounded = 0;
         }
     }
-
-    public void Jump() {
-        if (Input.GetAxis(playerJumpInput) > 0)
+    void handleMovement()
+    {
+        Vector2 m = new Vector2(move.x, move.y) * groundedMaxSpeed * Time.deltaTime;
+        if (movePressed)
         {
-            bool canJump = false;
-
-            if (grounded || (timeSinceGrounded <= coyoteTime && hasJumped == false)) {
-                canJump = true;
-            }
-
-            if (canJump) {
-                hasJumped = true;
-
-                rb.velocity = new Vector3(rb.velocity.x, initalJumpVelocity, rb.velocity.z);
-                grounded = false;
-                gameObject.transform.position = transform.position + Vector3.up * 0.05f;
-                forceAirborneTimer = 0.1f;
-                jumpBoostTimer = jumpBoostTime;
+            transform.Translate(m.x, 0, m.y);
+        }
+        else
+        {
+            if (rb.velocity.x > 0 || rb.velocity.z > 0)
+            {
 
             }
+        }
+        
+        /*
+        if (grounded)
+        {
+            hasJumped = false;
+
+            // grounded movement
+
+            // force calculation stuff is done on each axis independantly for this enviroment for the time being, I might change it later idk
+
+            if (move.x != 0)
+            {
+                if (move.normalized.x * groundedMaxSpeed > rb.velocity.x) // tl;dr we want to move faster right than we are already moving
+                {
+                    rb.velocity = rb.velocity + Vector3.right * groundedAcceleration * Time.fixedDeltaTime * 100;
+                }
+                else if (move.normalized.x * groundedMaxSpeed < rb.velocity.x) // tl;dr we want to move faster left than we are already moving
+                {
+                    rb.velocity = rb.velocity + Vector3.left * groundedAcceleration * Time.fixedDeltaTime * 100;
+                }
+                else
+                {
+                    rb.velocity = new Vector3(rb.velocity.x * (1 - groundedDeceleration), rb.velocity.y, rb.velocity.z);
+                }
+            }
+            else
+            {
+                rb.velocity = new Vector3(rb.velocity.x * (1 - groundedDeceleration), rb.velocity.y, rb.velocity.z);
+            }
+
+            if (move.y != 0)
+            {
+                if (move.normalized.y * groundedMaxSpeed > rb.velocity.z) // tl;dr we want to move faster forward than we are already moving
+                {
+                    rb.velocity = rb.velocity + Vector3.forward * groundedAcceleration * Time.fixedDeltaTime * 100;
+                }
+                else if (move.normalized.y * groundedMaxSpeed < rb.velocity.z) // tl;dr we want to move faster back than we are already moving
+                {
+                    rb.velocity = rb.velocity + Vector3.back * groundedAcceleration * Time.fixedDeltaTime * 100;
+                }
+                else
+                {
+                    rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, rb.velocity.z * (1 - groundedDeceleration));
+                }
+            }
+            else
+            {
+                rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, rb.velocity.z * (1 - groundedDeceleration));
+            }
+
+            // Max speed calculation
+
+            if (new Vector2(rb.velocity.x, rb.velocity.y).magnitude >= groundedMaxSpeed)
+            {
+                if (groundedMaxSpeedHardCap)
+                {
+                    rb.velocity = rb.velocity.normalized * groundedMaxSpeed;
+                }
+                else
+                {
+                    rb.velocity = rb.velocity * (1 - groundedDeceleration); // Uses 1 - groundedDeceleration to make the variable more intuitive for designers to adjust
+                }
+            }
+
+        }
+        else
+        {
+            // Air movement stuff, using simpler calculations since precision isn't as important
+
+            rb.AddForce(new Vector3(move.normalized.x, 0, move.normalized.y) * airborneAcceleration, ForceMode.Acceleration);
+
+            // deceleration (force soft, hard stopping in the air sounds ugly, but I can add if it if nessassary)
+
+            if (new Vector2(rb.velocity.x, rb.velocity.z).magnitude >= airborneMaxSpeed)
+            {
+                rb.velocity = new Vector3(rb.velocity.x * (1 - airborneDeceleration), rb.velocity.y, rb.velocity.z * (1 - airborneDeceleration)); // Uses 1 - groundedDeceleration to make the variable more intuitive for designers to adjust
+            }
+
+            // Timer increment
+            timeSinceGrounded = timeSinceGrounded + Time.fixedDeltaTime;
+
+        }*/
+    }
+    void handleJump()
+    {
+        if (jumpPressed)
+        {
+            Jump();
+        }
+    }
+    public void Jump() {
+        bool canJump = false;
+
+        if (grounded || (timeSinceGrounded <= coyoteTime && hasJumped == false)) {
+            canJump = true;
+        }
+
+        if (canJump) {
+            hasJumped = true;
+
+            rb.velocity = new Vector3(rb.velocity.x, initalJumpVelocity, rb.velocity.z);
+            grounded = false;
+            gameObject.transform.position = transform.position + Vector3.up * 0.05f;
+            forceAirborneTimer = 0.1f;
+            jumpBoostTimer = jumpBoostTime;
+
         }
 
         // Jump specific
 
         if (jumpBoostTimer > 0) {
-            if (Input.GetAxis(playerJumpInput) > 0)
+            if (jumpPressed)
             {
                 jumpBoostTimer = jumpBoostTimer - Time.fixedDeltaTime;
                 rb.AddForce(Vector3.up * Mathf.Lerp(0, jumpBoostForce, jumpBoostTimer / jumpBoostTime));
@@ -367,7 +398,7 @@ public class PuppetController : MonoBehaviour
 
         // General airborne
 
-        if (Input.GetAxis(playerJumpInput) > 0)
+        if (jumpPressed)
         {
             rb.AddForce(Vector3.up * jumpHoldForce);
         }
