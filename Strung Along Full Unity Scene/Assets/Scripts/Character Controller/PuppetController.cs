@@ -123,7 +123,7 @@ public class PuppetController : MonoBehaviour
         controls.Player.Jump.performed += ctx =>
         {
             jumpPressed = ctx.ReadValueAsButton();
-            //Debug.Log(ctx.ReadValueAsButton());
+            Debug.Log(ctx.ReadValueAsButton());
             if (jumpPressed)
             {
                 Jump();
@@ -170,7 +170,7 @@ public class PuppetController : MonoBehaviour
     {
         GroundDetection();
         handleMovement();
-        handleJump();
+        handleJump(); //don't remove
         //Debug.Log(move.x + " " + move.y);
 
         rb.AddForce(Vector3.down * gravity, ForceMode.Acceleration);

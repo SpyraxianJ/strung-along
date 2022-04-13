@@ -189,9 +189,9 @@ MonoBehaviour:
   airborneDeceleration: 0.205
   airborneDecay: 0.01
   airborneMaxSpeed: 6
-  initalJumpVelocity: 7
-  jumpBoostForce: 20
-  jumpBoostTime: 0.25
+  initalJumpVelocity: 3
+  jumpBoostForce: 30
+  jumpBoostTime: 0.5
   jumpHoldForce: 0.64
   jumpReleaseForce: -15
   jumpReleaseRisingDrag: 0.07
@@ -206,7 +206,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 55
   groundedDownPerFrame: 0.3
-  shadowObject: {fileID: 0}
 --- !u!54 &8461784611382557434
 Rigidbody:
   m_ObjectHideFlags: 0
