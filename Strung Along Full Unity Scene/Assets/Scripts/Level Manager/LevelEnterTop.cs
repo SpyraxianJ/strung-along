@@ -24,6 +24,10 @@ public class LevelEnterTop : MonoBehaviour
 		if (Vector3.Distance(transform.position, target) < 0.001f) {
 			// close enough, teleport it to final position.
 			transform.position = target;
+			
+			// add this prop to the active props list
+			LevelManager.activeProps.Add(this.gameObject);
+			
 			// delete this component from the object
 			Destroy(this);
 		}

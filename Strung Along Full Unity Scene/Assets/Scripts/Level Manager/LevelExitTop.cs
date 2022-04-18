@@ -20,6 +20,10 @@ public class LevelExitTop : MonoBehaviour
 		if (transform.position.y > LevelManager.TOP_BOUNDARY) {
 			// disable the object from the scene
 			this.gameObject.SetActive(false);
+			
+			// remove this prop from the active props list
+			LevelManager.activeProps.Remove(this.gameObject);
+			
 			// delete this component from the object
 			Destroy(this);
 		}

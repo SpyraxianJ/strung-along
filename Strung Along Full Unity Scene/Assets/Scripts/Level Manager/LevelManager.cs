@@ -5,11 +5,17 @@ using UnityEngine;
 public class LevelManager : MonoBehaviour
 {
 	
-	private static List<GameObject> activeProps; // the currently active props on the stage.
+	public static List<GameObject> activeProps; // the currently active props on the stage.
 	private static List<Act> acts; // a list of all the levels in the game.
+	
+	private static LevelLoader loader;
+	
 	// TODO: just make these ints? wat?
 	private static Level currentLevel;
 	private static Act currentAct;
+	
+	private static bool timerActive; // whether the timer is running or not.
+	private static float timer;
 	
 	public const float TOP_BOUNDARY = 20.0f; // the "top" of the level. Y coordinate.
 	public const float SIDE_BOUNDARY = 0f; // the "side" of the level. X coordinate.
@@ -22,25 +28,34 @@ public class LevelManager : MonoBehaviour
     {
 		acts = new List<Act>();
 		activeProps = new List<GameObject>();
+		loader = gameObject.AddComponent<LevelLoader>();
+		
+		timerActive = false;
+		timer = 0;
 		
 		// populate our list of levels.
 		buildLevelList(acts);
 		
-		// disable all the props before loading the first level...
+		// disable all the props before loading the first level.
 		clearLevel();
 		currentLevel = null;
 		currentAct = null;
-		
-		// DEBUG
-		// GUI will usually be the one calling this.
-        loadLevel(1, 1);
-		
     }
 	
 	// Update is called once per frame
     void Update()
     {
         
+		// DEBUG. GUI will be the one calling this on game start. woo
+		if (currentLevel == null) {
+			loadLevel(1, 1);
+		}
+		
+		// count the timer, if a level is active.
+		if (timerActive) {
+			timer += Time.deltaTime;
+		}
+		
     }
 	
 	// build an internal hierarchy of the game's levels.
@@ -88,7 +103,7 @@ public class LevelManager : MonoBehaviour
 		
 	}
 	
-	// disable all the props at the start of the game.
+	// disable all the props. called only once at start of game.
 	private static void clearLevel() {
 		
 		foreach (Act act in acts) {
@@ -99,83 +114,103 @@ public class LevelManager : MonoBehaviour
 			}
 		}
 		
+	}
+	
+	// begin loading a specific level by object reference.
+	private static void loadLevel(Level level) {
+		loader.load(level.props);
+	}
+	
+	// called by loader when finished loading
+	public static void loadComplete() {
+		startTimer();
+	}
+	
+	// being unloading whatever level is currently loaded.
+	private static void unloadLevel() {
+		loader.unload(activeProps);
+	}
+	
+	// called by loader when finished unloading
+	public static void unloadComplete() {
+		// DEBUG: for now just load the next level.
+		goNextLevel();
+	}
+	
+	// start the level timer from zero.
+	private static void startTimer() {
+		timer = 0;
+		timerActive = true;
+		Debug.Log("Timer started!");
+	}
+	
+	// stop the level timer.
+	private static void stopTimer() {
+		timerActive = false;
+		Debug.Log("Timer stopped at " + timer + "!");
+	}
+	
+	// called by other objects in the game to say the players won!
+	public static void win() {
+		
+		stopTimer();
+		currentLevel.newTime(timer);
+		
+		// TODO: GUI will pop in here to show "YOU WIN" and buttons for next level etc.
+		// TODO: how do i tell the GUI the level is finished?
+		
+		unloadLevel();
 		
 	}
 	
+	// GUI STUFF
 	
-	// unload the current level (if there is one) and load in the new one.
+	// GAME STATE
+	// you can use these to control game state!
+	
+	// load a specific level.
 	// takes two integers, act number and level number respectively.
-	// GUI uses this to start levels!
+	// GUI uses this to start specific levels, like from a "level select" menu.
+	// so to start the game, just call loadLevel(1, 1)
 	public static void loadLevel(int actNum, int levelNum) {
 		currentAct = acts[actNum-1];
 		currentLevel = currentAct.levels[levelNum-1];
 		loadLevel(currentLevel);
 	}
 	
-	// unloads the current level and loads in the new one.
-	// this version of the function takes a Level object and loads it.
-	private static void loadLevel(Level level) {
+	// load the next level.
+	// uses the LevelManager internal list to figure out which level comes next.
+	// GUI calls this for the "Next level" button or something similar.
+	public static void goNextLevel() {
 		
-		// clear the stage of everything on it.
-		// 1. move all active objects off the stage
-		// 2. disable those objects
-		// 3. clear the active props list
-		foreach (GameObject prop in activeProps) {
-			prop.AddComponent<LevelExitTop>();
-		}
-		activeProps.Clear();
-		
-		// TODO: calling loadLevel while props are exiting or entering will make them freeze.
-		// in general calling loadLevel too quickly makes weird shit happen.
-		
-		// activate the props for the new level.
-		// 1. enable all the new objects
-		// 2. bring them onto the stage!
-		// 3. add them to the active props list
-		foreach (GameObject prop in level.props) {
-			prop.SetActive(true);
-			prop.AddComponent<LevelEnterTop>();
-			activeProps.Add(prop);
-		}
-		
-	}
-	
-	// called by other objects in the game to say the players won!
-	public static void win() {
-		
-		// TODO: score stuff, animations for winning, etc.
-		
-		// let's figure out which Level comes next.
 		currentLevel = currentAct.getNextLevel(currentLevel);
 		if (currentLevel == null) {
-			// if there's no more levels in this Act, move to the next Act.
+			// there's no more Levels in the Act. go to next Act.
 			int nextActIndex = acts.IndexOf(currentAct);
 			nextActIndex++;
 			
 			if (acts.Count <= nextActIndex) {
-				// DEBUG
-				// if there's no more Acts, loop back to the start for now.
+				// there's no more Acts in the game.
+				// DEBUG: loop back to Act 1, Level 1.
 				// end-of-game stuff will go here.
 				currentAct = acts[0];
 				currentLevel = currentAct.levels[0];
 			}
 			else {
-				// otherwise the next Level is the start of the next Act.
+				// next Act is present. start at Level 1.
 				// end-of-act stuff will go here.
 				currentAct = acts[nextActIndex];
 				currentLevel = currentAct.levels[0];
 			}
-			
-			
 		}
 		
 		loadLevel(currentLevel);
 		
 	}
 	
+	// GETTERS
+	// hit me up if you want anything else!
 	
-	// GETTERS FOR GUI STUFF
-	//
 	// number of the current Level.
 	public static int getCurrentLevel() {
 		return currentLevel.number;
@@ -183,6 +218,10 @@ public class LevelManager : MonoBehaviour
 	// number of the current Act.
 	public static int getCurrentAct() {
 		return currentAct.number;
+	}
+	// total number of Acts in the game.
+	public static int getActCount() {
+		return acts.Count;
 	}
 	// number of levels in the given Act.
 	public static int getActLevelCount(int actNumber) {
@@ -192,7 +231,16 @@ public class LevelManager : MonoBehaviour
 	public static int getActRemainingLevels() {
 		return currentAct.levels.Count - currentLevel.number;
 	}
-	// TODO: timer? score?
+	// the amount of time the level has been playing for.
+	// stops when the level is completed, and resets when a new level is loaded.
+	public static float getTime() {
+		return timer;
+	}
+	// if the timer is running or not.
+	public static bool isRunning() {
+		return timerActive;
+	}
+	// TODO: score stuff? not sure what the designers have planned
 
 }
 
@@ -200,7 +248,7 @@ public class LevelManager : MonoBehaviour
 // internal data class for Acts.
 internal class Act
 {
-	internal GameObject parent;
+	internal GameObject parent; // reference to the object in the Hierarchy
 	internal int number;
 	internal List<Level> levels;
 	
@@ -229,14 +277,15 @@ internal class Act
 	
 }
 
-
 // internal data class for Levels.
 internal class Level
 {
-	internal GameObject parent;
+	internal GameObject parent; // reference to the object in the Hierarchy
 	internal int number;
-	internal List<GameObject> props;
-	// TODO: properties for marking a level as "complete"? Boolean for yes/no, int for scores and stuff?
+	internal List<GameObject> props; // references to all the props in this Level. i.e. all children of the parent.
+	
+	// starts at 0. when the players complete a level faster than they have before, this keeps track of it!
+	internal float bestTime; 
 	
 	internal Level(int number, GameObject parent) {
 		this.number = number;
@@ -258,8 +307,22 @@ internal class Level
 		
 	}
 	
+	// a level completion time has been recorded. if it's the fastest, keep record of it.
+	// returns true if it's a new record, false if not.
+	internal bool newTime(float newTime) {
+		if (newTime > bestTime) {
+			bestTime = newTime;
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	internal float getBestTime() {
+		return bestTime;
+	}
+	
 }
-
 
 // internal data class for stage props. we store a bunch of info about positioning.
 // this is also where the prop is teleported off-stage before the game begins.
