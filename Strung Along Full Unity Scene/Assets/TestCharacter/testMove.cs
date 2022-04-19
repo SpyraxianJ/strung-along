@@ -17,7 +17,8 @@ public class testMove : MonoBehaviour
     private bool jumpPressed;
 
     private float speed = 0;
-    private bool grounded = true;
+    private bool isGrounded = true;
+    private bool isJumping;
     private float groundedMaxSpeed = 50;
 
     [Header("State")]
@@ -38,7 +39,7 @@ public class testMove : MonoBehaviour
     [Space]
 
     [Tooltip("How string the inital force of the jump should be, affects the shortest possible jump")]
-    public float initalJumpVelocity;
+    public float initalJumpForce;
     [Tooltip("How strong the boost from holding up as they are jumping will be")]
     public float jumpBoostForce;
     [Tooltip("How long the puppet will have an upwards boost from holding jump")]
@@ -54,6 +55,8 @@ public class testMove : MonoBehaviour
     [Range(0, 1)]
     public float jumpReleaseRisingDrag;
     public float maxFallSpeed = 100;
+
+    public float jumpHorizontalSpeed;
 
     [Space]
 
@@ -109,6 +112,7 @@ public class testMove : MonoBehaviour
             movePressed = false;
             //Debug.Log(movePressed);
         };
+
         controls.Player.Jump.performed += ctx =>
         {
             jumpPressed = ctx.ReadValueAsButton();
@@ -117,6 +121,11 @@ public class testMove : MonoBehaviour
             {
                 Jump();
             }
+        };
+        controls.Player.Jump.canceled += ctx =>
+        {
+            jumpBoostTimer = 0;
+            isJumping = false;
         };
     }
     void OnEnable()
@@ -149,7 +158,7 @@ public class testMove : MonoBehaviour
     {
         // Ground Detection
 
-        if (grounded)
+        if (isGrounded)
         {
             hasJumped = false;
             transform.position -= (transform.up * groundedDownPerFrame);
@@ -159,7 +168,7 @@ public class testMove : MonoBehaviour
         {
             // Ground detection is not allowed
             forceAirborneTimer -= Time.fixedDeltaTime;
-            grounded = false;
+            isGrounded = false;
         }
         else
         {
@@ -193,14 +202,14 @@ public class testMove : MonoBehaviour
             {
                 bool lastGrounded = false;
 
-                if (grounded)
+                if (isGrounded)
                 {
                     // Reverse the downwards from being grounded, ONLY if we were grounded earlier, thus can confirm we did this earlier this frame
                     transform.position = transform.position + transform.up * groundedDownPerFrame;
                     lastGrounded = true;
                 }
 
-                grounded = true;
+                isGrounded = true;
                 float avg = 0;
                 for (int i = 0; i < groundRays.Count; i++)
                 {
@@ -219,16 +228,16 @@ public class testMove : MonoBehaviour
             }
             else
             {
-                if (grounded)
+                if (isGrounded)
                 {
                     // Reverse the downwards from being grounded, ONLY if we were grounded earlier, thus can confirm we did this earlier this frame
                     transform.position += (transform.up * groundedDownPerFrame);
                 }
-                grounded = false;
+                isGrounded = false;
             }
         }
 
-        if (grounded)
+        if (isGrounded)
         {
             timeSinceGrounded = 0;
         }
@@ -244,7 +253,7 @@ public class testMove : MonoBehaviour
         int relativeMaxSpeed = (int)Math.Floor(new Vector2(relativeMaxSpeedX, relativeMaxSpeedY).magnitude);
         Debug.Log(relativeMaxSpeed);
 
-        if (grounded)
+        if (isGrounded)
         {
             if (speed < relativeMaxSpeed)
             {
@@ -252,13 +261,13 @@ public class testMove : MonoBehaviour
             }
             else if (speed > relativeMaxSpeed - 1 && speed < relativeMaxSpeed + 1)
             {
-                //hold speed
+                //hold speed (prevents glitchy animation effect)
             }
             else
             {
-                speed -= stopCurve.Evaluate(speed / groundedMaxSpeed);
+                speed -= stopCurve.Evaluate(speed/groundedMaxSpeed);
             }
-            animator.SetFloat("Speed", speed);
+            animator.SetFloat("Speed", speed, 0.05f, Time.deltaTime);
 
             if (movementDirection != Vector3.zero)
             {
@@ -268,11 +277,14 @@ public class testMove : MonoBehaviour
         }
         else
         {
+            //much slower rotation while in air
             if (movementDirection != Vector3.zero)
             {
                 Quaternion toRotation = Quaternion.LookRotation(movementDirection, Vector3.up);
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, (rotateSpeed/airRotateModifier) * Time.deltaTime);
             }
+
+            timeSinceGrounded += Time.fixedDeltaTime;
         }
     }
 
@@ -283,54 +295,22 @@ public class testMove : MonoBehaviour
             Jump();
         }
     }
+
     public void Jump()
     {
-        if ((grounded || timeSinceGrounded <= coyoteTime) && hasJumped == false)
+        if ((isGrounded || timeSinceGrounded <= coyoteTime) && hasJumped == false)
         {
-            grounded = false;
+            isGrounded = false;
             hasJumped = true;
-            rb.velocity = new Vector3(rb.velocity.x, initalJumpVelocity, rb.velocity.z);
-            transform.position += Vector3.up * 0.05f;
+            rb.AddForce(Vector3.up * initalJumpForce, ForceMode.Impulse);
             forceAirborneTimer = 0.1f;
             jumpBoostTimer = jumpBoostTime;
-
         }
-
-        // Jump specific
 
         if (jumpBoostTimer > 0)
         {
-            if (jumpPressed)
-            {
-                jumpBoostTimer -= Time.fixedDeltaTime;
-                rb.AddForce(Vector3.up * Mathf.Lerp(0, jumpBoostForce, jumpBoostTimer / jumpBoostTime));
-            }
-            else
-            {
-                // Once jump is released, you can no longer continue rising
-                jumpBoostTimer = 0;
-            }
+            jumpBoostTimer -= Time.fixedDeltaTime;
+            rb.AddForce(Vector3.up * Mathf.Lerp(0, jumpBoostForce, jumpBoostTimer/jumpBoostTime));
         }
-
-        // General airborne
-
-        if (jumpPressed)
-        {
-            rb.AddForce(Vector3.up * jumpHoldForce);
-        }
-        else
-        {
-            rb.AddForce(Vector3.up * jumpReleaseForce);
-            if (rb.velocity.y > 0)
-            {
-                rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y * (1 - jumpReleaseRisingDrag * Time.fixedDeltaTime * 100), rb.velocity.z);
-            }
-        }
-
-        if (rb.velocity.y < -maxFallSpeed)
-        {
-            rb.AddForce(Vector3.up * jumpReleaseForce);
-        }
-
     }
 }

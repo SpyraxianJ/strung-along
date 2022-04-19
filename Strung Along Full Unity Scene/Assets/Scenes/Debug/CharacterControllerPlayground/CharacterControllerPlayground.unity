@@ -1152,13 +1152,14 @@ MonoBehaviour:
   airborneDeceleration: 0.205
   airborneDecay: 0.01
   airborneMaxSpeed: 6
-  initalJumpVelocity: 3
+  initalJumpForce: 5
   jumpBoostForce: 30
   jumpBoostTime: 0.5
   jumpHoldForce: 0.64
   jumpReleaseForce: -15
   jumpReleaseRisingDrag: 0.07
   maxFallSpeed: 100
+  jumpHorizontalSpeed: 0
   coyoteTime: 0.1
   groundedMaxSpeedHardCap: 0
   groundedRayNumber: 20
@@ -1198,46 +1199,6 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 112
   m_CollisionDetection: 3
---- !u!114 &1225159211
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1225159204}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b28a9ac3d6518ce4e84c0ff2a454f71c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  otherPuppet: {fileID: 0}
-  rb: {fileID: 1973227208}
-  secondPlayer: 0
-  grounded: 1
-  groundedAcceleration: 1
-  groundedDeceleration: 0.1
-  groundedMaxSpeed: 6
-  airborneAcceleration: 20
-  airborneDeceleration: 0.205
-  airborneDecay: 0.01
-  airborneMaxSpeed: 6
-  initalJumpVelocity: 3
-  jumpBoostForce: 30
-  jumpBoostTime: 0.5
-  jumpHoldForce: 0.64
-  jumpReleaseForce: -15
-  jumpReleaseRisingDrag: 0.07
-  maxFallSpeed: 100
-  gravity: 15
-  coyoteTime: 0.2
-  groundedMaxSpeedHardCap: 0
-  groundedRayNumber: 20
-  groundRayLength: 1
-  groundedRayRadius: 0.45
-  groundMask:
-    serializedVersion: 2
-    m_Bits: 55
-  groundedDownPerFrame: 0.3
 --- !u!1 &1336306991
 GameObject:
   m_ObjectHideFlags: 0
@@ -1802,11 +1763,6 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
---- !u!54 &1973227208 stripped
-Rigidbody:
-  m_CorrespondingSourceObject: {fileID: 8461784611382557434, guid: cffebe66f5b0dc24989f0862e3ab1787, type: 3}
-  m_PrefabInstance: {fileID: 8461784612679892327}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2002536914
 GameObject:
   m_ObjectHideFlags: 0
