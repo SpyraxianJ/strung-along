@@ -115,6 +115,7 @@ public class testMove : MonoBehaviour
 
         controls.Player.Jump.performed += ctx =>
         {
+            animator.applyRootMotion = false;
             jumpPressed = ctx.ReadValueAsButton();
             Debug.Log(ctx.ReadValueAsButton());
             if (jumpPressed)
@@ -147,11 +148,16 @@ public class testMove : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        float fallSpeedMod = 1;
+
         GroundDetection();
         HandleMovement();
         HandleJump();
+        Debug.Log(rb.velocity.x + " " + rb.velocity.y + " " + rb.velocity.z);
+        if (rb.velocity.y < 0) //slightly faster falling to make jumping feel better
+            fallSpeedMod = 1.5f;
 
-        rb.AddForce(Vector3.down * gravity, ForceMode.Acceleration);
+        rb.AddForce(Vector3.down * gravity * fallSpeedMod, ForceMode.Acceleration);
     }
 
     public void GroundDetection()
@@ -224,7 +230,7 @@ public class testMove : MonoBehaviour
                 {
                     gameObject.transform.position = new Vector3(gameObject.transform.position.x, avg, gameObject.transform.position.z);
                 }
-                rb.velocity = new Vector3(rb.velocity.x, -1f, rb.velocity.z);
+                rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
             }
             else
             {
@@ -240,6 +246,7 @@ public class testMove : MonoBehaviour
         if (isGrounded)
         {
             timeSinceGrounded = 0;
+            animator.applyRootMotion = true;
         }
     }
     
@@ -255,6 +262,8 @@ public class testMove : MonoBehaviour
 
         if (isGrounded)
         {
+            animator.SetBool("isLanding", false);
+
             if (speed < relativeMaxSpeed)
             {
                 speed += relativeMaxSpeed / groundedMaxSpeed;
@@ -267,7 +276,7 @@ public class testMove : MonoBehaviour
             {
                 speed -= stopCurve.Evaluate(speed/groundedMaxSpeed);
             }
-            animator.SetFloat("Speed", speed, 0.05f, Time.deltaTime);
+            animator.SetFloat("speed", speed, 0.05f, Time.deltaTime);
 
             if (movementDirection != Vector3.zero)
             {
@@ -277,6 +286,11 @@ public class testMove : MonoBehaviour
         }
         else
         {
+            if (rb.velocity.y < -0.5)
+            {
+                animator.SetBool("isJumping", false);
+                animator.SetBool("isFalling", true);
+            }
             //much slower rotation while in air
             if (movementDirection != Vector3.zero)
             {
@@ -285,6 +299,20 @@ public class testMove : MonoBehaviour
             }
 
             timeSinceGrounded += Time.fixedDeltaTime;
+            animator.SetFloat("airtime", timeSinceGrounded, 0.05f, Time.deltaTime);
+
+            RaycastHit hit;
+            // Does the ray intersect any objects excluding the player layer
+            if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit, 1f, groundMask) && animator.GetBool("isFalling"))
+            {
+                animator.SetBool("isFalling", false);
+                animator.SetBool("isLanding", true);
+                Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.down) * hit.distance, Color.green);
+            }
+            else
+            {
+                Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.down) * 1f, Color.white);
+            }
         }
     }
 
@@ -305,6 +333,9 @@ public class testMove : MonoBehaviour
             rb.AddForce(Vector3.up * initalJumpForce, ForceMode.Impulse);
             forceAirborneTimer = 0.1f;
             jumpBoostTimer = jumpBoostTime;
+            animator.SetBool("isLanding", false);
+            animator.SetBool("isFalling", false);
+            animator.SetBool("isJumping", true);
         }
 
         if (jumpBoostTimer > 0)

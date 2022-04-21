@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: e56380b86d23ce04c8578f3ce782e44b
+guid: 19a52dac76d093444aafcef8ef2b9650
 ModelImporter:
   serializedVersion: 21202
   internalIDToNameTable:
@@ -39,8 +39,8 @@ ModelImporter:
       name: Landing
       takeName: mixamo.com
       internalID: 0
-      firstFrame: 6
-      lastFrame: 32
+      firstFrame: 18
+      lastFrame: 63
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -52,9 +52,9 @@ ModelImporter:
       loopBlendOrientation: 0
       loopBlendPositionY: 0
       loopBlendPositionXZ: 0
-      keepOriginalOrientation: 1
+      keepOriginalOrientation: 0
       keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 1
+      keepOriginalPositionXZ: 0
       heightFromFeet: 0
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
