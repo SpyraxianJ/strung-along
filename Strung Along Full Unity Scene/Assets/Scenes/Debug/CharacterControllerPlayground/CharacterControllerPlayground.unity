@@ -1151,7 +1151,7 @@ MonoBehaviour:
   airborneAcceleration: 20
   airborneDeceleration: 0.205
   airborneDecay: 0.01
-  airborneMaxSpeed: 6
+  airborneMaxSpeed: 10
   initalJumpForce: 5
   jumpBoostForce: 30
   jumpBoostTime: 0.5
@@ -1159,12 +1159,13 @@ MonoBehaviour:
   jumpReleaseForce: -15
   jumpReleaseRisingDrag: 0.07
   maxFallSpeed: 100
-  jumpHorizontalSpeed: 0
+  jumpDisabledTime: 0.2
   coyoteTime: 0.1
   groundedMaxSpeedHardCap: 0
   groundedRayNumber: 20
   groundRayLength: 1
-  groundedRayRadius: 0.45
+  groundedRayDiameter: 0.4
+  landingRayDiameter: 0.45
   groundMask:
     serializedVersion: 2
     m_Bits: 55
@@ -1179,7 +1180,7 @@ CapsuleCollider:
   m_Material: {fileID: 13400000, guid: 0e30cac12f2c18f4da54ca3b6f929aa9, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.25
+  m_Radius: 0.2
   m_Height: 1.59
   m_Direction: 1
   m_Center: {x: 0, y: 1.02, z: 0}

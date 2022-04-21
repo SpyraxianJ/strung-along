@@ -18,7 +18,7 @@ public class testMove : MonoBehaviour
 
     private float speed = 0;
     private bool isGrounded = true;
-    private bool isJumping;
+    private bool jumpReleased = true;
     private float groundedMaxSpeed = 50;
 
     [Header("State")]
@@ -55,8 +55,9 @@ public class testMove : MonoBehaviour
     [Range(0, 1)]
     public float jumpReleaseRisingDrag;
     public float maxFallSpeed = 100;
-
-    public float jumpHorizontalSpeed;
+    [Tooltip("The time that has to expire before you can jump again")]
+    public float jumpDisabledTime;
+    private float jumpGracePeriod;
 
     [Space]
 
@@ -72,10 +73,14 @@ public class testMove : MonoBehaviour
     public bool groundedMaxSpeedHardCap;
     [Tooltip("This is the number of raycasts used to do ground detection, increase this if ground detection is wonky, but too many rays may become preformance heavy")]
     public int groundedRayNumber;
+    private int landingRayNumber = 10;
     [Tooltip("This is how far down the raycasts for ground detection extent from the puppet, higher values allow for stepping up larger steps")]
     public float groundRayLength;
+    private float landingRayLength = 1f;
     [Tooltip("This is how wide the ground detection rays are around the puppet, should be scaled with the capsule radius")]
-    public float groundedRayRadius;
+    public float groundedRayDiameter;
+    [Tooltip("This is how wide the landing detection rays are around the puppet, MUST BE LARGER THAN groundedRayRadius by 0.05")]
+    public float landingRayDiameter;
 
     [Space]
 
@@ -115,18 +120,18 @@ public class testMove : MonoBehaviour
 
         controls.Player.Jump.performed += ctx =>
         {
-            animator.applyRootMotion = false;
             jumpPressed = ctx.ReadValueAsButton();
             Debug.Log(ctx.ReadValueAsButton());
-            if (jumpPressed)
+            if (jumpPressed && jumpReleased)
             {
-                Jump();
+                StartJump();
             }
+            jumpReleased = false;
         };
         controls.Player.Jump.canceled += ctx =>
         {
+            jumpReleased = true;
             jumpBoostTimer = 0;
-            isJumping = false;
         };
     }
     void OnEnable()
@@ -150,6 +155,8 @@ public class testMove : MonoBehaviour
     {
         float fallSpeedMod = 1;
 
+        animator.applyRootMotion = isGrounded; //only use root motion when grounded
+
         GroundDetection();
         HandleMovement();
         HandleJump();
@@ -166,7 +173,16 @@ public class testMove : MonoBehaviour
 
         if (isGrounded)
         {
-            hasJumped = false;
+            if (hasJumped)
+            {
+                jumpGracePeriod += Time.fixedDeltaTime;
+            }
+            if (jumpGracePeriod > jumpDisabledTime)
+            {
+                hasJumped = false;
+                jumpGracePeriod = 0;
+            }
+
             transform.position -= (transform.up * groundedDownPerFrame);
         }
 
@@ -179,7 +195,7 @@ public class testMove : MonoBehaviour
         else
         {
             // Ground detection is allowed
-            List<RaycastHit> groundRays = new List<RaycastHit>();
+            List<RaycastHit> groundRays = objectRayGenerator(groundedRayNumber, groundRayLength, groundedRayDiameter, true);
 
             RaycastHit hit;
             Debug.DrawRay(transform.position + transform.up * groundRayLength, -transform.up * groundRayLength, Color.magenta);
@@ -187,22 +203,7 @@ public class testMove : MonoBehaviour
             {
                 groundRays.Add(hit);
             }
-
-            if (groundedRayNumber > 0)
-            {
-                for (int i = 0; i < groundedRayNumber; i++)
-                {
-                    hit = new RaycastHit();
-                    float rot = (Mathf.PI * i * 2) / groundedRayNumber;
-                    Vector3 pos = new Vector3(Mathf.Cos(rot), 0, Mathf.Sin(rot)) * groundedRayRadius;
-                    Physics.Raycast(transform.position + pos + transform.up * groundRayLength, -transform.up, out hit, groundRayLength, groundMask);
-                    Debug.DrawRay(transform.position + pos + transform.up * groundRayLength, -transform.up * groundRayLength, new Color(i / groundedRayNumber, 1, (groundedRayNumber - i) / groundedRayNumber));
-                    if (Physics.Raycast(transform.position + pos + transform.up * groundRayLength, -transform.up, out hit, groundRayLength, groundMask))
-                    {
-                        groundRays.Add(hit);
-                    }
-                }
-            }
+            
 
             if (groundRays.Count > 0)
             {
@@ -245,8 +246,10 @@ public class testMove : MonoBehaviour
 
         if (isGrounded)
         {
+            animator.SetBool("isJumping", false);
+            animator.SetBool("isFalling", false);
+            animator.SetBool("isLanding", true);
             timeSinceGrounded = 0;
-            animator.applyRootMotion = true;
         }
     }
     
@@ -298,33 +301,38 @@ public class testMove : MonoBehaviour
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, (rotateSpeed/airRotateModifier) * Time.deltaTime);
             }
 
+            rb.AddForce(new Vector3(move.normalized.x, 0, move.normalized.y) * airborneAcceleration, ForceMode.Acceleration);
+
+            // deceleration (force soft, hard stopping in the air sounds ugly, but I can add if it if nessassary)
+
+            if (new Vector2(rb.velocity.x, rb.velocity.z).magnitude >= airborneMaxSpeed)
+            {
+                rb.velocity = new Vector3(rb.velocity.x * (1 - airborneDeceleration), rb.velocity.y, rb.velocity.z * (1 - airborneDeceleration)); // Uses 1 - groundedDeceleration to make the variable more intuitive for designers to adjust
+            }
+
             timeSinceGrounded += Time.fixedDeltaTime;
             animator.SetFloat("airtime", timeSinceGrounded, 0.05f, Time.deltaTime);
 
-            RaycastHit hit;
-            // Does the ray intersect any objects excluding the player layer
-            if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit, 1f, groundMask) && animator.GetBool("isFalling"))
+            List<RaycastHit> landingRays = objectRayGenerator(landingRayNumber, landingRayLength, landingRayDiameter, false);
+
+            if ((landingRays.Count > 0 && animator.GetBool("isFalling")))
             {
                 animator.SetBool("isFalling", false);
                 animator.SetBool("isLanding", true);
-                Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.down) * hit.distance, Color.green);
-            }
-            else
-            {
-                Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.down) * 1f, Color.white);
             }
         }
     }
 
     void HandleJump()
     {
-        if (jumpPressed)
+        if (jumpPressed && jumpBoostTimer > 0)
         {
-            Jump();
+            jumpBoostTimer -= Time.fixedDeltaTime;
+            rb.AddForce(Vector3.up * Mathf.Lerp(0, jumpBoostForce, jumpBoostTimer / jumpBoostTime));
         }
     }
 
-    public void Jump()
+    public void StartJump()
     {
         if ((isGrounded || timeSinceGrounded <= coyoteTime) && hasJumped == false)
         {
@@ -337,11 +345,36 @@ public class testMove : MonoBehaviour
             animator.SetBool("isFalling", false);
             animator.SetBool("isJumping", true);
         }
+    }
 
-        if (jumpBoostTimer > 0)
+    List<RaycastHit> objectRayGenerator(int rayNumber, float rayLength, float rayRadius, bool useOffset)
+    {
+        List<RaycastHit> rays = new List<RaycastHit>();
+
+        if (rayNumber > 0)
         {
-            jumpBoostTimer -= Time.fixedDeltaTime;
-            rb.AddForce(Vector3.up * Mathf.Lerp(0, jumpBoostForce, jumpBoostTimer/jumpBoostTime));
+            for (int i = 0; i < rayNumber; i++)
+            {
+                float rot = (Mathf.PI * i * 2) / rayNumber;
+                Vector3 pos = new Vector3(Mathf.Cos(rot), 0, Mathf.Sin(rot)) * rayRadius;
+                Vector3 origin;
+
+                if (useOffset)
+                    origin = transform.position + pos + transform.up * rayLength;
+                else
+                    origin = transform.position + pos;
+
+
+                //Physics.Raycast(transform.position + pos + transform.up * rayLength, -transform.up, out hit, rayLength, groundMask);
+                Debug.DrawRay(origin, -transform.up * rayLength, Color.white);
+                if (Physics.Raycast(origin, -transform.up, out RaycastHit hit, rayLength, groundMask))
+                {
+                    Debug.DrawRay(origin, -transform.up * rayLength, Color.green);
+                    rays.Add(hit);
+                }
+            }
         }
+
+        return rays;
     }
 }
