@@ -60,7 +60,10 @@ public class LevelLoader : MonoBehaviour
 	// sends control back to LevelManager when all props have exited the stage.
 	IEnumerator waitExit(List<GameObject> props) {
 		
-		foreach (GameObject prop in props) {
+		List<GameObject> propsIterator = new List<GameObject>(props);
+		
+		
+		foreach (GameObject prop in propsIterator) {
 			yield return new WaitUntil( () => prop.GetComponent<LevelExitTop>() == null);
 		}
 		

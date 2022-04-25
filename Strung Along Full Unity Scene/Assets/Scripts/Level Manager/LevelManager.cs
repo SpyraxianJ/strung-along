@@ -10,15 +10,19 @@ public class LevelManager : MonoBehaviour
 	
 	private static LevelLoader loader;
 	
-	// TODO: just make these ints? wat?
+	public GameObject player1; // reference to P1
+	public GameObject player2; // reference to P2
+	
 	private static Level currentLevel;
 	private static Act currentAct;
 	
 	private static bool timerActive; // whether the timer is running or not.
 	private static float timer;
 	
+	public static int goals; // how many players are currently at their goal.
+	
 	public const float TOP_BOUNDARY = 20.0f; // the "top" of the level. Y coordinate.
-	public const float SIDE_BOUNDARY = 0f; // the "side" of the level. X coordinate.
+	public const float SIDE_BOUNDARY = 0f; // TODO: the "side" of the level. X coordinate.
 	public const float EXIT_SPEED = 16.0f; // exit speed when props leave the stage.
 	public const float ENTRY_SPEED = 16.0f; // entry speed when props enter the stage.
 	
@@ -26,17 +30,22 @@ public class LevelManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+		// init references
 		acts = new List<Act>();
 		activeProps = new List<GameObject>();
 		loader = gameObject.AddComponent<LevelLoader>();
 		
+		// init timer
 		timerActive = false;
 		timer = 0;
 		
-		// populate our list of levels.
+		// init win state
+		goals = 0;
+		
+		// populate list of levels
 		buildLevelList(acts);
 		
-		// disable all the props before loading the first level.
+		// disable all props before loading the first level
 		clearLevel();
 		currentLevel = null;
 		currentAct = null;
@@ -54,6 +63,11 @@ public class LevelManager : MonoBehaviour
 		// count the timer, if a level is active.
 		if (timerActive) {
 			timer += Time.deltaTime;
+		}
+		
+		// check if 2 players are at the goal.
+		if (goals == 2) {
+			win();
 		}
 		
     }
@@ -150,11 +164,12 @@ public class LevelManager : MonoBehaviour
 		Debug.Log("Timer stopped at " + timer + "!");
 	}
 	
-	// called by other objects in the game to say the players won!
-	public static void win() {
+	// called when the players have won wooohooooo
+	private static void win() {
 		
 		stopTimer();
 		currentLevel.newTime(timer);
+		goals = 0;
 		
 		// TODO: GUI will pop in here to show "YOU WIN" and buttons for next level etc.
 		// TODO: how do i tell the GUI the level is finished?
