@@ -16,12 +16,22 @@ public class PuppetStringManager : MonoBehaviour
 
     [Space]
 
+    public GameObject debug;
+    public GameObject debug2;
+
+    [Space]
+
     [Header("State")]
 
     [Tooltip("This is how tangled the strings currently are, public for exposed debug purposes")]
     public float fltTangle;
     public bool bolConnected;
     public Vector3 effectiveRoot;
+
+    [Space]
+
+    public Vector3 puppet1LastFrame;
+    public Vector3 puppet2LastFrame;
 
     [Space]
 
@@ -61,8 +71,13 @@ public class PuppetStringManager : MonoBehaviour
 
         }
 
-        StringTick(puppet1, stringRoot1, stringRoot2, string1Ref.transform);
-        StringTick(puppet2, stringRoot2, stringRoot1, string2Ref.transform);
+        StringTick(puppet1, stringRoot1, puppet2, stringRoot2, string1Ref.transform, string2Ref.transform, puppet1LastFrame, debug);
+        StringTick(puppet2, stringRoot2, puppet1, stringRoot1, string2Ref.transform, string1Ref.transform, puppet2LastFrame, debug2);
+
+        // End variable updates
+
+        puppet1LastFrame = puppet1.transform.position;
+        puppet2LastFrame = puppet2.transform.position;
 
     }
 
@@ -73,7 +88,7 @@ public class PuppetStringManager : MonoBehaviour
         string2Ref.manager = this;
     }
 
-    public void StringTick(GameObject puppet, GameObject root, GameObject otherRoot, Transform reference)
+    public void StringTick(GameObject puppet, GameObject root, GameObject otherpuppet, GameObject otherRoot, Transform reference, Transform otherReference, Vector3 lastFrame, GameObject debugObj)
     {
         if (bolConnected == false)
         {
@@ -85,6 +100,43 @@ public class PuppetStringManager : MonoBehaviour
             reference.rotation = Quaternion.FromToRotation(Vector3.up, puppet.transform.position - effectiveRoot);
             reference.position = (puppet.transform.position + effectiveRoot) / 2;
             reference.localScale = new Vector3(reference.localScale.x, (puppet.transform.position - effectiveRoot).magnitude, reference.localScale.z);
+
+            // calculate how much they have tangled/untangled
+
+            // difference from last frame
+            Vector3 differenceLastFrame = puppet.transform.position - lastFrame;
+
+            // We need to find the string height at this point
+            float refHeight = puppet.transform.position.y;
+            // This is the point we are calculating out tangling around
+            Vector3 referencePos = Vector3.zero;
+
+            if (refHeight >= effectiveRoot.y)
+            {
+                referencePos = effectiveRoot;
+            }
+            else
+            {
+                Vector3 otherRootPuppetDifference = otherpuppet.transform.position - effectiveRoot;
+
+                if (Mathf.Abs(otherRootPuppetDifference.y) > 0.05f)
+                {
+                    // in this, x = x, y = z
+                    Vector2 travelPerY = new Vector2(-otherRootPuppetDifference.x / otherRootPuppetDifference.y, -otherRootPuppetDifference.z / otherRootPuppetDifference.y);
+
+                    float heightDifferenceFromRoot = effectiveRoot.y - refHeight;
+                    referencePos = new Vector3(effectiveRoot.x + travelPerY.x * heightDifferenceFromRoot, refHeight, effectiveRoot.z + travelPerY.y * heightDifferenceFromRoot);
+
+                }
+                else // too close to dividing by 0, just use the effective root
+                {
+                    referencePos = effectiveRoot;
+                }
+
+            }
+
+            debugObj.transform.position = referencePos;
+
         }
     }
 
