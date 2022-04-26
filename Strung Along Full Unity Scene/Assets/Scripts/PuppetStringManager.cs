@@ -24,7 +24,7 @@ public class PuppetStringManager : MonoBehaviour
     [Header("State")]
 
     [Tooltip("This is how tangled the strings currently are, public for exposed debug purposes")]
-    public float fltTangle;
+    public float tangle;
     public bool bolConnected;
     public Vector3 effectiveRoot;
 
@@ -54,12 +54,15 @@ public class PuppetStringManager : MonoBehaviour
     void FixedUpdate()
     {
 
-        if (bolConnected == true) {
+        if (bolConnected == true)
+        {
 
-            Vector3 targetEffectiveRoot = Vector3.Lerp((stringRoot1.transform.position + stringRoot2.transform.position)/2, (puppet1.transform.position + puppet2.transform.position)/2, effectiveRootPuppetPositionInfluence);
-            targetEffectiveRoot = 
-                new Vector3(targetEffectiveRoot.x, 
-                Mathf.Lerp(Mathf.Max(puppet1.transform.position.y, puppet2.transform.position.y), Mathf.Min(stringRoot1.transform.position.y, stringRoot2.transform.position.y), -Mathf.Pow(puppetDistanceEffectiveRootFactor, -Vector3.Distance(puppet1.transform.position, puppet2.transform.position)) + 1), 
+            float startTangle = tangle;
+
+            Vector3 targetEffectiveRoot = Vector3.Lerp((stringRoot1.transform.position + stringRoot2.transform.position) / 2, (puppet1.transform.position + puppet2.transform.position) / 2, effectiveRootPuppetPositionInfluence);
+            targetEffectiveRoot =
+                new Vector3(targetEffectiveRoot.x,
+                Mathf.Lerp(Mathf.Max(puppet1.transform.position.y, puppet2.transform.position.y), Mathf.Min(stringRoot1.transform.position.y, stringRoot2.transform.position.y), -Mathf.Pow(puppetDistanceEffectiveRootFactor, -Vector3.Distance(puppet1.transform.position, puppet2.transform.position)) + 1),
                 targetEffectiveRoot.z);
 
             // end of the mathf.Lerp line uses -A^{-x}+1 where A = puppetDistanceEffectiveRootFactor, put it in https://www.desmos.com/calculator to see it
@@ -69,10 +72,38 @@ public class PuppetStringManager : MonoBehaviour
             // hight is lerped between square root of the two puppet's distance apart, further out, the lower it gets
             effectiveRoot = Vector3.Lerp(effectiveRoot, targetEffectiveRoot, lerpToEffectiveRootSpeed * Time.fixedDeltaTime);
 
-        }
+            StringTick(puppet1, stringRoot1, puppet2, stringRoot2, string1Ref.transform, string2Ref.transform, puppet1LastFrame, debug);
+            StringTick(puppet2, stringRoot2, puppet1, stringRoot1, string2Ref.transform, string1Ref.transform, puppet2LastFrame, debug2);
 
-        StringTick(puppet1, stringRoot1, puppet2, stringRoot2, string1Ref.transform, string2Ref.transform, puppet1LastFrame, debug);
-        StringTick(puppet2, stringRoot2, puppet1, stringRoot1, string2Ref.transform, string1Ref.transform, puppet2LastFrame, debug2);
+            if (startTangle > 0)
+            {
+                if (tangle <= 0) {
+                    bolConnected = false;
+                    tangle = 0;
+                }
+            }
+            else if (startTangle < 0)
+            {
+                if (tangle >= 0)
+                {
+                    bolConnected = false;
+                    tangle = 0;
+                }
+            }
+            else
+            {
+
+                // I feel like there should be some fancy thing to determine which direction to set the tangle to and all that, but in theory just being empty should cover every edge case I can think of??
+
+            }
+
+        }
+        else
+        {
+            // repeat code i know it's bad but brain has reached it's limit and won't think of a cleaner solution, will fix later if nessassary
+            StringTick(puppet1, stringRoot1, puppet2, stringRoot2, string1Ref.transform, string2Ref.transform, puppet1LastFrame, debug);
+            StringTick(puppet2, stringRoot2, puppet1, stringRoot1, string2Ref.transform, string1Ref.transform, puppet2LastFrame, debug2);
+        }
 
         // End variable updates
 
@@ -141,15 +172,28 @@ public class PuppetStringManager : MonoBehaviour
 
             // only uses x and z
             Vector3 stringDirection = puppet.transform.position - referencePos;
-            stringDirection = new Vector3(stringDirection.x, 0, stringDirection.z).normalized;
-            Vector3 rotateVector = new Vector3(stringDirection.z, 0, -stringDirection.x);
+            stringDirection = new Vector3(stringDirection.x, 0, stringDirection.z);
+            Vector3 rotateVector = new Vector3(stringDirection.normalized.z, 0, -stringDirection.normalized.x);
 
 
-            Debug.Log(Vector3.Project(differenceLastFrame, rotateVector));
+            //Debug.Log(Vector3.Project(differenceLastFrame, rotateVector));
 
+            // THIS IS THE FINAL VALUE THAT SHOWS HOW MUCH WE ROTATED YES I FINALLY DID IT OMG IT ACTUALLY WORKS I THINK AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
             float rotateAroundValue = Vector3.Dot(differenceLastFrame, rotateVector);
 
-            Debug.Log(rotateAroundValue);
+            //Debug.Log(rotateAroundValue);
+
+            // I never thought I'd see the day...
+            // tangle = tangle + rotateAroundValue;
+            // actually not quite, we need to multiply this value based on the distance we are away (exponential decay) to get a more accurate value
+            // Actually that's wrong, it /2 * pi * r
+            // Ok that's also wrong but I give up for now, I'll figure it out later when it's not 5:41am
+
+            float finalRotateValue = rotateAroundValue /(Mathf.Max(0.001f, 2 * Mathf.PI * stringDirection.magnitude));
+
+            // I never thought I'd see the day...
+            tangle = tangle + finalRotateValue;
+
 
         }
     }
