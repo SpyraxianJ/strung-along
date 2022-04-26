@@ -8,7 +8,8 @@ public class StringRoot : MonoBehaviour
     [Header("Referneces")]
 
     public Rigidbody connectedObject;
-    public StringManager manager;
+    public PuppetController connectedPuppet;
+    public PuppetStringManager manager;
     public LineRenderer lineVisual;
 
     [Space]
@@ -41,9 +42,9 @@ public class StringRoot : MonoBehaviour
     float stretchTime;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        
+        connectedPuppet = connectedObject.gameObject.GetComponent<PuppetController>();
     }
 
     // Update is called once per frame
@@ -54,29 +55,39 @@ public class StringRoot : MonoBehaviour
         Vector3 effectiveRoot = transform.position;
         float effectiveLength = stringLength;
 
-        if (manager.tangleCount != 0) {
+        if (manager.tangle != 0) {
 
             // Set new root
-            Vector3 puppetAverage = (manager.leftString.connectedObject.transform.position + manager.rightString.connectedObject.transform.position) / 2;
+            //Vector3 puppetAverage = (manager.leftString.connectedObject.transform.position + manager.rightString.connectedObject.transform.position) / 2;
 
             // This line is a bit weird to I'll try explain
             // Without this, when the puppets are fully tangled, their reference points will be set right next to each other and completely independant from the original StringRoot location
             // To fix this, the point at which the tangle lerp is converging to it the DIRECTION of the two puppets, with the min, max magic on top, to get the smallest between current position and max string length
-            Vector3 puppetMaxTanglePoint = -puppetAverage.normalized * Mathf.Min(stringLength, puppetAverage.magnitude) + (manager.leftString.transform.position + manager.rightString.transform.position) / 2;
+            //Vector3 puppetMaxTanglePoint = -puppetAverage.normalized * Mathf.Min(stringLength, puppetAverage.magnitude) + (manager.leftString.transform.position + manager.rightString.transform.position) / 2;
 
-            effectiveRoot = Vector3.Lerp((manager.leftString.transform.position + manager.rightString.transform.position) / 2, puppetMaxTanglePoint, (float)Mathf.Abs(manager.tangleCount) / manager.maxTangles);
+            //effectiveRoot = Vector3.Lerp((manager.leftString.transform.position + manager.rightString.transform.position) / 2, puppetMaxTanglePoint, (float)Mathf.Abs(manager.tangleCount) / manager.maxTangles);
             // Additional note: This could have a per-frame lerp function for smoother movements, especially when on the non-elastic option;
 
+            effectiveRoot = manager.effectiveRoot;
+
             // Set new length
-            effectiveLength = Mathf.Lerp(stringLength, minimumStringLength, (float)Mathf.Abs(manager.tangleCount) / manager.maxTangles);
+            effectiveLength = Mathf.Lerp(stringLength, minimumStringLength, (float)Mathf.Abs(manager.tangle) / manager.maxTangle);
 
         }
 
         float distance = Vector3.Distance(effectiveRoot, connectedObject.transform.position);
+        float baseDistance = Vector3.Distance(transform.position, connectedObject.transform.position);
+        distance = Mathf.Max(distance, baseDistance); // to make sure tangling doesn't ever give us MORE reach
         debugDistance = distance;
 
         if (distance > effectiveLength)
         {
+
+            if (connectedPuppet != null)
+            {
+                connectedPuppet.beingPulled = true;
+            }
+
 
             Vector3 difference = (effectiveRoot - connectedObject.transform.position);
 
@@ -123,6 +134,9 @@ public class StringRoot : MonoBehaviour
         {
             // -1 is used to avoid any strange floating point errors from causing any funny business
             stretchTime = -1;
+            if (connectedPuppet != null) {
+                connectedPuppet.beingPulled = false;
+            }
         }
 
         lineVisual.SetPosition(0, transform.position);

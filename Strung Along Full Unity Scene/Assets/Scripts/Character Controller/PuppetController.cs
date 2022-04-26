@@ -30,6 +30,8 @@ public class PuppetController : MonoBehaviour
     private string playerJumpInput;
     [Tooltip("Determines if the puppet is currently on the ground or not, public for unity inspector debugging purposes, can be made private later without issue")]
     public bool grounded;
+    [Tooltip("If true, movement is limited to prevent exploiting string mechanics")]
+    public bool beingPulled;
 
     [Space]
 
@@ -274,13 +276,21 @@ public class PuppetController : MonoBehaviour
 
             // force calculation stuff is done on each axis independantly for this enviroment for the time being, I might change it later idk
 
-            if (move.x != 0)
+            Vector2 effectiveMove = move;
+
+            if (beingPulled)
             {
-                if (move.normalized.x * relativeMaxSpeedX > rb.velocity.x) // tl;dr we want to move faster right than we are already moving
+                // If we are being pulled, decrease our ability to control grounded movement to prevent major string exploits
+                effectiveMove = move/10f;
+            }
+
+            if (effectiveMove.x != 0)
+            {
+                if (effectiveMove.normalized.x * relativeMaxSpeedX > rb.velocity.x) // tl;dr we want to move faster right than we are already moving
                 {
                     rb.velocity += Vector3.right * groundedAcceleration * Time.fixedDeltaTime * 100;
                 }
-                else if (move.normalized.x * relativeMaxSpeedX < rb.velocity.x) // tl;dr we want to move faster left than we are already moving
+                else if (effectiveMove.normalized.x * relativeMaxSpeedX < rb.velocity.x) // tl;dr we want to move faster left than we are already moving
                 {
                     rb.velocity += Vector3.left * groundedAcceleration * Time.fixedDeltaTime * 100;
                 }
@@ -294,13 +304,13 @@ public class PuppetController : MonoBehaviour
                 rb.velocity = new Vector3(rb.velocity.x * (1 - groundedDeceleration), rb.velocity.y, rb.velocity.z);
             }
 
-            if (move.y != 0)
+            if (effectiveMove.y != 0)
             {
-                if (move.normalized.y * relativeMaxSpeedY > rb.velocity.z) // tl;dr we want to move faster forward than we are already moving
+                if (effectiveMove.normalized.y * relativeMaxSpeedY > rb.velocity.z) // tl;dr we want to move faster forward than we are already moving
                 {
                     rb.velocity = rb.velocity + Vector3.forward * groundedAcceleration * Time.fixedDeltaTime * 100;
                 }
-                else if (move.normalized.y * relativeMaxSpeedY < rb.velocity.z) // tl;dr we want to move faster back than we are already moving
+                else if (effectiveMove.normalized.y * relativeMaxSpeedY < rb.velocity.z) // tl;dr we want to move faster back than we are already moving
                 {
                     rb.velocity = rb.velocity + Vector3.back * groundedAcceleration * Time.fixedDeltaTime * 100;
                 }
@@ -331,15 +341,20 @@ public class PuppetController : MonoBehaviour
         }
         else
         {
-            // Air movement stuff, using simpler calculations since precision isn't as important
 
-            rb.AddForce(new Vector3(move.normalized.x, 0, move.normalized.y) * airborneAcceleration, ForceMode.Acceleration);
-
-            // deceleration (force soft, hard stopping in the air sounds ugly, but I can add if it if nessassary)
-
-            if (new Vector2(rb.velocity.x, rb.velocity.z).magnitude >= airborneMaxSpeed)
+            if (beingPulled == false)
             {
-                rb.velocity = new Vector3(rb.velocity.x * (1 - airborneDeceleration), rb.velocity.y, rb.velocity.z * (1 - airborneDeceleration)); // Uses 1 - groundedDeceleration to make the variable more intuitive for designers to adjust
+                // Air movement stuff, using simpler calculations since precision isn't as important
+
+                rb.AddForce(new Vector3(move.normalized.x, 0, move.normalized.y) * airborneAcceleration, ForceMode.Acceleration);
+
+                // deceleration (force soft, hard stopping in the air sounds ugly, but I can add if it if nessassary)
+
+                if (new Vector2(rb.velocity.x, rb.velocity.z).magnitude >= airborneMaxSpeed)
+                {
+                    rb.velocity = new Vector3(rb.velocity.x * (1 - airborneDeceleration), rb.velocity.y, rb.velocity.z * (1 - airborneDeceleration)); // Uses 1 - groundedDeceleration to make the variable more intuitive for designers to adjust
+                }
+
             }
 
             // Timer increment
@@ -351,7 +366,10 @@ public class PuppetController : MonoBehaviour
     {
         if (jumpPressed)
         {
-            Jump();
+            if (beingPulled == false)
+            {
+                Jump();
+            }
         }
     }
     public void Jump() {

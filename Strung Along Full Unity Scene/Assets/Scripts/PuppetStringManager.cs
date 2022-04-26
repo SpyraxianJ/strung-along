@@ -25,6 +25,7 @@ public class PuppetStringManager : MonoBehaviour
 
     [Tooltip("This is how tangled the strings currently are, public for exposed debug purposes")]
     public float tangle;
+    public float maxTangle;
     public bool bolConnected;
     public Vector3 effectiveRoot;
 

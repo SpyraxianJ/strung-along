@@ -22,8 +22,8 @@ public class StringManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        leftString.manager = this;
-        rightString.manager = this;
+        //leftString.manager = this;
+        //rightString.manager = this;
     }
 
     // Update is called once per frame
