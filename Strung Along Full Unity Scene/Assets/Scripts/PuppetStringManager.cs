@@ -137,6 +137,20 @@ public class PuppetStringManager : MonoBehaviour
 
             debugObj.transform.position = referencePos;
 
+            // Now to determine if we tangled or not
+
+            // only uses x and z
+            Vector3 stringDirection = puppet.transform.position - referencePos;
+            stringDirection = new Vector3(stringDirection.x, 0, stringDirection.z).normalized;
+            Vector3 rotateVector = new Vector3(stringDirection.z, 0, -stringDirection.x);
+
+
+            Debug.Log(Vector3.Project(differenceLastFrame, rotateVector));
+
+            float rotateAroundValue = Vector3.Dot(differenceLastFrame, rotateVector);
+
+            Debug.Log(rotateAroundValue);
+
         }
     }
 
