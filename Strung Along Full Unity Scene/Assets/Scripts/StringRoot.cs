@@ -37,6 +37,13 @@ public class StringRoot : MonoBehaviour
 
     [Space]
 
+    [Tooltip("How fast it moves to it's new position")]
+    public float lerpSpeed;
+    [Tooltip("The position this anchor point will try to move to")]
+    public Vector3 targetPosition;
+
+    [Space]
+
     [Tooltip("Ignore this, it's used as a debug visual and can be freely removed without effecting functionality")]
     public float debugDistance;
     public float debugeffRange;
@@ -46,11 +53,14 @@ public class StringRoot : MonoBehaviour
     void Awake()
     {
         connectedPuppet = connectedObject.gameObject.GetComponent<PuppetController>();
+        targetPosition = transform.position; // turn off to manually set on startup rather than being based on current position
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
+
+        transform.position = Vector3.Lerp(transform.position, targetPosition, lerpSpeed * Time.fixedDeltaTime);
 
         // Used for tangleing
         Vector3 effectiveRoot = transform.position;
@@ -147,4 +157,9 @@ public class StringRoot : MonoBehaviour
 
 
     }
+
+    public void SetAnchorPoint(Vector3 newPoint) {
+        targetPosition = newPoint;
+    }
+
 }
