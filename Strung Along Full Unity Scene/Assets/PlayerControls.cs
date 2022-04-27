@@ -71,6 +71,24 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""TempMove2"",
+                    ""type"": ""Value"",
+                    ""id"": ""43c28c88-6f2c-4267-ab65-3ed33240d20a"",
+                    ""expectedControlType"": ""Stick"",
+                    ""processors"": ""StickDeadzone(min=0.2)"",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""TempJump2"",
+                    ""type"": ""Button"",
+                    ""id"": ""e7c8a1dd-0bb8-4db7-a597-5a9113cc85de"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press(behavior=2)"",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -205,6 +223,94 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""action"": ""Attack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""44f9b2d6-fed5-47c1-921f-c5e4e70d3cc7"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""TempJump2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8f9f4034-84c4-4450-b3fb-0701965d3bc3"",
+                    ""path"": ""<Keyboard>/alt"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""TempJump2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3e6b11c9-131b-418f-9401-92907788bc1f"",
+                    ""path"": ""<Gamepad>/leftStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""TempMove2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""2D Vector"",
+                    ""id"": ""63d93510-8d51-4710-9d81-4050486b047e"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""TempMove2"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""fc777ec4-3d01-4483-8929-6b66051944d9"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""TempMove2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""770b4823-4152-4305-a2a4-645ec832b55c"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""TempMove2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""e11759dc-e7ca-4a77-96b8-24cc4cc646cc"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""TempMove2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""ac7480b7-bd55-41a5-8b9f-60dadde075b1"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""TempMove2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         },
@@ -257,6 +363,8 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_Grab = m_Player.FindAction("Grab", throwIfNotFound: true);
         m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
+        m_Player_TempMove2 = m_Player.FindAction("TempMove2", throwIfNotFound: true);
+        m_Player_TempJump2 = m_Player.FindAction("TempJump2", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Pause = m_UI.FindAction("Pause", throwIfNotFound: true);
@@ -324,6 +432,8 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_Grab;
     private readonly InputAction m_Player_Attack;
+    private readonly InputAction m_Player_TempMove2;
+    private readonly InputAction m_Player_TempJump2;
     public struct PlayerActions
     {
         private @PlayerControls m_Wrapper;
@@ -333,6 +443,8 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @Grab => m_Wrapper.m_Player_Grab;
         public InputAction @Attack => m_Wrapper.m_Player_Attack;
+        public InputAction @TempMove2 => m_Wrapper.m_Player_TempMove2;
+        public InputAction @TempJump2 => m_Wrapper.m_Player_TempJump2;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -357,6 +469,12 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @Attack.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAttack;
                 @Attack.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAttack;
                 @Attack.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAttack;
+                @TempMove2.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTempMove2;
+                @TempMove2.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTempMove2;
+                @TempMove2.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTempMove2;
+                @TempJump2.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTempJump2;
+                @TempJump2.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTempJump2;
+                @TempJump2.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTempJump2;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -376,6 +494,12 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @Attack.started += instance.OnAttack;
                 @Attack.performed += instance.OnAttack;
                 @Attack.canceled += instance.OnAttack;
+                @TempMove2.started += instance.OnTempMove2;
+                @TempMove2.performed += instance.OnTempMove2;
+                @TempMove2.canceled += instance.OnTempMove2;
+                @TempJump2.started += instance.OnTempJump2;
+                @TempJump2.performed += instance.OnTempJump2;
+                @TempJump2.canceled += instance.OnTempJump2;
             }
         }
     }
@@ -420,6 +544,8 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         void OnJump(InputAction.CallbackContext context);
         void OnGrab(InputAction.CallbackContext context);
         void OnAttack(InputAction.CallbackContext context);
+        void OnTempMove2(InputAction.CallbackContext context);
+        void OnTempJump2(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

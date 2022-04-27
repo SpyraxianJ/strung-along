@@ -124,28 +124,58 @@ public class PuppetController : MonoBehaviour
 
     void Awake()
     {
-        controls = new PlayerControls();
-        controls.Player.Jump.performed += ctx =>
+
+        if (secondPlayer == false)
         {
-            jumpPressed = ctx.ReadValueAsButton();
-            Debug.Log(ctx.ReadValueAsButton());
-            if (jumpPressed)
+            controls = new PlayerControls();
+            controls.Player.Jump.performed += ctx =>
             {
-                Jump();
-            }
-        };
-        controls.Player.Move.performed += ctx =>
+                jumpPressed = ctx.ReadValueAsButton();
+                Debug.Log(ctx.ReadValueAsButton());
+                if (jumpPressed)
+                {
+                    Jump();
+                }
+            };
+            controls.Player.Move.performed += ctx =>
+            {
+                move = ctx.ReadValue<Vector2>();
+                movePressed = true; //move.x != 0 || move.y != 0;
+                                    //Debug.Log(movePressed);
+            };
+            controls.Player.Move.canceled += ctx =>
+            {
+                move = Vector2.zero;
+                movePressed = false;
+                //Debug.Log(movePressed);
+            };
+        }
+        else // THIS IS VERY TEMPORARY, just so the playtesters can have access to both players
         {
-            move = ctx.ReadValue<Vector2>();
-            movePressed = true; //move.x != 0 || move.y != 0;
-            //Debug.Log(movePressed);
-        };
-        controls.Player.Move.canceled += ctx =>
-        {
-            move = Vector2.zero;
-            movePressed = false;
-            //Debug.Log(movePressed);
-        };
+            controls = new PlayerControls();
+            controls.Player.TempJump2.performed += ctx =>
+            {
+                jumpPressed = ctx.ReadValueAsButton();
+                Debug.Log(ctx.ReadValueAsButton());
+                if (jumpPressed)
+                {
+                    Jump();
+                }
+            };
+            controls.Player.TempMove2.performed += ctx =>
+            {
+                move = ctx.ReadValue<Vector2>();
+                movePressed = true; //move.x != 0 || move.y != 0;
+                                    //Debug.Log(movePressed);
+            };
+            controls.Player.TempMove2.canceled += ctx =>
+            {
+                move = Vector2.zero;
+                movePressed = false;
+                //Debug.Log(movePressed);
+            };
+        }
+
     }
     void OnEnable()
     {
