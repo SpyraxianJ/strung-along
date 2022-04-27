@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PuppetStringManager : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class PuppetStringManager : MonoBehaviour
     public GameObject stringRoot2;
     public PuppetString string1Ref;
     public PuppetString string2Ref;
+    public Text debugTangleDisplay;
 
     [Space]
 
@@ -44,6 +46,12 @@ public class PuppetStringManager : MonoBehaviour
     [Range(0, 1)]
     public float effectiveRootPuppetPositionInfluence;
 
+    [Space]
+
+    [Header("Debug")]
+
+    public float debugeffRange;
+
 
     // Start is called before the first frame update
     void Start()
@@ -54,6 +62,10 @@ public class PuppetStringManager : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+
+        if (debugTangleDisplay != null) {
+            debugTangleDisplay.text = "Tangle: " + Mathf.Round(tangle * 100)/100 + " (maximum tangle at " + maxTangle + ")";
+        }
 
         if (bolConnected == true)
         {

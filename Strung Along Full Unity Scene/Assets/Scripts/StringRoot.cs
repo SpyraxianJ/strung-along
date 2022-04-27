@@ -39,6 +39,7 @@ public class StringRoot : MonoBehaviour
 
     [Tooltip("Ignore this, it's used as a debug visual and can be freely removed without effecting functionality")]
     public float debugDistance;
+    public float debugeffRange;
     float stretchTime;
 
     // Start is called before the first frame update
@@ -77,10 +78,11 @@ public class StringRoot : MonoBehaviour
 
         float distance = Vector3.Distance(effectiveRoot, connectedObject.transform.position);
         float baseDistance = Vector3.Distance(transform.position, connectedObject.transform.position);
-        distance = Mathf.Max(distance, baseDistance); // to make sure tangling doesn't ever give us MORE reach
+        //distance = Mathf.Max(distance, baseDistance); // to make sure tangling doesn't ever give us MORE reach
         debugDistance = distance;
+        debugeffRange = effectiveLength;
 
-        if (distance > effectiveLength)
+        if (distance > effectiveLength || baseDistance > stringLength)
         {
 
             if (connectedPuppet != null)
