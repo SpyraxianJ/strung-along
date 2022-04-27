@@ -190,10 +190,10 @@ public class PuppetStringManager : MonoBehaviour
             // Actually that's wrong, it /2 * pi * r
             // Ok that's also wrong but I give up for now, I'll figure it out later when it's not 5:41am
 
-            float finalRotateValue = rotateAroundValue /(Mathf.Max(0.001f, 2 * Mathf.PI * stringDirection.magnitude));
+            float finalRotateValue = rotateAroundValue / (Mathf.Max(0.000000001f, 2 * Mathf.PI * stringDirection.magnitude));
 
             // I never thought I'd see the day...
-            tangle = tangle + finalRotateValue;
+            tangle += finalRotateValue;
 
 
         }

@@ -134,6 +134,11 @@ public class testMove : MonoBehaviour
             jumpBoostTimer = 0;
         };
     }
+    /*IEnumerator ExecuteAfterTime(float time)
+    {
+        yield return new WaitForSeconds(time);
+        animator.applyRootMotion = isGrounded;
+    }*/
     void OnEnable()
     {
         controls.Player.Enable();
@@ -154,7 +159,8 @@ public class testMove : MonoBehaviour
     void FixedUpdate()
     {
         float fallSpeedMod = 1;
-
+        //if (!isGrounded)
+            //StartCoroutine(ExecuteAfterTime(1f));
         animator.applyRootMotion = isGrounded; //only use root motion when grounded
 
         GroundDetection();
@@ -162,7 +168,7 @@ public class testMove : MonoBehaviour
         HandleJump();
         Debug.Log(rb.velocity.x + " " + rb.velocity.y + " " + rb.velocity.z);
         if (rb.velocity.y < 0) //slightly faster falling to make jumping feel better
-            fallSpeedMod = 1.5f;
+            fallSpeedMod = 2f;
 
         rb.AddForce(Vector3.down * gravity * fallSpeedMod, ForceMode.Acceleration);
     }
@@ -173,6 +179,7 @@ public class testMove : MonoBehaviour
 
         if (isGrounded)
         {
+            //check to ensure jumping can't be instantly performed
             if (hasJumped)
             {
                 jumpGracePeriod += Time.fixedDeltaTime;
@@ -323,6 +330,7 @@ public class testMove : MonoBehaviour
         }
     }
 
+    //referenced inside the Update block to add force if jump is held
     void HandleJump()
     {
         if (jumpPressed && jumpBoostTimer > 0)
@@ -332,6 +340,7 @@ public class testMove : MonoBehaviour
         }
     }
 
+    //used once when initiating a jump
     public void StartJump()
     {
         if ((isGrounded || timeSinceGrounded <= coyoteTime) && hasJumped == false)
@@ -347,6 +356,7 @@ public class testMove : MonoBehaviour
         }
     }
 
+    //generates raycasts around an object in a circle. Used for landing animation and groun detection
     List<RaycastHit> objectRayGenerator(int rayNumber, float rayLength, float rayRadius, bool useOffset)
     {
         List<RaycastHit> rays = new List<RaycastHit>();

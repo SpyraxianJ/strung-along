@@ -1152,19 +1152,19 @@ MonoBehaviour:
   airborneDeceleration: 0.205
   airborneDecay: 0.01
   airborneMaxSpeed: 10
-  initalJumpForce: 5
+  initalJumpForce: 7
   jumpBoostForce: 30
   jumpBoostTime: 0.5
   jumpHoldForce: 0.64
   jumpReleaseForce: -15
   jumpReleaseRisingDrag: 0.07
   maxFallSpeed: 100
-  jumpDisabledTime: 0.2
+  jumpDisabledTime: 0
   coyoteTime: 0.1
   groundedMaxSpeedHardCap: 0
   groundedRayNumber: 20
   groundRayLength: 1
-  groundedRayDiameter: 0.4
+  groundedRayDiameter: 0.3
   landingRayDiameter: 0.45
   groundMask:
     serializedVersion: 2
