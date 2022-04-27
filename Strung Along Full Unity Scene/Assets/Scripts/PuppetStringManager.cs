@@ -35,6 +35,7 @@ public class PuppetStringManager : MonoBehaviour
 
     public Vector3 puppet1LastFrame;
     public Vector3 puppet2LastFrame;
+    public Vector3 effectiveRootLastFrame;
 
     [Space]
 
@@ -122,6 +123,7 @@ public class PuppetStringManager : MonoBehaviour
 
         puppet1LastFrame = puppet1.transform.position;
         puppet2LastFrame = puppet2.transform.position;
+        effectiveRootLastFrame = effectiveRoot;
 
     }
 
@@ -149,6 +151,7 @@ public class PuppetStringManager : MonoBehaviour
 
             // difference from last frame
             Vector3 differenceLastFrame = puppet.transform.position - lastFrame;
+            differenceLastFrame = differenceLastFrame - (effectiveRoot - effectiveRootLastFrame);
 
             // We need to find the string height at this point
             float refHeight = puppet.transform.position.y;
