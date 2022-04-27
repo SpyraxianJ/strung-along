@@ -137,6 +137,7 @@ public class StringRoot : MonoBehaviour
                 // I just did a few examples manually on paper, found the pattern, put it in and it ended up working :)
                 // (which is to flip x and y but invert the sign of the original x value)
                 connectedObject.velocity = Vector3.Project(connectedObject.velocity, new Vector3(difference.normalized.y, -difference.normalized.x));
+                connectedObject.AddForce(-9.8f * Vector3.down, ForceMode.Acceleration);
 
                 connectedObject.gameObject.transform.position = -(difference.normalized * effectiveLength) + effectiveRoot;
             }
