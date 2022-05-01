@@ -112,7 +112,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   manager: {fileID: 0}
-  player2Goal: 1
+  isPlayer2: 1
   persistent: 1
 --- !u!54 &8010899097883391678
 Rigidbody:

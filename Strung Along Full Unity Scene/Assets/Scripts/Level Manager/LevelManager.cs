@@ -14,18 +14,27 @@ public class LevelManager : MonoBehaviour
 	
 	private static bool timerActive; // whether the timer is running or not.
 	private static float timer;
-	public static int goals; // how many players are currently at their goal.
+	
+	private static int levelState; // game state indicators
+	private const int GAME_START = -1;
+	private const int NO_LEVEL = 0;
+	private const int LEVEL_LOADING = 1;
+	private const int LEVEL_PLAYING = 2;
 	
 	public const float TOP_BOUNDARY = 20.0f; // the "top" of the level. Y coordinate.
 	public const float SIDE_BOUNDARY = 0f; // TODO: the "side" of the level. X coordinate.
 	public const float EXIT_SPEED = 16.0f; // exit speed when props leave the stage.
 	public const float ENTRY_SPEED = 16.0f; // entry speed when props enter the stage.
 	
+	
+	
 	[Header("References")]
 	public GameObject player1; // reference to P1
 	public GameObject player2; // reference to P2
+	public bool p1AtGoal;
+	public bool p2AtGoal;
 	[Space]
-	[Header("Events")]
+	[Header("Events (GUI attaches functions here!)")]
 	public UnityEvent onLevelComplete;
 	public UnityEvent onLevelFailure;
 	
@@ -41,17 +50,21 @@ public class LevelManager : MonoBehaviour
 		// init event subscriptions
 		LevelLoader.onLoadComplete += loadComplete;
 		LevelLoader.onUnloadComplete += unloadComplete;
-		//Goal.onP1Goal
-		//Goal.onP2Goal
+		Goal.onPlayerGoal += updateGoalState;
+		// TODO: when both little dudes die, the level is failed.
+		//Player1.onDeath
+		//Player2.onDeath
 		
 		// init timer
 		timerActive = false;
 		timer = 0;
 		
 		// init win state
-		goals = 0;
+		p1AtGoal = false;
+		p2AtGoal = false;
+		levelState = GAME_START;
 		
-		// populate list of levels
+		// init list of levels
 		buildLevelList(acts);
 		
 		// disable all props before loading the first level
@@ -65,17 +78,17 @@ public class LevelManager : MonoBehaviour
     {
         
 		// DEBUG. GUI will be the one calling this on game start. woo
-		if (currentLevel == null) {
+		if (levelState == GAME_START) {
 			loadLevel(1, 1);
 		}
 		
 		// count the timer, if a level is active.
-		if (timerActive) {
+		if (levelState == LEVEL_PLAYING && timerActive) {
 			timer += Time.deltaTime;
 		}
 		
-		// check if 2 players are at the goal.
-		if (goals == 2) {
+		// check if little dudes have won!
+		if (levelState == LEVEL_PLAYING && p1AtGoal && p2AtGoal) {
 			onLevelComplete.Invoke();
 		}
 		
@@ -141,22 +154,30 @@ public class LevelManager : MonoBehaviour
 	
 	// begin loading a specific level by object reference.
 	private static void loadLevel(Level level) {
+		levelState = LEVEL_LOADING;
 		loader.load(level.props);
+		
 	}
 	
-	// subscribed to levelLoader load event
+	// subscribed to LevelLoader load event
 	private void loadComplete() {
+		// start the level!
+		levelState = LEVEL_PLAYING;
 		startTimer();
 	}
 	
 	// being unloading whatever level is currently loaded.
 	private void unloadLevel() {
+		levelState = LEVEL_LOADING;
 		loader.unload(activeProps);
+		// TODO: reset all the props, like levers  that have been pushed.
+		// make a disabled duplicate of each prop in its Prop class?
 	}
 	
-	// subscribed to levelLoader unload event
+	// subscribed to LevelLoader unload event
 	private void unloadComplete() {
 		// DEBUG: for now just load the next level.
+		levelState = NO_LEVEL;
 		goNextLevel();
 	}
 	
@@ -173,14 +194,48 @@ public class LevelManager : MonoBehaviour
 		Debug.Log("Timer stopped at " + timer + "!");
 	}
 	
+	// subscribed to Goal touch event
+	private void updateGoalState(bool enterGoal, bool isPlayer2) {
+		
+		if (enterGoal) {
+			
+			if (isPlayer2) {
+				p2AtGoal = true;
+			} else {
+				p1AtGoal = true;
+			}
+			
+		} else {
+			
+			if (isPlayer2) {
+				p2AtGoal = false;
+			} else {
+				p1AtGoal = false;
+			}
+			
+		}
+		
+	}
+	
+	
 	// subscribed to LevelManager OnLevelComplete UnityEvent
 	public void winLevel() {
 		
 		stopTimer();
 		currentLevel.newTime(timer);
-		goals = 0;
+		p1AtGoal = false;
+		p2AtGoal = false;
 		
 		unloadLevel();
+		
+	}
+	
+	// subscribed to LevelManager OnLevelFailure UnityEvent
+	public void failLevel() {
+		
+		stopTimer();
+		// send to GUI. restart level, quit, that sorta stuff
+		// TODO: restart level function!
 		
 	}
 	
@@ -228,6 +283,16 @@ public class LevelManager : MonoBehaviour
 		loadLevel(currentLevel);
 		
 	}
+	
+	// TODO: retry the current level.
+	public static void retryLevel() {
+		
+		// unloadLevel();
+		// reset level to how it started
+		// load the same level again
+		
+	}
+	
 	
 	// GETTERS
 	// hit me up if you want anything else!
