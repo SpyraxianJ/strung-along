@@ -29,8 +29,10 @@ public class LevelManager : MonoBehaviour
 	
 	
 	[Header("References")]
-	public GameObject player1; // reference to P1
-	public GameObject player2; // reference to P2
+	public GameObject player1; // refs to the player objects
+	public GameObject player2;
+	public Transform p1Anchor; // refs to string anchor locations
+	public Transform p2Anchor;
 	public bool p1AtGoal;
 	public bool p2AtGoal;
 	[Space]
