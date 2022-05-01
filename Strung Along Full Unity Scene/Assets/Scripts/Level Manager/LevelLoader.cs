@@ -59,7 +59,6 @@ public class LevelLoader : MonoBehaviour
 			yield return new WaitUntil( () => prop.GetComponent<LevelEnterTop>() == null);
 		}
 		
-		//LevelManager.loadComplete();
 		onLoadComplete?.Invoke();
 		
 	}
@@ -74,7 +73,6 @@ public class LevelLoader : MonoBehaviour
 			yield return new WaitUntil( () => prop.GetComponent<LevelExitTop>() == null);
 		}
 		
-		//LevelManager.unloadComplete();
 		onUnloadComplete?.Invoke();
 		
 	}

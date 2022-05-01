@@ -8,25 +8,26 @@ public class LevelManager : MonoBehaviour
 	
 	public static List<GameObject> activeProps; // the currently active props on the stage.
 	private static List<Act> acts; // a list of all the levels in the game.
-	private static LevelLoader loader; // class for handling moving objects on and off the stage.
-	
-	public GameObject player1; // reference to P1
-	public GameObject player2; // reference to P2
-	
 	private static Level currentLevel;
 	private static Act currentAct;
+	private static LevelLoader loader; // class for handling moving objects on and off the stage.
 	
 	private static bool timerActive; // whether the timer is running or not.
 	private static float timer;
-	
 	public static int goals; // how many players are currently at their goal.
-	
-	public UnityEvent onLevelComplete;
 	
 	public const float TOP_BOUNDARY = 20.0f; // the "top" of the level. Y coordinate.
 	public const float SIDE_BOUNDARY = 0f; // TODO: the "side" of the level. X coordinate.
 	public const float EXIT_SPEED = 16.0f; // exit speed when props leave the stage.
 	public const float ENTRY_SPEED = 16.0f; // entry speed when props enter the stage.
+	
+	[Header("References")]
+	public GameObject player1; // reference to P1
+	public GameObject player2; // reference to P2
+	[Space]
+	[Header("Events")]
+	public UnityEvent onLevelComplete;
+	public UnityEvent onLevelFailure;
 	
 	
     // Start is called before the first frame update
@@ -35,10 +36,13 @@ public class LevelManager : MonoBehaviour
 		// init references
 		acts = new List<Act>();
 		activeProps = new List<GameObject>();
-		
 		loader = gameObject.AddComponent<LevelLoader>();
+		
+		// init event subscriptions
 		LevelLoader.onLoadComplete += loadComplete;
 		LevelLoader.onUnloadComplete += unloadComplete;
+		//Goal.onP1Goal
+		//Goal.onP2Goal
 		
 		// init timer
 		timerActive = false;
@@ -85,7 +89,7 @@ public class LevelManager : MonoBehaviour
 	// it's clowny but very modular, as it doesn't rely on any hardcoded values or tagging.
 	// you can create a whole new act with tons of levels just by creating GameObjects in the Unity Editor!
 	// ONLY CALL THIS ONCE, ON Start(). IT'S SLOW AS FUCK
-	private static void buildLevelList(List<Act> actList) {
+	private void buildLevelList(List<Act> actList) {
 		
 		int totalActs = 0; // DEBUG
 		int totalLevels = 0; // DEBUG
@@ -123,7 +127,7 @@ public class LevelManager : MonoBehaviour
 	}
 	
 	// disable all the props. called only once at start of game.
-	private static void clearLevel() {
+	private void clearLevel() {
 		
 		foreach (Act act in acts) {
 			foreach (Level level in act.levels) {
@@ -140,37 +144,37 @@ public class LevelManager : MonoBehaviour
 		loader.load(level.props);
 	}
 	
-	// called by loader event when finished loading
+	// subscribed to levelLoader load event
 	private void loadComplete() {
 		startTimer();
 	}
 	
 	// being unloading whatever level is currently loaded.
-	private static void unloadLevel() {
+	private void unloadLevel() {
 		loader.unload(activeProps);
 	}
 	
-	// called by loader event when finished unloading
-	private static void unloadComplete() {
+	// subscribed to levelLoader unload event
+	private void unloadComplete() {
 		// DEBUG: for now just load the next level.
 		goNextLevel();
 	}
 	
 	// start the level timer from zero.
-	private static void startTimer() {
+	private void startTimer() {
 		timer = 0;
 		timerActive = true;
 		Debug.Log("Timer started!");
 	}
 	
 	// stop the level timer.
-	private static void stopTimer() {
+	private void stopTimer() {
 		timerActive = false;
 		Debug.Log("Timer stopped at " + timer + "!");
 	}
 	
-	// called when the players have won wooohooooo
-	public static void winLevel() {
+	// subscribed to LevelManager OnLevelComplete UnityEvent
+	public void winLevel() {
 		
 		stopTimer();
 		currentLevel.newTime(timer);
