@@ -1,14 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class LevelManager : MonoBehaviour
 {
 	
 	public static List<GameObject> activeProps; // the currently active props on the stage.
 	private static List<Act> acts; // a list of all the levels in the game.
-	
-	private static LevelLoader loader;
+	private static LevelLoader loader; // class for handling moving objects on and off the stage.
 	
 	public GameObject player1; // reference to P1
 	public GameObject player2; // reference to P2
@@ -20,6 +20,8 @@ public class LevelManager : MonoBehaviour
 	private static float timer;
 	
 	public static int goals; // how many players are currently at their goal.
+	
+	public UnityEvent onLevelComplete;
 	
 	public const float TOP_BOUNDARY = 20.0f; // the "top" of the level. Y coordinate.
 	public const float SIDE_BOUNDARY = 0f; // TODO: the "side" of the level. X coordinate.
@@ -33,7 +35,10 @@ public class LevelManager : MonoBehaviour
 		// init references
 		acts = new List<Act>();
 		activeProps = new List<GameObject>();
+		
 		loader = gameObject.AddComponent<LevelLoader>();
+		LevelLoader.onLoadComplete += loadComplete;
+		LevelLoader.onUnloadComplete += unloadComplete;
 		
 		// init timer
 		timerActive = false;
@@ -67,7 +72,7 @@ public class LevelManager : MonoBehaviour
 		
 		// check if 2 players are at the goal.
 		if (goals == 2) {
-			win();
+			onLevelComplete.Invoke();
 		}
 		
     }
@@ -135,8 +140,8 @@ public class LevelManager : MonoBehaviour
 		loader.load(level.props);
 	}
 	
-	// called by loader when finished loading
-	public static void loadComplete() {
+	// called by loader event when finished loading
+	private void loadComplete() {
 		startTimer();
 	}
 	
@@ -145,8 +150,8 @@ public class LevelManager : MonoBehaviour
 		loader.unload(activeProps);
 	}
 	
-	// called by loader when finished unloading
-	public static void unloadComplete() {
+	// called by loader event when finished unloading
+	private static void unloadComplete() {
 		// DEBUG: for now just load the next level.
 		goNextLevel();
 	}
@@ -165,14 +170,11 @@ public class LevelManager : MonoBehaviour
 	}
 	
 	// called when the players have won wooohooooo
-	private static void win() {
+	public static void winLevel() {
 		
 		stopTimer();
 		currentLevel.newTime(timer);
 		goals = 0;
-		
-		// TODO: GUI will pop in here to show "YOU WIN" and buttons for next level etc.
-		// TODO: how do i tell the GUI the level is finished?
 		
 		unloadLevel();
 		
