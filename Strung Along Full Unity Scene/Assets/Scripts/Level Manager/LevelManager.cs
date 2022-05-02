@@ -1,30 +1,44 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class LevelManager : MonoBehaviour
 {
 	
 	public static List<GameObject> activeProps; // the currently active props on the stage.
 	private static List<Act> acts; // a list of all the levels in the game.
-	
-	private static LevelLoader loader;
-	
-	public GameObject player1; // reference to P1
-	public GameObject player2; // reference to P2
-	
 	private static Level currentLevel;
 	private static Act currentAct;
+	private static LevelLoader loader; // class for handling moving objects on and off the stage.
 	
 	private static bool timerActive; // whether the timer is running or not.
 	private static float timer;
 	
-	public static int goals; // how many players are currently at their goal.
+	private static int levelState; // game state indicators
+	private const int GAME_START = -1;
+	private const int NO_LEVEL = 0;
+	private const int LEVEL_LOADING = 1;
+	private const int LEVEL_PLAYING = 2;
 	
 	public const float TOP_BOUNDARY = 20.0f; // the "top" of the level. Y coordinate.
 	public const float SIDE_BOUNDARY = 0f; // TODO: the "side" of the level. X coordinate.
 	public const float EXIT_SPEED = 16.0f; // exit speed when props leave the stage.
 	public const float ENTRY_SPEED = 16.0f; // entry speed when props enter the stage.
+	
+	
+	
+	[Header("References")]
+	public GameObject player1; // refs to the player objects
+	public GameObject player2;
+	public Transform p1Anchor; // refs to string anchor locations
+	public Transform p2Anchor;
+	public bool p1AtGoal;
+	public bool p2AtGoal;
+	[Space]
+	[Header("Events (GUI attaches functions here!)")]
+	public UnityEvent onLevelComplete;
+	public UnityEvent onLevelFailure;
 	
 	
     // Start is called before the first frame update
@@ -35,14 +49,24 @@ public class LevelManager : MonoBehaviour
 		activeProps = new List<GameObject>();
 		loader = gameObject.AddComponent<LevelLoader>();
 		
+		// init event subscriptions
+		LevelLoader.onLoadComplete += loadComplete;
+		LevelLoader.onUnloadComplete += unloadComplete;
+		Goal.onPlayerGoal += updateGoalState;
+		// TODO: when both little dudes die, the level is failed.
+		//Player1.onDeath
+		//Player2.onDeath
+		
 		// init timer
 		timerActive = false;
 		timer = 0;
 		
 		// init win state
-		goals = 0;
+		p1AtGoal = false;
+		p2AtGoal = false;
+		levelState = GAME_START;
 		
-		// populate list of levels
+		// init list of levels
 		buildLevelList(acts);
 		
 		// disable all props before loading the first level
@@ -56,18 +80,18 @@ public class LevelManager : MonoBehaviour
     {
         
 		// DEBUG. GUI will be the one calling this on game start. woo
-		if (currentLevel == null) {
+		if (levelState == GAME_START) {
 			loadLevel(1, 1);
 		}
 		
 		// count the timer, if a level is active.
-		if (timerActive) {
+		if (levelState == LEVEL_PLAYING && timerActive) {
 			timer += Time.deltaTime;
 		}
 		
-		// check if 2 players are at the goal.
-		if (goals == 2) {
-			win();
+		// check if little dudes have won!
+		if (levelState == LEVEL_PLAYING && p1AtGoal && p2AtGoal) {
+			onLevelComplete.Invoke();
 		}
 		
     }
@@ -80,7 +104,7 @@ public class LevelManager : MonoBehaviour
 	// it's clowny but very modular, as it doesn't rely on any hardcoded values or tagging.
 	// you can create a whole new act with tons of levels just by creating GameObjects in the Unity Editor!
 	// ONLY CALL THIS ONCE, ON Start(). IT'S SLOW AS FUCK
-	private static void buildLevelList(List<Act> actList) {
+	private void buildLevelList(List<Act> actList) {
 		
 		int totalActs = 0; // DEBUG
 		int totalLevels = 0; // DEBUG
@@ -118,7 +142,7 @@ public class LevelManager : MonoBehaviour
 	}
 	
 	// disable all the props. called only once at start of game.
-	private static void clearLevel() {
+	private void clearLevel() {
 		
 		foreach (Act act in acts) {
 			foreach (Level level in act.levels) {
@@ -132,49 +156,88 @@ public class LevelManager : MonoBehaviour
 	
 	// begin loading a specific level by object reference.
 	private static void loadLevel(Level level) {
+		levelState = LEVEL_LOADING;
 		loader.load(level.props);
+		
 	}
 	
-	// called by loader when finished loading
-	public static void loadComplete() {
+	// subscribed to LevelLoader load event
+	private void loadComplete() {
+		// start the level!
+		levelState = LEVEL_PLAYING;
 		startTimer();
 	}
 	
 	// being unloading whatever level is currently loaded.
-	private static void unloadLevel() {
+	private void unloadLevel() {
+		levelState = LEVEL_LOADING;
 		loader.unload(activeProps);
+		// TODO: reset all the props, like levers  that have been pushed.
+		// make a disabled duplicate of each prop in its Prop class?
 	}
 	
-	// called by loader when finished unloading
-	public static void unloadComplete() {
+	// subscribed to LevelLoader unload event
+	private void unloadComplete() {
 		// DEBUG: for now just load the next level.
+		levelState = NO_LEVEL;
 		goNextLevel();
 	}
 	
 	// start the level timer from zero.
-	private static void startTimer() {
+	private void startTimer() {
 		timer = 0;
 		timerActive = true;
 		Debug.Log("Timer started!");
 	}
 	
 	// stop the level timer.
-	private static void stopTimer() {
+	private void stopTimer() {
 		timerActive = false;
 		Debug.Log("Timer stopped at " + timer + "!");
 	}
 	
-	// called when the players have won wooohooooo
-	private static void win() {
+	// subscribed to Goal touch event
+	private void updateGoalState(bool enterGoal, bool isPlayer2) {
+		
+		if (enterGoal) {
+			
+			if (isPlayer2) {
+				p2AtGoal = true;
+			} else {
+				p1AtGoal = true;
+			}
+			
+		} else {
+			
+			if (isPlayer2) {
+				p2AtGoal = false;
+			} else {
+				p1AtGoal = false;
+			}
+			
+		}
+		
+	}
+	
+	
+	// subscribed to LevelManager OnLevelComplete UnityEvent
+	public void winLevel() {
 		
 		stopTimer();
 		currentLevel.newTime(timer);
-		goals = 0;
-		
-		// TODO: GUI will pop in here to show "YOU WIN" and buttons for next level etc.
-		// TODO: how do i tell the GUI the level is finished?
+		p1AtGoal = false;
+		p2AtGoal = false;
 		
 		unloadLevel();
+		
+	}
+	
+	// subscribed to LevelManager OnLevelFailure UnityEvent
+	public void failLevel() {
+		
+		stopTimer();
+		// send to GUI. restart level, quit, that sorta stuff
+		// TODO: restart level function!
 		
 	}
 	
@@ -222,6 +285,16 @@ public class LevelManager : MonoBehaviour
 		loadLevel(currentLevel);
 		
 	}
+	
+	// TODO: retry the current level.
+	public static void retryLevel() {
+		
+		// unloadLevel();
+		// reset level to how it started
+		// load the same level again
+		
+	}
+	
 	
 	// GETTERS
 	// hit me up if you want anything else!

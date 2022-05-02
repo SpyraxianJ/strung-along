@@ -1,9 +1,15 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class LevelLoader : MonoBehaviour
 {
+	
+	public static event Action onLoadComplete;
+	public static event Action onUnloadComplete;
+	
+	
     // Start is called before the first frame update
     void Start()
     {
@@ -53,7 +59,7 @@ public class LevelLoader : MonoBehaviour
 			yield return new WaitUntil( () => prop.GetComponent<LevelEnterTop>() == null);
 		}
 		
-		LevelManager.loadComplete();
+		onLoadComplete?.Invoke();
 		
 	}
 	
@@ -67,7 +73,7 @@ public class LevelLoader : MonoBehaviour
 			yield return new WaitUntil( () => prop.GetComponent<LevelExitTop>() == null);
 		}
 		
-		LevelManager.unloadComplete();
+		onUnloadComplete?.Invoke();
 		
 	}
 	
