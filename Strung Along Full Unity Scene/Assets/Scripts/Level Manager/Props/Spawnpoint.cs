@@ -17,7 +17,13 @@ public class Spawnpoint : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+		// these are intended as a guide during the Editor.
+		// you can't see them during gameplay!
+		Component[] renderers = gameObject.GetComponentsInChildren<Renderer>();
+		foreach (Renderer r in renderers) {
+			Destroy(r);
+		}
+		
     }
 
     // Update is called once per frame
