@@ -31,12 +31,12 @@ public class LevelManager : MonoBehaviour
 	[Header("References")]
 	public GameObject player1; // refs to the player objects
 	public GameObject player2;
-	public Transform p1Anchor; // refs to string anchor locations
-	public Transform p2Anchor;
+	public StringRoot p1Anchor; // refs to string anchor locations
+	public StringRoot p2Anchor;
 	public bool p1AtGoal;
 	public bool p2AtGoal;
 	[Space]
-	[Header("Events (GUI attaches functions here!)")]
+	[Header("Events")]
 	public UnityEvent onLevelComplete;
 	public UnityEvent onLevelFailure;
 	
@@ -163,6 +163,11 @@ public class LevelManager : MonoBehaviour
 	
 	// subscribed to LevelLoader load event
 	private void loadComplete() {
+		
+		
+		// TODO: pull the puppets to the desired locations.
+		// TODO: after this, ground hazard comes in.
+		
 		// start the level!
 		levelState = LEVEL_PLAYING;
 		startTimer();
