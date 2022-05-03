@@ -60,6 +60,7 @@ public class LevelLoader : MonoBehaviour
 		}
 		
 		onLoadComplete?.Invoke();
+		// TODO: then move the puppets. then move the AFTER props.
 		
 	}
 	
