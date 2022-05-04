@@ -25,6 +25,9 @@ public class LevelManager : MonoBehaviour
 	public const float SIDE_BOUNDARY = 0f; // TODO: the "side" of the level. X coordinate.
 	public const float EXIT_SPEED = 16.0f; // exit speed when props leave the stage.
 	public const float ENTRY_SPEED = 16.0f; // entry speed when props enter the stage.
+	// the tag props will use for being brought on after the puppets are moved to their spawnpoint.
+	public const string PROP_DELAY_TAG = "AfterPuppetSpawn";
+	
 	
 	
 	
@@ -423,12 +426,14 @@ internal class StageProp : MonoBehaviour
 {
 	internal Vector3 originalPosition;
 	internal Quaternion originalRotation;
+	internal bool afterPuppetSpawn = false;
 	
     // Start is called before the first frame update
     void Start()
     {
         this.originalPosition = this.transform.position;
 		this.originalRotation = this.transform.rotation;
+		this.afterPuppetSpawn = gameObject.CompareTag(LevelManager.PROP_DELAY_TAG);
 		
 		this.transform.position = new Vector3(this.transform.position.x, LevelManager.TOP_BOUNDARY, this.transform.position.z);
     }
