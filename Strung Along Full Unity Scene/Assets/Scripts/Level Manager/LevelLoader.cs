@@ -9,6 +9,8 @@ public class LevelLoader : MonoBehaviour
 	public static event Action onLoadComplete;
 	public static event Action onUnloadComplete;
 	
+	private List<GameObject> workingProps;
+	
 	
     // Start is called before the first frame update
     void Start()
@@ -28,13 +30,85 @@ public class LevelLoader : MonoBehaviour
 	// 3. add them to the active props list
 	public void load(List<GameObject> props) {
 		
-		foreach (GameObject prop in props) {
-			prop.SetActive(true);
-			prop.AddComponent<LevelEnterTop>();
+		workingProps = props;
+		
+		// only load props that aren't tagged to be loaded after puppets are moved.
+		foreach (GameObject prop in workingProps) {
+			
+			if (!prop.GetComponent<StageProp>().afterPuppetSpawn) {
+				prop.SetActive(true);
+				prop.AddComponent<LevelEnterTop>();
+			}
+			
+			
 		}
 		
-		StartCoroutine( waitEnter(props) );
+		StartCoroutine( waitLoadBefore() );
+		
 	}
+	
+	
+	IEnumerator waitLoadBefore() {
+		
+		foreach (GameObject prop in workingProps) {
+			yield return new WaitUntil( () => prop.GetComponent<LevelEnterTop>() == null);
+		}
+		
+		
+		movePuppets();
+		
+	}
+	
+	private void movePuppets() {
+		
+		// do the thing
+		
+		//StartCoroutine( waitMovePuppets() );
+		loadAfter();
+		
+	}
+	
+	IEnumerator waitMovePuppets() {
+		
+		// TODO: target puppets instead asdavghsdas
+		foreach (GameObject prop in workingProps) {
+			yield return new WaitUntil( () => prop.GetComponent<LevelEnterTop>() == null);
+		}
+		
+		//onLoadComplete?.Invoke();
+		loadAfter();
+		
+	}
+	
+	private void loadAfter() {
+		
+		foreach (GameObject prop in workingProps) {
+			
+			if (prop.GetComponent<StageProp>().afterPuppetSpawn) {
+				prop.SetActive(true);
+				prop.AddComponent<LevelEnterTop>();
+			}
+			
+			
+		}
+		
+		StartCoroutine( waitLoadAfter() );
+		
+	}
+	
+	IEnumerator waitLoadAfter() {
+		
+		foreach (GameObject prop in workingProps) {
+			yield return new WaitUntil( () => prop.GetComponent<LevelEnterTop>() == null);
+		}
+		
+		
+		onLoadComplete?.Invoke();
+		
+	}
+	
+	
+	
 	
 	// clear the stage of everything on it.
 	// 1. move all active objects off the stage
@@ -52,17 +126,7 @@ public class LevelLoader : MonoBehaviour
 		
 	}
 	
-	// sends control back to LevelManager when all props reach target positions.
-	IEnumerator waitEnter(List<GameObject> props) {
-		
-		foreach (GameObject prop in props) {
-			yield return new WaitUntil( () => prop.GetComponent<LevelEnterTop>() == null);
-		}
-		
-		onLoadComplete?.Invoke();
-		// TODO: then move the puppets. then move the AFTER props.
-		
-	}
+	
 	
 	// sends control back to LevelManager when all props have exited the stage.
 	IEnumerator waitExit(List<GameObject> props) {
