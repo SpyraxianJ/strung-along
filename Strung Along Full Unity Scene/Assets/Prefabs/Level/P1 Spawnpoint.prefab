@@ -49,7 +49,7 @@ MonoBehaviour:
   anchorPoint: {fileID: 4886951789303173182}
   puppet: {fileID: 4886951788974076926}
   isPlayer2: 0
-  elasticString: 0
+  elasticString: 1
   stringLength: 12
 --- !u!1 &4886951788974076921
 GameObject:

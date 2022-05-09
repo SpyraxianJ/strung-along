@@ -50,7 +50,12 @@ public class LevelLoader : MonoBehaviour
 			
 			if (!prop.GetComponent<StageProp>().afterPuppetSpawn) {
 				prop.SetActive(true);
-				prop.AddComponent<LevelEnterTop>();
+				
+				MoveProp moverComponent = prop.AddComponent<MoveProp>();
+				moverComponent.target = prop.GetComponent<StageProp>().originalPosition;
+				moverComponent.enabled = true;
+				
+				LevelManager.activeProps.Add(prop);
 			}
 			
 			
@@ -60,13 +65,11 @@ public class LevelLoader : MonoBehaviour
 		
 	}
 	
-	
 	IEnumerator waitLoadBefore() {
 		
 		foreach (GameObject prop in workingProps) {
-			yield return new WaitUntil( () => prop.GetComponent<LevelEnterTop>() == null);
+			yield return new WaitUntil( () => prop.GetComponent<MoveProp>() == null);
 		}
-		
 		
 		movePuppets();
 		
@@ -74,33 +77,35 @@ public class LevelLoader : MonoBehaviour
 	
 	private void movePuppets() {
 		
+		// set temporary string parameters while moving em around
+		p1Anchor.stringLength = 4f;
+		p1Anchor.elasticString = false;
+		p2Anchor.stringLength = 4f;
+		p2Anchor.elasticString = false;
 		
-		//p1Anchor.AddComponent<MoveToPosition>();
-		//p2Anchor.AddComponent<MoveToPosition>();
+		MoveProp moverComponent;
+		// move p1 anchor point
+		moverComponent = p1Anchor.gameObject.AddComponent<MoveProp>();
+		moverComponent.target = p1Spawn.anchorPoint.position;
+		moverComponent.enabled = true;
+		// move p2 anchor point
+		moverComponent = p2Anchor.gameObject.AddComponent<MoveProp>();
+		moverComponent.target = p2Spawn.anchorPoint.position;
+		moverComponent.enabled = true;
 		
-		p1Anchor.SetAnchorPoint(p1Spawn.anchorPoint.position);
-		p1Anchor.connectedObject.gameObject.transform.position = p1Spawn.puppet.position;
-		p1Anchor.stringLength = p1Spawn.stringLength;
-		p1Anchor.elasticString = p1Spawn.elasticString;
-		
-		p2Anchor.SetAnchorPoint(p2Spawn.anchorPoint.position);
-		p2Anchor.connectedObject.gameObject.transform.position = p2Spawn.puppet.position;
-		p2Anchor.stringLength = p2Spawn.stringLength;
-		p2Anchor.elasticString = p2Spawn.elasticString;
-		
-		loadAfter();
-		//StartCoroutine( waitMovePuppets() );
+		StartCoroutine( waitMovePuppets() );
 		
 	}
 	
 	IEnumerator waitMovePuppets() {
+		yield return new WaitUntil( () => p1Anchor.GetComponent<MoveProp>() == null);
+		yield return new WaitUntil( () => p2Anchor.GetComponent<MoveProp>() == null);
 		
-		// TODO: target puppets instead asdavghsdas
-		
-		//yield return new WaitUntil( () => p1Anchor.GetComponent<MoveToPosition>() == null);
-		//yield return new WaitUntil( () => p2Anchor.GetComponent<MoveToPosition>() == null);
-		// meaningless thing to make compiler shut up
-		yield return new WaitUntil( () => p2Anchor.GetComponent<LevelEnterTop>() == null);
+		// update string parameters
+		p1Anchor.stringLength = p1Spawn.stringLength;
+		p1Anchor.elasticString = p1Spawn.elasticString;
+		p2Anchor.stringLength = p2Spawn.stringLength;
+		p2Anchor.elasticString = p2Spawn.elasticString;
 		
 		loadAfter();
 		
@@ -112,8 +117,12 @@ public class LevelLoader : MonoBehaviour
 			
 			if (prop.GetComponent<StageProp>().afterPuppetSpawn) {
 				prop.SetActive(true);
-				//prop.AddComponent<LevelEnterRight>();
-				prop.AddComponent<LevelEnterTop>();
+				
+				MoveProp moverComponent = prop.AddComponent<MoveProp>();
+				moverComponent.target = prop.GetComponent<StageProp>().originalPosition;
+				moverComponent.enabled = true;
+				
+				LevelManager.activeProps.Add(prop);
 			}
 			
 			
@@ -126,7 +135,7 @@ public class LevelLoader : MonoBehaviour
 	IEnumerator waitLoadAfter() {
 		
 		foreach (GameObject prop in workingProps) {
-			yield return new WaitUntil( () => prop.GetComponent<LevelEnterTop>() == null);
+			yield return new WaitUntil( () => prop.GetComponent<MoveProp>() == null);
 		}
 		
 		// all done, clear references.
@@ -138,36 +147,52 @@ public class LevelLoader : MonoBehaviour
 		
 	}
 	
-	
-	
-	
 	// clear the stage of everything on it.
-	// 1. move all active objects off the stage
-	// 2. disable those objects
-	// 3. remove them from the active props list
 	public void unload(List<GameObject> activeProps) {
 		
-		List<GameObject> activePropsIterator = new List<GameObject>(activeProps);
+		workingProps = new List<GameObject>(activeProps);
 		
-		foreach (GameObject prop in activePropsIterator) {
-			prop.AddComponent<LevelExitTop>();
+		foreach (GameObject prop in workingProps) {
+			MoveProp moverComponent = prop.AddComponent<MoveProp>();
+			Vector3 targetPosition;
+			
+			if (prop.TryGetComponent<Collider>(out Collider comp) ) {
+				comp.enabled = false;
+			}
+			
+			if (prop.GetComponent<StageProp>().afterPuppetSpawn) {
+				targetPosition = prop.transform.position - new Vector3(LevelManager.SIDE_BOUNDARY, 0, 0);
+			}
+			else {
+				targetPosition = prop.transform.position + new Vector3(0, LevelManager.TOP_BOUNDARY, 0);
+			}
+			
+			moverComponent.target = targetPosition;
+			moverComponent.enabled = true;
+			
 		}
 		
-		StartCoroutine( waitExit(activeProps) );
+		StartCoroutine( waitExit() );
 		
 	}
 	
 	
 	
 	// sends control back to LevelManager when all props have exited the stage.
-	IEnumerator waitExit(List<GameObject> props) {
+	IEnumerator waitExit() {
 		
-		List<GameObject> propsIterator = new List<GameObject>(props);
-		
-		
-		foreach (GameObject prop in propsIterator) {
-			yield return new WaitUntil( () => prop.GetComponent<LevelExitTop>() == null);
+		foreach (GameObject prop in workingProps) {
+			yield return new WaitUntil( () => prop.GetComponent<MoveProp>() == null);
+			
+			if (prop.TryGetComponent<Collider>(out Collider comp) ) {
+				comp.enabled = true;
+			}
+			
+			LevelManager.activeProps.Remove(prop);
+			prop.SetActive(false);
 		}
+		
+		workingProps = null;
 		
 		onUnloadComplete?.Invoke();
 		

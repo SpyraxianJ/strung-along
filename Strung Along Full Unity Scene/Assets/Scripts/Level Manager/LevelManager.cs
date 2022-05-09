@@ -20,10 +20,11 @@ public class LevelManager : MonoBehaviour
 	private const int LEVEL_LOADING = 1;
 	private const int LEVEL_PLAYING = 2;
 	
-	public const float TOP_BOUNDARY = 20.0f; // the "top" of the level. Y coordinate.
-	public const float SIDE_BOUNDARY = 30f; // the "side" of the level. X coordinate.
+	public const float TOP_BOUNDARY = 24f; // the "top" of the level. Y coordinate.
+	public const float SIDE_BOUNDARY = 34f; // the "side" of the level. X coordinate.
 	public const float EXIT_SPEED = 16.0f; // exit speed when props leave the stage.
-	public const float ENTRY_SPEED = 16.0f; // entry speed when props enter the stage.
+	public const float ENTRY_SPEED = 0.2f; // entry speed when props enter the stage.
+	public const float ENTRY_SPEED_MAX = 20f; // maximum speed allowed when entering the stage.
 	// the tag props will use for being brought on after the puppets are moved to their spawnpoint.
 	public const string PROP_DELAY_TAG = "AfterPuppetSpawn";
 	
@@ -261,10 +262,11 @@ public class LevelManager : MonoBehaviour
 	// GUI calls this for the "Next level" button or something similar.
 	public static void goNextLevel() {
 		
+		int nextActIndex = acts.IndexOf(currentLevel.act);
 		currentLevel = currentLevel.act.getNextLevel(currentLevel);
+		
 		if (currentLevel == null) {
 			// there's no more Levels in the Act. go to next Act.
-			int nextActIndex = acts.IndexOf(currentLevel.act);
 			nextActIndex++;
 			
 			if (acts.Count <= nextActIndex) {
