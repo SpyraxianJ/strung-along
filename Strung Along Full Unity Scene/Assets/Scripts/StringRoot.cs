@@ -48,6 +48,8 @@ public class StringRoot : MonoBehaviour
     public float debugDistance;
     public float debugeffRange;
     float stretchTime;
+    public Transform angleRef;
+    public Transform angleRef2;
 
     // Start is called before the first frame update
     void Awake()
@@ -69,6 +71,7 @@ public class StringRoot : MonoBehaviour
 
         if (manager.tangle != 0) {
 
+
             // Set new root
             //Vector3 puppetAverage = (manager.leftString.connectedObject.transform.position + manager.rightString.connectedObject.transform.position) / 2;
 
@@ -89,12 +92,26 @@ public class StringRoot : MonoBehaviour
 
         float distance = Vector3.Distance(effectiveRoot, connectedObject.transform.position);
         float baseDistance = Vector3.Distance(transform.position, connectedObject.transform.position);
-        //distance = Mathf.Max(distance, baseDistance); // to make sure tangling doesn't ever give us MORE reach
+
+        if (stringLength - baseDistance <= 0) // pretend we aren't tangled this frame, since our bounding area isn't limited by out tangled range
+        {
+
+            Debug.Log("lol2 " + effectiveLength);
+
+            effectiveRoot = transform.position;
+            effectiveLength = stringLength;
+
+            distance = Vector3.Distance(effectiveRoot, connectedObject.transform.position);
+            baseDistance = Vector3.Distance(transform.position, connectedObject.transform.position);
+        }
+
+        //float distanceExtended = Mathf.Max(distance, baseDistance); // to make sure tangling doesn't ever give us MORE reach
         debugDistance = distance;
         debugeffRange = effectiveLength;
 
-        if (distance > effectiveLength || baseDistance > stringLength)
+        if (distance > effectiveLength)
         {
+
 
             if (connectedPuppet != null)
             {
@@ -132,15 +149,33 @@ public class StringRoot : MonoBehaviour
             }
             else
             {
-                // These two lines took more time to write than like, almost the entire rest of this script and I'm really not proud of that.
 
-                // So, I have absolutely 0 idea why this works mathematically (using new Vector3(difference.normalized.y, -difference.normalized.x) to rotate it by 90),
-                // I just did a few examples manually on paper, found the pattern, put it in and it ended up working :)
-                // (which is to flip x and y but invert the sign of the original x value)
-                connectedObject.velocity = Vector3.Project(connectedObject.velocity, new Vector3(difference.normalized.y, -difference.normalized.x));
-                connectedObject.AddForce(-9.8f * Vector3.down, ForceMode.Acceleration);
+                // this entire section is a nightmare sorry
+
+                Vector3 crossOut = Vector3.Cross(connectedObject.velocity, difference);
+
+                angleRef.transform.rotation = Quaternion.LookRotation(crossOut); // This' Z
+                angleRef.transform.position = connectedObject.position;
+
+                angleRef2.transform.rotation = Quaternion.LookRotation(difference); // This' X
+                angleRef2.transform.position = connectedObject.position;
+
+                // this is all disgusting
+
+                //Debug.Log("VelocityBefore: " + connectedObject.velocity);
+
+                connectedObject.velocity =
+                    Vector3.Project(connectedObject.velocity, angleRef2.transform.up) +
+                    Vector3.Project(connectedObject.velocity, angleRef2.transform.right);
+
+                connectedObject.velocity = connectedObject.velocity * (1 - (Time.fixedDeltaTime * 5));
+
+                //Debug.Log("VelocityAfter: " + connectedObject.velocity);
+
+                //connectedObject.velocity = Vector3.Project(connectedObject.velocity, new Vector3(difference.normalized.y, -difference.normalized.x));
 
                 connectedObject.gameObject.transform.position = -(difference.normalized * effectiveLength) + effectiveRoot;
+
             }
 
         }
@@ -151,6 +186,11 @@ public class StringRoot : MonoBehaviour
             if (connectedPuppet != null) {
                 connectedPuppet.beingPulled = false;
             }
+        }
+
+        if (manager.tangle != 0) // This is done bc we might overwrite this earlier, just putting it back for the line render or anythign else that might need it
+        {
+            effectiveRoot = manager.effectiveRoot;
         }
 
         lineVisual.SetPosition(0, transform.position);

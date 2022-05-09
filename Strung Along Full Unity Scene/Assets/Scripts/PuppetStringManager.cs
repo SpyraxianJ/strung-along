@@ -210,6 +210,12 @@ public class PuppetStringManager : MonoBehaviour
             // I never thought I'd see the day...
             tangle += finalRotateValue;
 
+            // bad, i'll fix this if it becomes a problem
+            PuppetController puppetCont = puppet.GetComponent<PuppetController>();
+
+            if (puppetCont != null) {
+                puppetCont.effectiveRoot = effectiveRoot;
+            }
 
         }
     }

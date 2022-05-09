@@ -111,6 +111,7 @@ public class PuppetController : MonoBehaviour
     [Tooltip("This is the amount that this puppet it pushed downwards into the ground every frame, allows for travelling down slopes or stairs without going airborne, but too high will result in strange teleporting")]
     [Range(0, 3)]
     public float groundedDownPerFrame;
+    public Vector3 effectiveRoot;
 
     // Private
 
@@ -214,6 +215,15 @@ public class PuppetController : MonoBehaviour
     {
         // Ground Detection
 
+        if (beingPulled && grounded)
+        {
+            if (rb.velocity.y > pulledAirborneThreshold)
+            {
+                grounded = false;
+                forceAirborneTimer = 0.05f;
+            }
+        }
+
         if (grounded)
         {
             transform.position = transform.position - transform.up * groundedDownPerFrame;
@@ -291,12 +301,6 @@ public class PuppetController : MonoBehaviour
                 grounded = false;
             }
 
-            if (beingPulled) {
-                if (rb.velocity.y > pulledAirborneThreshold) {
-                    grounded = false;
-                    forceAirborneTimer = 0.01f;
-                }
-            }
         }
 
         if (grounded) {
@@ -322,68 +326,79 @@ public class PuppetController : MonoBehaviour
             {
                 // If we are being pulled, decrease our ability to control grounded movement to prevent major string exploits
 
-                rb.velocity = rb.velocity * (1 - pulledDrag * Time.fixedDeltaTime);
-                rb.AddForce(new Vector3(move.x, 0, move.y) * pulledAcceleration);
+                //rb.velocity = rb.velocity * (1 - pulledDrag * Time.fixedDeltaTime);
+                //rb.AddForce(new Vector3(move.x, 0, move.y) * pulledAcceleration);
+
+                Vector3 difference = transform.position - effectiveRoot;
+                effectiveMove = effectiveMove - new Vector2(difference.normalized.x / 2, difference.normalized.z / 2);
 
             }
-            else
+
+            if (effectiveMove.x != 0)
             {
-                if (effectiveMove.x != 0)
+                if (effectiveMove.normalized.x * relativeMaxSpeedX > rb.velocity.x) // tl;dr we want to move faster right than we are already moving
                 {
-                    if (effectiveMove.normalized.x * relativeMaxSpeedX > rb.velocity.x) // tl;dr we want to move faster right than we are already moving
-                    {
-                        rb.velocity += Vector3.right * groundedAcceleration * Time.fixedDeltaTime * 100;
-                    }
-                    else if (effectiveMove.normalized.x * relativeMaxSpeedX < rb.velocity.x) // tl;dr we want to move faster left than we are already moving
-                    {
-                        rb.velocity += Vector3.left * groundedAcceleration * Time.fixedDeltaTime * 100;
-                    }
-                    else
-                    {
-                        rb.velocity = new Vector3(rb.velocity.x * (1 - groundedDeceleration), rb.velocity.y, rb.velocity.z);
-                    }
+                    rb.velocity += Vector3.right * groundedAcceleration * Time.fixedDeltaTime * 100;
+                }
+                else if (effectiveMove.normalized.x * relativeMaxSpeedX < rb.velocity.x) // tl;dr we want to move faster left than we are already moving
+                {
+                    rb.velocity += Vector3.left * groundedAcceleration * Time.fixedDeltaTime * 100;
                 }
                 else
                 {
                     rb.velocity = new Vector3(rb.velocity.x * (1 - groundedDeceleration), rb.velocity.y, rb.velocity.z);
                 }
-
-                if (effectiveMove.y != 0)
+            }
+            else
+            {
+                if (beingPulled == false)
                 {
-                    if (effectiveMove.normalized.y * relativeMaxSpeedY > rb.velocity.z) // tl;dr we want to move faster forward than we are already moving
-                    {
-                        rb.velocity = rb.velocity + Vector3.forward * groundedAcceleration * Time.fixedDeltaTime * 100;
-                    }
-                    else if (effectiveMove.normalized.y * relativeMaxSpeedY < rb.velocity.z) // tl;dr we want to move faster back than we are already moving
-                    {
-                        rb.velocity = rb.velocity + Vector3.back * groundedAcceleration * Time.fixedDeltaTime * 100;
-                    }
-                    else
-                    {
-                        rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, rb.velocity.z * (1 - groundedDeceleration));
-                    }
+                    rb.velocity = new Vector3(rb.velocity.x * (1 - groundedDeceleration), rb.velocity.y, rb.velocity.z);
+                }
+            }
+
+            if (effectiveMove.y != 0)
+            {
+                if (effectiveMove.normalized.y * relativeMaxSpeedY > rb.velocity.z) // tl;dr we want to move faster forward than we are already moving
+                {
+                    rb.velocity = rb.velocity + Vector3.forward * groundedAcceleration * Time.fixedDeltaTime * 100;
+                }
+                else if (effectiveMove.normalized.y * relativeMaxSpeedY < rb.velocity.z) // tl;dr we want to move faster back than we are already moving
+                {
+                    rb.velocity = rb.velocity + Vector3.back * groundedAcceleration * Time.fixedDeltaTime * 100;
                 }
                 else
                 {
                     rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, rb.velocity.z * (1 - groundedDeceleration));
                 }
-
-                // Max speed calculation
-
-                if (new Vector2(rb.velocity.x, rb.velocity.y).magnitude >= groundedMaxSpeed)
+            }
+            else
+            {
+                if (beingPulled == false)
                 {
-                    if (groundedMaxSpeedHardCap)
-                    {
-                        rb.velocity = rb.velocity.normalized * groundedMaxSpeed;
-                    }
-                    else
-                    {
-                        rb.velocity = rb.velocity * (1 - groundedDeceleration); // Uses 1 - groundedDeceleration to make the variable more intuitive for designers to adjust
-                    }
+                    rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, rb.velocity.z * (1 - groundedDeceleration));
                 }
             }
 
-           
+            // Max speed calculation
+
+            if (new Vector2(rb.velocity.x, rb.velocity.y).magnitude >= groundedMaxSpeed)
+            {
+                if (groundedMaxSpeedHardCap)
+                {
+                    rb.velocity = rb.velocity.normalized * groundedMaxSpeed;
+                }
+                else
+                {
+                    rb.velocity = rb.velocity * (1 - groundedDeceleration); // Uses 1 - groundedDeceleration to make the variable more intuitive for designers to adjust
+                }
+            }
+
+            if (beingPulled) {
+                //rb.AddForce(-(transform.position - effectiveRoot), ForceMode.Acceleration);
+            }
+
+
 
         }
         else
@@ -403,10 +418,10 @@ public class PuppetController : MonoBehaviour
                 }
 
             }
-            else // You still have a tiny bit of influence even when tangled
+            else // You still have a bit of influence even when tangled
             {
                 jumpBoostTimer = 0;
-                rb.AddForce(new Vector3(move.normalized.x, 0, move.normalized.y) * airborneAcceleration * 0.1f, ForceMode.Acceleration);
+                rb.AddForce(new Vector3(move.normalized.x, 0, move.normalized.y) * airborneAcceleration * 0.4f, ForceMode.Acceleration);
             }
 
             // Timer increment
@@ -418,10 +433,7 @@ public class PuppetController : MonoBehaviour
     {
         if (jumpPressed)
         {
-            if (beingPulled == false)
-            {
-                Jump();
-            }
+            Jump();
         }
     }
     public void Jump() {
