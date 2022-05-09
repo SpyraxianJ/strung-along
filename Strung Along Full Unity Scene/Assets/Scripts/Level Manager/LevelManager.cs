@@ -7,9 +7,8 @@ public class LevelManager : MonoBehaviour
 {
 	
 	public static List<GameObject> activeProps; // the currently active props on the stage.
-	private static List<Act> acts; // a list of all the levels in the game.
-	private static Level currentLevel;
-	private static Act currentAct;
+	private static List<Act> acts; // a list of all the acts in the game. access levels through acts[#].levels[#]
+	private static Level currentLevel; // reference to the currently playing level.
 	private static LevelLoader loader; // class for handling moving objects on and off the stage.
 	
 	private static bool timerActive; // whether the timer is running or not.
@@ -22,14 +21,11 @@ public class LevelManager : MonoBehaviour
 	private const int LEVEL_PLAYING = 2;
 	
 	public const float TOP_BOUNDARY = 20.0f; // the "top" of the level. Y coordinate.
-	public const float SIDE_BOUNDARY = 0f; // TODO: the "side" of the level. X coordinate.
+	public const float SIDE_BOUNDARY = 30f; // the "side" of the level. X coordinate.
 	public const float EXIT_SPEED = 16.0f; // exit speed when props leave the stage.
 	public const float ENTRY_SPEED = 16.0f; // entry speed when props enter the stage.
 	// the tag props will use for being brought on after the puppets are moved to their spawnpoint.
 	public const string PROP_DELAY_TAG = "AfterPuppetSpawn";
-	
-	
-	
 	
 	[Header("References")]
 	public GameObject player1; // refs to the player objects
@@ -51,6 +47,7 @@ public class LevelManager : MonoBehaviour
 		acts = new List<Act>();
 		activeProps = new List<GameObject>();
 		loader = gameObject.AddComponent<LevelLoader>();
+		loader.initPlayerRefs(p1Anchor, p2Anchor);
 		
 		// init event subscriptions
 		LevelLoader.onLoadComplete += loadComplete;
@@ -75,7 +72,6 @@ public class LevelManager : MonoBehaviour
 		// disable all props before loading the first level
 		clearLevel();
 		currentLevel = null;
-		currentAct = null;
     }
 	
 	// Update is called once per frame
@@ -131,7 +127,7 @@ public class LevelManager : MonoBehaviour
 					GameObject levelObject = gObject.transform.GetChild(i).gameObject;
 					int levelNum = int.Parse(levelObject.name);
 					
-					Level level = new Level(levelNum, levelObject);
+					Level level = new Level(act, levelNum, levelObject);
 					act.levels.Add(level);
 					totalLevels++;
 				}
@@ -139,6 +135,8 @@ public class LevelManager : MonoBehaviour
 			}
 			
 		}
+		
+		actList.Reverse();
 		
 		Debug.Log("Loaded " + totalActs + " acts with " + totalLevels + " levels."); // DEBUG
 		
@@ -160,17 +158,12 @@ public class LevelManager : MonoBehaviour
 	// begin loading a specific level by object reference.
 	private static void loadLevel(Level level) {
 		levelState = LEVEL_LOADING;
-		loader.load(level.props);
+		loader.load(level.props, level.p1Spawn, level.p2Spawn);
 		
 	}
 	
 	// subscribed to LevelLoader load event
 	private void loadComplete() {
-		
-		
-		// TODO: pull the puppets to the desired locations.
-		// TODO: after this, ground hazard comes in.
-		
 		// start the level!
 		levelState = LEVEL_PLAYING;
 		startTimer();
@@ -259,8 +252,7 @@ public class LevelManager : MonoBehaviour
 	// GUI uses this to start specific levels, like from a "level select" menu.
 	// so to start the game, just call loadLevel(1, 1)
 	public static void loadLevel(int actNum, int levelNum) {
-		currentAct = acts[actNum-1];
-		currentLevel = currentAct.levels[levelNum-1];
+		currentLevel = acts[actNum-1].levels[levelNum-1];
 		loadLevel(currentLevel);
 	}
 	
@@ -269,24 +261,22 @@ public class LevelManager : MonoBehaviour
 	// GUI calls this for the "Next level" button or something similar.
 	public static void goNextLevel() {
 		
-		currentLevel = currentAct.getNextLevel(currentLevel);
+		currentLevel = currentLevel.act.getNextLevel(currentLevel);
 		if (currentLevel == null) {
 			// there's no more Levels in the Act. go to next Act.
-			int nextActIndex = acts.IndexOf(currentAct);
+			int nextActIndex = acts.IndexOf(currentLevel.act);
 			nextActIndex++;
 			
 			if (acts.Count <= nextActIndex) {
 				// there's no more Acts in the game.
 				// DEBUG: loop back to Act 1, Level 1.
 				// end-of-game stuff will go here.
-				currentAct = acts[0];
-				currentLevel = currentAct.levels[0];
+				currentLevel = acts[0].levels[0];
 			}
 			else {
 				// next Act is present. start at Level 1.
 				// end-of-act stuff will go here.
-				currentAct = acts[nextActIndex];
-				currentLevel = currentAct.levels[0];
+				currentLevel = acts[nextActIndex].levels[0];
 			}
 		}
 		
@@ -313,7 +303,7 @@ public class LevelManager : MonoBehaviour
 	}
 	// number of the current Act.
 	public static int getCurrentAct() {
-		return currentAct.number;
+		return currentLevel.act.number;
 	}
 	// total number of Acts in the game.
 	public static int getActCount() {
@@ -325,7 +315,7 @@ public class LevelManager : MonoBehaviour
 	}
 	// number of levels left (after the current Level) in the current Act.
 	public static int getActRemainingLevels() {
-		return currentAct.levels.Count - currentLevel.number;
+		return currentLevel.act.levels.Count - currentLevel.number;
 	}
 	// the amount of time the level has been playing for.
 	// stops when the level is completed, and resets when a new level is loaded.
@@ -376,14 +366,20 @@ internal class Act
 // internal data class for Levels.
 internal class Level
 {
+	internal Act act; // reference to the Act this Level is part of
 	internal GameObject parent; // reference to the object in the Hierarchy
 	internal int number;
 	internal List<GameObject> props; // references to all the props in this Level. i.e. all children of the parent.
+	internal Goal p1Goal;
+	internal Goal p2Goal;
+	internal Spawnpoint p1Spawn;
+	internal Spawnpoint p2Spawn;
 	
 	// starts at 0. when the players complete a level faster than they have before, this keeps track of it!
 	internal float bestTime; 
 	
-	internal Level(int number, GameObject parent) {
+	internal Level(Act act, int number, GameObject parent) {
+		this.act = act;
 		this.number = number;
 		this.parent = parent;
 		
@@ -398,7 +394,47 @@ internal class Level
 		for (int i = 0; i < parent.transform.childCount; i++) {
 			GameObject propObject = parent.transform.GetChild(i).gameObject;
 			propList.Add(propObject);
-			propObject.AddComponent<StageProp>();
+			
+			StageProp stagePropComponent = propObject.AddComponent<StageProp>();
+			stagePropComponent.init();
+			
+			if (propObject.GetComponent<Spawnpoint>() ) {
+				// the prop is a spawnpoint. but whose?!
+				Spawnpoint newSpawn = propObject.GetComponent<Spawnpoint>();
+				
+				if (newSpawn.isPlayer2) {
+					p2Spawn = newSpawn;
+				} else {
+					p1Spawn = newSpawn;
+				}
+			}
+			
+			if (propObject.GetComponent<Goal>() ) {
+				// the prop is a goal. but whose?!
+				Goal newGoal = propObject.GetComponent<Goal>();
+				
+				if (newGoal.isPlayer2) {
+					p2Goal = newGoal;
+				} else {
+					p1Goal = newGoal;
+				}
+			}
+			
+			
+		}
+		
+		// if a level is missing a key component, yell at the level designer.
+		if (p1Spawn == null) {
+			Debug.LogError("Act " + act.number + " Level " + number + " has no P1 spawnpoint set!");
+		}
+		if (p2Spawn == null) {
+			Debug.LogError("Act " + act.number + " Level " + number + " has no P2 spawnpoint set!");
+		}
+		if (p1Goal == null) {
+			Debug.LogError("Act " + act.number + " Level " + number + " has no P1 goal set!");
+		}
+		if (p2Goal == null) {
+			Debug.LogError("Act " + act.number + " Level " + number + " has no P2 goal set!");
 		}
 		
 	}
@@ -424,18 +460,14 @@ internal class Level
 // this is also where the prop is teleported off-stage before the game begins.
 internal class StageProp : MonoBehaviour
 {
-	internal Vector3 originalPosition;
-	internal Quaternion originalRotation;
-	internal bool afterPuppetSpawn = false;
+	public Vector3 originalPosition;
+	public Quaternion originalRotation;
+	public bool afterPuppetSpawn = false;
 	
     // Start is called before the first frame update
     void Start()
     {
-        this.originalPosition = this.transform.position;
-		this.originalRotation = this.transform.rotation;
-		this.afterPuppetSpawn = gameObject.CompareTag(LevelManager.PROP_DELAY_TAG);
-		
-		this.transform.position = new Vector3(this.transform.position.x, LevelManager.TOP_BOUNDARY, this.transform.position.z);
+        
     }
 
     // Update is called once per frame
@@ -443,4 +475,22 @@ internal class StageProp : MonoBehaviour
     {
         
     }
+	
+	public void init() {
+		// MonoBehaviours don't let me use constructors so i have to do this lmao
+		
+		this.originalPosition = this.transform.position;
+		this.originalRotation = this.transform.rotation;
+		this.afterPuppetSpawn = gameObject.CompareTag(LevelManager.PROP_DELAY_TAG);
+		
+		
+		if (afterPuppetSpawn) {
+			// if from the right:
+			this.transform.position = new Vector3(LevelManager.SIDE_BOUNDARY, this.transform.position.y, this.transform.position.z);
+		} else {
+			// if from the top:
+			this.transform.position = new Vector3(this.transform.position.x, LevelManager.TOP_BOUNDARY, this.transform.position.z);
+		}
+	}
+	
 }
