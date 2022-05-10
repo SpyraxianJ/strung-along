@@ -26,7 +26,7 @@ public class MoveProp : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
 		transform.position = Vector3.SmoothDamp(transform.position, target, ref velocity, moveSpeed, maxSpeed);
 		

@@ -23,8 +23,8 @@ public class LevelManager : MonoBehaviour
 	public const float TOP_BOUNDARY = 24f; // the "top" of the level. Y coordinate.
 	public const float SIDE_BOUNDARY = 34f; // the "side" of the level. X coordinate.
 	public const float EXIT_SPEED = 16.0f; // exit speed when props leave the stage.
-	public const float ENTRY_SPEED = 0.2f; // entry speed when props enter the stage.
-	public const float ENTRY_SPEED_MAX = 20f; // maximum speed allowed when entering the stage.
+	public const float ENTRY_SPEED = 0.1f; // entry speed when props enter the stage.
+	public const float ENTRY_SPEED_MAX = 10f; // maximum speed allowed when entering the stage.
 	// the tag props will use for being brought on after the puppets are moved to their spawnpoint.
 	public const string PROP_DELAY_TAG = "AfterPuppetSpawn";
 	
