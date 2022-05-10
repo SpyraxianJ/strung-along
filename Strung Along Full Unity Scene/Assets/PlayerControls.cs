@@ -55,6 +55,15 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""Grab2"",
+                    ""type"": ""Button"",
+                    ""id"": ""4f6b602c-3ee7-446a-8573-e3019081e092"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""Attack"",
                     ""type"": ""Button"",
                     ""id"": ""732b807a-5f85-4a1e-8421-e12b7f2fe27a"",
@@ -146,28 +155,6 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Jump"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""2dfc41de-5fc5-4cc9-ae89-264824e4a8a0"",
-                    ""path"": ""<Gamepad>/rightTrigger"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Grab"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""df5bd760-eccb-41d5-9455-006c74dd43a7"",
-                    ""path"": ""<Gamepad>/rightShoulder"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Grab"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -280,6 +267,28 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""action"": ""TempMove2"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""92551fa0-1538-4961-b74f-897f3d5949c3"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Grab2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""00159eed-dc9d-484c-b76a-fc22d34f3098"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Grab2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -330,6 +339,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_Grab = m_Player.FindAction("Grab", throwIfNotFound: true);
+        m_Player_Grab2 = m_Player.FindAction("Grab2", throwIfNotFound: true);
         m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
         m_Player_TempMove2 = m_Player.FindAction("TempMove2", throwIfNotFound: true);
         m_Player_TempJump2 = m_Player.FindAction("TempJump2", throwIfNotFound: true);
@@ -398,6 +408,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Move;
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_Grab;
+    private readonly InputAction m_Player_Grab2;
     private readonly InputAction m_Player_Attack;
     private readonly InputAction m_Player_TempMove2;
     private readonly InputAction m_Player_TempJump2;
@@ -408,6 +419,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         public InputAction @Move => m_Wrapper.m_Player_Move;
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @Grab => m_Wrapper.m_Player_Grab;
+        public InputAction @Grab2 => m_Wrapper.m_Player_Grab2;
         public InputAction @Attack => m_Wrapper.m_Player_Attack;
         public InputAction @TempMove2 => m_Wrapper.m_Player_TempMove2;
         public InputAction @TempJump2 => m_Wrapper.m_Player_TempJump2;
@@ -429,6 +441,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @Grab.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGrab;
                 @Grab.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGrab;
                 @Grab.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGrab;
+                @Grab2.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGrab2;
+                @Grab2.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGrab2;
+                @Grab2.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGrab2;
                 @Attack.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAttack;
                 @Attack.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAttack;
                 @Attack.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAttack;
@@ -451,6 +466,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @Grab.started += instance.OnGrab;
                 @Grab.performed += instance.OnGrab;
                 @Grab.canceled += instance.OnGrab;
+                @Grab2.started += instance.OnGrab2;
+                @Grab2.performed += instance.OnGrab2;
+                @Grab2.canceled += instance.OnGrab2;
                 @Attack.started += instance.OnAttack;
                 @Attack.performed += instance.OnAttack;
                 @Attack.canceled += instance.OnAttack;
@@ -502,6 +520,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         void OnMove(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnGrab(InputAction.CallbackContext context);
+        void OnGrab2(InputAction.CallbackContext context);
         void OnAttack(InputAction.CallbackContext context);
         void OnTempMove2(InputAction.CallbackContext context);
         void OnTempJump2(InputAction.CallbackContext context);

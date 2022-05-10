@@ -163,7 +163,7 @@ public class StringRoot : MonoBehaviour
                     Vector3.Project(connectedObject.velocity, angleRef2.transform.up) +
                     Vector3.Project(connectedObject.velocity, angleRef2.transform.right);
 
-                connectedObject.velocity = connectedObject.velocity * (1 - (Time.fixedDeltaTime * 5));
+                connectedObject.velocity = connectedObject.velocity * (1 - (Time.fixedDeltaTime * 0.5f));
 
                 //Debug.Log("VelocityAfter: " + connectedObject.velocity);
 

@@ -207,7 +207,7 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 567
-  groundedDownPerFrame: 0.3
+  groundedDownPerFrame: 0.1
   effectiveRoot: {x: 0, y: 0, z: 0}
 --- !u!54 &8461784611382557434
 Rigidbody:

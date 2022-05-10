@@ -267,7 +267,7 @@ public class PuppetController : MonoBehaviour
 
             if (groundedRayNumber > 0)
             {
-                for (int i = 0; i < groundedRayNumber; i++)
+                for (int i = 0; i < groundedRayNumber; i++) // minor problem with the ground detection if grounded down per frame is >= ray length
                 {
                     hit = new RaycastHit();
                     float rot = (Mathf.PI * i * 2) / groundedRayNumber;

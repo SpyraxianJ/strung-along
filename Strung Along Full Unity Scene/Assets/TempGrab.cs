@@ -14,7 +14,7 @@ public class TempGrab : MonoBehaviour
 
     [Space]
 
-    bool secondPlayer;
+    public bool secondPlayer;
 
     void Awake()
     {
@@ -34,12 +34,12 @@ public class TempGrab : MonoBehaviour
         else { 
         }
         controls = new PlayerControls();
-        controls.Player.Grab.performed += ctx =>
+        controls.Player.Grab2.performed += ctx =>
         {
             grabPressed = ctx.ReadValueAsButton();
             Debug.Log(ctx.ReadValueAsButton());
         };
-        controls.Player.Grab.canceled += ctx =>
+        controls.Player.Grab2.canceled += ctx =>
         {
             grabPressed = false;
         };
