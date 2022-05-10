@@ -88,11 +88,11 @@ public class LevelLoader : MonoBehaviour
 		MoveProp moverComponent;
 		// move p1 anchor point
 		moverComponent = p1Anchor.gameObject.AddComponent<MoveProp>();
-		moverComponent.target = p1Spawn.anchorPoint.position;
+		moverComponent.target = p1Spawn.transform.position;
 		moverComponent.enabled = true;
 		// move p2 anchor point
 		moverComponent = p2Anchor.gameObject.AddComponent<MoveProp>();
-		moverComponent.target = p2Spawn.anchorPoint.position;
+		moverComponent.target = p2Spawn.transform.position;
 		moverComponent.enabled = true;
 		
 		StartCoroutine( waitMovePuppets() );
