@@ -104,7 +104,6 @@ public class TempGrab : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         grabbed = other.GetComponent<Rigidbody>();
-        Debug.Log("piss");
         grabbed.isKinematic = true;
     }
 

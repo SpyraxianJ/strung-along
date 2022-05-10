@@ -276,7 +276,7 @@ public class PuppetController : MonoBehaviour
         //Debug.Log(move.x + " " + move.y);
 
         // Temp gross grab compatability
-        if (tempGrab.grabbed != null)
+        if (tempGrab.grabbed != null && isClimbing == true)
         {
             GrabRelease();
         }
