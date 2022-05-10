@@ -102,6 +102,7 @@ public class LevelLoader : MonoBehaviour
 	IEnumerator waitMovePuppets() {
 		yield return new WaitUntil( () => p1Anchor.GetComponent<MoveProp>() == null);
 		yield return new WaitUntil( () => p2Anchor.GetComponent<MoveProp>() == null);
+		yield return new WaitForSeconds(1.25f);
 		
 		// update string parameters
 		p1Anchor.stringLength = p1Spawn.stringLength;
