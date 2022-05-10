@@ -108,15 +108,14 @@ public class LevelManager : MonoBehaviour
 		
 		int totalActs = 0; // DEBUG
 		int totalLevels = 0; // DEBUG
-		bool debugMode = false;
+		bool debugLevel = false;
 		
 		// DEBUG
 		// if there's a GameObject named "TEST", just load that and nothing else. useful for testing!
 		foreach (GameObject gObject in Resources.FindObjectsOfTypeAll(typeof(GameObject)) as GameObject[]) {
 			
 			if ( gObject.name.Equals("TEST") ) {
-				debugMode = true;
-				
+				debugLevel = true;
 				
 				Act act = new Act(gObject, 1);
 				actList.Add(act);
@@ -127,6 +126,7 @@ public class LevelManager : MonoBehaviour
 				totalLevels++;
 				
 				Debug.Log("Loaded TEST level. When you're done, rename it to the level number and drop it under an 'act' GameObject!");
+				break;
 			}
 			
 		}
@@ -135,18 +135,14 @@ public class LevelManager : MonoBehaviour
 		// iterate over every GameObject in the Hierarchy. see this is why we only call this once.
 		foreach (GameObject gObject in Resources.FindObjectsOfTypeAll(typeof(GameObject)) as GameObject[]) {
 			
-			
-			
-			
 			// check if the first 3 characters are "act".
 			// TODO: this means we can't have any other GameObject starting with "act". i'll have to think about this.
 			if ( gObject.name.Length > 3 && gObject.name.Substring(0, 3).Equals("act") ) {
 				
-				if (debugMode) {
+				if (debugLevel) {
 					gObject.SetActive(false);
 					continue;
 				}
-				
 				
 				// we have a match! add it to the Act list.
 				int actNum = int.Parse( gObject.name.Substring(3) );
