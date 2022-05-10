@@ -568,6 +568,8 @@ public class PuppetController : MonoBehaviour
     {
         climbValue = 0;
         isClimbing = false;
+
+        rb.velocity = rb.velocity * 0.5f;
     }
 
     public void ClimbTick() {
@@ -586,6 +588,8 @@ public class PuppetController : MonoBehaviour
 
                 // temp simple patch
                 transform.position = Vector3.MoveTowards(transform.position, stringManager.effectiveRoot, climbingSpeed * Time.fixedDeltaTime);
+                //transform.position = Vector3.MoveTowards(transform.position, new Vector3(stringManager.effectiveRoot.x, transform.position.y, stringManager.effectiveRoot.z), Time.fixedDeltaTime);
+                transform.position += (new Vector3(stringManager.effectiveRoot.x, transform.position.y, stringManager.effectiveRoot.z) - transform.position) * Time.fixedDeltaTime/2;
 
                 // TEMP FAKE GRAVITY :))))
                 rb.AddForce((stringManager.effectiveRoot - transform.position) * 2);
@@ -596,9 +600,10 @@ public class PuppetController : MonoBehaviour
                 // Over 0.5
 
                 // Should do this for both when we can climb the other's string
-                transform.position = Vector3.Lerp(stringManager.effectiveRoot, thisStringRoot.transform.position, (climbValue - 0.5f) * 2);
+                transform.position = Vector3.Lerp(stringManager.effectiveRoot, thisStringRoot.transform.position, (climbValue - 0.5f) * 5);
 
                 transform.position = Vector3.MoveTowards(transform.position, thisStringRoot.transform.position, climbingSpeed * Time.fixedDeltaTime);
+                transform.position += (new Vector3(thisStringRoot.transform.position.x, transform.position.y, thisStringRoot.transform.position.z) - transform.position) * Time.fixedDeltaTime/2;
 
             }
 
@@ -606,9 +611,11 @@ public class PuppetController : MonoBehaviour
         else {
             Debug.Log("AAAAAAAAAAAA");
             transform.position = Vector3.MoveTowards(transform.position, thisStringRoot.transform.position, climbingSpeed * Time.fixedDeltaTime);
+            //transform.position = Vector3.MoveTowards(transform.position, new Vector3(thisStringRoot.transform.position.x, transform.position.y, thisStringRoot.transform.position.z), Time.fixedDeltaTime);
+            transform.position += (new Vector3(thisStringRoot.transform.position.x, transform.position.y, thisStringRoot.transform.position.z) - transform.position) * Time.fixedDeltaTime/2;
 
             // TEMP FAKE GRAVITY :))))
-            rb.AddForce((thisStringRoot.transform.position - transform.position) * 2);
+            rb.AddForce((thisStringRoot.transform.position - transform.position) * 5);
             rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
         }
 
