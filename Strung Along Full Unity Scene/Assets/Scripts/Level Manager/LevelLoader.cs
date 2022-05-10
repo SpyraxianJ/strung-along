@@ -9,9 +9,11 @@ public class LevelLoader : MonoBehaviour
 	public static event Action onLoadComplete;
 	public static event Action onUnloadComplete;
 	
+	// set on initialization: static throughout gameplay.
 	private StringRoot p1Anchor;
 	private StringRoot p2Anchor;
 	
+	// set each time a level is loaded: dynamic.
 	private List<GameObject> workingProps = null;
 	private Spawnpoint p1Spawn = null;
 	private Spawnpoint p2Spawn = null;

@@ -56,6 +56,15 @@ public class StringRoot : MonoBehaviour
     {
         connectedPuppet = connectedObject.gameObject.GetComponent<PuppetController>();
         //targetPosition = transform.position; // turn off to manually set on startup rather than being based on current position
+		
+		// DEBUG harper here, making unity happy about these empty refs. delete when you've got it all sorted <3
+		GameObject angleRefObj = new GameObject("angleRef");
+		GameObject angleRef2Obj = new GameObject("angleRef2");
+		angleRef = angleRefObj.transform;
+		angleRef2 = angleRef2Obj.transform;
+		
+		
+		
     }
 
     // Update is called once per frame
@@ -96,7 +105,7 @@ public class StringRoot : MonoBehaviour
         if (stringLength - baseDistance <= 0) // pretend we aren't tangled this frame, since our bounding area isn't limited by out tangled range
         {
 
-            Debug.Log("lol2 " + effectiveLength);
+            //Debug.Log("lol2 " + effectiveLength);
 
             effectiveRoot = transform.position;
             effectiveLength = stringLength;
