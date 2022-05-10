@@ -92,7 +92,7 @@ public class TempGrab : MonoBehaviour
         if (grabPressed == false && grabbed != null)
         {
             grabDetect.enabled = false;
-            grabbed.isKinematic = false;
+            grabbed.isKinematic = true;
             grabbed = null;
         }
 
@@ -106,5 +106,13 @@ public class TempGrab : MonoBehaviour
         grabbed = other.GetComponent<Rigidbody>();
         Debug.Log("piss");
         grabbed.isKinematic = true;
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (grabbed != null) {
+            grabbed.isKinematic = true;
+        }
+        grabbed = null;
     }
 }

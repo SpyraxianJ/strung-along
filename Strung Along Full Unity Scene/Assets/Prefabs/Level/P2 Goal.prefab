@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1810861810102240246}
   - component: {fileID: 1810861810102240245}
   - component: {fileID: 1810861810102240234}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: P2 Goal
   m_TagString: Untagged
   m_Icon: {fileID: 0}

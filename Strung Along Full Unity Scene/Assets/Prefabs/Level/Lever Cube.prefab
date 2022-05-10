@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 272125373094265070}
   - component: {fileID: 1159629203058512185}
   - component: {fileID: 778880995240076644}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Lever Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}

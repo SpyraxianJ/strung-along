@@ -570,8 +570,8 @@ public class PuppetController : MonoBehaviour
 
     public void ClimbTick() {
 
-        // We don't want velocity here, just keep it at 0 to be safe
-        //rb.velocity = Vector3.zero;
+        // We don't want y velocity here, just keep it at 0 to be safe
+        rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
 
         SetClimbValue();
 
@@ -584,6 +584,10 @@ public class PuppetController : MonoBehaviour
 
                 // temp simple patch
                 transform.position = Vector3.MoveTowards(transform.position, stringManager.effectiveRoot, climbingSpeed * Time.fixedDeltaTime);
+
+                // TEMP FAKE GRAVITY :))))
+                rb.AddForce(stringManager.effectiveRoot - transform.position);
+                rb.velocity = new Vector3(rb.velocity.x * 0.995f, 0, rb.velocity.z * 0.995f);
             }
             else
             {
@@ -593,12 +597,18 @@ public class PuppetController : MonoBehaviour
                 transform.position = Vector3.Lerp(stringManager.effectiveRoot, thisStringRoot.transform.position, (climbValue - 0.5f) * 2);
 
                 transform.position = Vector3.MoveTowards(transform.position, thisStringRoot.transform.position, climbingSpeed * Time.fixedDeltaTime);
+                rb.velocity = new Vector3(rb.velocity.x * 0.995f, 0, rb.velocity.z * 0.995f);
+
             }
 
         }
         else {
             Debug.Log("AAAAAAAAAAAA");
             transform.position = Vector3.MoveTowards(transform.position, thisStringRoot.transform.position, climbingSpeed * Time.fixedDeltaTime);
+
+            // TEMP FAKE GRAVITY :))))
+            rb.AddForce(thisStringRoot.transform.position - transform.position);
+            rb.velocity = new Vector3(rb.velocity.x * 0.995f, 0, rb.velocity.z * 0.995f);
         }
 
     }

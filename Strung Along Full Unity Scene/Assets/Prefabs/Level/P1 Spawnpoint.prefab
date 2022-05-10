@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7993517201442467256}
   - component: {fileID: 5924089533943451632}
   - component: {fileID: 4886951788896199881}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: P1 Spawnpoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -96,8 +96,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46075f8c80db791419c33df5a3cd2e71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  anchorPoint: {fileID: 0}
-  puppet: {fileID: 0}
   isPlayer2: 0
+  distanceFromGround: 0
   elasticString: 1
   stringLength: 12
