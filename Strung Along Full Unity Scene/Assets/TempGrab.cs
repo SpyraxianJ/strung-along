@@ -10,7 +10,7 @@ public class TempGrab : MonoBehaviour
     public SphereCollider grabDetect;
     public Vector3 lastFrame;
 
-    bool grabPressed = false;
+    public bool grabPressed = false;
 
     [Space]
 
@@ -31,18 +31,19 @@ public class TempGrab : MonoBehaviour
                 grabPressed = false;
             };
         }
-        else { 
+        else
+        {
+            controls = new PlayerControls();
+            controls.Player.Grab2.performed += ctx =>
+            {
+                grabPressed = ctx.ReadValueAsButton();
+                Debug.Log(ctx.ReadValueAsButton());
+            };
+            controls.Player.Grab2.canceled += ctx =>
+            {
+                grabPressed = false;
+            };
         }
-        controls = new PlayerControls();
-        controls.Player.Grab2.performed += ctx =>
-        {
-            grabPressed = ctx.ReadValueAsButton();
-            Debug.Log(ctx.ReadValueAsButton());
-        };
-        controls.Player.Grab2.canceled += ctx =>
-        {
-            grabPressed = false;
-        };
     }
     
     void OnEnable()
@@ -63,6 +64,11 @@ public class TempGrab : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+
+        if (grabDetect.enabled == true && grabbed == null) {
+            grabDetect.enabled = false;
+        }
+
         if (grabbed != null)
         {
             grabbed.isKinematic = true;
@@ -80,7 +86,7 @@ public class TempGrab : MonoBehaviour
             grabDetect.enabled = true;
             if (grabbed != null) {
                 Vector3 move = transform.position - lastFrame;
-                grabbed.position += new Vector3(move.x, grabbed.position.y, move.z); // y movement
+                grabbed.position += new Vector3(move.x, 0, move.z); // y movement
             }
         }
         if (grabPressed == false && grabbed != null)

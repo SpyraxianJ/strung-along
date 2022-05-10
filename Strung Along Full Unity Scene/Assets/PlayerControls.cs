@@ -289,6 +289,17 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""action"": ""Grab2"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""68734d6b-d48b-43eb-8c5f-f518d9462701"",
+                    ""path"": ""<Keyboard>/l"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Grab2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },

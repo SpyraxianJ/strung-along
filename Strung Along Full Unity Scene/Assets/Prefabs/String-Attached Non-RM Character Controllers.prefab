@@ -1933,7 +1933,8 @@ MonoBehaviour:
   puppet2LastFrame: {x: 0, y: 0, z: 0}
   effectiveRootLastFrame: {x: 0, y: 0, z: 0}
   lerpToEffectiveRootSpeed: 3
-  puppetDistanceEffectiveRootFactor: 1.8
+  puppetDistanceEffectiveRootFactor: 1.04
+  puppetDistanceEffectiveRootFactorTangled: 1.8
   effectiveRootPuppetPositionInfluence: 0.7
   debugeffRange: 0
 --- !u!1 &3167654759249926488
@@ -2065,6 +2066,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3167654759174068984}
     m_Modifications:
+    - target: {fileID: 439617497744736901, guid: 22b6b98194cdd0841b47984bfc299e19, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 439617497744736901, guid: 22b6b98194cdd0841b47984bfc299e19, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 439617497744736901, guid: 22b6b98194cdd0841b47984bfc299e19, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1263892433115001763, guid: 22b6b98194cdd0841b47984bfc299e19, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -2085,6 +2098,14 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -2
       objectReference: {fileID: 0}
+    - target: {fileID: 1779473841372733556, guid: 22b6b98194cdd0841b47984bfc299e19, type: 3}
+      propertyPath: stringManager
+      value: 
+      objectReference: {fileID: 3167654759174068871}
+    - target: {fileID: 1779473841372733556, guid: 22b6b98194cdd0841b47984bfc299e19, type: 3}
+      propertyPath: thisStringRoot
+      value: 
+      objectReference: {fileID: 3167654758976716786}
     - target: {fileID: 2107118651359688901, guid: 22b6b98194cdd0841b47984bfc299e19, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -2133,6 +2154,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7098019107874276634, guid: 22b6b98194cdd0841b47984bfc299e19, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7098019107874276634, guid: 22b6b98194cdd0841b47984bfc299e19, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7098019107874276634, guid: 22b6b98194cdd0841b47984bfc299e19, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8436034256400593980, guid: 22b6b98194cdd0841b47984bfc299e19, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -2149,6 +2182,14 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8946709668202817515, guid: 22b6b98194cdd0841b47984bfc299e19, type: 3}
+      propertyPath: stringManager
+      value: 
+      objectReference: {fileID: 3167654759174068871}
+    - target: {fileID: 8946709668202817515, guid: 22b6b98194cdd0841b47984bfc299e19, type: 3}
+      propertyPath: thisStringRoot
+      value: 
+      objectReference: {fileID: 3167654758654512373}
     - target: {fileID: 8946709668202817516, guid: 22b6b98194cdd0841b47984bfc299e19, type: 3}
       propertyPath: m_LocalPosition.x
       value: 11

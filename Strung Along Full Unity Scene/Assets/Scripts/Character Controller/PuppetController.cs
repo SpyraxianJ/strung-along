@@ -12,7 +12,8 @@ public class PuppetController : MonoBehaviour
 
     [Tooltip("This is the other playable puppet, it should never be empty otherwise it will probably cause errors")]
     public PuppetController otherPuppet;
-    //public stringthingidk string;
+    public PuppetStringManager stringManager;
+    public StringRoot thisStringRoot;
 
     [Space]
 
@@ -21,10 +22,12 @@ public class PuppetController : MonoBehaviour
     private bool movePressed;
     private Vector2 move;
     private bool jumpPressed;
+    bool grabPressed;
 
     private float speed = 0;
     [Tooltip("Determines if the puppet is currently on the ground or not, public for unity inspector debugging purposes, can be made private later without issue")]
     private bool isGrounded = true;
+    public bool isClimbing = false;
     private bool jumpReleased = true;
     public float groundedMaxSpeed = 10;
 
@@ -41,6 +44,10 @@ public class PuppetController : MonoBehaviour
     [Tooltip("If true, movement is limited to prevent exploiting string mechanics")]
     public bool beingPulled;
 
+    [Tooltip("This is how much we have climbed up our string currently, used to make it so the string can move and we move with it.")]
+    // Goes between 0-1, knot is always at 0.5 if it exists
+    public float climbValue;
+
     [Space]
 
     [Header("Movement Attributes")]
@@ -50,6 +57,12 @@ public class PuppetController : MonoBehaviour
     public float pulledAcceleration;
     public float pulledDrag;
     public float pulledAirborneThreshold;
+
+    [Space]
+
+    [Header("Climbing Attributes")]
+
+    public float climbingSpeed;
 
     [Space]
 
@@ -124,6 +137,10 @@ public class PuppetController : MonoBehaviour
     float timeSinceGrounded;
     bool hasJumped;
 
+    [Space]
+
+    public TempGrab tempGrab;
+
 
     void Awake()
     {
@@ -159,6 +176,17 @@ public class PuppetController : MonoBehaviour
                 movePressed = false;
                 //Debug.Log(movePressed);
             };
+            controls.Player.Grab.performed += ctx =>
+            {
+                grabPressed = ctx.ReadValueAsButton();
+                Debug.Log(ctx.ReadValueAsButton());
+                GrabStart();
+            };
+            controls.Player.Grab.canceled += ctx =>
+            {
+                grabPressed = false;
+                GrabRelease();
+            };
         }
         else // THIS IS VERY TEMPORARY, just so the playtesters can have access to both players
         {
@@ -191,6 +219,17 @@ public class PuppetController : MonoBehaviour
                 movePressed = false;
                 //Debug.Log(movePressed);
             };
+            controls.Player.Grab2.performed += ctx =>
+            {
+                grabPressed = ctx.ReadValueAsButton();
+                Debug.Log(ctx.ReadValueAsButton());
+                GrabStart();
+            };
+            controls.Player.Grab2.canceled += ctx =>
+            {
+                grabPressed = false;
+                GrabRelease();
+            };
         }
 
     }
@@ -222,12 +261,29 @@ public class PuppetController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        GroundDetection();
-        HandleMovement();
-        HandleJump(); //don't remove
+        if (isClimbing == false) // Do normal stuff
+        {
+            GroundDetection();
+            HandleMovement();
+            HandleJump(); //don't remove
+        }
+        else // Pause all normal movement stuff, just climb
+        {
+            Debug.Log("AA");
+            ClimbTick();
+        }        
+        
         //Debug.Log(move.x + " " + move.y);
 
+        // Temp gross grab compatability
+        if (tempGrab.grabbed != null)
+        {
+            GrabRelease();
+        }
+
         rb.AddForce(Vector3.down * gravity, ForceMode.Acceleration);
+
+
     }
     public void GroundDetection()
     {
@@ -491,6 +547,83 @@ public class PuppetController : MonoBehaviour
             // required for ensuring the puppet gets off the ground consistantly when jumping
             gameObject.transform.position = transform.position + Vector3.up * 0.05f;
         }
+    }
+
+    // Grab stuff.
+    // NOTE: A fair bit of this might seem redundant, and yeah it kind of is right now but it's foundation for when we want the ability to climb the other puppet's strings, so leave it in there for now.
+
+    public void GrabStart()
+    {
+
+        // First, we need to find out where we are in relation to our own string
+        SetClimbValue();
+
+        isClimbing = true;
+
+    }
+
+    public void GrabRelease()
+    {
+        climbValue = 0;
+        isClimbing = false;
+    }
+
+    public void ClimbTick() {
+
+        // We don't want velocity here, just keep it at 0 to be safe
+        //rb.velocity = Vector3.zero;
+
+        SetClimbValue();
+
+        if (stringManager.tangle != 0)
+        {
+
+            if (transform.position.y < stringManager.effectiveRoot.y)
+            {
+                // Under 0.5
+
+                // temp simple patch
+                transform.position = Vector3.MoveTowards(transform.position, stringManager.effectiveRoot, climbingSpeed * Time.fixedDeltaTime);
+            }
+            else
+            {
+                // Over 0.5
+
+                // Should do this for both when we can climb the other's string
+                transform.position = Vector3.Lerp(stringManager.effectiveRoot, thisStringRoot.transform.position, (climbValue - 0.5f) * 2);
+
+                transform.position = Vector3.MoveTowards(transform.position, thisStringRoot.transform.position, climbingSpeed * Time.fixedDeltaTime);
+            }
+
+        }
+        else {
+            Debug.Log("AAAAAAAAAAAA");
+            transform.position = Vector3.MoveTowards(transform.position, thisStringRoot.transform.position, climbingSpeed * Time.fixedDeltaTime);
+        }
+
+    }
+
+    public void SetClimbValue()
+    {
+
+        if (stringManager.tangle != 0)
+        {
+            if (transform.position.y < stringManager.effectiveRoot.y)
+            {
+                // Under 0.5
+                climbValue = Mathf.Lerp(0, 0.5f, (transform.position.y - transform.position.y) / (stringManager.effectiveRoot.y - transform.position.y));
+            }
+            else
+            {
+                // Over 0.5
+                climbValue = Mathf.Lerp(0.5f, 1, (stringManager.effectiveRoot.y - transform.position.y) / (thisStringRoot.transform.position.y - transform.position.y));
+            }
+        }
+        else
+        {
+            climbValue = (transform.position.y - transform.position.y) / (thisStringRoot.transform.position.y - transform.position.y);
+        }
+
     }
 
 }

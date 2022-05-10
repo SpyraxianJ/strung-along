@@ -43,7 +43,10 @@ public class PuppetStringManager : MonoBehaviour
 
     public float lerpToEffectiveRootSpeed;
     [Range(1, 2)]
-    public float puppetDistanceEffectiveRootFactor = 1.5f;
+    public float puppetDistanceEffectiveRootFactor = 1.2f;
+    [Range(1, 3)]
+    [Tooltip("This one helps the tangle point go up when highly tangled o7")]
+    public float puppetDistanceEffectiveRootFactorTangled = 1.8f;
     [Range(0, 1)]
     public float effectiveRootPuppetPositionInfluence;
 
@@ -76,7 +79,7 @@ public class PuppetStringManager : MonoBehaviour
             Vector3 targetEffectiveRoot = Vector3.Lerp((stringRoot1.transform.position + stringRoot2.transform.position) / 2, (puppet1.transform.position + puppet2.transform.position) / 2, effectiveRootPuppetPositionInfluence);
             targetEffectiveRoot =
                 new Vector3(targetEffectiveRoot.x,
-                Mathf.Lerp(Mathf.Max(puppet1.transform.position.y, puppet2.transform.position.y), Mathf.Min(stringRoot1.transform.position.y, stringRoot2.transform.position.y), -Mathf.Pow(puppetDistanceEffectiveRootFactor, -Vector3.Distance(puppet1.transform.position, puppet2.transform.position)) + 1),
+                Mathf.Lerp(Mathf.Max(puppet1.transform.position.y, puppet2.transform.position.y), Mathf.Min(stringRoot1.transform.position.y, stringRoot2.transform.position.y), -Mathf.Pow(Mathf.Lerp(puppetDistanceEffectiveRootFactor, puppetDistanceEffectiveRootFactorTangled, Mathf.Abs(tangle) / Mathf.Max(0.0001f, maxTangle)), -Vector3.Distance(puppet1.transform.position, puppet2.transform.position)) + 1),
                 targetEffectiveRoot.z);
 
             // end of the mathf.Lerp line uses -A^{-x}+1 where A = puppetDistanceEffectiveRootFactor, put it in https://www.desmos.com/calculator to see it
