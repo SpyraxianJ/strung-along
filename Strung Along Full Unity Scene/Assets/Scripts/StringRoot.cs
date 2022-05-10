@@ -37,13 +37,6 @@ public class StringRoot : MonoBehaviour
 
     [Space]
 
-    //[Tooltip("How fast it moves to it's new position")]
-    //public float lerpSpeed;
-    //[Tooltip("The position this anchor point will try to move to")]
-    //public Vector3 targetPosition;
-
-    [Space]
-
     [Tooltip("Ignore this, it's used as a debug visual and can be freely removed without effecting functionality")]
     public float debugDistance;
     public float debugeffRange;
@@ -55,7 +48,6 @@ public class StringRoot : MonoBehaviour
     void Awake()
     {
         connectedPuppet = connectedObject.gameObject.GetComponent<PuppetController>();
-        //targetPosition = transform.position; // turn off to manually set on startup rather than being based on current position
 		
 		// DEBUG harper here, making unity happy about these empty refs. delete when you've got it all sorted <3
 		GameObject angleRefObj = new GameObject("angleRef");
@@ -63,17 +55,11 @@ public class StringRoot : MonoBehaviour
 		angleRef = angleRefObj.transform;
 		angleRef2 = angleRef2Obj.transform;
 		
-		
-		
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-
-        // harper here: i'm going to handle all prop movement in a dedicated class, so won't need this!
-		//transform.position = Vector3.Lerp(transform.position, targetPosition, lerpSpeed * Time.fixedDeltaTime);
-
         // Used for tangleing
         Vector3 effectiveRoot = transform.position;
         float effectiveLength = stringLength;
@@ -208,9 +194,5 @@ public class StringRoot : MonoBehaviour
 
 
     }
-
-    //public void SetAnchorPoint(Vector3 newPoint) {
-        //targetPosition = newPoint;
-    //}
 
 }
