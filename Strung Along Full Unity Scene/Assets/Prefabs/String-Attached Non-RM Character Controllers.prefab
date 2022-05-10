@@ -856,7 +856,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3167654758654512363}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 6, y: 10, z: 0}
+  m_LocalPosition: {x: 11, y: 11, z: -2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -971,10 +971,10 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  lerpSpeed: 5
-  targetPosition: {x: 0, y: 0, z: 0}
   debugDistance: 0
   debugeffRange: 0
+  angleRef: {fileID: 0}
+  angleRef2: {fileID: 0}
 --- !u!120 &3167654758654512374
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -1546,7 +1546,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3167654758976716791}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -6, y: 10, z: 0}
+  m_LocalPosition: {x: -11, y: 11, z: -2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1661,10 +1661,10 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  lerpSpeed: 5
-  targetPosition: {x: 0, y: 0, z: 0}
   debugDistance: 0
   debugeffRange: 0
+  angleRef: {fileID: 0}
+  angleRef2: {fileID: 0}
 --- !u!120 &3167654758976716785
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -1933,7 +1933,7 @@ MonoBehaviour:
   puppet2LastFrame: {x: 0, y: 0, z: 0}
   effectiveRootLastFrame: {x: 0, y: 0, z: 0}
   lerpToEffectiveRootSpeed: 3
-  puppetDistanceEffectiveRootFactor: 1.07
+  puppetDistanceEffectiveRootFactor: 1.8
   effectiveRootPuppetPositionInfluence: 0.7
   debugeffRange: 0
 --- !u!1 &3167654759249926488
@@ -2073,6 +2073,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Puppets
       objectReference: {fileID: 0}
+    - target: {fileID: 1779473841372733555, guid: 22b6b98194cdd0841b47984bfc299e19, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -11
+      objectReference: {fileID: 0}
+    - target: {fileID: 1779473841372733555, guid: 22b6b98194cdd0841b47984bfc299e19, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1779473841372733555, guid: 22b6b98194cdd0841b47984bfc299e19, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -2
+      objectReference: {fileID: 0}
     - target: {fileID: 1779473841372733556, guid: 22b6b98194cdd0841b47984bfc299e19, type: 3}
       propertyPath: pulledDrag
       value: 5
@@ -2152,6 +2164,18 @@ PrefabInstance:
     - target: {fileID: 8946709668202817515, guid: 22b6b98194cdd0841b47984bfc299e19, type: 3}
       propertyPath: pulledAcceleration
       value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8946709668202817516, guid: 22b6b98194cdd0841b47984bfc299e19, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 8946709668202817516, guid: 22b6b98194cdd0841b47984bfc299e19, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8946709668202817516, guid: 22b6b98194cdd0841b47984bfc299e19, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 22b6b98194cdd0841b47984bfc299e19, type: 3}
