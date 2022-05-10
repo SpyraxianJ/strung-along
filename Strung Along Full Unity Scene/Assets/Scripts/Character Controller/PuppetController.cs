@@ -26,7 +26,7 @@ public class PuppetController : MonoBehaviour
     [Tooltip("Determines if the puppet is currently on the ground or not, public for unity inspector debugging purposes, can be made private later without issue")]
     private bool isGrounded = true;
     private bool jumpReleased = true;
-    private float groundedMaxSpeed = 10;
+    public float groundedMaxSpeed = 10;
 
     [Space]
 
@@ -439,7 +439,7 @@ public class PuppetController : MonoBehaviour
             else // You still have a bit of influence even when tangled
             {
                 jumpBoostTimer = 0;
-                rb.AddForce(new Vector3(move.normalized.x, 0, move.normalized.y) * airborneAcceleration * 0.4f, ForceMode.Acceleration);
+                rb.AddForce(new Vector3(move.normalized.x, 0, move.normalized.y) * airborneAcceleration * 0.6f, ForceMode.Acceleration);
             }
 
             // Timer increment
@@ -455,6 +455,28 @@ public class PuppetController : MonoBehaviour
             jumpBoostTimer -= Time.fixedDeltaTime;
             rb.AddForce(Vector3.up * Mathf.Lerp(0, jumpBoostForce, jumpBoostTimer / jumpBoostTime));
         }
+
+        if (isGrounded == false)
+        {
+            if (jumpPressed)
+            {
+                rb.AddForce(Vector3.up * jumpHoldForce);
+            }
+            else
+            {
+                rb.AddForce(Vector3.up * jumpReleaseForce);
+                if (rb.velocity.y > 0)
+                {
+                    rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y * (1 - jumpReleaseRisingDrag * Time.fixedDeltaTime * 100), rb.velocity.z);
+                }
+            }
+
+            if (rb.velocity.y < -maxFallSpeed)
+            {
+                rb.AddForce(Vector3.up * jumpReleaseForce);
+            }
+        }
+
     }
 
     public void StartJump()
@@ -463,9 +485,11 @@ public class PuppetController : MonoBehaviour
         {
             isGrounded = false;
             hasJumped = true;
-            rb.AddForce(Vector3.up * initialJumpForce, ForceMode.Impulse);
+            rb.velocity = new Vector3(rb.velocity.x, initialJumpForce, rb.velocity.z);// needs to set velocity not add it to prevent having strange grounded forces affecting jump
             forceAirborneTimer = 0.1f;
             jumpBoostTimer = jumpBoostTime;
+            // required for ensuring the puppet gets off the ground consistantly when jumping
+            gameObject.transform.position = transform.position + Vector3.up * 0.05f;
         }
     }
 

@@ -2085,14 +2085,6 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -2
       objectReference: {fileID: 0}
-    - target: {fileID: 1779473841372733556, guid: 22b6b98194cdd0841b47984bfc299e19, type: 3}
-      propertyPath: pulledDrag
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1779473841372733556, guid: 22b6b98194cdd0841b47984bfc299e19, type: 3}
-      propertyPath: pulledAcceleration
-      value: 0.2
-      objectReference: {fileID: 0}
     - target: {fileID: 2107118651359688901, guid: 22b6b98194cdd0841b47984bfc299e19, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -2156,14 +2148,6 @@ PrefabInstance:
     - target: {fileID: 8946709668202817515, guid: 22b6b98194cdd0841b47984bfc299e19, type: 3}
       propertyPath: m_Enabled
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8946709668202817515, guid: 22b6b98194cdd0841b47984bfc299e19, type: 3}
-      propertyPath: pulledDrag
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8946709668202817515, guid: 22b6b98194cdd0841b47984bfc299e19, type: 3}
-      propertyPath: pulledAcceleration
-      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 8946709668202817516, guid: 22b6b98194cdd0841b47984bfc299e19, type: 3}
       propertyPath: m_LocalPosition.x

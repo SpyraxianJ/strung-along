@@ -347,7 +347,7 @@ public class testMove : MonoBehaviour
         {
             isGrounded = false;
             hasJumped = true;
-            rb.AddForce(Vector3.up * initalJumpForce, ForceMode.Impulse);
+            rb.velocity = Vector3.up * initalJumpForce;
             forceAirborneTimer = 0.1f;
             jumpBoostTimer = jumpBoostTime;
             animator.SetBool("isLanding", false);

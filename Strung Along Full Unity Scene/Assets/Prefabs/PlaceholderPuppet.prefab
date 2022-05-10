@@ -163,9 +163,9 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.5
-  m_Height: 1.5
+  m_Height: 1.75
   m_Direction: 1
-  m_Center: {x: 0, y: 1.25, z: 0}
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!114 &8461784611382557435
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -179,19 +179,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   otherPuppet: {fileID: 0}
-  rb: {fileID: 8461784611382557434}
+  groundedMaxSpeed: 6
   secondPlayer: 0
-  grounded: 1
+  beingPulled: 0
   groundedAcceleration: 1
   groundedDeceleration: 0.1
-  groundedMaxSpeed: 6
+  pulledAcceleration: 3
+  pulledDrag: 0
+  pulledAirborneThreshold: 0
   airborneAcceleration: 20
   airborneDeceleration: 0.205
   airborneDecay: 0.01
   airborneMaxSpeed: 6
-  initalJumpVelocity: 3
+  initialJumpForce: 5
   jumpBoostForce: 30
-  jumpBoostTime: 0.5
+  jumpBoostTime: 0.35
   jumpHoldForce: 0.64
   jumpReleaseForce: -15
   jumpReleaseRisingDrag: 0.07
@@ -200,12 +202,13 @@ MonoBehaviour:
   coyoteTime: 0.2
   groundedMaxSpeedHardCap: 0
   groundedRayNumber: 20
-  groundRayLength: 1
+  groundRayLength: 0.2
   groundedRayRadius: 0.5
   groundMask:
     serializedVersion: 2
-    m_Bits: 55
+    m_Bits: 567
   groundedDownPerFrame: 0.3
+  effectiveRoot: {x: 0, y: 0, z: 0}
 --- !u!54 &8461784611382557434
 Rigidbody:
   m_ObjectHideFlags: 0

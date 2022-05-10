@@ -79,7 +79,8 @@ public class TempGrab : MonoBehaviour
         {
             grabDetect.enabled = true;
             if (grabbed != null) {
-                grabbed.position += transform.position - lastFrame;
+                Vector3 move = transform.position - lastFrame;
+                grabbed.position += new Vector3(move.x, grabbed.position.y, move.z); // y movement
             }
         }
         if (grabPressed == false && grabbed != null)
