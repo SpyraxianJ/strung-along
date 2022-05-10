@@ -16,7 +16,17 @@ public class PuppetController : MonoBehaviour
 
     [Space]
 
-    public Rigidbody rb;
+    private Rigidbody rb;
+
+    private bool movePressed;
+    private Vector2 move;
+    private bool jumpPressed;
+
+    private float speed = 0;
+    [Tooltip("Determines if the puppet is currently on the ground or not, public for unity inspector debugging purposes, can be made private later without issue")]
+    private bool isGrounded = true;
+    private bool jumpReleased = true;
+    private float groundedMaxSpeed = 10;
 
     [Space]
 
@@ -28,8 +38,6 @@ public class PuppetController : MonoBehaviour
     private string playerHorizontalInput;
     private string playerVerticalInput;
     private string playerJumpInput;
-    [Tooltip("Determines if the puppet is currently on the ground or not, public for unity inspector debugging purposes, can be made private later without issue")]
-    public bool grounded;
     [Tooltip("If true, movement is limited to prevent exploiting string mechanics")]
     public bool beingPulled;
 
@@ -42,9 +50,6 @@ public class PuppetController : MonoBehaviour
     public float pulledAcceleration;
     public float pulledDrag;
     public float pulledAirborneThreshold;
-
-    [Range(0, 20)]
-    public float groundedMaxSpeed;
 
     [Space]
 
@@ -61,7 +66,7 @@ public class PuppetController : MonoBehaviour
     [Space]
 
     [Tooltip("How string the inital force of the jump should be, affects the shortest possible jump")]
-    public float initalJumpVelocity;
+    public float initialJumpForce;
     [Tooltip("How strong the boost from holding up as they are jumping will be")]
     public float jumpBoostForce;
     [Tooltip("How long the puppet will have an upwards boost from holding jump")]
@@ -119,9 +124,6 @@ public class PuppetController : MonoBehaviour
     float timeSinceGrounded;
     bool hasJumped;
 
-    bool movePressed;
-    Vector2 move;
-    bool jumpPressed;
 
     void Awake()
     {
@@ -133,11 +135,18 @@ public class PuppetController : MonoBehaviour
             {
                 jumpPressed = ctx.ReadValueAsButton();
                 Debug.Log(ctx.ReadValueAsButton());
-                if (jumpPressed)
+                if (jumpPressed && jumpReleased)
                 {
-                    Jump();
+                    StartJump();
                 }
+                jumpReleased = false;
             };
+            controls.Player.Jump.canceled += ctx =>
+            {
+                jumpReleased = true;
+                jumpBoostTimer = 0;
+            };
+
             controls.Player.Move.performed += ctx =>
             {
                 move = ctx.ReadValue<Vector2>();
@@ -158,11 +167,18 @@ public class PuppetController : MonoBehaviour
             {
                 jumpPressed = ctx.ReadValueAsButton();
                 Debug.Log(ctx.ReadValueAsButton());
-                if (jumpPressed)
+                if (jumpPressed && jumpReleased)
                 {
-                    Jump();
+                    StartJump();
                 }
+                jumpReleased = false;
             };
+            controls.Player.TempJump2.canceled += ctx =>
+            {
+                jumpReleased = true;
+                jumpBoostTimer = 0;
+            };
+
             controls.Player.TempMove2.performed += ctx =>
             {
                 move = ctx.ReadValue<Vector2>();
@@ -190,6 +206,8 @@ public class PuppetController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        rb = GetComponent<Rigidbody>();
+
         if (otherPuppet == null)
         {
             Debug.LogWarning("No second player connected to " + this + ", this is likely to cause errors");
@@ -205,8 +223,8 @@ public class PuppetController : MonoBehaviour
     void FixedUpdate()
     {
         GroundDetection();
-        handleMovement();
-        handleJump(); //don't remove
+        HandleMovement();
+        HandleJump(); //don't remove
         //Debug.Log(move.x + " " + move.y);
 
         rb.AddForce(Vector3.down * gravity, ForceMode.Acceleration);
@@ -215,16 +233,16 @@ public class PuppetController : MonoBehaviour
     {
         // Ground Detection
 
-        if (beingPulled && grounded)
+        if (beingPulled && isGrounded)
         {
             if (rb.velocity.y > pulledAirborneThreshold)
             {
-                grounded = false;
+                isGrounded = false;
                 forceAirborneTimer = 0.05f;
             }
         }
 
-        if (grounded)
+        if (isGrounded)
         {
             transform.position = transform.position - transform.up * groundedDownPerFrame;
         }
@@ -233,7 +251,7 @@ public class PuppetController : MonoBehaviour
         {
             // Ground detection is not allowed
             forceAirborneTimer = forceAirborneTimer - Time.fixedDeltaTime;
-            grounded = false;
+            isGrounded = false;
         }
         else
         {
@@ -267,14 +285,14 @@ public class PuppetController : MonoBehaviour
             {
                 bool lastGrounded = false;
 
-                if (grounded)
+                if (isGrounded)
                 {
                     // Reverse the downwards from being grounded, ONLY if we were grounded earlier, thus can confirm we did this earlier this frame
                     transform.position = transform.position + transform.up * groundedDownPerFrame;
                     lastGrounded = true;
                 }
 
-                grounded = true;
+                isGrounded = true;
                 float avg = 0;
                 for (int i = 0; i < groundRays.Count; i++)
                 {
@@ -293,26 +311,26 @@ public class PuppetController : MonoBehaviour
             }
             else
             {
-                if (grounded)
+                if (isGrounded)
                 {
                     // Reverse the downwards from being grounded, ONLY if we were grounded earlier, thus can confirm we did this earlier this frame
                     transform.position = transform.position + transform.up * groundedDownPerFrame;
                 }
-                grounded = false;
+                isGrounded = false;
             }
 
         }
 
-        if (grounded) {
+        if (isGrounded) {
             timeSinceGrounded = 0;
         }
     }
-    void handleMovement()
+    void HandleMovement()
     {
         float relativeMaxSpeedX = Math.Abs(groundedMaxSpeed * move.x);
         float relativeMaxSpeedY = Math.Abs(groundedMaxSpeed * move.y);
 
-        if (grounded)
+        if (isGrounded)
         {
             hasJumped = false;
 
@@ -429,64 +447,26 @@ public class PuppetController : MonoBehaviour
 
         }
     }
-    void handleJump()
+
+    void HandleJump()
     {
-        if (jumpPressed)
+        if (jumpPressed && jumpBoostTimer > 0)
         {
-            Jump();
+            jumpBoostTimer -= Time.fixedDeltaTime;
+            rb.AddForce(Vector3.up * Mathf.Lerp(0, jumpBoostForce, jumpBoostTimer / jumpBoostTime));
         }
     }
-    public void Jump() {
-        bool canJump = false;
 
-        if (grounded || (timeSinceGrounded <= coyoteTime && hasJumped == false)) {
-            canJump = true;
-        }
-
-        if (canJump) {
+    public void StartJump()
+    {
+        if ((isGrounded || timeSinceGrounded <= coyoteTime) && hasJumped == false)
+        {
+            isGrounded = false;
             hasJumped = true;
-
-            rb.velocity = new Vector3(rb.velocity.x, initalJumpVelocity, rb.velocity.z);
-            grounded = false;
-            gameObject.transform.position = transform.position + Vector3.up * 0.05f;
+            rb.AddForce(Vector3.up * initialJumpForce, ForceMode.Impulse);
             forceAirborneTimer = 0.1f;
             jumpBoostTimer = jumpBoostTime;
-
         }
-
-        // Jump specific
-
-        if (jumpBoostTimer > 0) {
-            if (jumpPressed)
-            {
-                jumpBoostTimer = jumpBoostTimer - Time.fixedDeltaTime;
-                rb.AddForce(Vector3.up * Mathf.Lerp(0, jumpBoostForce, jumpBoostTimer / jumpBoostTime));
-            }
-            else
-            {
-                // Once jump is released, you can no longer continue rising
-                jumpBoostTimer = 0;
-            }
-        }
-
-        // General airborne
-
-        if (jumpPressed)
-        {
-            rb.AddForce(Vector3.up * jumpHoldForce);
-        }
-        else
-        {
-            rb.AddForce(Vector3.up * jumpReleaseForce);
-            if (rb.velocity.y > 0) {
-                rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y * (1 - jumpReleaseRisingDrag * Time.fixedDeltaTime * 100), rb.velocity.z);
-            }
-        }
-
-        if (rb.velocity.y < -maxFallSpeed) {
-            rb.AddForce(Vector3.up * jumpReleaseForce);
-        }
-
     }
 
 }
