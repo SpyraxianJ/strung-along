@@ -560,7 +560,7 @@ public class PuppetController : MonoBehaviour
 
         isClimbing = true;
 
-        rb.velocity = Vector3.zero; // makes climbing feel a little worse, but prevents some exploits, consider turning off desired.
+        //rb.velocity = Vector3.zero; // makes climbing feel a little worse, but prevents some exploits, consider turning of if desired.
 
     }
 
