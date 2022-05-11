@@ -9456,9 +9456,25 @@ PrefabInstance:
       propertyPath: m_Name
       value: String-Attached Non-RM Character Controllers
       objectReference: {fileID: 0}
+    - target: {fileID: 3694133943377610563, guid: bca65c23b1594aa4dbebacacfe0c1350, type: 3}
+      propertyPath: landingRayDiameter
+      value: 0.45
+      objectReference: {fileID: 0}
+    - target: {fileID: 3694133943377610563, guid: bca65c23b1594aa4dbebacacfe0c1350, type: 3}
+      propertyPath: groundedRayDiameter
+      value: 0.3
+      objectReference: {fileID: 0}
     - target: {fileID: 3694133943377610567, guid: bca65c23b1594aa4dbebacacfe0c1350, type: 3}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6331177286643695836, guid: bca65c23b1594aa4dbebacacfe0c1350, type: 3}
+      propertyPath: landingRayDiameter
+      value: 0.45
+      objectReference: {fileID: 0}
+    - target: {fileID: 6331177286643695836, guid: bca65c23b1594aa4dbebacacfe0c1350, type: 3}
+      propertyPath: groundedRayDiameter
+      value: 0.3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bca65c23b1594aa4dbebacacfe0c1350, type: 3}

@@ -118,6 +118,10 @@ public class PuppetController : MonoBehaviour
     public float groundRayLength;
     [Tooltip("This is how wide the ground detection rays are around the puppet, should be scaled with the capsule radius")]
     public float groundedRayRadius;
+    [Tooltip("This is how wide the ground detection rays are around the puppet, should be scaled with the capsule radius")]
+    public float groundedRayDiameter = 0.3f;
+    [Tooltip("This is how wide the landing detection rays are around the puppet, MUST BE LARGER THAN groundedRayRadius by 0.05")]
+    public float landingRayDiameter = 0.45f;
 
     [Space]
 
@@ -242,6 +246,37 @@ public class PuppetController : MonoBehaviour
         controls.Player.Disable();
     }
 
+    List<RaycastHit> objectRayGenerator(int rayNumber, float rayLength, float rayRadius, bool useOffset)
+    {
+        List<RaycastHit> rays = new List<RaycastHit>();
+
+        if (rayNumber > 0)
+        {
+            for (int i = 0; i < rayNumber; i++)
+            {
+                float rot = (Mathf.PI * i * 2) / rayNumber;
+                Vector3 pos = new Vector3(Mathf.Cos(rot), 0, Mathf.Sin(rot)) * rayRadius;
+                Vector3 origin;
+
+                if (useOffset)
+                    origin = transform.position + pos + transform.up * rayLength;
+                else
+                    origin = transform.position + pos;
+
+
+                //Physics.Raycast(transform.position + pos + transform.up * rayLength, -transform.up, out hit, rayLength, groundMask);
+                Debug.DrawRay(origin, -transform.up * rayLength, Color.white);
+                if (Physics.Raycast(origin, -transform.up, out RaycastHit hit, rayLength, groundMask))
+                {
+                    Debug.DrawRay(origin, -transform.up * rayLength, Color.green);
+                    rays.Add(hit);
+                }
+            }
+        }
+
+        return rays;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -312,29 +347,13 @@ public class PuppetController : MonoBehaviour
         else
         {
             // Ground detection is allowed
-            List<RaycastHit> groundRays = new List<RaycastHit>();
+            List<RaycastHit> groundRays = objectRayGenerator(groundedRayNumber, groundRayLength, groundedRayDiameter, true);
 
             RaycastHit hit;
             Debug.DrawRay(transform.position + transform.up * groundRayLength, -transform.up * groundRayLength, Color.magenta);
             if (Physics.Raycast(transform.position + transform.up * groundRayLength, -transform.up, out hit, groundRayLength, groundMask))
             {
                 groundRays.Add(hit);
-            }
-
-            if (groundedRayNumber > 0)
-            {
-                for (int i = 0; i < groundedRayNumber; i++) // minor problem with the ground detection if grounded down per frame is >= ray length
-                {
-                    hit = new RaycastHit();
-                    float rot = (Mathf.PI * i * 2) / groundedRayNumber;
-                    Vector3 pos = new Vector3(Mathf.Cos(rot), 0, Mathf.Sin(rot)) * groundedRayRadius;
-                    Physics.Raycast(transform.position + pos + transform.up * groundRayLength, -transform.up, out hit, groundRayLength, groundMask);
-                    Debug.DrawRay(transform.position + pos + transform.up * groundRayLength, -transform.up * groundRayLength, new Color(i / groundedRayNumber, 1, (groundedRayNumber - i) / groundedRayNumber));
-                    if (Physics.Raycast(transform.position + pos + transform.up * groundRayLength, -transform.up, out hit, groundRayLength, groundMask))
-                    {
-                        groundRays.Add(hit);
-                    }
-                }
             }
 
             if (groundRays.Count > 0)
