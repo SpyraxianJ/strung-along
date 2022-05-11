@@ -89,6 +89,15 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": ""Press(behavior=2)"",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Restart"",
+                    ""type"": ""Button"",
+                    ""id"": ""c9eb6acd-9297-4c0b-ba68-309045a500e8"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press"",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -300,6 +309,17 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""action"": ""Grab2"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f4871a6b-079a-4b92-b9df-5fe327a5162c"",
+                    ""path"": ""<Keyboard>/f8"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Restart"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -354,6 +374,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
         m_Player_TempMove2 = m_Player.FindAction("TempMove2", throwIfNotFound: true);
         m_Player_TempJump2 = m_Player.FindAction("TempJump2", throwIfNotFound: true);
+        m_Player_Restart = m_Player.FindAction("Restart", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Pause = m_UI.FindAction("Pause", throwIfNotFound: true);
@@ -423,6 +444,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Attack;
     private readonly InputAction m_Player_TempMove2;
     private readonly InputAction m_Player_TempJump2;
+    private readonly InputAction m_Player_Restart;
     public struct PlayerActions
     {
         private @PlayerControls m_Wrapper;
@@ -434,6 +456,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         public InputAction @Attack => m_Wrapper.m_Player_Attack;
         public InputAction @TempMove2 => m_Wrapper.m_Player_TempMove2;
         public InputAction @TempJump2 => m_Wrapper.m_Player_TempJump2;
+        public InputAction @Restart => m_Wrapper.m_Player_Restart;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -464,6 +487,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @TempJump2.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTempJump2;
                 @TempJump2.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTempJump2;
                 @TempJump2.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTempJump2;
+                @Restart.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRestart;
+                @Restart.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRestart;
+                @Restart.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRestart;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -489,6 +515,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @TempJump2.started += instance.OnTempJump2;
                 @TempJump2.performed += instance.OnTempJump2;
                 @TempJump2.canceled += instance.OnTempJump2;
+                @Restart.started += instance.OnRestart;
+                @Restart.performed += instance.OnRestart;
+                @Restart.canceled += instance.OnRestart;
             }
         }
     }
@@ -535,6 +564,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         void OnAttack(InputAction.CallbackContext context);
         void OnTempMove2(InputAction.CallbackContext context);
         void OnTempJump2(InputAction.CallbackContext context);
+        void OnRestart(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
