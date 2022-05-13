@@ -3,7 +3,22 @@ guid: 8501331cba0b51a4e8f5327382960bb1
 ModelImporter:
   serializedVersion: 21202
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: SHovel_Metal
+    second: {fileID: 2100000, guid: 82d866028243fbe4799ea80ec1f925f1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Shovel_Handle
+    second: {fileID: 2100000, guid: 5b98504a0ed9dd740bd9c308610ee25a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Shovel_wood
+    second: {fileID: 2100000, guid: b5c92a3d088006b41839bfb03155f292, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
