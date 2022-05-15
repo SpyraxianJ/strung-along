@@ -8,10 +8,10 @@ public class MoveProp : MonoBehaviour
 {
 	
 	public Vector3 target; // the position to move this prop to
-	public float moveSpeed = 0.2f; // how fast it moves
-	public float maxSpeed = 20f; // maximum speed allowed
-	public float targetMargin = 0.01f; // distance between prop and target before setting position
+	public float moveSpeed; // how fast it moves
+	public float maxSpeed; // maximum speed allowed
 	
+	private float targetMargin = 0.01f; // distance between prop and target before setting position
 	private Vector3 velocity = Vector3.zero;
 	
 	

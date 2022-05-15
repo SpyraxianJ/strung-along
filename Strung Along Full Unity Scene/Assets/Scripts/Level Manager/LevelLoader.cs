@@ -9,9 +9,14 @@ public class LevelLoader : MonoBehaviour
 	public static event Action onLoadComplete;
 	public static event Action onUnloadComplete;
 	
+	public const float ENTRY_SPEED = 0.2f; // entry speed when props enter the stage.
+	public const float EXIT_SPEED = 0.2f; // exit speed when props leave the stage.
+	public const float SPEED_MAX = 30f; // maximum speed allowed when moving props.
+	
 	// set on initialization: static throughout gameplay.
 	private StringRoot p1Anchor;
 	private StringRoot p2Anchor;
+	private StringRoot[] anchors;
 	
 	// set each time a level is loaded: dynamic.
 	private List<GameObject> workingProps = null;
@@ -34,6 +39,7 @@ public class LevelLoader : MonoBehaviour
 	public void initPlayerRefs(StringRoot p1Anchor, StringRoot p2Anchor) {
 		this.p1Anchor = p1Anchor;
 		this.p2Anchor = p2Anchor;
+		this.anchors = new StringRoot[] {p1Anchor, p2Anchor};
 	}
 	
 	// activate the props for the new level.
@@ -55,6 +61,8 @@ public class LevelLoader : MonoBehaviour
 				
 				MoveProp moverComponent = prop.AddComponent<MoveProp>();
 				moverComponent.target = prop.GetComponent<StageProp>().originalPosition;
+				moverComponent.moveSpeed = LevelLoader.ENTRY_SPEED;
+				moverComponent.maxSpeed = LevelLoader.SPEED_MAX;
 				moverComponent.enabled = true;
 				
 				LevelManager.activeProps.Add(prop);
@@ -79,20 +87,24 @@ public class LevelLoader : MonoBehaviour
 	
 	private void movePuppets() {
 		
-		// set temporary string parameters while moving em around
-		p1Anchor.stringLength = 4f;
-		p1Anchor.elasticString = false;
-		p2Anchor.stringLength = 4f;
-		p2Anchor.elasticString = false;
+		foreach(StringRoot anchor in anchors) {
+			// set temporary string parameters while moving em around
+			anchor.stringLength = 4f;
+			anchor.elasticString = false;
+		}
 		
 		MoveProp moverComponent;
 		// move p1 anchor point
 		moverComponent = p1Anchor.gameObject.AddComponent<MoveProp>();
 		moverComponent.target = p1Spawn.transform.position;
+		moverComponent.moveSpeed = LevelLoader.ENTRY_SPEED;
+		moverComponent.maxSpeed = LevelLoader.SPEED_MAX;
 		moverComponent.enabled = true;
 		// move p2 anchor point
 		moverComponent = p2Anchor.gameObject.AddComponent<MoveProp>();
 		moverComponent.target = p2Spawn.transform.position;
+		moverComponent.moveSpeed = LevelLoader.ENTRY_SPEED;
+		moverComponent.maxSpeed = LevelLoader.SPEED_MAX;
 		moverComponent.enabled = true;
 		
 		StartCoroutine( waitMovePuppets() );
@@ -109,6 +121,8 @@ public class LevelLoader : MonoBehaviour
 		p1Anchor.elasticString = p1Spawn.elasticString;
 		p2Anchor.stringLength = p2Spawn.stringLength;
 		p2Anchor.elasticString = p2Spawn.elasticString;
+		// untangle them if they got tangled. this might be fucked we'll see.
+		p1Anchor.manager.tangle = 0;
 		
 		loadAfter();
 		
@@ -123,6 +137,8 @@ public class LevelLoader : MonoBehaviour
 				
 				MoveProp moverComponent = prop.AddComponent<MoveProp>();
 				moverComponent.target = prop.GetComponent<StageProp>().originalPosition;
+				moverComponent.moveSpeed = LevelLoader.ENTRY_SPEED;
+				moverComponent.maxSpeed = LevelLoader.SPEED_MAX;
 				moverComponent.enabled = true;
 				
 				LevelManager.activeProps.Add(prop);
@@ -171,6 +187,8 @@ public class LevelLoader : MonoBehaviour
 			}
 			
 			moverComponent.target = targetPosition;
+			moverComponent.moveSpeed = LevelLoader.EXIT_SPEED;
+			moverComponent.maxSpeed = LevelLoader.SPEED_MAX;
 			moverComponent.enabled = true;
 			
 		}
