@@ -14,11 +14,13 @@ public class LevelManager : MonoBehaviour
 	private static bool timerActive; // whether the timer is running or not.
 	private static float timer;
 	
-	private static int levelState; // game state indicators
-	private const int GAME_START = -1;
-	private const int NO_LEVEL = 0;
-	private const int LEVEL_LOADING = 1;
-	private const int LEVEL_PLAYING = 2;
+	public static State state; // game state indicators
+	public enum State {
+		GameStart,
+		NoLevel,
+		LevelLoading,
+		LevelPlaying
+	}
 	
 	public const float TOP_BOUNDARY = 24f; // the "top" of the level. Y coordinate.
 	public const float SIDE_BOUNDARY = 34f; // the "side" of the level. X coordinate.
@@ -62,7 +64,7 @@ public class LevelManager : MonoBehaviour
 		// init win state
 		p1AtGoal = false;
 		p2AtGoal = false;
-		levelState = GAME_START;
+		state = State.GameStart;
 		
 		// init list of levels
 		buildLevelList(acts);
@@ -76,17 +78,17 @@ public class LevelManager : MonoBehaviour
     {
         
 		// DEBUG. GUI will be the one calling this on game start. woo
-		if (levelState == GAME_START) {
+		if (state == State.GameStart) {
 			loadLevel(1, 1);
 		}
 		
 		// count the timer, if a level is active.
-		if (levelState == LEVEL_PLAYING && timerActive) {
+		if (state == State.LevelPlaying && timerActive) {
 			timer += Time.deltaTime;
 		}
 		
 		// check if little dudes have won!
-		if (levelState == LEVEL_PLAYING && p1AtGoal && p2AtGoal) {
+		if (state == State.LevelPlaying && p1AtGoal && p2AtGoal) {
 			onLevelComplete.Invoke();
 		}
 		
@@ -183,7 +185,7 @@ public class LevelManager : MonoBehaviour
 	
 	// begin loading a specific level by object reference.
 	private static void loadLevel(Level level) {
-		levelState = LEVEL_LOADING;
+		state = State.LevelLoading;
 		loader.load(level.props, level.p1Spawn, level.p2Spawn);
 		
 	}
@@ -191,13 +193,13 @@ public class LevelManager : MonoBehaviour
 	// subscribed to LevelLoader load event
 	private void loadComplete() {
 		// start the level!
-		levelState = LEVEL_PLAYING;
+		state = State.LevelPlaying;
 		startTimer();
 	}
 	
 	// being unloading whatever level is currently loaded.
 	private void unloadLevel() {
-		levelState = LEVEL_LOADING;
+		state = State.LevelLoading;
 		loader.unload(activeProps);
 		// TODO: reset all the props, like levers  that have been pushed.
 		// make a disabled duplicate of each prop in its Prop class?
@@ -206,7 +208,7 @@ public class LevelManager : MonoBehaviour
 	// subscribed to LevelLoader unload event
 	private void unloadComplete() {
 		// DEBUG: for now just load the next level.
-		levelState = NO_LEVEL;
+		state = State.NoLevel;
 		goNextLevel();
 	}
 	
