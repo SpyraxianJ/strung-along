@@ -22,5 +22,7 @@ public abstract class Activator : MonoBehaviour
 		}
 	}
 	
+	public abstract void reset();
+	
 	
 }

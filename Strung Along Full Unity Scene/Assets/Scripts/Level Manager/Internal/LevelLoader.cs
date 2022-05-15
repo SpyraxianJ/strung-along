@@ -51,7 +51,6 @@ public class LevelLoader : MonoBehaviour
 	// 2. move puppets to spawnpoints
 	// 3. StageProps with AfterPuppets
 	public void load(List<GameObject> props, Spawnpoint p1, Spawnpoint p2) {
-		
 		workingProps = props;
 		p1Spawn = p1;
 		p2Spawn = p2;
@@ -73,7 +72,6 @@ public class LevelLoader : MonoBehaviour
 		
 		// PHASE 1
 		foreach (GameObject prop in workingProps) {
-			
 			if (prop.GetComponent<StageProp>().stageMoveTiming == Timing.BeforePuppets) {
 				prop.SetActive(true);
 				
@@ -86,7 +84,6 @@ public class LevelLoader : MonoBehaviour
 				LevelManager.activeProps.Add(prop);
 			}
 			
-			
 		}
 		
 		StartCoroutine( waitLoadBefore() );
@@ -94,7 +91,6 @@ public class LevelLoader : MonoBehaviour
 	}
 	
 	IEnumerator waitLoadBefore() {
-		
 		foreach (GameObject prop in workingProps) {
 			yield return new WaitUntil( () => prop.GetComponent<MoveProp>() == null);
 		}
@@ -104,7 +100,6 @@ public class LevelLoader : MonoBehaviour
 	}
 	
 	private void movePuppets() {
-		
 		// PHASE 2
 		foreach(StringRoot anchor in anchors) {
 			// set temporary string parameters while moving em around
@@ -148,8 +143,6 @@ public class LevelLoader : MonoBehaviour
 	}
 	
 	private void loadAfter() {
-		
-		
 		// PHASE 3
 		foreach (GameObject prop in workingProps) {
 			
@@ -173,7 +166,6 @@ public class LevelLoader : MonoBehaviour
 	}
 	
 	IEnumerator waitLoadAfter() {
-		
 		foreach (GameObject prop in workingProps) {
 			yield return new WaitUntil( () => prop.GetComponent<MoveProp>() == null);
 		}
@@ -189,7 +181,6 @@ public class LevelLoader : MonoBehaviour
 	
 	// clear the stage of everything on it.
 	public void unload(List<GameObject> activeProps) {
-		
 		workingProps = new List<GameObject>(activeProps);
 		
 		foreach (GameObject prop in workingProps) {
@@ -227,7 +218,6 @@ public class LevelLoader : MonoBehaviour
 	
 	// sends control back to LevelManager when all props have exited the stage.
 	IEnumerator waitExit() {
-		
 		foreach (GameObject prop in workingProps) {
 			yield return new WaitUntil( () => prop.GetComponent<MoveProp>() == null);
 			
@@ -244,10 +234,17 @@ public class LevelLoader : MonoBehaviour
 			if (prop.TryGetComponent<Goal>(out Goal goal) ) {
 				//
 			}
+			// call reset() on all reactors and activators
+			// TODO: this only chooses 1 on each prop, gotta iterate through all.
+			if (prop.TryGetComponent<Activator>(out Activator actv) ) {
+				actv.reset();
+			}
+			if (prop.TryGetComponent<Reactor>(out Reactor react) ) {
+				react.reset();
+			}
 		}
 		
 		workingProps = null;
-		
 		onUnloadComplete?.Invoke();
 		
 	}

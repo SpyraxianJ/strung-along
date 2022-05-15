@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,12 +14,24 @@ public class LevelManager : MonoBehaviour
 	
 	private static bool timerActive; // whether the timer is running or not.
 	private static float timer;
-	private static State state; // game state indicators
-	private enum State {
+	// level manager state machine
+	public enum State {
 		GameStart,
 		NoLevel,
 		LevelLoading,
 		LevelPlaying
+	}
+	// win state machine
+	public enum WinState {
+		None,
+		Win,
+		Fail
+	}
+	// puppet state machine
+	[Serializable]
+	public struct Puppet {
+		public bool atGoal;
+		public bool alive;
 	}
 	
 	[Header("References")]
@@ -26,17 +39,25 @@ public class LevelManager : MonoBehaviour
 	public GameObject player2;
 	public StringRoot p1Anchor; // refs to string anchor locations
 	public StringRoot p2Anchor;
+	[Header("Initialization")]
+	public int initialAct;
+	public int initialLevel;
 	[Space]
 	[Header("Events")]
 	public UnityEvent onLevelComplete;
 	public UnityEvent onLevelFailure;
 	[Space]
 	[Header("Debug")]
-	public bool p1AtGoal;
-	public bool p2AtGoal;
+	public Puppet p1;
+	public Puppet p2;
+	public static State state; 
+	public WinState winState;
 	
 	
-    // Start is called before the first frame update
+	//
+	// INITIALIZATION
+	//
+	
     void Awake()
     {
 		// init references
@@ -58,9 +79,12 @@ public class LevelManager : MonoBehaviour
 		timer = 0;
 		
 		// init win state
-		p1AtGoal = false;
-		p2AtGoal = false;
+		p1.atGoal = false;
+		p2.atGoal = false;
+		p1.alive = true;
+		p2.alive = true;
 		state = State.GameStart;
+		winState = WinState.None;
 		
 		// init list of levels
 		buildLevelList(acts);
@@ -68,26 +92,6 @@ public class LevelManager : MonoBehaviour
 		// disable all props before loading the first level
 		clearLevel();
 		currentLevel = null;
-    }
-	
-    void Update()
-    {
-        
-		// DEBUG. GUI will be the one calling this on game start. woo
-		if (state == State.GameStart) {
-			loadLevel(1, 1);
-		}
-		
-		// count the timer, if a level is active.
-		if (state == State.LevelPlaying && timerActive) {
-			timer += Time.deltaTime;
-		}
-		
-		// check if little dudes have won!
-		if (state == State.LevelPlaying && p1AtGoal && p2AtGoal) {
-			onLevelComplete.Invoke();
-		}
-		
     }
 	
 	// build an internal hierarchy of the game's levels.
@@ -103,12 +107,12 @@ public class LevelManager : MonoBehaviour
 		int totalActs = 0; // DEBUG
 		int totalLevels = 0; // DEBUG
 		bool debugLevel = false; // DEBUG
+		string debugString = "TEST"; // DEBUG
 		
 		// DEBUG
 		// if there's a GameObject named "TEST", just load that and nothing else. useful for testing!
 		foreach (GameObject gObject in Resources.FindObjectsOfTypeAll(typeof(GameObject)) as GameObject[]) {
-			
-			if ( gObject.name.Equals("TEST") ) {
+			if ( gObject.name.Equals(debugString) ) {
 				debugLevel = true;
 				
 				Act act = gObject.AddComponent<Act>();
@@ -124,9 +128,7 @@ public class LevelManager : MonoBehaviour
 				Debug.Log("Loaded TEST level. When you're done, rename it to the level number and drop it under an 'act' GameObject!");
 				break;
 			}
-			
 		}
-		
 		
 		// iterate over every GameObject in the Hierarchy. see this is why we only call this once.
 		foreach (GameObject gObject in Resources.FindObjectsOfTypeAll(typeof(GameObject)) as GameObject[]) {
@@ -158,16 +160,11 @@ public class LevelManager : MonoBehaviour
 					act.levels.Add(level);
 					totalLevels++;
 				}
-				
 			}
-			
 		}
-		
 		// the act list is created in the wrong order for some reason.
 		actList.Reverse();
-		
 		Debug.Log("Loaded " + totalActs + " acts with " + totalLevels + " levels."); // DEBUG
-		
 	}
 	
 	// disable all the props. called only once at start of game.
@@ -180,14 +177,42 @@ public class LevelManager : MonoBehaviour
 				}
 			}
 		}
-		
 	}
+	
+	
+	//
+	// RUNTIME
+	//
+	
+	void Update()
+    {
+		// DEBUG. GUI will be the one calling this on game start. woo
+		if (state == State.GameStart) {
+			loadLevel(initialAct, initialLevel);
+		}
+		
+		// count the timer if it's on.
+		if (timerActive) {
+			timer += Time.deltaTime;
+		}
+		
+		if (state == State.LevelPlaying) {
+			// check if both players at goal
+			if (p1.atGoal && p2.atGoal) {
+				onLevelComplete.Invoke();
+			}
+			
+			// check if either player has died
+			if (!p1.alive || !p2.alive) {
+				onLevelFailure.Invoke();
+			}
+		}
+    }
 	
 	// begin loading a specific level by object reference.
 	private static void loadLevel(Level level) {
 		state = State.LevelLoading;
 		loader.load(level.props, level.p1Spawn, level.p2Spawn);
-		
 	}
 	
 	// subscribed to LevelLoader load event
@@ -197,19 +222,27 @@ public class LevelManager : MonoBehaviour
 		startTimer();
 	}
 	
-	// being unloading whatever level is currently loaded.
+	// begin unloading whatever level is currently loaded.
 	private void unloadLevel() {
 		state = State.LevelLoading;
 		loader.unload(activeProps);
-		// TODO: reset all the props, like levers  that have been pushed.
-		// make a disabled duplicate of each prop in its Prop class?
 	}
 	
 	// subscribed to LevelLoader unload event
 	private void unloadComplete() {
-		// DEBUG: for now just load the next level.
 		state = State.NoLevel;
-		goNextLevel();
+		
+		switch (winState) {
+			case WinState.Win:
+				winState = WinState.None;
+				loadNextLevel();
+				break;
+			case WinState.Fail:
+				winState = WinState.None;
+				respawnPuppets();
+				loadLevel(currentLevel);
+				break;
+		}
 	}
 	
 	// start the level timer from zero.
@@ -227,54 +260,58 @@ public class LevelManager : MonoBehaviour
 	
 	// subscribed to Goal touch event
 	private void updateGoalState(bool enterGoal, bool isPlayer2) {
-		
 		if (enterGoal) {
-			
 			if (isPlayer2) {
-				p2AtGoal = true;
+				p2.atGoal = true;
 			} else {
-				p1AtGoal = true;
+				p1.atGoal = true;
 			}
-			
 		} else {
 			
 			if (isPlayer2) {
-				p2AtGoal = false;
+				p2.atGoal = false;
 			} else {
-				p1AtGoal = false;
+				p1.atGoal = false;
 			}
-			
 		}
-		
 	}
 	
+	// not sure how the character programmers will handle this.
+	// killPuppet subscribed to something on PuppetController class.
+	private void respawnPuppets() {
+		p1.alive = true;
+		p2.alive = true;
+	}
 	
 	// subscribed to LevelManager OnLevelComplete UnityEvent
 	public void winLevel() {
 		
+		winState = WinState.Win;
+		
 		stopTimer();
 		currentLevel.newTime(timer);
-		p1AtGoal = false;
-		p2AtGoal = false;
+		p1.atGoal = false;
+		p2.atGoal = false;
 		
 		unloadLevel();
-		
 	}
 	
 	// subscribed to LevelManager OnLevelFailure UnityEvent
 	public void failLevel() {
 		
-		stopTimer();
-		// send to GUI. restart level, quit, that sorta stuff
-		// TODO: restart level function!
+		winState = WinState.Fail;
 		
+		stopTimer();
+		p1.atGoal = false;
+		p2.atGoal = false;
+		
+		unloadLevel();
 	}
 	
+	
+	//
 	// GUI STUFF
-	
-	// GAME STATE
-	// you can use these to control game state!
-	
+	//
 	// load a specific level.
 	// takes two integers, act number and level number respectively.
 	// GUI uses this to start specific levels, like from a "level select" menu.
@@ -287,7 +324,7 @@ public class LevelManager : MonoBehaviour
 	// load the next level.
 	// uses the LevelManager internal list to figure out which level comes next.
 	// GUI calls this for the "Next level" button or something similar.
-	public static void goNextLevel() {
+	public static void loadNextLevel() {
 		
 		int nextActIndex = acts.IndexOf(currentLevel.act);
 		currentLevel = currentLevel.act.getNextLevel(currentLevel);
@@ -313,18 +350,7 @@ public class LevelManager : MonoBehaviour
 		
 	}
 	
-	// TODO: retry the current level.
-	public static void retryLevel() {
-		
-		// unloadLevel();
-		// reset level to how it started
-		// load the same level again
-		
-	}
-	
-	
 	// GETTERS
-	// hit me up if you want anything else!
 	
 	// number of the current Level.
 	public static int getCurrentLevel() {

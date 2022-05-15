@@ -14,5 +14,6 @@ public abstract class Reactor : MonoBehaviour
 	public int fireAttempts = 0;
 	
 	public abstract void fire();
+	public abstract void reset();
 	
 }

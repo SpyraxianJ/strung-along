@@ -9,7 +9,6 @@ public class ReactMove : Reactor
 	public bool relativePosition = true;
 	public float speed = 0.1f;
 	public float maxSpeed = 10f;
-	//public bool requireConstantActivation = false;
 	
     public override void fire() {
 		fireAttempts++;
@@ -34,6 +33,14 @@ public class ReactMove : Reactor
 				canFire = false;
 			}
 		}
+	}
+	
+	public override void reset() {
+		canFire = true;
+		fireCount = 0;
+		fireAttempts = 0;
+		
+		targetObject.transform.position = targetObject.GetComponent<StageProp>().originalPosition;
 	}
 	
 }

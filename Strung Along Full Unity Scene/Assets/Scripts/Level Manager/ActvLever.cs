@@ -67,4 +67,11 @@ public class ActvLever : Activator
 		}
 	}
 	
+	public override void reset() {
+		isActivating = false;
+		lerpProgress = 0.0f;
+		transform.rotation = originalRotation;
+	}
+	
+	
 }
