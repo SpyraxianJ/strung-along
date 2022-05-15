@@ -1598,9 +1598,10 @@ GameObject:
   - component: {fileID: 364477573}
   - component: {fileID: 364477572}
   - component: {fileID: 364477571}
+  - component: {fileID: 364477574}
   m_Layer: 0
   m_Name: Danger Plane
-  m_TagString: AfterPuppetSpawn
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1684,6 +1685,20 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 364477569}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &364477574
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 364477569}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7322f25711bfaca4f8399a3ea355af22, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stageMoveDirection: 2
+  stageMoveTiming: 1
 --- !u!1001 &379585772
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3105,8 +3120,6 @@ MonoBehaviour:
   player2: {fileID: 1530655684}
   p1Anchor: {fileID: 1530655683}
   p2Anchor: {fileID: 1530655682}
-  p1AtGoal: 0
-  p2AtGoal: 0
   onLevelComplete:
     m_PersistentCalls:
       m_Calls:
@@ -3125,6 +3138,8 @@ MonoBehaviour:
   onLevelFailure:
     m_PersistentCalls:
       m_Calls: []
+  p1AtGoal: 0
+  p2AtGoal: 0
 --- !u!4 &693985799
 Transform:
   m_ObjectHideFlags: 0
@@ -8629,9 +8644,10 @@ GameObject:
   - component: {fileID: 1806038440}
   - component: {fileID: 1806038439}
   - component: {fileID: 1806038438}
+  - component: {fileID: 1806038441}
   m_Layer: 0
   m_Name: Danger Plane
-  m_TagString: AfterPuppetSpawn
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8715,6 +8731,20 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1806038436}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1806038441
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1806038436}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7322f25711bfaca4f8399a3ea355af22, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stageMoveDirection: 2
+  stageMoveTiming: 1
 --- !u!4 &1821806127 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1810861810102240241, guid: ead20634c13d50f4196301df198ea5cd, type: 3}
@@ -8798,9 +8828,10 @@ GameObject:
   - component: {fileID: 1830823590}
   - component: {fileID: 1830823589}
   - component: {fileID: 1830823588}
+  - component: {fileID: 1830823591}
   m_Layer: 0
   m_Name: Danger Plane
-  m_TagString: AfterPuppetSpawn
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8884,6 +8915,20 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1830823586}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1830823591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1830823586}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7322f25711bfaca4f8399a3ea355af22, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stageMoveDirection: 2
+  stageMoveTiming: 1
 --- !u!1 &1840525467
 GameObject:
   m_ObjectHideFlags: 0

@@ -9,32 +9,35 @@ public class LevelLoader : MonoBehaviour
 	public static event Action onLoadComplete;
 	public static event Action onUnloadComplete;
 	
+	public const float TOP_BOUNDARY = 24f; // the "top" of the level. Y coordinate.
+	public const float BOTTOM_BOUNDARY = -10f;
+	public const float SIDE_BOUNDARY = 34f; // the "side" of the level. X coordinate.
+	
 	public const float ENTRY_SPEED = 0.2f; // entry speed when props enter the stage.
 	public const float EXIT_SPEED = 0.2f; // exit speed when props leave the stage.
 	public const float SPEED_MAX = 30f; // maximum speed allowed when moving props.
 	
+	public enum Direction {
+		Top,
+		Side,
+		Bottom
+	}
+	
+	public enum Timing {
+		BeforePuppets,
+		AfterPuppets
+	}
+	
+	[Header("Debug")]
 	// set on initialization: static throughout gameplay.
-	private StringRoot p1Anchor;
-	private StringRoot p2Anchor;
+	public StringRoot p1Anchor;
+	public StringRoot p2Anchor;
 	private StringRoot[] anchors;
 	
 	// set each time a level is loaded: dynamic.
-	private List<GameObject> workingProps = null;
+	public List<GameObject> workingProps = null;
 	private Spawnpoint p1Spawn = null;
 	private Spawnpoint p2Spawn = null;
-	
-	
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 	
 	public void initPlayerRefs(StringRoot p1Anchor, StringRoot p2Anchor) {
 		this.p1Anchor = p1Anchor;
@@ -44,25 +47,40 @@ public class LevelLoader : MonoBehaviour
 	
 	// activate the props for the new level.
 	// THREE PHASES:
-	// 1. prop minigame (most props)
+	// 1. StageProps with BeforePuppets
 	// 2. move puppets to spawnpoints
-	// 3. props that arent suitable for the minigame (like ground hazards)
+	// 3. StageProps with AfterPuppets
 	public void load(List<GameObject> props, Spawnpoint p1, Spawnpoint p2) {
 		
 		workingProps = props;
 		p1Spawn = p1;
 		p2Spawn = p2;
 		
-		// only load props that aren't tagged to be loaded after puppets are moved.
+		// before enabling, place all props offstage to make it look like they're moving on
+		foreach (GameObject prop in workingProps) {
+			switch (prop.GetComponent<StageProp>().stageMoveDirection) {
+				case Direction.Top:
+					prop.transform.position += new Vector3(0, TOP_BOUNDARY, 0);
+					break;
+				case Direction.Side:
+					prop.transform.position += new Vector3(SIDE_BOUNDARY, 0, 0);
+					break;
+				case Direction.Bottom:
+					prop.transform.position += new Vector3(0, BOTTOM_BOUNDARY, 0);
+					break;
+			}
+		}
+		
+		// PHASE 1
 		foreach (GameObject prop in workingProps) {
 			
-			if (!prop.GetComponent<StageProp>().afterPuppetSpawn) {
+			if (prop.GetComponent<StageProp>().stageMoveTiming == Timing.BeforePuppets) {
 				prop.SetActive(true);
 				
 				MoveProp moverComponent = prop.AddComponent<MoveProp>();
 				moverComponent.target = prop.GetComponent<StageProp>().originalPosition;
-				moverComponent.moveSpeed = LevelLoader.ENTRY_SPEED;
-				moverComponent.maxSpeed = LevelLoader.SPEED_MAX;
+				moverComponent.moveSpeed = ENTRY_SPEED;
+				moverComponent.maxSpeed = SPEED_MAX;
 				moverComponent.enabled = true;
 				
 				LevelManager.activeProps.Add(prop);
@@ -87,6 +105,7 @@ public class LevelLoader : MonoBehaviour
 	
 	private void movePuppets() {
 		
+		// PHASE 2
 		foreach(StringRoot anchor in anchors) {
 			// set temporary string parameters while moving em around
 			anchor.stringLength = 4f;
@@ -97,14 +116,14 @@ public class LevelLoader : MonoBehaviour
 		// move p1 anchor point
 		moverComponent = p1Anchor.gameObject.AddComponent<MoveProp>();
 		moverComponent.target = p1Spawn.transform.position;
-		moverComponent.moveSpeed = LevelLoader.ENTRY_SPEED;
-		moverComponent.maxSpeed = LevelLoader.SPEED_MAX;
+		moverComponent.moveSpeed = ENTRY_SPEED;
+		moverComponent.maxSpeed = SPEED_MAX;
 		moverComponent.enabled = true;
 		// move p2 anchor point
 		moverComponent = p2Anchor.gameObject.AddComponent<MoveProp>();
 		moverComponent.target = p2Spawn.transform.position;
-		moverComponent.moveSpeed = LevelLoader.ENTRY_SPEED;
-		moverComponent.maxSpeed = LevelLoader.SPEED_MAX;
+		moverComponent.moveSpeed = ENTRY_SPEED;
+		moverComponent.maxSpeed = SPEED_MAX;
 		moverComponent.enabled = true;
 		
 		StartCoroutine( waitMovePuppets() );
@@ -130,15 +149,17 @@ public class LevelLoader : MonoBehaviour
 	
 	private void loadAfter() {
 		
+		
+		// PHASE 3
 		foreach (GameObject prop in workingProps) {
 			
-			if (prop.GetComponent<StageProp>().afterPuppetSpawn) {
+			if (prop.GetComponent<StageProp>().stageMoveTiming == Timing.AfterPuppets) {
 				prop.SetActive(true);
 				
 				MoveProp moverComponent = prop.AddComponent<MoveProp>();
 				moverComponent.target = prop.GetComponent<StageProp>().originalPosition;
-				moverComponent.moveSpeed = LevelLoader.ENTRY_SPEED;
-				moverComponent.maxSpeed = LevelLoader.SPEED_MAX;
+				moverComponent.moveSpeed = ENTRY_SPEED;
+				moverComponent.maxSpeed = SPEED_MAX;
 				moverComponent.enabled = true;
 				
 				LevelManager.activeProps.Add(prop);
@@ -173,17 +194,22 @@ public class LevelLoader : MonoBehaviour
 		
 		foreach (GameObject prop in workingProps) {
 			MoveProp moverComponent = prop.AddComponent<MoveProp>();
-			Vector3 targetPosition;
+			Vector3 targetPosition = new Vector3();
 			
 			if (prop.TryGetComponent<Collider>(out Collider comp) ) {
 				comp.enabled = false;
 			}
 			
-			if (prop.GetComponent<StageProp>().afterPuppetSpawn) {
-				targetPosition = prop.transform.position - new Vector3(LevelManager.SIDE_BOUNDARY, 0, 0);
-			}
-			else {
-				targetPosition = prop.transform.position + new Vector3(0, LevelManager.TOP_BOUNDARY, 0);
+			switch (prop.GetComponent<StageProp>().stageMoveDirection) {
+				case Direction.Top:
+					targetPosition = prop.transform.position + new Vector3(0, TOP_BOUNDARY, 0);
+					break;
+				case Direction.Side:
+					targetPosition = prop.transform.position - new Vector3(SIDE_BOUNDARY, 0, 0);
+					break;
+				case Direction.Bottom:
+					targetPosition = prop.transform.position + new Vector3(0, BOTTOM_BOUNDARY, 0);
+					break;
 			}
 			
 			moverComponent.target = targetPosition;
@@ -205,12 +231,19 @@ public class LevelLoader : MonoBehaviour
 		foreach (GameObject prop in workingProps) {
 			yield return new WaitUntil( () => prop.GetComponent<MoveProp>() == null);
 			
-			if (prop.TryGetComponent<Collider>(out Collider comp) ) {
-				comp.enabled = true;
+			if (prop.TryGetComponent<Collider>(out Collider collider) ) {
+				collider.enabled = true;
 			}
 			
 			LevelManager.activeProps.Remove(prop);
 			prop.SetActive(false);
+			
+			// set prop position back to default
+			prop.transform.position = prop.GetComponent<StageProp>().originalPosition;
+			// reenable Goal
+			if (prop.TryGetComponent<Goal>(out Goal goal) ) {
+				//
+			}
 		}
 		
 		workingProps = null;

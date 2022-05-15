@@ -13,13 +13,10 @@ public class Goal : MonoBehaviour
 	public LevelManager manager;
 	[Tooltip("Determines if this is the goal for Player 2. Otherwise Player 1.")]
 	public bool isPlayer2;
-	[Tooltip("Does the player have to remain touching the goal to win? If not, the goal only needs to be touched once: the player doesn't have to remain touching the goal.")]
-	public bool persistent = true;
 	
 	public static event Action<bool, bool> onPlayerGoal;
-	
+	[Header("Debug")]
 	private Color originalColor;
-	private bool goalActive = true; // if not persistent, turns inactive after first touch.
 	private GameObject targetPlayer; // reference to the player GameObject this goal waits for.
 	
 	
@@ -46,27 +43,18 @@ public class Goal : MonoBehaviour
 	
 	void OnTriggerEnter(Collider other) {
 		
-		if (other.gameObject == targetPlayer && goalActive) {
-			
+		if (other.gameObject == targetPlayer) {
 			onPlayerGoal?.Invoke(true, isPlayer2);
-			
 			gameObject.GetComponent<Renderer>().material.color = Color.green;
 			StartCoroutine ( pulseAnimation() );
-			
-			// if not persistent, turn the goal off after first touch.
-			if (!persistent) {
-				goalActive = false;
-			}
 		}
 		
 	}
 	
 	void OnTriggerExit(Collider other) {
 		
-		if (other.gameObject == targetPlayer && persistent && goalActive) {
-			
+		if (other.gameObject == targetPlayer) {
 			onPlayerGoal?.Invoke(false, isPlayer2);
-			
 			gameObject.GetComponent<Renderer>().material.color = originalColor;
 		}
 		
