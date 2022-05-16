@@ -75,6 +75,8 @@ public class LevelLoader : MonoBehaviour
 			if (prop.GetComponent<StageProp>().stageMoveTiming == Timing.BeforePuppets) {
 				prop.SetActive(true);
 				
+				toggleColliders(prop, true);
+				
 				MoveProp moverComponent = prop.AddComponent<MoveProp>();
 				moverComponent.target = prop.GetComponent<StageProp>().originalPosition;
 				moverComponent.moveSpeed = ENTRY_SPEED;
@@ -148,6 +150,7 @@ public class LevelLoader : MonoBehaviour
 			
 			if (prop.GetComponent<StageProp>().stageMoveTiming == Timing.AfterPuppets) {
 				prop.SetActive(true);
+				toggleColliders(prop, true);
 				
 				MoveProp moverComponent = prop.AddComponent<MoveProp>();
 				moverComponent.target = prop.GetComponent<StageProp>().originalPosition;
@@ -168,6 +171,9 @@ public class LevelLoader : MonoBehaviour
 	IEnumerator waitLoadAfter() {
 		foreach (GameObject prop in workingProps) {
 			yield return new WaitUntil( () => prop.GetComponent<MoveProp>() == null);
+			
+			toggleActivators(prop, true);
+			toggleReactors(prop, true);
 		}
 		
 		// all done, clear references.
@@ -184,13 +190,15 @@ public class LevelLoader : MonoBehaviour
 		workingProps = new List<GameObject>(activeProps);
 		
 		foreach (GameObject prop in workingProps) {
+			
+			
+			toggleColliders(prop, false);
+			toggleActivators(prop, false);
+			toggleReactors(prop, false);
+			
+			
 			MoveProp moverComponent = prop.AddComponent<MoveProp>();
 			Vector3 targetPosition = new Vector3();
-			
-			if (prop.TryGetComponent<Collider>(out Collider comp) ) {
-				comp.enabled = false;
-			}
-			
 			switch (prop.GetComponent<StageProp>().stageMoveDirection) {
 				case Direction.Top:
 					targetPosition = prop.transform.position + new Vector3(0, TOP_BOUNDARY, 0);
@@ -202,7 +210,6 @@ public class LevelLoader : MonoBehaviour
 					targetPosition = prop.transform.position + new Vector3(0, BOTTOM_BOUNDARY, 0);
 					break;
 			}
-			
 			moverComponent.target = targetPosition;
 			moverComponent.moveSpeed = LevelLoader.EXIT_SPEED;
 			moverComponent.maxSpeed = LevelLoader.SPEED_MAX;
@@ -214,39 +221,44 @@ public class LevelLoader : MonoBehaviour
 		
 	}
 	
-	
-	
 	// sends control back to LevelManager when all props have exited the stage.
 	IEnumerator waitExit() {
 		foreach (GameObject prop in workingProps) {
 			yield return new WaitUntil( () => prop.GetComponent<MoveProp>() == null);
-			
-			if (prop.TryGetComponent<Collider>(out Collider collider) ) {
-				collider.enabled = true;
-			}
 			
 			LevelManager.activeProps.Remove(prop);
 			prop.SetActive(false);
 			
 			// set prop position back to default
 			prop.transform.position = prop.GetComponent<StageProp>().originalPosition;
-			// reenable Goal
-			if (prop.TryGetComponent<Goal>(out Goal goal) ) {
-				//
-			}
-			// call reset() on all reactors and activators
-			// TODO: this only chooses 1 on each prop, gotta iterate through all.
-			if (prop.TryGetComponent<Activator>(out Activator actv) ) {
-				actv.reset();
-			}
-			if (prop.TryGetComponent<Reactor>(out Reactor react) ) {
-				react.reset();
-			}
+			
 		}
 		
 		workingProps = null;
 		onUnloadComplete?.Invoke();
 		
+	}
+	
+	// helper methods for toggling components off. this is so weird shit doesnt happen
+	public void toggleColliders(GameObject obj, bool res) {
+		Collider[] comps = obj.GetComponents<Collider>();
+		foreach (Collider comp in comps) {
+			comp.enabled = res;
+		}
+	}
+	public void toggleActivators(GameObject obj, bool res) {
+		Activator[] comps = obj.GetComponents<Activator>();
+		foreach (Activator comp in comps) {
+			if (!res) { comp.reset(); }
+			comp.enabled = res;
+		}
+	}
+	public void toggleReactors(GameObject obj, bool res) {
+		Reactor[] comps = obj.GetComponents<Reactor>();
+		foreach (Reactor comp in comps) {
+			if (!res) { comp.reset(); }
+			comp.enabled = res;
+		}
 	}
 	
 }

@@ -8,12 +8,12 @@ public abstract class Reactor : MonoBehaviour
 	
 	public GameObject targetObject;
 	public bool onlyActivateOnce = true;
-	[Header("Debug")]
+	[Header("Reactor Debug")]
 	public bool canFire = true;
 	public int fireCount = 0;
 	public int fireAttempts = 0;
 	
-	public abstract void fire();
+	public abstract void fire(float progress);
 	public abstract void reset();
 	
 }

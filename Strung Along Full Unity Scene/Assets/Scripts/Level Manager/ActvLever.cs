@@ -45,10 +45,7 @@ public class ActvLever : Activator
 			lerpProgress = lerpProgress > 0.0f ? lerpProgress -= speedFactor : lerpProgress = 0.0f;
 		}
 		
-		// if the rotation has reached the target, the lever activates!
-		if (lerpProgress == 1) {
-			fireAll();
-		}
+		fireAll(lerpProgress);
 		
     }
 	

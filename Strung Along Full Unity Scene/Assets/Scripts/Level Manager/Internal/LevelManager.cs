@@ -174,6 +174,9 @@ public class LevelManager : MonoBehaviour
 			foreach (Level level in act.levels) {
 				foreach (GameObject prop in level.props) {
 					prop.SetActive(false);
+					loader.toggleColliders(prop, false);
+					loader.toggleActivators(prop, false);
+					loader.toggleReactors(prop, false);
 				}
 			}
 		}
