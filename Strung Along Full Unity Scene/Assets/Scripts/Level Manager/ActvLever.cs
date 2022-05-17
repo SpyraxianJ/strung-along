@@ -18,6 +18,13 @@ public class ActvLever : Activator
 	public Quaternion targetRotation;
 	
 	
+	public override void checkErrors() {
+		if ( TryGetComponent<Collider>(out Collider comp) ) {
+			if (comp.isTrigger == false) {
+				Debug.LogError(this + ": must be on an object whose Collider is a Trigger.");
+			}
+		}
+	}
 	
     // Start is called before the first frame update
     void Start()

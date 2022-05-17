@@ -11,7 +11,13 @@ public abstract class Activator : MonoBehaviour
 	public bool p1CanActivate = true;
 	public bool p2CanActivate = true;
 	
+	public abstract void reset();
+	public abstract void checkErrors();
+	
 	void Awake() {
+		checkActvErrors();
+		checkErrors();
+		
 		bool counting = false;
 		Component[] every = GetComponents<Component>();
 		foreach(Component comp in every) {
@@ -27,6 +33,12 @@ public abstract class Activator : MonoBehaviour
 				counting = false;
 			}
 		}
+		
+		
+		if (reactors.Count == 0) {
+			Debug.LogWarning(this + ": has no Reactors. He is so lonely.");
+		}
+		
 	}
 	
 	public void fireAll(float progress) {
@@ -35,7 +47,15 @@ public abstract class Activator : MonoBehaviour
 		}
 	}
 	
-	public abstract void reset();
+	private void checkActvErrors() {
+		
+		if (manager == null) {
+			Debug.LogError(this + ": LevelManager is not assigned.");
+		}
+		
+	}
+	
+	
 	
 	
 }

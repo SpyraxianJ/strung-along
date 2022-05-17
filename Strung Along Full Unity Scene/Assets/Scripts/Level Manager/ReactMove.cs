@@ -5,18 +5,34 @@ using UnityEngine;
 public class ReactMove : Reactor
 {
 	[Header("Movement Properties")]
+	[Tooltip("Leave at 0,0,0 with relative = true to leave as-is.")]
 	public Vector3 targetPosition;
 	public bool relativePosition = true;
-	public bool dynamicReactor = false;
+	// TODO: add rotation support.
+	//[Tooltip("Leave at 0,0,0 with relative = true to leave as-is.")]
+	//public Quaternion targetRotation;
+	//public bool relativeRotation = true;
+	
 	[Header("Non-Dynamic Properties")]
 	public float speed = 0.1f;
 	public float maxSpeed = 10f;
+	[Tooltip("Move the prop back to it's original spot after a delay.")]
 	public bool returnToOriginalPos = false;
 	public float returnDelay = 3;
+	
+	[Header("Dynamic Properties")]
+	[Tooltip("Syncs movement with the Activator. Try it out it's super cool.")]
+	public bool dynamicReactor = false;
+	[Range(0,1)]
+	public float progress;
+	
 	[Header("Movement Debug")]
 	public Vector3 originalWorldPosition;
 	public Vector3 targetWorldPosition;
 	
+	public override void checkErrors() {
+		// nothing to check here!
+	}
 	
 	void Start() {
 		originalWorldPosition = targetObject.transform.position;
@@ -30,31 +46,34 @@ public class ReactMove : Reactor
 	}
 	
     public override void fire(float progress) {
-		fireAttempts++;
+		this.progress = progress;
 		
-		if (dynamicReactor) {
+		if (dynamicReactor && ready) {
 			targetObject.transform.position = Vector3.Lerp(originalWorldPosition, targetWorldPosition, progress / 1.0f);
-		} else if (progress == 1.0f && canFire) {
+		} else if (progress == 1.0f && ready) {
 			MoveProp moverComponent;
 			moverComponent = targetObject.AddComponent<MoveProp>();
 			moverComponent.target = targetWorldPosition;
 			moverComponent.moveSpeed = speed;
 			moverComponent.maxSpeed = maxSpeed;
 			moverComponent.enabled = true;
-		
-			fireCount++;
-			if (onlyActivateOnce) {
-				canFire = false;
-			}
 			
+			// while it's moving it can't fire. wait till it's done!
+			ready = false;
 			if (returnToOriginalPos) {
 				StartCoroutine( waitBeforeReturn() );
 			}
 		}
+		
+		// disable on first fire if onlyActivateOnce
+		if (progress == 1.0f && onlyActivateOnce && ready) {
+			ready = false;
+		}
+		
+		
 	}
 	
 	IEnumerator waitBeforeReturn() {
-		
 		yield return new WaitForSeconds(returnDelay);
 		
 		MoveProp moverComponent;
@@ -64,14 +83,16 @@ public class ReactMove : Reactor
 		moverComponent.maxSpeed = maxSpeed;
 		moverComponent.enabled = true;
 		
+		// okay we're finished moving.
+		ready = true;
+		
 	}
 	
 	public override void reset() {
-		canFire = true;
+		ready = true;
 		fireCount = 0;
-		fireAttempts = 0;
 		
-		targetObject.transform.position = targetObject.GetComponent<StageProp>().originalPosition;
+		//targetObject.transform.position = targetObject.GetComponent<StageProp>().originalPosition;
 	}
 	
 }
