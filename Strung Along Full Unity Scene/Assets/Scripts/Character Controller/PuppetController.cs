@@ -561,7 +561,7 @@ public class PuppetController : MonoBehaviour
         {
             isGrounded = false;
             hasJumped = true;
-            rb.velocity = new Vector3(rb.velocity.x, initialJumpForce, rb.velocity.z);// needs to set velocity not add it to prevent having strange grounded forces affecting jump
+            rb.velocity += Vector3.up * initialJumpForce;
             forceAirborneTimer = 0.1f;
             jumpBoostTimer = jumpBoostTime;
             // required for ensuring the puppet gets off the ground consistantly when jumping
