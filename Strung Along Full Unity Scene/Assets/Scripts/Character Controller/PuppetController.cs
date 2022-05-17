@@ -14,6 +14,7 @@ public class PuppetController : MonoBehaviour
     public PuppetController otherPuppet;
     public PuppetStringManager stringManager;
     public StringRoot thisStringRoot;
+    public StaminaBar staminaUI;
 
     [Space]
 
@@ -47,6 +48,15 @@ public class PuppetController : MonoBehaviour
     [Tooltip("This is how much we have climbed up our string currently, used to make it so the string can move and we move with it.")]
     // Goes between 0-1, knot is always at 0.5 if it exists
     public float climbValue;
+
+    [Space]
+
+    [Tooltip("max of 1")]
+    public float stamina;
+    [Tooltip("How fast their stamina drains as they climb, this is basically how much stamina they lose per second")]
+    public float staminaDrain;
+    [Tooltip("How long it takes to regen all stamina while on the ground")]
+    public float staminaRegen;
 
     [Space]
 
@@ -305,6 +315,8 @@ public class PuppetController : MonoBehaviour
         else // Pause all normal movement stuff, just climb
         {
             Debug.Log("AA");
+            isGrounded = false;
+            HandleMovement();
             ClimbTick();
         }        
         
@@ -336,12 +348,23 @@ public class PuppetController : MonoBehaviour
         if (isGrounded)
         {
             transform.position = transform.position - transform.up * groundedDownPerFrame;
+
+            if (stamina < 1)
+            {
+                stamina += staminaRegen * Time.fixedDeltaTime;
+                staminaUI.UpdateStaminaVisual(stamina);
+            }
+            else
+            {
+                stamina = 1;
+            }
+
         }
 
         if (forceAirborneTimer > 0)
         {
             // Ground detection is not allowed
-            forceAirborneTimer = forceAirborneTimer - Time.fixedDeltaTime;
+            forceAirborneTimer -= Time.fixedDeltaTime;
             isGrounded = false;
         }
         else
@@ -530,28 +553,6 @@ public class PuppetController : MonoBehaviour
             jumpBoostTimer -= Time.fixedDeltaTime;
             rb.AddForce(Vector3.up * Mathf.Lerp(0, jumpBoostForce, jumpBoostTimer / jumpBoostTime));
         }
-
-        if (isGrounded == false)
-        {
-            if (jumpPressed)
-            {
-                rb.AddForce(Vector3.up * jumpHoldForce);
-            }
-            else
-            {
-                rb.AddForce(Vector3.up * jumpReleaseForce);
-                if (rb.velocity.y > 0)
-                {
-                    rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y * (1 - jumpReleaseRisingDrag * Time.fixedDeltaTime * 100), rb.velocity.z);
-                }
-            }
-
-            if (rb.velocity.y < -maxFallSpeed)
-            {
-                rb.AddForce(Vector3.up * jumpReleaseForce);
-            }
-        }
-
     }
 
     public void StartJump()
@@ -564,7 +565,7 @@ public class PuppetController : MonoBehaviour
             forceAirborneTimer = 0.1f;
             jumpBoostTimer = jumpBoostTime;
             // required for ensuring the puppet gets off the ground consistantly when jumping
-            gameObject.transform.position = transform.position + Vector3.up * 0.05f;
+            //gameObject.transform.position = transform.position + Vector3.up * 0.05f;
         }
     }
 
@@ -574,21 +575,24 @@ public class PuppetController : MonoBehaviour
     public void GrabStart()
     {
 
-        // First, we need to find out where we are in relation to our own string
-        SetClimbValue();
+        if (stamina > 0) {
+            // First, we need to find out where we are in relation to our own string
+            SetClimbValue();
 
-        isClimbing = true;
+            isClimbing = true;
 
-        //rb.velocity = Vector3.zero; // makes climbing feel a little worse, but prevents some exploits, consider turning of if desired.
+            //rb.velocity = Vector3.zero; // makes climbing feel a little worse, but prevents some exploits, consider turning of if desired.
+        }
 
     }
 
     public void GrabRelease()
     {
+        if (isClimbing) {
+            //rb.velocity *= 0.5f;
+        }
         climbValue = 0;
         isClimbing = false;
-
-        rb.velocity = rb.velocity * 0.5f;
     }
 
     public void ClimbTick() {
@@ -636,6 +640,14 @@ public class PuppetController : MonoBehaviour
             // TEMP FAKE GRAVITY :))))
             rb.AddForce((thisStringRoot.transform.position - transform.position) * 5);
             rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+        }
+
+        stamina -= staminaDrain * Time.fixedDeltaTime;
+
+        staminaUI.UpdateStaminaVisual(stamina);
+
+        if (stamina < 0) {
+            GrabRelease();
         }
 
     }
