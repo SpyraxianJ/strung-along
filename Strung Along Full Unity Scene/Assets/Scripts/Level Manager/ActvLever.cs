@@ -12,8 +12,6 @@ public class ActvLever : Activator
 	[Space]
 	[Header("Debug")]
 	public bool isActivating = false;
-	[Range(0,1)]
-	public float lerpProgress = 0.0f;
 	public Quaternion originalRotation;
 	public Quaternion targetRotation;
 	

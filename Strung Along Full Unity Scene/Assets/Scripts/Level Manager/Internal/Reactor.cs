@@ -7,7 +7,6 @@ public abstract class Reactor : MonoBehaviour
 {
 	
 	public GameObject targetObject;
-	public bool onlyActivateOnce = true;
 	[Header("Reactor Debug")]
 	public bool ready = true;
 	public int fireCount = 0;
@@ -15,8 +14,6 @@ public abstract class Reactor : MonoBehaviour
 	public abstract void fire(float progress);
 	public abstract void reset();
 	public abstract void checkErrors();
-	
-	
 	
 	void Awake() {
 		

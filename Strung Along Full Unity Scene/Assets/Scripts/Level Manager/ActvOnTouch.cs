@@ -10,17 +10,13 @@ public class ActvOnTouch : Activator
 	[Header("Touch Properties")]
 	public float activationTime = 2f;
 	public float resetTime = 0f;
-	[Tooltip("e.g. if two puppets are touching, it activates twice as fast.")]
+	[Tooltip("e.g. if two puppets are touching, it activates twice as fast.\nDoesn't do anything if ActivationTime is 0.")]
 	public bool accumulative = true;
-	public Vector3 touchDistance = new Vector3(0.5f, 1f, 0.5f);
 	[Space]
 	[Header("Debug")]
+	public Vector3 touchDistance = new Vector3(0.25f, 1f, 0.25f);
 	public List<Collider> currentActivators;
-	[Range(0,1)]
-	public float lerpProgress = 0.0f;
 	public List<Collider> currentHits;
-	public Collider p1Collider;
-	public Collider p2Collider;
 	
 	
 	public override void checkErrors() {
@@ -32,20 +28,16 @@ public class ActvOnTouch : Activator
 		lerpProgress = 0.0f;
 	}
 	
-	
     // Start is called before the first frame update
     void Start()
     {
         currentHits = new List<Collider>();
 		currentActivators = new List<Collider>();
-		p1Collider = manager.player1.GetComponent<Collider>();
-		p2Collider = manager.player2.GetComponent<Collider>();
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-		// reimplementing OnCollision because unity's suck ass
 		handleTouches();
 		
 		float speedFactor;
@@ -63,6 +55,7 @@ public class ActvOnTouch : Activator
 		
     }
 	
+	// reimplementing OnCollision because unity's suck ass
 	private void handleTouches() {
 		Collider[] hitArray = Physics.OverlapBox(transform.position, transform.localScale / 2 + touchDistance, transform.rotation);
 		
@@ -85,12 +78,11 @@ public class ActvOnTouch : Activator
 	}
 	
 	private void onTouchEnter(Collider other) {
-		
-		if (other == p1Collider && p1CanActivate) {
+		if (other.gameObject == manager.player1 && p1CanActivate) {
 			currentActivators.Add(other);
 			
 		}
-		if (other == p2Collider && p2CanActivate) {
+		if (other.gameObject == manager.player2 && p2CanActivate) {
 			currentActivators.Add(other);
 		}
 		
@@ -99,27 +91,12 @@ public class ActvOnTouch : Activator
 				currentActivators.Add(other);
 			}
 		}
-		
-		
-		
 	}
+	
 	private void onTouchStay(Collider other) {
-		if (other == p1Collider && p1CanActivate) {
-			//isActivating = true;
-			
-		}
-		if (other == p2Collider && p2CanActivate) {
-			//isActivating = true;
-		}
-		
-		
-		foreach (Collider otherActivator in extraActivators) {
-			if (other == otherActivator) {
-				//isActivating = true;
-			}
-		}
 		
 	}
+	
 	private void onTouchExit(Collider other) {
 		currentActivators.Remove(other);
 	}

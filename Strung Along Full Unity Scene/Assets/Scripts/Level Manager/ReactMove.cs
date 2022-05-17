@@ -11,6 +11,7 @@ bit of info here about how to use it
 public class ReactMove : Reactor
 {
 	[Header("Movement Properties")]
+	public bool onlyActivateOnce = true;
 	[Tooltip("Leave at 0,0,0 with relative = true to leave as-is.")]
 	public Vector3 targetPosition;
 	public bool relativePosition = true;

@@ -7,6 +7,8 @@ public abstract class Activator : MonoBehaviour
 {
 	public LevelManager manager;
 	public List<Reactor> reactors;
+	[Range(0,1)]
+	public float lerpProgress = 0.0f;
 	[Space]
 	public bool p1CanActivate = true;
 	public bool p2CanActivate = true;
