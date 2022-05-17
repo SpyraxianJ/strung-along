@@ -2,6 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+
+bit of info here about how to use it
+
+*/
+
 public class ReactMove : Reactor
 {
 	[Header("Movement Properties")]
@@ -21,7 +27,7 @@ public class ReactMove : Reactor
 	public float returnDelay = 3;
 	
 	[Header("Dynamic Properties")]
-	[Tooltip("Syncs movement with the Activator. Try it out it's super cool.")]
+	[Tooltip("Syncs movement with the Activator. Try it out it's super cool.\nIgnores all Non-Dynamic Properties.")]
 	public bool dynamicReactor = false;
 	[Range(0,1)]
 	public float progress;
@@ -51,6 +57,7 @@ public class ReactMove : Reactor
 		if (dynamicReactor && ready) {
 			targetObject.transform.position = Vector3.Lerp(originalWorldPosition, targetWorldPosition, progress / 1.0f);
 		} else if (progress == 1.0f && ready) {
+			fireCount++;
 			MoveProp moverComponent;
 			moverComponent = targetObject.AddComponent<MoveProp>();
 			moverComponent.target = targetWorldPosition;

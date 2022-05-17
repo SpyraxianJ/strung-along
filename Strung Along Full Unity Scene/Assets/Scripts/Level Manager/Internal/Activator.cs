@@ -5,9 +5,9 @@ using UnityEngine.Events;
 
 public abstract class Activator : MonoBehaviour
 {
-	
 	public LevelManager manager;
 	public List<Reactor> reactors;
+	[Space]
 	public bool p1CanActivate = true;
 	public bool p2CanActivate = true;
 	

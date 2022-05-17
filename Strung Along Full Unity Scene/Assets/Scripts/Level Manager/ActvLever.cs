@@ -21,9 +21,15 @@ public class ActvLever : Activator
 	public override void checkErrors() {
 		if ( TryGetComponent<Collider>(out Collider comp) ) {
 			if (comp.isTrigger == false) {
-				Debug.LogError(this + ": must be on an object whose Collider is a Trigger.");
+				Debug.LogError(this + ": Collider must be a Trigger.");
 			}
 		}
+	}
+	
+	public override void reset() {
+		isActivating = false;
+		lerpProgress = 0.0f;
+		transform.rotation = originalRotation;
 	}
 	
     // Start is called before the first frame update
@@ -38,7 +44,6 @@ public class ActvLever : Activator
     {
         
 		float speedFactor;
-		
 		// spin toward the target direction if the player is touching it
 		if (isActivating) {
 			transform.rotation = Quaternion.Lerp(originalRotation, targetRotation, lerpProgress / 1.0f);
@@ -69,12 +74,6 @@ public class ActvLever : Activator
 		if (other.gameObject == manager.player1 || other.gameObject == manager.player2) {
 			isActivating = false;
 		}
-	}
-	
-	public override void reset() {
-		isActivating = false;
-		lerpProgress = 0.0f;
-		transform.rotation = originalRotation;
 	}
 	
 	
