@@ -9,6 +9,8 @@ public abstract class Activator : MonoBehaviour
 	public List<Reactor> reactors;
 	[Range(0,1)]
 	public float lerpProgress = 0.0f;
+	[SerializeField]
+	public AnimationCurve curve = AnimationCurve.Linear(0.0f, 0.0f, 1.0f, 1.0f);
 	[Space]
 	public bool p1CanActivate = true;
 	public bool p2CanActivate = true;
