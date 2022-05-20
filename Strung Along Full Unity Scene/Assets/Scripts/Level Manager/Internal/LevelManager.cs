@@ -6,12 +6,27 @@ using UnityEngine.Events;
 
 public class LevelManager : MonoBehaviour
 {
+	
+	public static List<GameObject> activeProps; // the currently active props on the stage.
+	private static List<Act> acts; // a list of all the acts in the game. access levels through acts[#].levels[#]
+	private static Level currentLevel; // reference to the currently playing level.
+	private static LevelLoader loader; // class for handling moving objects on and off the stage.
+	
+	private static bool timerActive; // whether the timer is running or not.
+	private static float timer;
 	// level manager state machine
 	public enum State {
 		GameStart,
 		NoLevel,
 		LevelLoading,
-		LevelPlaying
+		LevelPlaying,
+		GameLoaded
+	}
+	// win state machine
+	public enum WinState {
+		None,
+		Win,
+		Fail
 	}
 	// puppet state machine
 	[Serializable]
@@ -32,22 +47,12 @@ public class LevelManager : MonoBehaviour
 	[Header("Events")]
 	public UnityEvent onLevelComplete;
 	public UnityEvent onLevelFailure;
-	public UnityEvent onLevelUnloaded;
-	public UnityEvent onPuppet1Death;
-	public UnityEvent onPuppet2Death;
 	[Space]
 	[Header("Debug")]
-	public State state;
-	public bool win;
-	public Level currentLevel; // reference to the currently playing level.
-	public static List<GameObject> activeProps; // the currently active props on the stage.
-	private LevelLoader loader; // class for handling moving objects on and off the stage.
-	public bool timerActive; // whether the timer is running or not.
-	public float timer;
 	public Puppet p1;
 	public Puppet p2;
-	
-	public List<Act> acts; // a list of all the acts in the game. access levels through acts[#].levels[#]
+	public static State state; 
+	public WinState winState;
 	
 	
 	//
@@ -61,11 +66,15 @@ public class LevelManager : MonoBehaviour
 		activeProps = new List<GameObject>();
 		loader = gameObject.AddComponent<LevelLoader>();
 		loader.initPlayerRefs(p1Anchor, p2Anchor);
-		
+
+
 		// init event subscriptions
 		LevelLoader.onLoadComplete += loadComplete;
 		LevelLoader.onUnloadComplete += unloadComplete;
 		Goal.onPlayerGoal += updateGoalState;
+		// TODO: when both little dudes die, the level is failed.
+		//Player1.onDeath
+		//Player2.onDeath
 		
 		// init timer
 		timerActive = false;
@@ -76,8 +85,9 @@ public class LevelManager : MonoBehaviour
 		p2.atGoal = false;
 		p1.alive = true;
 		p2.alive = true;
-		state = State.GameStart;
-		win = false;
+
+        state = State.NoLevel;
+        winState = WinState.None;
 		
 		// init list of levels
 		buildLevelList(acts);
@@ -167,9 +177,6 @@ public class LevelManager : MonoBehaviour
 			foreach (Level level in act.levels) {
 				foreach (GameObject prop in level.props) {
 					prop.SetActive(false);
-					loader.toggleColliders(prop, false);
-					loader.toggleActivators(prop, false);
-					loader.toggleReactors(prop, false);
 				}
 			}
 		}
@@ -179,13 +186,31 @@ public class LevelManager : MonoBehaviour
 	//
 	// RUNTIME
 	//
+	
 	void Update()
     {
+
 		// DEBUG. GUI will be the one calling this on game start. woo
 		if (state == State.GameStart) {
-			state = State.NoLevel;
+			clearLevel();
 			loadLevel(initialAct, initialLevel);
 		}
+
+		if (state == State.GameLoaded)
+        {
+			clearLevel();
+			GameData data = SaveSystem.loadData();
+
+			//Debug.Log("Saved Act is "+ data.SavedAct);
+			//Debug.Log("Saved level is " + data.SavedLevel);
+			p1.atGoal = false;
+			p2.atGoal = false;
+			p1.alive = true;
+			p2.alive = true;
+
+			loadLevel(data.SavedAct, data.SavedLevel);
+
+        }
 		
 		// count the timer if it's on.
 		if (timerActive) {
@@ -195,32 +220,147 @@ public class LevelManager : MonoBehaviour
 		if (state == State.LevelPlaying) {
 			// check if both players at goal
 			if (p1.atGoal && p2.atGoal) {
-				state = State.LevelLoading;
 				onLevelComplete.Invoke();
 			}
 			
 			// check if either player has died
 			if (!p1.alive || !p2.alive) {
-				state = State.LevelLoading;
 				onLevelFailure.Invoke();
 			}
 		}
     }
+
+	public void startbuttonClicked()
+    {
+		state = State.GameStart;
+	}
+
+	public void loadButtonClicked()
+    {
+		state = State.GameLoaded;
+		
+	}
 	
-	//
-	// LEVEL LOADING: NoLevel
-	//
-	private void loadLevel(Level level) {
+	// begin loading a specific level by object reference.
+	private static void loadLevel(Level level) {
 		state = State.LevelLoading;
 		loader.load(level.props, level.p1Spawn, level.p2Spawn);
 	}
-	public void loadLevel(int actNum, int levelNum) {
+	
+	// subscribed to LevelLoader load event
+	private void loadComplete() {
+		// start the level!
+		state = State.LevelPlaying;
+		startTimer();
+	}
+	
+	// begin unloading whatever level is currently loaded.
+	private void unloadLevel() {
+		state = State.LevelLoading;
+		loader.unload(activeProps);
+	}
+	
+	// subscribed to LevelLoader unload event
+	private void unloadComplete() {
+		state = State.NoLevel;
+		
+		switch (winState) {
+			case WinState.Win:
+				winState = WinState.None;
+				loadNextLevel();
+				break;
+			case WinState.Fail:
+				winState = WinState.None;
+				respawnPuppets();
+				loadLevel(currentLevel);
+				break;
+		}
+	}
+	
+	// start the level timer from zero.
+	private void startTimer() {
+		timer = 0;
+		timerActive = true;
+		Debug.Log("Timer started!");
+	}
+	
+	// stop the level timer.
+	private void stopTimer() {
+		timerActive = false;
+		Debug.Log("Timer stopped at " + timer + "!");
+	}
+	
+	// subscribed to Goal touch event
+	private void updateGoalState(bool enterGoal, bool isPlayer2) {
+		if (enterGoal) {
+			if (isPlayer2) {
+				p2.atGoal = true;
+			} else {
+				p1.atGoal = true;
+			}
+		} else {
+			
+			if (isPlayer2) {
+				p2.atGoal = false;
+			} else {
+				p1.atGoal = false;
+			}
+		}
+	}
+	
+	// not sure how the character programmers will handle this.
+	// killPuppet subscribed to something on PuppetController class.
+	private void respawnPuppets() {
+		p1.alive = true;
+		p2.alive = true;
+	}
+	
+	// subscribed to LevelManager OnLevelComplete UnityEvent
+	public void winLevel() {
+		
+		winState = WinState.Win;
+		
+		stopTimer();
+		currentLevel.newTime(timer);
+		p1.atGoal = false;
+		p2.atGoal = false;
+		
+		unloadLevel();
+	}
+	
+	// subscribed to LevelManager OnLevelFailure UnityEvent
+	public void failLevel() {
+		
+		winState = WinState.Fail;
+		
+		stopTimer();
+		p1.atGoal = false;
+		p2.atGoal = false;
+		
+		unloadLevel();
+	}
+	
+	
+	//
+	// GUI STUFF
+	//
+	// load a specific level.
+	// takes two integers, act number and level number respectively.
+	// GUI uses this to start specific levels, like from a "level select" menu.
+	// so to start the game, just call loadLevel(1, 1)
+	public static void loadLevel(int actNum, int levelNum) {
 		currentLevel = acts[actNum-1].levels[levelNum-1];
 		loadLevel(currentLevel);
 	}
-	public void loadNextLevel() {
+	
+	// load the next level.
+	// uses the LevelManager internal list to figure out which level comes next.
+	// GUI calls this for the "Next level" button or something similar.
+	public static void loadNextLevel() {
+		
 		int nextActIndex = acts.IndexOf(currentLevel.act);
 		currentLevel = currentLevel.act.getNextLevel(currentLevel);
+		
 		if (currentLevel == null) {
 			// there's no more Levels in the Act. go to next Act.
 			nextActIndex++;
@@ -239,144 +379,47 @@ public class LevelManager : MonoBehaviour
 		}
 		
 		loadLevel(currentLevel);
-	}
-	public void loadSameOrNext() {
 		
-		if (win) {
-			loadNextLevel();
-		} else {
-			loadLevel(currentLevel);
-		}
-		win = false;
-		
-		
-	}
-	// subscribed to LevelLoader load event
-	private void loadComplete() {
-		state = State.LevelPlaying;
-		startTimer();
-		Debug.Log("Act " + currentLevel.act.actNumber + " Level " + currentLevel.levelNumber + " start!");
 	}
 	
-	//
-	// LEVEL FUNCTIONS: LevelPlaying
-	//
-	// start the level timer from zero.
-	private void startTimer() {
-		timer = 0;
-		timerActive = true;
-	}
-	// stop the level timer.
-	private void stopTimer() {
-		timerActive = false;
-	}
-	// subscribed to Goal touch event
-	private void updateGoalState(bool enterGoal, bool isPlayer2) {
-		if (enterGoal) {
-			if (isPlayer2) {
-				p2.atGoal = true;
-			} else {
-				p1.atGoal = true;
-			}
-		} else {
-			
-			if (isPlayer2) {
-				p2.atGoal = false;
-			} else {
-				p1.atGoal = false;
-			}
-		}
-	}
-	public void killPuppet(PuppetController pup) {
-		if (pup.gameObject == player1) {
-			p1.alive = false;
-			onPuppet1Death.Invoke();
-		}
-		if (pup.gameObject == player2) {
-			p2.alive = false;
-			onPuppet2Death.Invoke();
-		}
-		Debug.Log("Puppet died!! How could you?!?");
-		StartCoroutine( waitForSeconds(2) );
-		
-		
-	}
-	public void endLevel(bool win) {
-		stopTimer();
-		this.win = win;
-		
-		p1.atGoal = false;
-		p2.atGoal = false;
-		Debug.Log("Level end! Win: " + win + ". Time: " + timer);
-	}
-	public void respawnPuppets() {
-		p1.alive = true;
-		p2.alive = true;
-	}
-	
-	//
-	// LEVEL UNLOADING
-	//
-	public void unloadLevel() {
-		state = State.LevelLoading;
-		loader.unload(activeProps);
-	}
-	// subscribed to LevelLoader unload event
-	private void unloadComplete() {
-		state = State.NoLevel;
-		onLevelUnloaded.Invoke();
-	}
-
-	//
 	// GETTERS
-	//
+	
 	// number of the current Level.
-	public int getCurrentLevel() {
+	public static int getCurrentLevel() {
 		return currentLevel.levelNumber;
 	}
 	// number of the current Act.
-	public int getCurrentAct() {
+	public static int getCurrentAct() {
 		return currentLevel.act.actNumber;
 	}
 	// total number of Acts in the game.
-	public int getActCount() {
+	public static int getActCount() {
 		return acts.Count;
 	}
 	// number of levels in the given Act.
-	public int getActLevelCount(int actNumber) {
+	public static int getActLevelCount(int actNumber) {
 		return acts[actNumber-1].levels.Count;
 	}
 	// number of levels left (after the current Level) in the current Act.
-	public int getActRemainingLevels() {
+	public static int getActRemainingLevels() {
 		return currentLevel.act.levels.Count - currentLevel.levelNumber;
 	}
 	// the amount of time the level has been playing for.
 	// stops when the level is completed, and resets when a new level is loaded.
-	public float getTime() {
+	public static float getTime() {
 		return timer;
 	}
 	// if the timer is running or not.
-	public bool isRunning() {
+	public static bool isRunning() {
 		return timerActive;
 	}
 	// TODO: score stuff? not sure what the designers have planned
 
-	
-	IEnumerator waitForState(State waitState) {
-		yield return new WaitUntil( () => this.state == waitState);
-	}
-	IEnumerator waitForSeconds(float sec) {
-		yield return new WaitForSeconds(sec);
-	}
-	
-	
 }
 
 
-
-
 // internal data class for Acts.
-public class Act : MonoBehaviour
+internal class Act : MonoBehaviour
 {
 	[Header("Debug")]
 	public int actNumber;
@@ -407,7 +450,7 @@ public class Act : MonoBehaviour
 }
 
 // internal data class for Levels.
-public class Level : MonoBehaviour
+internal class Level : MonoBehaviour
 {
 	[Header("Debug")]
 	public Act act; // reference to the Act this Level is part of
@@ -501,7 +544,7 @@ public class Level : MonoBehaviour
 // internal data class for stage props.
 // we store a bunch of info about positioning, what direction the prop enters from, and when.
 // you can override the default direction and timing of props with the StagePropOverride component.
-public class StageProp : MonoBehaviour
+internal class StageProp : MonoBehaviour
 {
 	[Header("Debug")]
 	public Vector3 originalPosition;
@@ -523,3 +566,4 @@ public class StageProp : MonoBehaviour
 	}
 	
 }
+
