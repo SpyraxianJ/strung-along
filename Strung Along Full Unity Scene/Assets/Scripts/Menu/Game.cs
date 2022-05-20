@@ -6,10 +6,14 @@ using UnityEngine;
 public class Game : MonoBehaviour
 {
     public float SavedTimer = 0.0f;
+    public int SavedLevel = 1;
+    public int SavedAct = 1;
 
     public void SaveGame()
     {
-        SavedTimer = Timer.GetTimer();
+        SavedTimer = LevelManager.getTime();
+        SavedLevel = LevelManager.getCurrentLevel();
+        SavedAct = LevelManager.getCurrentAct();
         SaveSystem.SaveData(this);
     }
 
@@ -19,6 +23,8 @@ public class Game : MonoBehaviour
         {
             GameData data = SaveSystem.loadData();
             SavedTimer = data.SavedTimer;
+            SavedLevel = data.SavedLevel;
+            SavedAct = data.SavedAct;
         }
     }
 }
