@@ -3,14 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+/*
+
+Fires when the chosen puppets and/or collider touches the object.
+
+*/
+
 public class ActvOnTouch : Activator
 {
 	[Tooltip("By default, only puppets can activate.\nYou can optionally add other colliders aside the puppets.")]
 	public List<Collider> extraActivators;
 	[Header("Touch Properties")]
+	[Tooltip("Required time touching to fire.\n0 for instant.")]
 	public float activationTime = 2f;
+	[Tooltip("Required time to reset.\n0 for instant.")]
 	public float resetTime = 0f;
-	[Tooltip("e.g. if two puppets are touching, it activates twice as fast.\nDoesn't do anything if ActivationTime is 0.")]
+	[Tooltip("Speeds up Activation Time depending on how many things are touching.\nDoesn't do anything if Activation Time is 0.")]
 	public bool accumulative = true;
 	[Space]
 	[Header("Debug")]

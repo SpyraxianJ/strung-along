@@ -2,12 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+
+Fires after the puppets have "turned" the object by standing inside it, like turning a lever.
+
+*/
+
 public class ActvLever : Activator
 {
 	[Header("Lever Properties")]
 	[Range(0, 360)]
+	[Tooltip("Target rotation the lever fires at.\n90 for quarter-turn, 180 for half turn etc.")]
 	public float rotationToActivate = 90f;
+	[Tooltip("Time it takes to rotate.")]
 	public float activationTime = 1f;
+	[Tooltip("Time it takes to rotate back after being turned.")]
 	public float resetTime = 2f;
 	[Space]
 	[Header("Debug")]

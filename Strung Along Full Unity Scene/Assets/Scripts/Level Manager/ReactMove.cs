@@ -4,16 +4,18 @@ using UnityEngine;
 
 /*
 
-bit of info here about how to use it
+Moves the object to the given position on fire.
 
 */
 
 public class ReactMove : Reactor
 {
 	[Header("Movement Properties")]
+	[Tooltip("Fire on the first time and disable afterward.")]
 	public bool onlyActivateOnce = true;
-	[Tooltip("Leave at 0,0,0 with relative = true to leave as-is.")]
+	[Tooltip("Position to move the object to.\nLeave at 0,0,0 with relative = true to leave as-is.")]
 	public Vector3 targetPosition;
+	[Tooltip("Move the object by these values rather than move to them in world space.")]
 	public bool relativePosition = true;
 	// TODO: add rotation support.
 	//[Tooltip("Leave at 0,0,0 with relative = true to leave as-is.")]
@@ -21,14 +23,17 @@ public class ReactMove : Reactor
 	//public bool relativeRotation = true;
 	
 	[Header("Non-Dynamic Properties")]
+	[Tooltip("Speed of the object.")]
 	public float speed = 0.1f;
+	[Tooltip("Maximum speed allowed.")]
 	public float maxSpeed = 10f;
 	[Tooltip("Move the prop back to it's original spot after a delay.")]
 	public bool returnToOriginalPos = false;
+	[Tooltip("Time to wait before returning.")]
 	public float returnDelay = 3;
 	
 	[Header("Dynamic Properties")]
-	[Tooltip("Syncs movement with the Activator. Try it out it's super cool.\nIgnores all Non-Dynamic Properties.")]
+	[Tooltip("Syncs movement with the Activator. Very nifty.\nIgnores all Non-Dynamic Properties.")]
 	public bool dynamicReactor = false;
 	[Range(0,1)]
 	public float progress;

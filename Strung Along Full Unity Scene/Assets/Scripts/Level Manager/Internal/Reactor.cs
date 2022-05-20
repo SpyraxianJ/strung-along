@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 public abstract class Reactor : MonoBehaviour
 {
-	
+	[Tooltip("The object to manipulate.")]
 	public GameObject targetObject;
 	[Header("Reactor Debug")]
 	public bool ready = true;

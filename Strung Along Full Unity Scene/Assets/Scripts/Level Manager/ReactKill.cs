@@ -2,17 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+
+Kills or destroys the target object.
+If the object is a puppet, tells the Level Manager the puppet has died.
+If the object is a prop, sets the prop to disabled.
+
+Has a special interaction with ActvOnTouch.
+If the Target Object is the same as one with ActvOnTouch and ReactKill, this will target any objects that fire ActvOnTouch.
+This way you can make an object that kills whatever touches it.
+
+*/
+
 public class ReactKill : Reactor
 {
-	
-	
 	public List<GameObject> kills;
 	
 	public override void checkErrors() {
 		
 	}
 	
-    // Start is called before the first frame update
     void Start()
     {
         kills = new List<GameObject>();
@@ -22,6 +31,7 @@ public class ReactKill : Reactor
 		
 		if (progress == 1.0f) {
 			if (targetObject == this.gameObject) {
+				
 				// if target is THIS object, search for ActvOnTouch and the Collider list.
 				if (TryGetComponent<ActvOnTouch>(out ActvOnTouch comp)  ) {
 					foreach (Collider collider in comp.currentActivators) {
