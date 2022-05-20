@@ -28,6 +28,9 @@ public class LevelManager : MonoBehaviour
 	[Header("Initialization")]
 	public int initialAct;
 	public int initialLevel;
+	// TODO: add support for changing default prop stage entry direction.
+	public bool loadTestLevel;
+	public GameObject testLevel;
 	[Space]
 	[Header("Events")]
 	public UnityEvent onLevelComplete;
@@ -37,16 +40,15 @@ public class LevelManager : MonoBehaviour
 	public UnityEvent onPuppet2Death;
 	[Space]
 	[Header("Debug")]
-	public State state;
-	public bool win;
-	public Level currentLevel; // reference to the currently playing level.
-	public static List<GameObject> activeProps; // the currently active props on the stage.
-	private LevelLoader loader; // class for handling moving objects on and off the stage.
-	public bool timerActive; // whether the timer is running or not.
-	public float timer;
-	public Puppet p1;
-	public Puppet p2;
-	
+	public Puppet p1; // puppet 1 status
+	public Puppet p2; // puppet 2 status
+	public State state; // current gamestate
+	public bool win; // did the puppets win the current level?
+	public Level currentLevel; // reference to the currently playing level
+	public static List<GameObject> activeProps; // the currently active props on the stage
+	private LevelLoader loader; // class for handling moving objects on and off the stage
+	public bool timerActive; // whether the timer is running or not
+	public float timer; // current timer value
 	public List<Act> acts; // a list of all the acts in the game. access levels through acts[#].levels[#]
 	
 	
@@ -97,40 +99,35 @@ public class LevelManager : MonoBehaviour
 	// ONLY CALL THIS ONCE, ON Start(). IT'S SLOW AS FUCK
 	private void buildLevelList(List<Act> actList) {
 		
-		int totalActs = 0; // DEBUG
-		int totalLevels = 0; // DEBUG
-		bool debugLevel = false; // DEBUG
-		string debugString = "TEST"; // DEBUG
+		int totalActs = 0;
+		int totalLevels = 0;
 		
-		// DEBUG
-		// if there's a GameObject named "TEST", just load that and nothing else. useful for testing!
-		foreach (GameObject gObject in Resources.FindObjectsOfTypeAll(typeof(GameObject)) as GameObject[]) {
-			if ( gObject.name.Equals(debugString) ) {
-				debugLevel = true;
-				
-				Act act = gObject.AddComponent<Act>();
-				act.init(1);
-				actList.Add(act);
-				totalActs++;
-				
-				Level level = gObject.AddComponent<Level>();
-				level.init(act, 1);
-				act.levels.Add(level);
-				totalLevels++;
-				
-				Debug.Log("Loaded TEST level. When you're done, rename it to the level number and drop it under an 'act' GameObject!");
-				break;
-			}
+		// check if we're loading the test level.
+		if (loadTestLevel && testLevel != null) {
+			Act act = testLevel.AddComponent<Act>();
+			act.init(1);
+			actList.Add(act);
+			totalActs++;
+			
+			Level level = testLevel.AddComponent<Level>();
+			level.init(act, 1);
+			act.levels.Add(level);
+			totalLevels++;
+			Debug.Log(this + ": Loaded test level '" + testLevel.name + "'. Uncheck 'Load Test Level' on LevelManager to load game as usual.");
+		} else if (loadTestLevel) {
+			Debug.LogWarning(this + ": 'Load Test Level' is checked but no level is given. Things might be funky.");
+			loadTestLevel = false;
+		} else if (testLevel != null) {
+			testLevel.SetActive(false);
 		}
 		
 		// iterate over every GameObject in the Hierarchy. see this is why we only call this once.
 		foreach (GameObject gObject in Resources.FindObjectsOfTypeAll(typeof(GameObject)) as GameObject[]) {
 			
 			// check if the first 3 characters are "act".
-			// TODO: this means we can't have any other GameObject starting with "act". i'll have to think about this.
 			if ( gObject.name.Length > 3 && gObject.name.Substring(0, 3).Equals("act") ) {
 				
-				if (debugLevel) {
+				if (loadTestLevel) {
 					gObject.SetActive(false);
 					continue;
 				}
@@ -157,7 +154,7 @@ public class LevelManager : MonoBehaviour
 		}
 		// the act list is created in the wrong order for some reason.
 		actList.Reverse();
-		Debug.Log("Loaded " + totalActs + " acts with " + totalLevels + " levels."); // DEBUG
+		Debug.Log(this + ": Loaded " + totalActs + " acts with " + totalLevels + " levels.");
 	}
 	
 	// disable all the props. called only once at start of game.
@@ -255,7 +252,7 @@ public class LevelManager : MonoBehaviour
 	private void loadComplete() {
 		state = State.LevelPlaying;
 		startTimer();
-		Debug.Log("Act " + currentLevel.act.actNumber + " Level " + currentLevel.levelNumber + " start!");
+		Debug.Log(this + ": Act " + currentLevel.act.actNumber + " Level " + currentLevel.levelNumber + " start!");
 	}
 	
 	//
@@ -296,8 +293,9 @@ public class LevelManager : MonoBehaviour
 			p2.alive = false;
 			onPuppet2Death.Invoke();
 		}
-		Debug.Log("Puppet died!! How could you?!?");
-		StartCoroutine( waitForSeconds(2) );
+		Debug.Log(this + ": Puppet died!! How could you?!?");
+		// TODO: wait for puppet animation to play. could wait arbitrary amount?
+		//StartCoroutine( waitForSeconds(2) );
 		
 		
 	}
@@ -307,7 +305,7 @@ public class LevelManager : MonoBehaviour
 		
 		p1.atGoal = false;
 		p2.atGoal = false;
-		Debug.Log("Level end! Win: " + win + ". Time: " + timer);
+		Debug.Log(this + ": Level end! Win: " + win + ". Time: " + timer);
 	}
 	public void respawnPuppets() {
 		p1.alive = true;
@@ -330,13 +328,13 @@ public class LevelManager : MonoBehaviour
 	//
 	// GETTERS
 	//
-	// number of the current Level.
+	// number of the current Level. returns -1 if no level is loaded.
 	public int getCurrentLevel() {
-		return currentLevel.levelNumber;
+		return currentLevel != null ? currentLevel.levelNumber : -1;
 	}
-	// number of the current Act.
+	// number of the current Act. returns -1 if no level is loaded.
 	public int getCurrentAct() {
-		return currentLevel.act.actNumber;
+		return currentLevel != null ? currentLevel.act.actNumber : -1;
 	}
 	// total number of Acts in the game.
 	public int getActCount() {
@@ -358,15 +356,6 @@ public class LevelManager : MonoBehaviour
 	// if the timer is running or not.
 	public bool isRunning() {
 		return timerActive;
-	}
-	// TODO: score stuff? not sure what the designers have planned
-
-	
-	IEnumerator waitForState(State waitState) {
-		yield return new WaitUntil( () => this.state == waitState);
-	}
-	IEnumerator waitForSeconds(float sec) {
-		yield return new WaitForSeconds(sec);
 	}
 	
 	
@@ -438,7 +427,7 @@ public class Level : MonoBehaviour
 			propList.Add(propObject);
 			
 			StageProp stagePropComponent = propObject.AddComponent<StageProp>();
-			stagePropComponent.init();
+			//stagePropComponent.init();
 			
 			if (propObject.GetComponent<Spawnpoint>() ) {
 				// the prop is a spawnpoint. but whose?!
@@ -467,33 +456,18 @@ public class Level : MonoBehaviour
 		
 		// if a level is missing a key component, yell at the level designer.
 		if (p1Spawn == null) {
-			Debug.LogError("Act " + act.actNumber + " Level " + levelNumber + " has no P1 spawnpoint set!");
+			Debug.LogError(this + ": Act " + act.actNumber + " Level " + levelNumber + " has no P1 spawnpoint set!");
 		}
 		if (p2Spawn == null) {
-			Debug.LogError("Act " + act.actNumber + " Level " + levelNumber + " has no P2 spawnpoint set!");
+			Debug.LogError(this + ": Act " + act.actNumber + " Level " + levelNumber + " has no P2 spawnpoint set!");
 		}
 		if (p1Goal == null) {
-			Debug.LogError("Act " + act.actNumber + " Level " + levelNumber + " has no P1 goal set!");
+			Debug.LogError(this + ": Act " + act.actNumber + " Level " + levelNumber + " has no P1 goal set!");
 		}
 		if (p2Goal == null) {
-			Debug.LogError("Act " + act.actNumber + " Level " + levelNumber + " has no P2 goal set!");
+			Debug.LogError(this + ": Act " + act.actNumber + " Level " + levelNumber + " has no P2 goal set!");
 		}
 		
-	}
-	
-	// a level completion time has been recorded. if it's the fastest, keep record of it.
-	// returns true if it's a new record, false if not.
-	internal bool newTime(float newTime) {
-		if (newTime > bestTime) {
-			bestTime = newTime;
-			return true;
-		} else {
-			return false;
-		}
-	}
-	
-	internal float getBestTime() {
-		return bestTime;
 	}
 	
 }
@@ -508,7 +482,7 @@ public class StageProp : MonoBehaviour
 	public LevelLoader.Direction stageMoveDirection;
 	public LevelLoader.Timing stageMoveTiming;
 	
-	internal void init() {
+	void Awake() {
 		
 		this.originalPosition = this.transform.position;
 		

@@ -40,7 +40,6 @@ public class ActvLever : Activator
     // Update is called once per frame
     void FixedUpdate()
     {
-        
 		float speedFactor;
 		// spin toward the target direction if the player is touching it
 		if (isActivating) {

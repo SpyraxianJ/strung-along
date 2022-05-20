@@ -1616,7 +1616,7 @@ GameObject:
   m_Component:
   - component: {fileID: 335173467}
   m_Layer: 0
-  m_Name: TEST
+  m_Name: harper test playground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3531,7 +3531,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   manager: {fileID: 693985798}
   reactors: []
-  lerpProgress: 0
   curve:
     serializedVersion: 2
     m_Curve:
@@ -3556,6 +3555,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  lerpProgress: 0
+  curvedProgress: 0
   p1CanActivate: 1
   p2CanActivate: 1
   extraActivators: []
@@ -3694,6 +3695,8 @@ MonoBehaviour:
   p2Anchor: {fileID: 1530655682}
   initialAct: 1
   initialLevel: 1
+  loadTestLevel: 1
+  testLevel: {fileID: 335173466}
   onLevelComplete:
     m_PersistentCalls:
       m_Calls:
@@ -3781,17 +3784,17 @@ MonoBehaviour:
   onPuppet2Death:
     m_PersistentCalls:
       m_Calls: []
-  state: 0
-  win: 0
-  currentLevel: {fileID: 0}
-  timerActive: 0
-  timer: 0
   p1:
     atGoal: 0
     alive: 0
   p2:
     atGoal: 0
     alive: 0
+  state: 0
+  win: 0
+  currentLevel: {fileID: 0}
+  timerActive: 0
+  timer: 0
   acts: []
 --- !u!4 &693985799
 Transform:
@@ -5578,7 +5581,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   manager: {fileID: 693985798}
   reactors: []
-  lerpProgress: 0
   curve:
     serializedVersion: 2
     m_Curve:
@@ -5603,6 +5605,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  lerpProgress: 0
+  curvedProgress: 0
   p1CanActivate: 1
   p2CanActivate: 1
   extraActivators: []
@@ -7996,7 +8000,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   manager: {fileID: 693985798}
   reactors: []
-  lerpProgress: 0
   curve:
     serializedVersion: 2
     m_Curve:
@@ -8201,6 +8204,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  lerpProgress: 0
+  curvedProgress: 0
   p1CanActivate: 1
   p2CanActivate: 1
   extraActivators: []
@@ -12731,7 +12736,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   manager: {fileID: 693985798}
   reactors: []
-  lerpProgress: 0
   curve:
     serializedVersion: 2
     m_Curve:
@@ -12756,6 +12760,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  lerpProgress: 0
+  curvedProgress: 0
   p1CanActivate: 1
   p2CanActivate: 1
   extraActivators: []

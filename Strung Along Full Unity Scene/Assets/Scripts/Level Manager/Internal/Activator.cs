@@ -7,10 +7,12 @@ public abstract class Activator : MonoBehaviour
 {
 	public LevelManager manager;
 	public List<Reactor> reactors;
-	[Range(0,1)]
-	public float lerpProgress = 0.0f;
 	[SerializeField]
 	public AnimationCurve curve = AnimationCurve.Linear(0.0f, 0.0f, 1.0f, 1.0f);
+	[Range(0,1)]
+	public float lerpProgress = 0.0f;
+	[Range(0,1)]
+	public float curvedProgress = 0.0f;
 	[Space]
 	public bool p1CanActivate = true;
 	public bool p2CanActivate = true;
@@ -47,7 +49,9 @@ public abstract class Activator : MonoBehaviour
 	
 	public void fireAll(float progress) {
 		foreach (Reactor reactor in reactors) {
-			reactor.fire(progress);
+			curve.Evaluate(lerpProgress);
+			curvedProgress = float.IsNaN(curvedProgress) ? curvedProgress = 0.0f : curvedProgress;
+			reactor.fire(curvedProgress);
 		}
 	}
 	

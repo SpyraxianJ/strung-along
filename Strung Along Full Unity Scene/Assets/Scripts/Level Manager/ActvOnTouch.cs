@@ -51,12 +51,7 @@ public class ActvOnTouch : Activator
 			lerpProgress = lerpProgress > 0.0f ? lerpProgress -= speedFactor : lerpProgress = 0.0f;
 		}
 		
-		float curvedProgress = curve.Evaluate(lerpProgress);
-		// why the fuck is it sometimes NaN for no reason
-		if (float.IsNaN(curvedProgress)  ) {
-			curvedProgress = 0.0f;
-		}
-		fireAll(curvedProgress);
+		fireAll(lerpProgress);
 		
     }
 	
