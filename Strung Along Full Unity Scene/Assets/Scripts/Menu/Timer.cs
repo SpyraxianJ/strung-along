@@ -16,7 +16,7 @@ public class Timer : MonoBehaviour
 
     void Update()
     {
-        GameData data = SaveSystem.loadData();
+        GameData data = SaveSystem.LoadData();
         lastSavedTime = data.SavedTimer;
 
         TimerGoesOn();

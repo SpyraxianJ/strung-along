@@ -45,6 +45,7 @@ public class LevelManager : MonoBehaviour
 	public State state; // current gamestate
 	public bool win; // did the puppets win the current level?
 	public Level currentLevel; // reference to the currently playing level
+	public Level nextLevel; // reference to the next level if it exists.
 	public static List<GameObject> activeProps; // the currently active props on the stage
 	private LevelLoader loader; // class for handling moving objects on and off the stage
 	public bool timerActive; // whether the timer is running or not
@@ -178,12 +179,6 @@ public class LevelManager : MonoBehaviour
 	//
 	void Update()
     {
-		// DEBUG. GUI will be the one calling this on game start. woo
-		if (state == State.GameStart) {
-			state = State.NoLevel;
-			loadLevel(initialAct, initialLevel);
-		}
-		
 		// count the timer if it's on.
 		if (timerActive) {
 			timer += Time.deltaTime;
@@ -209,48 +204,34 @@ public class LevelManager : MonoBehaviour
 	//
 	private void loadLevel(Level level) {
 		state = State.LevelLoading;
+		currentLevel = level;
+		nextLevel = null;
 		loader.load(level.props, level.p1Spawn, level.p2Spawn);
 	}
-	public void loadLevel(int actNum, int levelNum) {
-		currentLevel = acts[actNum-1].levels[levelNum-1];
-		loadLevel(currentLevel);
-	}
 	public void loadNextLevel() {
-		int nextActIndex = acts.IndexOf(currentLevel.act);
-		currentLevel = currentLevel.act.getNextLevel(currentLevel);
-		if (currentLevel == null) {
-			// there's no more Levels in the Act. go to next Act.
-			nextActIndex++;
-			
-			if (acts.Count <= nextActIndex) {
-				// there's no more Acts in the game.
-				// DEBUG: loop back to Act 1, Level 1.
-				// end-of-game stuff will go here.
-				currentLevel = acts[0].levels[0];
-			}
-			else {
-				// next Act is present. start at Level 1.
-				// end-of-act stuff will go here.
-				currentLevel = acts[nextActIndex].levels[0];
-			}
+		if (nextLevel != null) {
+			loadLevel(nextLevel);
 		}
 		
-		loadLevel(currentLevel);
 	}
-	public void loadSameOrNext() {
-		
-		if (win) {
-			loadNextLevel();
-		} else {
-			loadLevel(currentLevel);
+	public void loadFirstLevel() {
+		if (state == State.GameStart) {
+			state = State.NoLevel;
+			loadLevel(acts[initialAct-1].levels[initialLevel-1]);
 		}
-		win = false;
+	}
+	public void setNextLevel(int actNum, int levelNum) {
+		nextLevel = acts[actNum-1].levels[levelNum-1];
 		
+		if (nextLevel == null) {
+			Debug.LogError(this + ": couldn't find Act " + actNum + " Level " + levelNum + ".");
+		}
 		
 	}
 	// subscribed to LevelLoader load event
 	private void loadComplete() {
 		state = State.LevelPlaying;
+		resetTimer();
 		startTimer();
 		Debug.Log(this + ": Act " + currentLevel.act.actNumber + " Level " + currentLevel.levelNumber + " start!");
 	}
@@ -258,9 +239,16 @@ public class LevelManager : MonoBehaviour
 	//
 	// LEVEL FUNCTIONS: LevelPlaying
 	//
-	// start the level timer from zero.
-	private void startTimer() {
+	// reset the level timer.
+	private void resetTimer() {
 		timer = 0;
+	}
+	// set the level timer to a value.
+	public void setTimer(float time) {
+		timer = time;
+	}
+	// start the level timer.
+	private void startTimer() {
 		timerActive = true;
 	}
 	// stop the level timer.
@@ -301,15 +289,19 @@ public class LevelManager : MonoBehaviour
 	}
 	public void endLevel(bool win) {
 		stopTimer();
-		this.win = win;
+		
+		if (win) {
+			nextLevel = currentLevel.next();
+		} else {
+			nextLevel = currentLevel;
+		}
+		
 		
 		p1.atGoal = false;
 		p2.atGoal = false;
-		Debug.Log(this + ": Level end! Win: " + win + ". Time: " + timer);
-	}
-	public void respawnPuppets() {
 		p1.alive = true;
 		p2.alive = true;
+		Debug.Log(this + ": Level ended! Win: " + win + ". Time: " + timer);
 	}
 	
 	//
@@ -352,10 +344,6 @@ public class LevelManager : MonoBehaviour
 	// stops when the level is completed, and resets when a new level is loaded.
 	public float getTime() {
 		return timer;
-	}
-	// if the timer is running or not.
-	public bool isRunning() {
-		return timerActive;
 	}
 	
 	
@@ -421,7 +409,6 @@ public class Level : MonoBehaviour
 	// iterate through the children of the parent object and populate the prop list.
 	// we also attach StageProp here.
 	private void buildPropList(List<GameObject> propList) {
-		
 		for (int i = 0; i < transform.childCount; i++) {
 			GameObject propObject = transform.GetChild(i).gameObject;
 			propList.Add(propObject);
@@ -469,6 +456,13 @@ public class Level : MonoBehaviour
 		}
 		
 	}
+	
+	
+	public Level next() {
+		return act.getNextLevel(this);
+		
+	}
+	
 	
 }
 

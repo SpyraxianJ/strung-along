@@ -4,17 +4,16 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 public static class SaveSystem
 {
-    public static void SaveData(Game game)
+    public static void SaveData(GameData gameData)
     {
         BinaryFormatter formatter = new BinaryFormatter();
         string path = Application.persistentDataPath + "/gameData.bin";
         FileStream stream = new FileStream(path, FileMode.Create);
-        GameData data = new GameData(game);
-        formatter.Serialize(stream, data);
+        formatter.Serialize(stream, gameData);
         stream.Close();
     }
 
-    public static GameData loadData()
+    public static GameData LoadData()
     {
         string path = Application.persistentDataPath + "/gameData.bin";
         if (File.Exists(path))

@@ -11,10 +11,10 @@ public class GameData
     public int SavedLevel;
     public int SavedAct;
 
-    public GameData(Game game)
+    public GameData(float time, int level, int act)
     {
-        SavedTimer = game.SavedTimer;
-        SavedLevel = game.SavedLevel;
-        SavedAct = game.SavedAct;
+        SavedTimer = time;
+        SavedLevel = level;
+        SavedAct = act;
     }
 }
