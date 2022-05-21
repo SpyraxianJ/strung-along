@@ -43,7 +43,6 @@ public class LevelManager : MonoBehaviour
 	public Puppet p1; // puppet 1 status
 	public Puppet p2; // puppet 2 status
 	public State state; // current gamestate
-	public bool win; // did the puppets win the current level?
 	public Level currentLevel; // reference to the currently playing level
 	public Level nextLevel; // reference to the next level if it exists.
 	public static List<GameObject> activeProps; // the currently active props on the stage
@@ -80,7 +79,6 @@ public class LevelManager : MonoBehaviour
 		p1.alive = true;
 		p2.alive = true;
 		state = State.GameStart;
-		win = false;
 		
 		// init list of levels
 		buildLevelList(acts);
@@ -88,6 +86,7 @@ public class LevelManager : MonoBehaviour
 		// disable all props before loading the first level
 		clearLevel();
 		currentLevel = null;
+		nextLevel = null;
     }
 	
 	// build an internal hierarchy of the game's levels.
@@ -369,6 +368,8 @@ public class Act : MonoBehaviour
 	// if this level isn't found, returns null. (Act is over)
 	internal Level getNextLevel(Level level) {
 		
+		// TODO: handle end of act.
+		// TODO: handle end of game.
 		int nextLevelIndex = levels.IndexOf(level);
 		nextLevelIndex++;
 		
