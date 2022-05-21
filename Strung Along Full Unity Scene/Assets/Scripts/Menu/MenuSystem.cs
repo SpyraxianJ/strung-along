@@ -18,6 +18,16 @@ public class MenuSystem : MonoBehaviour
         
     }
 	
+	public void startNewGame() {
+		manager.loadFirstLevel();
+	}
+	public void quitGame() {
+		manager.endLevel(false);
+		manager.setNextLevel(0, 0);
+		manager.setTimer(0);
+		manager.unloadLevel();
+	}
+	
 	public void saveGameData() {
 		GameData currentGameData = new GameData(manager.getTime(), manager.getCurrentLevel(), manager.getCurrentAct() );
 		SaveSystem.SaveData(currentGameData);

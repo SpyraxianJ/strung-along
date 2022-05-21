@@ -202,30 +202,34 @@ public class LevelManager : MonoBehaviour
 	// LEVEL LOADING: NoLevel
 	//
 	private void loadLevel(Level level) {
-		state = State.LevelLoading;
 		currentLevel = level;
 		nextLevel = null;
-		loader.load(level.props, level.p1Spawn, level.p2Spawn);
+		
+		if (currentLevel == null) {
+			// just do nothing!
+		} else {
+			state = State.LevelLoading;
+			loader.load(level.props, level.p1Spawn, level.p2Spawn);
+		}
+		
 	}
 	public void loadNextLevel() {
-		if (nextLevel != null) {
-			loadLevel(nextLevel);
-		}
-		
+		loadLevel(nextLevel);
 	}
 	public void loadFirstLevel() {
-		if (state == State.GameStart) {
-			state = State.NoLevel;
-			loadLevel(acts[initialAct-1].levels[initialLevel-1]);
-		}
+		loadLevel(acts[initialAct-1].levels[initialLevel-1]);
 	}
 	public void setNextLevel(int actNum, int levelNum) {
-		nextLevel = acts[actNum-1].levels[levelNum-1];
 		
-		if (nextLevel == null) {
-			Debug.LogError(this + ": couldn't find Act " + actNum + " Level " + levelNum + ".");
+		if (actNum == 0 || levelNum == 0) {
+			nextLevel = null;
+		} else {
+			nextLevel = acts[actNum-1].levels[levelNum-1];
+			if (nextLevel == null) {
+				Debug.LogError(this + ": couldn't find Act " + actNum + " Level " + levelNum + ".");
+			}
 		}
-		
+	
 	}
 	// subscribed to LevelLoader load event
 	private void loadComplete() {
