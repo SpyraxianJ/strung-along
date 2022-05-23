@@ -31,6 +31,10 @@ public class LevelManager : MonoBehaviour
 	// TODO: add support for changing default prop stage entry direction.
 	public bool loadTestLevel;
 	public GameObject testLevel;
+	[Header("Puppet Grim Reaper")]
+	public ParticleSystem deathParticle;
+	public float deathWaitTime;
+	public ParticleSystem respawnParticle;
 	[Space]
 	[Header("Events")]
 	public UnityEvent onLevelComplete;
@@ -287,6 +291,10 @@ public class LevelManager : MonoBehaviour
 		Debug.Log(this + ": Puppet died!! How could you?!?");
 		// TODO: wait for puppet animation to play. could wait arbitrary amount?
 		//StartCoroutine( waitForSeconds(2) );
+		
+		
+		
+		
 		
 		
 	}

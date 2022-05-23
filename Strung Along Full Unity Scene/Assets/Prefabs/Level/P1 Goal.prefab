@@ -113,7 +113,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   manager: {fileID: 0}
   isPlayer2: 0
-  persistent: 1
 --- !u!54 &8010899097883391678
 Rigidbody:
   m_ObjectHideFlags: 0

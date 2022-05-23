@@ -29,7 +29,9 @@ public class ReactKill : Reactor
 	
 	public override void fire(float progress) {
 		
-		if (progress == 1.0f) {
+		if (progress == 1.0f && ready) {
+			ready = false;
+			
 			if (targetObject == this.gameObject) {
 				
 				// if target is THIS object, search for ActvOnTouch and the Collider list.
@@ -50,12 +52,10 @@ public class ReactKill : Reactor
 				targetObject.SetActive(false);
 				kills.Add(targetObject);
 			}
+		} else if (progress < 1.0f) {
+			ready = true;
 		}
 		
-	}
-	
-	private void explode() {
-		// TODO: make particles explode around the thing that died
 	}
 	
     // Update is called once per frame

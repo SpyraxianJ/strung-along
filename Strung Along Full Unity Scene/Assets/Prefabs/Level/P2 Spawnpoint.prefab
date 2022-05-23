@@ -97,5 +97,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isPlayer2: 1
-  elasticString: 1
+  distanceFromGround: 0
+  elasticString: 0
   stringLength: 12

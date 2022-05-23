@@ -15,14 +15,14 @@ public class ActvOnTouch : Activator
 	public List<Collider> extraActivators;
 	[Header("Touch Properties")]
 	[Tooltip("Required time touching to fire.\n0 for instant.")]
-	public float activationTime = 2f;
+	public float activationTime = 0f;
 	[Tooltip("Required time to reset.\n0 for instant.")]
 	public float resetTime = 0f;
 	[Tooltip("Speeds up Activation Time depending on how many things are touching.\nDoesn't do anything if Activation Time is 0.")]
 	public bool accumulative = true;
 	[Space]
 	[Header("Debug")]
-	public Vector3 touchDistance = new Vector3(0.25f, 1f, 0.25f);
+	public Vector3 touchDistance = new Vector3(0.1f, 0.5f, 0.1f);
 	public List<Collider> currentActivators;
 	public List<Collider> currentHits;
 	
