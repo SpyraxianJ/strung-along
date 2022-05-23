@@ -31,17 +31,11 @@ public class LevelManager : MonoBehaviour
 	// TODO: add support for changing default prop stage entry direction.
 	public bool loadTestLevel;
 	public GameObject testLevel;
-	[Header("Puppet Grim Reaper")]
-	public ParticleSystem deathParticle;
-	public float deathWaitTime;
-	public ParticleSystem respawnParticle;
 	[Space]
 	[Header("Events")]
 	public UnityEvent onLevelComplete;
 	public UnityEvent onLevelFailure;
 	public UnityEvent onLevelUnloaded;
-	public UnityEvent onPuppet1Death;
-	public UnityEvent onPuppet2Death;
 	[Space]
 	[Header("Debug")]
 	public Puppet p1; // puppet 1 status
@@ -53,6 +47,7 @@ public class LevelManager : MonoBehaviour
 	private LevelLoader loader; // class for handling moving objects on and off the stage
 	public bool timerActive; // whether the timer is running or not
 	public float timer; // current timer value
+	public GrimReaper reaper; // reference to attached grim reaper
 	public List<Act> acts; // a list of all the acts in the game. access levels through acts[#].levels[#]
 	
 	
@@ -67,6 +62,7 @@ public class LevelManager : MonoBehaviour
 		activeProps = new List<GameObject>();
 		loader = gameObject.AddComponent<LevelLoader>();
 		loader.initPlayerRefs(p1Anchor, p2Anchor);
+		reaper = GetComponent<GrimReaper>();
 		
 		// init event subscriptions
 		LevelLoader.onLoadComplete += loadComplete;
@@ -195,10 +191,20 @@ public class LevelManager : MonoBehaviour
 			}
 			
 			// check if either player has died
-			if (!p1.alive || !p2.alive) {
-				state = State.LevelLoading;
-				onLevelFailure.Invoke();
+			if (!p1.alive) {
+				Debug.Log(this + ": Player 1 died ;_;");
+				p1.alive = true;
+				reaper.respawn( player1.GetComponent<PuppetController>() );
+				//state = State.LevelLoading;
+				//onLevelFailure.Invoke();
 			}
+			if (!p2.alive) {
+				Debug.Log(this + ": Player 2 died ;_;");
+				p2.alive = true;
+				reaper.respawn( player2.GetComponent<PuppetController>() );
+			}
+			
+			
 		}
     }
 	
@@ -280,17 +286,8 @@ public class LevelManager : MonoBehaviour
 		}
 	}
 	public void killPuppet(PuppetController pup) {
-		if (pup.gameObject == player1) {
-			p1.alive = false;
-			onPuppet1Death.Invoke();
-		}
-		if (pup.gameObject == player2) {
-			p2.alive = false;
-			onPuppet2Death.Invoke();
-		}
-		Debug.Log(this + ": Puppet died!! How could you?!?");
-		// TODO: wait for puppet animation to play. could wait arbitrary amount?
-		//StartCoroutine( waitForSeconds(2) );
+		
+		reaper.kill(pup);
 		
 		
 		

@@ -139,6 +139,7 @@ public class LevelLoader : MonoBehaviour
 		p2Anchor.elasticString = p2Spawn.elasticString;
 		// untangle them if they got tangled. this might be fucked we'll see.
 		p1Anchor.manager.tangle = 0;
+		p1Anchor.manager.bolConnected = false;
 		
 		loadAfter();
 		

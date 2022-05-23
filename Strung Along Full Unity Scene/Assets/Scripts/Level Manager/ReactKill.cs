@@ -16,6 +16,12 @@ This way you can make an object that kills whatever touches it.
 
 public class ReactKill : Reactor
 {
+	[Header("Kill Properties")]
+	[Tooltip("Respawn the object after a delay. Doesn't work with puppets.\n0 for NEVER.")]
+	public float respawnAfter = 0f;
+	[Tooltip("Make particles when it respawns.")]
+	public ParticleSystem respawnParticle;
+	[Header("Kill Debug")]
 	public List<GameObject> kills;
 	
 	public override void checkErrors() {
@@ -24,7 +30,7 @@ public class ReactKill : Reactor
 	
     void Start()
     {
-        kills = new List<GameObject>();
+		kills = new List<GameObject>();
     }
 	
 	public override void fire(float progress) {
@@ -38,7 +44,7 @@ public class ReactKill : Reactor
 				if (TryGetComponent<ActvOnTouch>(out ActvOnTouch comp)  ) {
 					foreach (Collider collider in comp.currentActivators) {
 						if (collider.TryGetComponent<PuppetController>(out PuppetController pup)  ) {
-							// a puppet is touching. kill it and tell LevelManager!
+							// a puppet is touching. tell LevelManager to kill it!
 							comp.manager.killPuppet(pup);
 						} else {
 							collider.gameObject.SetActive(false);
@@ -51,12 +57,31 @@ public class ReactKill : Reactor
 			} else {
 				targetObject.SetActive(false);
 				kills.Add(targetObject);
+				if (respawnAfter > 0f) {
+					StartCoroutine( waitRespawnAfter(targetObject, respawnAfter) );
+				}
+				
+				
 			}
 		} else if (progress < 1.0f) {
 			ready = true;
 		}
 		
 	}
+	
+	
+	IEnumerator waitRespawnAfter(GameObject skeleton, float delay) {
+		yield return new WaitForSeconds(delay);
+		
+		skeleton.SetActive(true);
+		skeleton.transform.position = skeleton.GetComponent<StageProp>().originalPosition;
+		
+		if (respawnParticle != null) {
+			Instantiate(respawnParticle, skeleton.transform.position, Quaternion.identity);
+		}
+		
+	}
+	
 	
     // Update is called once per frame
     void Update()

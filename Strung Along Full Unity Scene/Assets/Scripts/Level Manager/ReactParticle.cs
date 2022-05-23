@@ -17,7 +17,7 @@ public class ReactParticle : Reactor
 	public ParticleSystem particle;
 	private ParticleSystem particleInstance;
 	[Tooltip("Turn Looping particles on and off with each fire.")]
-	public bool toggle = true;
+	public bool toggle = false;
 	[Tooltip("If true, particle emission rotates with the object.")]
 	public bool useLocalRotation = false;
 	[Tooltip("If true, particle size is scaled with the object.")]
