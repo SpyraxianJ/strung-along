@@ -16,6 +16,7 @@ public class PuppetController : MonoBehaviour
     public StringRoot thisStringRoot;
     public StaminaBar staminaUI;
     public GameObject visualReference;
+    public PuppetAudio audioManager;
 
     [Space]
 
@@ -28,7 +29,7 @@ public class PuppetController : MonoBehaviour
 
     private float speed = 0;
     [Tooltip("Determines if the puppet is currently on the ground or not, public for unity inspector debugging purposes, can be made private later without issue")]
-    private bool isGrounded = true;
+    public bool isGrounded = true; // Keep public, other things use this as a reference
     public bool isClimbing = false;
     private bool jumpReleased = true;
     public float groundedMaxSpeed = 10;
@@ -411,6 +412,13 @@ public class PuppetController : MonoBehaviour
                     transform.position = transform.position + transform.up * groundedDownPerFrame;
                     lastGrounded = true;
                 }
+                else
+                {
+                    if (audioManager != null)
+                    {
+                        audioManager.Land();
+                    }
+                }
 
                 isGrounded = true;
                 float avg = 0;
@@ -609,6 +617,9 @@ public class PuppetController : MonoBehaviour
             jumpBoostTimer = jumpBoostTime;
             // required for ensuring the puppet gets off the ground consistantly when jumping
             //gameObject.transform.position = transform.position + Vector3.up * 0.05f;
+            if (audioManager != null){
+                audioManager.Jump();
+            }
         }
     }
 
