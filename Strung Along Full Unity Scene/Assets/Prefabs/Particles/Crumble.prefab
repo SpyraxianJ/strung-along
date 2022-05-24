@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2788865796426764631}
   - component: {fileID: 5764836419752413014}
   m_Layer: 0
-  m_Name: Explosion
+  m_Name: Crumble
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -54,7 +54,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a1b05bdaa36c70542a9edcea3bb2766b, type: 2}
+  - {fileID: 2100000, guid: b08f3c102cff279409bcba0bb8616dda, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

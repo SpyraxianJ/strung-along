@@ -15,7 +15,7 @@ public abstract class Reactor : MonoBehaviour
 	public abstract void reset();
 	public abstract void checkErrors();
 	
-	void Awake() {
+	public virtual void Start() {
 		
 		checkReactorErrors();
 		checkErrors();

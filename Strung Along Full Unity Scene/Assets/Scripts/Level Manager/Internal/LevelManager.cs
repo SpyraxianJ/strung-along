@@ -82,12 +82,17 @@ public class LevelManager : MonoBehaviour
 		
 		// init list of levels
 		buildLevelList(acts);
-		
-		// disable all props before loading the first level
 		clearLevel();
 		currentLevel = null;
 		nextLevel = null;
     }
+	
+	void Start() {
+		
+		
+		
+	}
+	
 	
 	// build an internal hierarchy of the game's levels.
 	// this is done by searching through the Unity Engine Hierarchy and:
@@ -191,18 +196,24 @@ public class LevelManager : MonoBehaviour
 			}
 			
 			// check if either player has died
-			if (!p1.alive) {
-				Debug.Log(this + ": Player 1 died ;_;");
-				p1.alive = true;
-				reaper.respawn( player1.GetComponent<PuppetController>() );
-				//state = State.LevelLoading;
-				//onLevelFailure.Invoke();
+			
+			if (!p1.alive || !p2.alive) {
+				loader.resetLevel(activeProps);
+				
+				if (!p1.alive) {
+					Debug.Log(this + ": Player 1 died ;_;");
+					p1.alive = true;
+					reaper.respawn( player1.GetComponent<PuppetController>() );
+				}
+				if (!p2.alive) {
+					Debug.Log(this + ": Player 2 died ;_;");
+					p2.alive = true;
+					reaper.respawn( player2.GetComponent<PuppetController>() );
+				}
+				
 			}
-			if (!p2.alive) {
-				Debug.Log(this + ": Player 2 died ;_;");
-				p2.alive = true;
-				reaper.respawn( player2.GetComponent<PuppetController>() );
-			}
+			
+			
 			
 			
 		}

@@ -262,4 +262,22 @@ public class LevelLoader : MonoBehaviour
 		}
 	}
 	
+	// reset the level without moving props on and off the stage.
+	public void resetLevel(List<GameObject> activeProps) {
+		workingProps = new List<GameObject>(activeProps);
+		
+		foreach (GameObject prop in workingProps) {
+			
+			toggleActivators(prop, false);
+			toggleReactors(prop, false);
+			toggleActivators(prop, true);
+			toggleReactors(prop, true);
+			
+		}
+		
+		
+		
+	}
+	
+	
 }

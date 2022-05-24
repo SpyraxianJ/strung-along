@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2537727479804583126}
   - component: {fileID: 3725077783195857375}
   m_Layer: 0
-  m_Name: Sparkle Explosion
+  m_Name: Sparkle Burst
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -28,8 +28,9 @@ public class ReactKill : Reactor
 		
 	}
 	
-    void Start()
+    public override void Start()
     {
+        base.Start();
 		kills = new List<GameObject>();
     }
 	

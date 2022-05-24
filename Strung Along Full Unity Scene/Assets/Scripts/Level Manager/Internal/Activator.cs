@@ -24,7 +24,7 @@ public abstract class Activator : MonoBehaviour
 	public abstract void reset();
 	public abstract void checkErrors();
 	
-	void Awake() {
+	public virtual void Start() {
 		checkActvErrors();
 		checkErrors();
 		
