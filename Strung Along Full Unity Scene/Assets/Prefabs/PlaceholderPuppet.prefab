@@ -392,14 +392,14 @@ MonoBehaviour:
   beingPulled: 0
   climbValue: 0
   stamina: 0
-  staminaDrain: 0.75
+  staminaDrain: 0.5
   staminaRegen: 1
   groundedAcceleration: 1
   groundedDeceleration: 0.1
   pulledAcceleration: 3
   pulledDrag: 0
   pulledAirborneThreshold: 0
-  climbingSpeed: 3
+  climbingSpeed: 2
   airborneAcceleration: 20
   airborneDeceleration: 0.205
   airborneDecay: 0.01

@@ -16,6 +16,9 @@ public class TempGrab : MonoBehaviour
 
     public bool secondPlayer;
 
+    public float grabtimer = 0.1f; // do not perceive
+    float grabtime;
+
     void Awake()
     {
         if (secondPlayer == false)
@@ -23,6 +26,8 @@ public class TempGrab : MonoBehaviour
             controls = new PlayerControls();
             controls.Player.Grab.performed += ctx =>
             {
+                grabDetect.enabled = true;
+                grabtime = grabtimer;
                 grabPressed = ctx.ReadValueAsButton();
                 Debug.Log(ctx.ReadValueAsButton());
             };
@@ -36,6 +41,8 @@ public class TempGrab : MonoBehaviour
             controls = new PlayerControls();
             controls.Player.Grab2.performed += ctx =>
             {
+                grabDetect.enabled = true;
+                grabtime = grabtimer;
                 grabPressed = ctx.ReadValueAsButton();
                 Debug.Log(ctx.ReadValueAsButton());
             };
@@ -65,9 +72,13 @@ public class TempGrab : MonoBehaviour
     void FixedUpdate()
     {
 
-        if (grabDetect.enabled == true && grabbed == null) {
-            grabDetect.enabled = false;
-        }
+        grabtime -= Time.fixedDeltaTime;
+
+        grabDetect.enabled = false;
+
+        // if (grabDetect.enabled == true && grabbed == null) {
+        //     grabDetect.enabled = false;
+        // }
 
         if (grabbed != null)
         {
@@ -75,7 +86,9 @@ public class TempGrab : MonoBehaviour
         }
         if (grabPressed == true)
         {
-            grabDetect.enabled = true;
+            if (grabtime > 0) {
+                grabDetect.enabled = true;
+            }
         }
         if (grabPressed == false)
         {
@@ -83,7 +96,7 @@ public class TempGrab : MonoBehaviour
         }
         if (grabPressed == true && grabbed != null)
         {
-            grabDetect.enabled = true;
+            //grabDetect.enabled = true;
             if (grabbed != null) {
                 Vector3 move = transform.position - lastFrame;
                 grabbed.position += new Vector3(move.x, 0, move.z); // y movement
