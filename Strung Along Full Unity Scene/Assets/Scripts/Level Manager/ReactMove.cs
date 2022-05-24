@@ -104,10 +104,14 @@ public class ReactMove : Reactor
 	}
 	
 	public override void reset() {
+		
+		if (fireCount > 0) {
+			// it's been fired. change pos!
+			targetObject.transform.position = originalWorldPosition;
+		}
+		
 		ready = true;
 		fireCount = 0;
-		
-		//targetObject.transform.position = targetObject.GetComponent<StageProp>().originalPosition;
 	}
 	
 }
