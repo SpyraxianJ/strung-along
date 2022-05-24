@@ -15,6 +15,7 @@ public class PuppetController : MonoBehaviour
     public PuppetStringManager stringManager;
     public StringRoot thisStringRoot;
     public StaminaBar staminaUI;
+    public GameObject visualReference;
 
     [Space]
 
@@ -144,6 +145,13 @@ public class PuppetController : MonoBehaviour
     [Range(0, 3)]
     public float groundedDownPerFrame;
     public Vector3 effectiveRoot;
+
+    [Space]
+
+    [Header("Animation Variables")]
+
+    public float visualRotateSpeed;
+    public float visualAirRotateSpeed;
 
     // Private
 
@@ -318,8 +326,10 @@ public class PuppetController : MonoBehaviour
             isGrounded = false;
             HandleMovement();
             ClimbTick();
-        }        
-        
+        }
+
+        AnimationTick();
+
         //Debug.Log(move.x + " " + move.y);
 
         // Temp gross grab compatability
@@ -332,6 +342,18 @@ public class PuppetController : MonoBehaviour
 
 
     }
+
+    public void AnimationTick()
+    {
+        if (isGrounded)
+        {
+            visualReference.transform.rotation = Quaternion.RotateTowards(visualReference.transform.rotation, Quaternion.LookRotation(new Vector3(rb.velocity.normalized.x, 0, rb.velocity.normalized.z), transform.up), visualRotateSpeed * Time.fixedDeltaTime);
+        }
+        else {
+            visualReference.transform.rotation = Quaternion.RotateTowards(visualReference.transform.rotation, Quaternion.LookRotation(new Vector3(rb.velocity.normalized.x, 0, rb.velocity.normalized.z), transform.up), visualAirRotateSpeed * Time.fixedDeltaTime);
+        }
+    }
+
     public void GroundDetection()
     {
         // Ground Detection
@@ -452,11 +474,11 @@ public class PuppetController : MonoBehaviour
 
             if (effectiveMove.x != 0)
             {
-                if (effectiveMove.normalized.x * relativeMaxSpeedX > rb.velocity.x) // tl;dr we want to move faster right than we are already moving
+                if (effectiveMove.x * relativeMaxSpeedX > rb.velocity.x) // tl;dr we want to move faster right than we are already moving
                 {
                     rb.velocity += Vector3.right * groundedAcceleration * Time.fixedDeltaTime * 100;
                 }
-                else if (effectiveMove.normalized.x * relativeMaxSpeedX < rb.velocity.x) // tl;dr we want to move faster left than we are already moving
+                else if (effectiveMove.x * relativeMaxSpeedX < rb.velocity.x) // tl;dr we want to move faster left than we are already moving
                 {
                     rb.velocity += Vector3.left * groundedAcceleration * Time.fixedDeltaTime * 100;
                 }
@@ -475,11 +497,11 @@ public class PuppetController : MonoBehaviour
 
             if (effectiveMove.y != 0)
             {
-                if (effectiveMove.normalized.y * relativeMaxSpeedY > rb.velocity.z) // tl;dr we want to move faster forward than we are already moving
+                if (effectiveMove.y * relativeMaxSpeedY > rb.velocity.z) // tl;dr we want to move faster forward than we are already moving
                 {
                     rb.velocity = rb.velocity + Vector3.forward * groundedAcceleration * Time.fixedDeltaTime * 100;
                 }
-                else if (effectiveMove.normalized.y * relativeMaxSpeedY < rb.velocity.z) // tl;dr we want to move faster back than we are already moving
+                else if (effectiveMove.y * relativeMaxSpeedY < rb.velocity.z) // tl;dr we want to move faster back than we are already moving
                 {
                     rb.velocity = rb.velocity + Vector3.back * groundedAcceleration * Time.fixedDeltaTime * 100;
                 }
