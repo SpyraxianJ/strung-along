@@ -491,6 +491,7 @@ MonoBehaviour:
   puppetAudioSource: {fileID: 6447687788611892727}
   lastPos: {x: 0, y: 0, z: 0}
   stepDistance: 2
+  pitchRange: {x: 0.9, y: 1.1}
 --- !u!82 &6447687788611892727
 AudioSource:
   m_ObjectHideFlags: 0
@@ -604,7 +605,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &3732229700093121401
 Transform:
   m_ObjectHideFlags: 0
@@ -753,7 +754,7 @@ MonoBehaviour:
   staminaDrain: 0.5
   staminaRegen: 1
   groundedAcceleration: 1
-  groundedDeceleration: 0.1
+  groundedDeceleration: 0.2
   pulledAcceleration: 3
   pulledDrag: 0
   pulledAirborneThreshold: 0

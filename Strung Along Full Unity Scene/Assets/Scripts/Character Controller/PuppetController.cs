@@ -455,8 +455,8 @@ public class PuppetController : MonoBehaviour
     }
     void HandleMovement()
     {
-        float relativeMaxSpeedX = Math.Abs(groundedMaxSpeed * move.x);
-        float relativeMaxSpeedY = Math.Abs(groundedMaxSpeed * move.y);
+        float relativeMaxSpeedX = Math.Abs(groundedMaxSpeed); // ugly sorry, leave for now bc I may use it later, if it's past May, I probably wont lol
+        float relativeMaxSpeedY = Math.Abs(groundedMaxSpeed);
 
         if (isGrounded)
         {
@@ -482,11 +482,11 @@ public class PuppetController : MonoBehaviour
 
             if (effectiveMove.x != 0)
             {
-                if (effectiveMove.x * relativeMaxSpeedX > rb.velocity.x) // tl;dr we want to move faster right than we are already moving
+                if (effectiveMove.x * relativeMaxSpeedX > rb.velocity.x && effectiveMove.x > 0) // tl;dr we want to move faster right than we are already moving
                 {
                     rb.velocity += Vector3.right * groundedAcceleration * Time.fixedDeltaTime * 100;
                 }
-                else if (effectiveMove.x * relativeMaxSpeedX < rb.velocity.x) // tl;dr we want to move faster left than we are already moving
+                else if (effectiveMove.x * relativeMaxSpeedX < rb.velocity.x && effectiveMove.x < 0) // tl;dr we want to move faster left than we are already moving
                 {
                     rb.velocity += Vector3.left * groundedAcceleration * Time.fixedDeltaTime * 100;
                 }
@@ -505,13 +505,13 @@ public class PuppetController : MonoBehaviour
 
             if (effectiveMove.y != 0)
             {
-                if (effectiveMove.y * relativeMaxSpeedY > rb.velocity.z) // tl;dr we want to move faster forward than we are already moving
+                if (effectiveMove.y * relativeMaxSpeedY > rb.velocity.z && effectiveMove.y > 0) // tl;dr we want to move faster forward than we are already moving
                 {
-                    rb.velocity = rb.velocity + Vector3.forward * groundedAcceleration * Time.fixedDeltaTime * 100;
+                    rb.velocity += Vector3.forward * groundedAcceleration * Time.fixedDeltaTime * 100;
                 }
-                else if (effectiveMove.y * relativeMaxSpeedY < rb.velocity.z) // tl;dr we want to move faster back than we are already moving
+                else if (effectiveMove.y * relativeMaxSpeedY < rb.velocity.z && effectiveMove.y < 0) // tl;dr we want to move faster back than we are already moving
                 {
-                    rb.velocity = rb.velocity + Vector3.back * groundedAcceleration * Time.fixedDeltaTime * 100;
+                    rb.velocity += Vector3.back * groundedAcceleration * Time.fixedDeltaTime * 100;
                 }
                 else
                 {
@@ -528,11 +528,11 @@ public class PuppetController : MonoBehaviour
 
             // Max speed calculation
 
-            if (new Vector2(rb.velocity.x, rb.velocity.y).magnitude >= groundedMaxSpeed)
+            if (new Vector2(rb.velocity.x, rb.velocity.z).magnitude >= groundedMaxSpeed)
             {
                 if (groundedMaxSpeedHardCap)
                 {
-                    rb.velocity = rb.velocity.normalized * groundedMaxSpeed;
+                    rb.velocity = rb.velocity * groundedMaxSpeed;
                 }
                 else
                 {
