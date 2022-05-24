@@ -365,10 +365,10 @@ MonoBehaviour:
   m_enableVertexGradient: 1
   m_colorMode: 2
   m_fontColorGradient:
-    topLeft: {r: 1, g: 0.48235297, b: 0.41176474, a: 1}
-    topRight: {r: 1, g: 0.48235297, b: 0.41176474, a: 1}
-    bottomLeft: {r: 1, g: 0.2784314, b: 0.42352945, a: 1}
-    bottomRight: {r: 1, g: 0.2784314, b: 0.42352945, a: 1}
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 0.735849, g: 0.6351904, b: 0.6351904, a: 1}
+    bottomRight: {r: 0.735849, g: 0.6351904, b: 0.6351904, a: 1}
   m_fontColorGradientPreset: {fileID: 0}
   m_spriteAsset: {fileID: 0}
   m_tintAllSprites: 0
@@ -500,10 +500,10 @@ MonoBehaviour:
   m_enableVertexGradient: 1
   m_colorMode: 2
   m_fontColorGradient:
-    topLeft: {r: 0.38431376, g: 0.69411767, b: 1, a: 1}
-    topRight: {r: 0.38431376, g: 0.69411767, b: 1, a: 1}
-    bottomLeft: {r: 0.2627451, g: 0.46274513, b: 1, a: 1}
-    bottomRight: {r: 0.2627451, g: 0.46274513, b: 1, a: 1}
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 0.6969562, g: 0.74239624, b: 0.7735849, a: 1}
+    bottomRight: {r: 0.6969562, g: 0.74239624, b: 0.7735849, a: 1}
   m_fontColorGradientPreset: {fileID: 0}
   m_spriteAsset: {fileID: 0}
   m_tintAllSprites: 0
@@ -692,10 +692,10 @@ MonoBehaviour:
   m_enableVertexGradient: 1
   m_colorMode: 2
   m_fontColorGradient:
-    topLeft: {r: 0.7411765, g: 1, b: 0.24705884, a: 1}
-    topRight: {r: 0.7411765, g: 1, b: 0.24705884, a: 1}
-    bottomLeft: {r: 0.23529413, g: 1, b: 0.5254902, a: 1}
-    bottomRight: {r: 0.23529413, g: 1, b: 0.5254902, a: 1}
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
   m_fontColorGradientPreset: {fileID: 0}
   m_spriteAsset: {fileID: 0}
   m_tintAllSprites: 0
@@ -887,7 +887,7 @@ RectTransform:
   m_GameObject: {fileID: 1060678385}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.11, y: 0.11, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1714112718}
@@ -896,7 +896,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0.000061035156, y: 37.299988}
-  m_SizeDelta: {x: 350, y: 350}
+  m_SizeDelta: {x: 4961.591, y: 3508}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1060678387
 MonoBehaviour:
@@ -918,7 +918,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: e2d0659658d57154596584adb6359512, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7dd705abbfc5dee4b909397c54feeef2, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1187,10 +1187,10 @@ MonoBehaviour:
   m_enableVertexGradient: 1
   m_colorMode: 2
   m_fontColorGradient:
-    topLeft: {r: 0.7411765, g: 1, b: 0.24705884, a: 1}
-    topRight: {r: 0.7411765, g: 1, b: 0.24705884, a: 1}
-    bottomLeft: {r: 0.23529413, g: 1, b: 0.5254902, a: 1}
-    bottomRight: {r: 0.23529413, g: 1, b: 0.5254902, a: 1}
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
   m_fontColorGradientPreset: {fileID: 0}
   m_spriteAsset: {fileID: 0}
   m_tintAllSprites: 0
@@ -1320,7 +1320,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.1981132, g: 0.015886439, b: 0.08215074, a: 0}
+  m_BackGroundColor: {r: 0.2735849, g: 0.2735849, b: 0.2735849, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -1631,7 +1631,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Playtest Build (11/05/2022)
+  m_text: Playtest Build (25/05/2022)
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 125cb55b44b24c4393181402bc6200e6, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 125cb55b44b24c4393181402bc6200e6, type: 2}
@@ -1645,10 +1645,10 @@ MonoBehaviour:
   m_enableVertexGradient: 1
   m_colorMode: 2
   m_fontColorGradient:
-    topLeft: {r: 0.7411765, g: 1, b: 0.24705884, a: 1}
-    topRight: {r: 0.7411765, g: 1, b: 0.24705884, a: 1}
-    bottomLeft: {r: 0.23529413, g: 1, b: 0.5254902, a: 1}
-    bottomRight: {r: 0.23529413, g: 1, b: 0.5254902, a: 1}
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
   m_fontColorGradientPreset: {fileID: 0}
   m_spriteAsset: {fileID: 0}
   m_tintAllSprites: 0
@@ -1922,10 +1922,10 @@ MonoBehaviour:
   m_enableVertexGradient: 1
   m_colorMode: 2
   m_fontColorGradient:
-    topLeft: {r: 0.46121117, g: 0.3215686, b: 1, a: 1}
-    topRight: {r: 0.46121117, g: 0.3215686, b: 1, a: 1}
-    bottomLeft: {r: 1, g: 0.3803922, b: 0.77705365, a: 1}
-    bottomRight: {r: 1, g: 0.3803922, b: 0.77705365, a: 1}
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
   m_fontColorGradientPreset: {fileID: 0}
   m_spriteAsset: {fileID: 0}
   m_tintAllSprites: 0
