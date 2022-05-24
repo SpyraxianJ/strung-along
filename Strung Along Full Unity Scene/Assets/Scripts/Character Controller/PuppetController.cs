@@ -553,6 +553,27 @@ public class PuppetController : MonoBehaviour
             jumpBoostTimer -= Time.fixedDeltaTime;
             rb.AddForce(Vector3.up * Mathf.Lerp(0, jumpBoostForce, jumpBoostTimer / jumpBoostTime));
         }
+
+        // Please don't remove this part, it acts independently of the jump boost timer
+
+        if (jumpPressed)
+        {
+            rb.AddForce(Vector3.up * jumpHoldForce);
+        }
+        else
+        {
+            rb.AddForce(Vector3.up * jumpReleaseForce);
+            if (rb.velocity.y > 0)
+            {
+                rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y * (1 - jumpReleaseRisingDrag * Time.fixedDeltaTime * 100), rb.velocity.z);
+            }
+        }
+
+        // prevents falling too fast
+        if (rb.velocity.y < -maxFallSpeed)
+        {
+            rb.AddForce(Vector3.up * jumpReleaseForce);
+        }
     }
 
     public void StartJump()
