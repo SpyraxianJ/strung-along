@@ -45,11 +45,16 @@ public class ActvLever : Activator
 		base.Start();
 		originalRotation = transform.rotation;
 		targetRotation = originalRotation * Quaternion.Euler(0, 0, rotationToActivate);
+		
+		handleColor();
+		
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
+		handleColor();
+		
 		float speedFactor;
 		// spin toward the target direction if the player is touching it
 		if (isActivating) {
@@ -81,6 +86,26 @@ public class ActvLever : Activator
 		if (other.gameObject == manager.player1 || other.gameObject == manager.player2) {
 			isActivating = false;
 		}
+	}
+	
+	private void handleColor() {
+		Color objColor = Color.magenta;
+		
+		if (p1CanActivate && !p2CanActivate) {
+			objColor = Color.blue;
+		}
+		if (!p1CanActivate && p2CanActivate) {
+			objColor = Color.red;
+		}
+		
+		if (isActivating) {
+			objColor = Color.green;
+		}
+		
+		
+		gameObject.GetComponent<Renderer>().material.color = objColor;
+		
+		
 	}
 	
 	
