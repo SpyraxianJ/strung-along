@@ -975,6 +975,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1272548620014168875, guid: bca65c23b1594aa4dbebacacfe0c1350, type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 3167654758654512373, guid: bca65c23b1594aa4dbebacacfe0c1350, type: 3}
       propertyPath: angleRef
       value: 
@@ -1080,16 +1084,8 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3694133943377610563, guid: bca65c23b1594aa4dbebacacfe0c1350, type: 3}
-      propertyPath: jumpBoostTime
-      value: 0.35
-      objectReference: {fileID: 0}
-    - target: {fileID: 3694133943377610563, guid: bca65c23b1594aa4dbebacacfe0c1350, type: 3}
       propertyPath: fltClimbingSpeed
       value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3694133943377610563, guid: bca65c23b1594aa4dbebacacfe0c1350, type: 3}
-      propertyPath: initialJumpForce
-      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3694133943377610563, guid: bca65c23b1594aa4dbebacacfe0c1350, type: 3}
       propertyPath: pulledAcceleration
@@ -1115,13 +1111,9 @@ PrefabInstance:
       propertyPath: rb
       value: 
       objectReference: {fileID: 605140921}
-    - target: {fileID: 6331177286643695836, guid: bca65c23b1594aa4dbebacacfe0c1350, type: 3}
-      propertyPath: jumpBoostTime
-      value: 0.35
-      objectReference: {fileID: 0}
-    - target: {fileID: 6331177286643695836, guid: bca65c23b1594aa4dbebacacfe0c1350, type: 3}
-      propertyPath: initialJumpForce
-      value: 5
+    - target: {fileID: 8444793796814482612, guid: bca65c23b1594aa4dbebacacfe0c1350, type: 3}
+      propertyPath: m_RootOrder
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bca65c23b1594aa4dbebacacfe0c1350, type: 3}
