@@ -24,8 +24,9 @@ public class ReactParticle : Reactor
 	public bool useLocalScale = true;
 	
     // Start is called before the first frame update
-    void Start()
+    public override void Start()
     {
+        base.Start();
 		
     }
 

@@ -22,13 +22,16 @@ public class ActvOnTouch : Activator
 	public bool accumulative = true;
 	[Space]
 	[Header("Debug")]
+	public BoxCollider detector;
 	public Vector3 touchDistance = new Vector3(0.1f, 0.5f, 0.1f);
 	public List<Collider> currentActivators;
 	public List<Collider> currentHits;
 	
 	
 	public override void checkErrors() {
-		
+		if ( !TryGetComponent<BoxCollider>(out BoxCollider bc) ) {
+			Debug.LogError(this + ": no Box Collider on this object.");
+		}
 	}
 	
 	public override void reset() {
@@ -37,8 +40,10 @@ public class ActvOnTouch : Activator
 	}
 	
     // Start is called before the first frame update
-    void Start()
+    public override void Start()
     {
+		base.Start();
+		detector = GetComponent<BoxCollider>();
         currentHits = new List<Collider>();
 		currentActivators = new List<Collider>();
     }
@@ -65,7 +70,9 @@ public class ActvOnTouch : Activator
 	
 	// reimplementing OnCollision because unity's suck ass
 	private void handleTouches() {
-		Collider[] hitArray = Physics.OverlapBox(transform.position, transform.localScale / 2 + touchDistance, transform.rotation);
+		Vector3 detectScale = Vector3.Scale(detector.size, transform.lossyScale);
+		
+		Collider[] hitArray = Physics.OverlapBox(transform.position, detectScale / 2 + touchDistance, transform.rotation);
 		
 		List<Collider> newHits = new List<Collider>(hitArray);
 		List<Collider> entries = newHits.Except(currentHits).ToList();

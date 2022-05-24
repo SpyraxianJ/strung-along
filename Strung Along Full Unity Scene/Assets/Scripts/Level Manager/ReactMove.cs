@@ -46,7 +46,9 @@ public class ReactMove : Reactor
 		// nothing to check here!
 	}
 	
-	void Start() {
+    public override void Start()
+    {
+        base.Start();
 		originalWorldPosition = targetObject.transform.position;
 		
 		if (relativePosition) {

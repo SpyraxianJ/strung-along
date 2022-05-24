@@ -82,12 +82,17 @@ public class LevelManager : MonoBehaviour
 		
 		// init list of levels
 		buildLevelList(acts);
-		
-		// disable all props before loading the first level
-		clearLevel();
 		currentLevel = null;
 		nextLevel = null;
     }
+	
+	void Start() {
+		
+		// disable all props before loading the first level
+		clearLevel();
+		
+	}
+	
 	
 	// build an internal hierarchy of the game's levels.
 	// this is done by searching through the Unity Engine Hierarchy and:

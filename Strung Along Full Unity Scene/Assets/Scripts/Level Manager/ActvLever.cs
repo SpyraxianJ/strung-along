@@ -40,8 +40,9 @@ public class ActvLever : Activator
 	}
 	
     // Start is called before the first frame update
-    void Start()
+    public override void Start()
     {
+		base.Start();
 		originalRotation = transform.rotation;
 		targetRotation = originalRotation * Quaternion.Euler(0, 0, rotationToActivate);
     }
