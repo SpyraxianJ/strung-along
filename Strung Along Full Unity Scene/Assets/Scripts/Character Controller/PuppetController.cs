@@ -353,6 +353,7 @@ public class PuppetController : MonoBehaviour
                 puppetAnimator.SetBool("GrabbingObject", true);
                 Vector3 a = (tempGrab.grabbed.gameObject.transform.position - transform.position);
                 float difference = Vector3.Distance(new Vector3(a.x, 0, a.z).normalized, new Vector3(move.x, 0, move.y).normalized);
+                puppetAnimator.SetFloat("ObjectRelativeMovement", difference);
                 Debug.Log(difference);
             }
             else
@@ -367,20 +368,24 @@ public class PuppetController : MonoBehaviour
 
     public void AnimationTick()
     {
-        if (isGrounded)
+        if (tempGrab.grabbed != null)
         {
-            if (new Vector3(rb.velocity.x, 0, rb.velocity.z).magnitude > 0.05) {
-                visualReference.transform.rotation = Quaternion.RotateTowards(visualReference.transform.rotation, Quaternion.LookRotation(new Vector3(rb.velocity.normalized.x, 0, rb.velocity.normalized.z), transform.up), visualRotateSpeed * Time.fixedDeltaTime);
-            }
-        }
-        else {
-            visualReference.transform.rotation = Quaternion.RotateTowards(visualReference.transform.rotation, Quaternion.LookRotation(new Vector3(rb.velocity.normalized.x, 0, rb.velocity.normalized.z), transform.up), visualAirRotateSpeed * Time.fixedDeltaTime);
-        }
-        if (tempGrab.grabbed != null) {
             Vector3 a = (tempGrab.grabbed.gameObject.transform.position - transform.position);
             float difference = Vector3.Distance(new Vector3(a.x, 0, a.z).normalized, new Vector3(move.x, 0, move.y).normalized);
             visualReference.transform.rotation = Quaternion.RotateTowards(visualReference.transform.rotation, Quaternion.LookRotation(new Vector3(a.x, 0, a.z), transform.up), visualAirRotateSpeed * Time.fixedDeltaTime);
-
+        }
+        else {
+            if (isGrounded)
+            {
+                if (new Vector3(rb.velocity.x, 0, rb.velocity.z).magnitude > 0.05)
+                {
+                    visualReference.transform.rotation = Quaternion.RotateTowards(visualReference.transform.rotation, Quaternion.LookRotation(new Vector3(rb.velocity.normalized.x, 0, rb.velocity.normalized.z), transform.up), visualRotateSpeed * Time.fixedDeltaTime);
+                }
+            }
+            else
+            {
+                visualReference.transform.rotation = Quaternion.RotateTowards(visualReference.transform.rotation, Quaternion.LookRotation(new Vector3(rb.velocity.normalized.x, 0, rb.velocity.normalized.z), transform.up), visualAirRotateSpeed * Time.fixedDeltaTime);
+            }
         }
     }
 
