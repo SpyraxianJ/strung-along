@@ -38,7 +38,8 @@ public class SpinIndicator : MonoBehaviour
             spriteRenderer.flipX = false;
         }
 
-        transform.position = new Vector3(manager.effectiveRoot.x, Mathf.Lerp(manager.puppet1.transform.position.y, manager.puppet2.transform.position.y, 0.5f) + 0.1f, manager.effectiveRoot.z);
+        //transform.position = new Vector3(manager.effectiveRoot.x, Mathf.Lerp(manager.puppet1.transform.position.y, manager.puppet2.transform.position.y, 0.5f) + 0.1f, manager.effectiveRoot.z);
+        transform.position = Vector3.Lerp(manager.puppet1.transform.position, manager.puppet2.transform.position, 0.5f);
         transform.rotation = Quaternion.Euler(new Vector3(90, manager.tangle * 100f, transform.rotation.z));
 
     }

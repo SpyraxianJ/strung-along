@@ -164,7 +164,7 @@ public class PuppetController : MonoBehaviour
     [Space]
 
     public TempGrab tempGrab;
-
+    float airTimer;
 
     void Awake()
     {
@@ -420,6 +420,22 @@ public class PuppetController : MonoBehaviour
             }
 
         }
+        else {
+            airTimer = airTimer + Time.fixedDeltaTime;
+
+            // This is to prevent getting stuck hanging permanantly and out of stamina
+            if (airTimer > 6) {
+                if (stamina < 1)
+                {
+                    stamina += staminaRegen * Time.fixedDeltaTime * 0.1f;
+                    staminaUI.UpdateStaminaVisual(stamina);
+                }
+                else
+                {
+                    stamina = 1;
+                }
+            }
+        }
 
         if (forceAirborneTimer > 0)
         {
@@ -645,6 +661,7 @@ public class PuppetController : MonoBehaviour
 
     public void StartJump()
     {
+        airTimer = 0;
         if ((isGrounded || timeSinceGrounded <= coyoteTime) && hasJumped == false)
         {
             isGrounded = false;
@@ -692,7 +709,7 @@ public class PuppetController : MonoBehaviour
     }
 
     public void ClimbTick() {
-
+        airTimer = 0;
         // We don't want y velocity here, just keep it at 0 to be safe
         rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
 
