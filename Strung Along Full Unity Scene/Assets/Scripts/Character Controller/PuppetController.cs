@@ -17,6 +17,7 @@ public class PuppetController : MonoBehaviour
     public StaminaBar staminaUI;
     public GameObject visualReference;
     public PuppetAudio audioManager;
+    public Animator puppetAnimator;
 
     [Space]
 
@@ -341,6 +342,26 @@ public class PuppetController : MonoBehaviour
 
         rb.AddForce(Vector3.down * gravity, ForceMode.Acceleration);
 
+        // Animator Variables
+
+        if (puppetAnimator != null) {
+            puppetAnimator.SetFloat("Speed", new Vector3(rb.velocity.x, 0, rb.velocity.z).magnitude);
+            puppetAnimator.SetBool("Grounded", isGrounded);
+            puppetAnimator.SetFloat("YVelocity", rb.velocity.y);
+            if (tempGrab.grabbed != null)
+            {
+                puppetAnimator.SetBool("GrabbingObject", true);
+                Vector3 a = (tempGrab.grabbed.gameObject.transform.position - transform.position);
+                float difference = Vector3.Distance(new Vector3(a.x, 0, a.z).normalized, new Vector3(move.x, 0, move.y).normalized);
+                Debug.Log(difference);
+            }
+            else
+            {
+                puppetAnimator.SetBool("GrabbingObject", false);
+                puppetAnimator.SetFloat("ObjectRelativeMovement", 0);
+            }
+            puppetAnimator.SetBool("Climbing", isClimbing);
+        }
 
     }
 
@@ -348,10 +369,18 @@ public class PuppetController : MonoBehaviour
     {
         if (isGrounded)
         {
-            visualReference.transform.rotation = Quaternion.RotateTowards(visualReference.transform.rotation, Quaternion.LookRotation(new Vector3(rb.velocity.normalized.x, 0, rb.velocity.normalized.z), transform.up), visualRotateSpeed * Time.fixedDeltaTime);
+            if (new Vector3(rb.velocity.x, 0, rb.velocity.z).magnitude > 0.05) {
+                visualReference.transform.rotation = Quaternion.RotateTowards(visualReference.transform.rotation, Quaternion.LookRotation(new Vector3(rb.velocity.normalized.x, 0, rb.velocity.normalized.z), transform.up), visualRotateSpeed * Time.fixedDeltaTime);
+            }
         }
         else {
             visualReference.transform.rotation = Quaternion.RotateTowards(visualReference.transform.rotation, Quaternion.LookRotation(new Vector3(rb.velocity.normalized.x, 0, rb.velocity.normalized.z), transform.up), visualAirRotateSpeed * Time.fixedDeltaTime);
+        }
+        if (tempGrab.grabbed != null) {
+            Vector3 a = (tempGrab.grabbed.gameObject.transform.position - transform.position);
+            float difference = Vector3.Distance(new Vector3(a.x, 0, a.z).normalized, new Vector3(move.x, 0, move.y).normalized);
+            visualReference.transform.rotation = Quaternion.RotateTowards(visualReference.transform.rotation, Quaternion.LookRotation(new Vector3(a.x, 0, a.z), transform.up), visualAirRotateSpeed * Time.fixedDeltaTime);
+
         }
     }
 
@@ -619,6 +648,10 @@ public class PuppetController : MonoBehaviour
             //gameObject.transform.position = transform.position + Vector3.up * 0.05f;
             if (audioManager != null){
                 audioManager.Jump();
+            }
+            // Animator stuff
+            if (puppetAnimator != null) {
+                puppetAnimator.SetTrigger("Jump");
             }
         }
     }
