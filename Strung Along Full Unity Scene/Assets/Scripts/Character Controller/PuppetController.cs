@@ -102,7 +102,7 @@ public class PuppetController : MonoBehaviour
     [Range(0, 20)]
     public float jumpHoldForce;
     [Tooltip("The force applied downwards when jump is not held")]
-    [Range(-20, 0)]
+    [Range(-50, 0)]
     public float jumpReleaseForce;
     [Tooltip("The drag applied to the puppet during the rise when jump is not held")]
     [Range(0, 1)]
@@ -384,7 +384,10 @@ public class PuppetController : MonoBehaviour
             }
             else
             {
-                visualReference.transform.rotation = Quaternion.RotateTowards(visualReference.transform.rotation, Quaternion.LookRotation(new Vector3(rb.velocity.normalized.x, 0, rb.velocity.normalized.z), transform.up), visualAirRotateSpeed * Time.fixedDeltaTime);
+                if (new Vector3(rb.velocity.x, 0, rb.velocity.z).magnitude > 0.05)
+                {
+                    visualReference.transform.rotation = Quaternion.RotateTowards(visualReference.transform.rotation, Quaternion.LookRotation(new Vector3(rb.velocity.normalized.x, 0, rb.velocity.normalized.z), transform.up), visualAirRotateSpeed * Time.fixedDeltaTime);
+                }
             }
         }
     }
@@ -656,7 +659,8 @@ public class PuppetController : MonoBehaviour
             }
             // Animator stuff
             if (puppetAnimator != null) {
-                puppetAnimator.SetTrigger("Jump");
+                //puppetAnimator.SetTrigger("Jump");
+                puppetAnimator.Play("JumpStart");
             }
         }
     }

@@ -768,7 +768,7 @@ MonoBehaviour:
   jumpBoostForce: 45
   jumpBoostTime: 0.25
   jumpHoldForce: 0.64
-  jumpReleaseForce: -20
+  jumpReleaseForce: -35.2
   jumpReleaseRisingDrag: 0.04
   maxFallSpeed: 100
   gravity: 15
