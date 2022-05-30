@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static UnityEngine.InputSystem.InputAction;
 
 public class PuppetController : MonoBehaviour
 {
@@ -21,10 +22,13 @@ public class PuppetController : MonoBehaviour
 
     [Space]
 
+    [SerializeField]
+    private int playerIndex = 0;
+
     private Rigidbody rb;
 
     private bool movePressed;
-    private Vector2 move;
+    public Vector2 move;
     private bool jumpPressed;
     bool grabPressed;
 
@@ -166,7 +170,12 @@ public class PuppetController : MonoBehaviour
     public TempGrab tempGrab;
     float airTimer;
 
-    void Awake()
+    public int GetPlayerIndex()
+    {
+        return playerIndex;
+    }
+
+    /*void Awake()
     {
 
         if (secondPlayer == false)
@@ -256,15 +265,18 @@ public class PuppetController : MonoBehaviour
             };
         }
 
-    }
-    void OnEnable()
+    }*/
+
+    
+
+    /*void OnEnable()
     {
         controls.Player.Enable();
     }
     void OnDisable()
     {
         controls.Player.Disable();
-    }
+    }*/
 
     List<RaycastHit> objectRayGenerator(int rayNumber, float rayLength, float rayRadius, bool useOffset)
     {

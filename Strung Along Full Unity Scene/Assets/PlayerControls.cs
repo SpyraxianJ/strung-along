@@ -55,18 +55,18 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Grab2"",
+                    ""name"": ""Attack"",
                     ""type"": ""Button"",
-                    ""id"": ""4f6b602c-3ee7-446a-8573-e3019081e092"",
+                    ""id"": ""732b807a-5f85-4a1e-8421-e12b7f2fe27a"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Attack"",
+                    ""name"": ""Grab2"",
                     ""type"": ""Button"",
-                    ""id"": ""732b807a-5f85-4a1e-8421-e12b7f2fe27a"",
+                    ""id"": ""4f6b602c-3ee7-446a-8573-e3019081e092"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -102,6 +102,17 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
             ],
             ""bindings"": [
                 {
+                    ""name"": """",
+                    ""id"": ""0d890f01-7dce-4e99-aa9d-485a65ecacac"",
+                    ""path"": ""<Gamepad>/leftStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
                     ""name"": ""2D Vector"",
                     ""id"": ""c4c96f41-0878-45f0-99bf-94a56a39cefe"",
                     ""path"": ""2DVector"",
@@ -115,7 +126,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 {
                     ""name"": ""up"",
                     ""id"": ""00c9ffc6-304a-4f0e-afb1-bc82f8691c7c"",
-                    ""path"": ""<Keyboard>/upArrow"",
+                    ""path"": ""<Keyboard>/w"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -126,7 +137,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 {
                     ""name"": ""down"",
                     ""id"": ""bbfbc7aa-2e06-4d32-a186-98a7a4806002"",
-                    ""path"": ""<Keyboard>/downArrow"",
+                    ""path"": ""<Keyboard>/s"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -137,7 +148,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 {
                     ""name"": ""left"",
                     ""id"": ""dc39f12f-6b18-47df-8668-f46d80f75c21"",
-                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""path"": ""<Keyboard>/a"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -148,13 +159,24 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 {
                     ""name"": ""right"",
                     ""id"": ""20e26be0-f5ce-41d7-a13c-7b04ad43ed14"",
-                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""path"": ""<Keyboard>/d"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8f9f4034-84c4-4450-b3fb-0701965d3bc3"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
@@ -169,8 +191,8 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""79222d2f-b39d-487d-ba88-9ea2dfc8dae6"",
-                    ""path"": ""<Keyboard>/g"",
+                    ""id"": ""00159eed-dc9d-484c-b76a-fc22d34f3098"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -180,23 +202,23 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""8c3764fe-e0de-4bc8-b5b4-b1d2cd8ea4a5"",
-                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""id"": ""92551fa0-1538-4961-b74f-897f3d5949c3"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Attack"",
+                    ""action"": ""Grab"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""8f9f4034-84c4-4450-b3fb-0701965d3bc3"",
-                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""id"": ""79222d2f-b39d-487d-ba88-9ea2dfc8dae6"",
+                    ""path"": ""<Keyboard>/leftShift"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""TempJump2"",
+                    ""action"": ""Grab"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -279,28 +301,6 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""92551fa0-1538-4961-b74f-897f3d5949c3"",
-                    ""path"": ""<Gamepad>/rightTrigger"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Grab2"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""00159eed-dc9d-484c-b76a-fc22d34f3098"",
-                    ""path"": ""<Gamepad>/rightShoulder"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Grab2"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""68734d6b-d48b-43eb-8c5f-f518d9462701"",
                     ""path"": ""<Keyboard>/l"",
                     ""interactions"": """",
@@ -318,6 +318,17 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Restart"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8c3764fe-e0de-4bc8-b5b4-b1d2cd8ea4a5"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Attack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -370,8 +381,8 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_Grab = m_Player.FindAction("Grab", throwIfNotFound: true);
-        m_Player_Grab2 = m_Player.FindAction("Grab2", throwIfNotFound: true);
         m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
+        m_Player_Grab2 = m_Player.FindAction("Grab2", throwIfNotFound: true);
         m_Player_TempMove2 = m_Player.FindAction("TempMove2", throwIfNotFound: true);
         m_Player_TempJump2 = m_Player.FindAction("TempJump2", throwIfNotFound: true);
         m_Player_Restart = m_Player.FindAction("Restart", throwIfNotFound: true);
@@ -440,8 +451,8 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Move;
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_Grab;
-    private readonly InputAction m_Player_Grab2;
     private readonly InputAction m_Player_Attack;
+    private readonly InputAction m_Player_Grab2;
     private readonly InputAction m_Player_TempMove2;
     private readonly InputAction m_Player_TempJump2;
     private readonly InputAction m_Player_Restart;
@@ -452,8 +463,8 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         public InputAction @Move => m_Wrapper.m_Player_Move;
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @Grab => m_Wrapper.m_Player_Grab;
-        public InputAction @Grab2 => m_Wrapper.m_Player_Grab2;
         public InputAction @Attack => m_Wrapper.m_Player_Attack;
+        public InputAction @Grab2 => m_Wrapper.m_Player_Grab2;
         public InputAction @TempMove2 => m_Wrapper.m_Player_TempMove2;
         public InputAction @TempJump2 => m_Wrapper.m_Player_TempJump2;
         public InputAction @Restart => m_Wrapper.m_Player_Restart;
@@ -475,12 +486,12 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @Grab.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGrab;
                 @Grab.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGrab;
                 @Grab.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGrab;
-                @Grab2.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGrab2;
-                @Grab2.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGrab2;
-                @Grab2.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGrab2;
                 @Attack.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAttack;
                 @Attack.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAttack;
                 @Attack.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAttack;
+                @Grab2.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGrab2;
+                @Grab2.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGrab2;
+                @Grab2.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGrab2;
                 @TempMove2.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTempMove2;
                 @TempMove2.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTempMove2;
                 @TempMove2.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTempMove2;
@@ -503,12 +514,12 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @Grab.started += instance.OnGrab;
                 @Grab.performed += instance.OnGrab;
                 @Grab.canceled += instance.OnGrab;
-                @Grab2.started += instance.OnGrab2;
-                @Grab2.performed += instance.OnGrab2;
-                @Grab2.canceled += instance.OnGrab2;
                 @Attack.started += instance.OnAttack;
                 @Attack.performed += instance.OnAttack;
                 @Attack.canceled += instance.OnAttack;
+                @Grab2.started += instance.OnGrab2;
+                @Grab2.performed += instance.OnGrab2;
+                @Grab2.canceled += instance.OnGrab2;
                 @TempMove2.started += instance.OnTempMove2;
                 @TempMove2.performed += instance.OnTempMove2;
                 @TempMove2.canceled += instance.OnTempMove2;
@@ -560,8 +571,8 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         void OnMove(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnGrab(InputAction.CallbackContext context);
-        void OnGrab2(InputAction.CallbackContext context);
         void OnAttack(InputAction.CallbackContext context);
+        void OnGrab2(InputAction.CallbackContext context);
         void OnTempMove2(InputAction.CallbackContext context);
         void OnTempJump2(InputAction.CallbackContext context);
         void OnRestart(InputAction.CallbackContext context);
