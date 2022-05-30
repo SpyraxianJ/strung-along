@@ -27,16 +27,16 @@ public class PuppetController : MonoBehaviour
 
     private Rigidbody rb;
 
-    private bool movePressed;
     public Vector2 move;
-    private bool jumpPressed;
-    bool grabPressed;
+    public bool movePressed;
+    public bool jumpPressed;
+    public bool jumpReleased = true;
+    public bool grabPressed;
 
     private float speed = 0;
     [Tooltip("Determines if the puppet is currently on the ground or not, public for unity inspector debugging purposes, can be made private later without issue")]
     public bool isGrounded = true; // Keep public, other things use this as a reference
     public bool isClimbing = false;
-    private bool jumpReleased = true;
     public float groundedMaxSpeed = 10;
 
     [Space]
@@ -101,7 +101,7 @@ public class PuppetController : MonoBehaviour
     public float jumpBoostForce;
     [Tooltip("How long the puppet will have an upwards boost from holding jump")]
     public float jumpBoostTime;
-    float jumpBoostTimer; // how much time we have left of the jump boost, set to 0 when jump is released
+    public float jumpBoostTimer; // how much time we have left of the jump boost, set to 0 when jump is released
     [Tooltip("The force applied upwards when jump is held, be careful not to set too high or the puppet will be able to fly")]
     [Range(0, 20)]
     public float jumpHoldForce;
@@ -175,108 +175,6 @@ public class PuppetController : MonoBehaviour
         return playerIndex;
     }
 
-    /*void Awake()
-    {
-
-        if (secondPlayer == false)
-        {
-            controls = new PlayerControls();
-            controls.Player.Jump.performed += ctx =>
-            {
-                jumpPressed = ctx.ReadValueAsButton();
-                Debug.Log(ctx.ReadValueAsButton());
-                if (jumpPressed && jumpReleased)
-                {
-                    StartJump();
-                }
-                jumpReleased = false;
-            };
-            controls.Player.Jump.canceled += ctx =>
-            {
-                jumpReleased = true;
-                jumpBoostTimer = 0;
-            };
-
-            controls.Player.Move.performed += ctx =>
-            {
-                move = ctx.ReadValue<Vector2>();
-                movePressed = true; //move.x != 0 || move.y != 0;
-                                    //Debug.Log(movePressed);
-            };
-            controls.Player.Move.canceled += ctx =>
-            {
-                move = Vector2.zero;
-                movePressed = false;
-                //Debug.Log(movePressed);
-            };
-            controls.Player.Grab.performed += ctx =>
-            {
-                grabPressed = ctx.ReadValueAsButton();
-                Debug.Log(ctx.ReadValueAsButton());
-                GrabStart();
-            };
-            controls.Player.Grab.canceled += ctx =>
-            {
-                grabPressed = false;
-                GrabRelease();
-            };
-        }
-        else // THIS IS VERY TEMPORARY, just so the playtesters can have access to both players
-        {
-            controls = new PlayerControls();
-            controls.Player.TempJump2.performed += ctx =>
-            {
-                jumpPressed = ctx.ReadValueAsButton();
-                Debug.Log(ctx.ReadValueAsButton());
-                if (jumpPressed && jumpReleased)
-                {
-                    StartJump();
-                }
-                jumpReleased = false;
-            };
-            controls.Player.TempJump2.canceled += ctx =>
-            {
-                jumpReleased = true;
-                jumpBoostTimer = 0;
-            };
-
-            controls.Player.TempMove2.performed += ctx =>
-            {
-                move = ctx.ReadValue<Vector2>();
-                movePressed = true; //move.x != 0 || move.y != 0;
-                                    //Debug.Log(movePressed);
-            };
-            controls.Player.TempMove2.canceled += ctx =>
-            {
-                move = Vector2.zero;
-                movePressed = false;
-                //Debug.Log(movePressed);
-            };
-            controls.Player.Grab2.performed += ctx =>
-            {
-                grabPressed = ctx.ReadValueAsButton();
-                Debug.Log(ctx.ReadValueAsButton());
-                GrabStart();
-            };
-            controls.Player.Grab2.canceled += ctx =>
-            {
-                grabPressed = false;
-                GrabRelease();
-            };
-        }
-
-    }*/
-
-    
-
-    /*void OnEnable()
-    {
-        controls.Player.Enable();
-    }
-    void OnDisable()
-    {
-        controls.Player.Disable();
-    }*/
 
     List<RaycastHit> objectRayGenerator(int rayNumber, float rayLength, float rayRadius, bool useOffset)
     {
