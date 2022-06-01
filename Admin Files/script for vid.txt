@@ -1,0 +1,23 @@
+Welcome to group 4's presentation of Strung Along.
+Strung Along is a 3D, two player puzzle solver literally set against the backdrop of a marionette stage. 
+Today you'll hear from myself, Harper and Andrew discussing some of the most significant parts of the project.
+
+Optimising the feel and character puppets is essential and has continued to offer new challenges. 
+Being 3D, the movement is mainly conducted using rigidbody physics, forces and velocity manipulation. Used hand in hand with unity's new input system
+this allows us to give the players mechanical flexibility such as short jumping, air movement, coyote time and more.
+Players can interact with their environemnt in a number of ways by dragging objects along the ground, climbing their strings and even using the
+carefully coded properties of string tangling to raise themselves over certain obstacles.
+
+Taking heavy inspiration from old-timey puppet shows, the strings are a key gimmick in gameplay, restricting both players movement, but also 
+providing ways around obstacle that would otherwise be impossible. 
+
+Before we settled on mechanics, I explored a ew alternative options such as using root motion to move the characters around. Root motion basically 
+drives the model position from the animation rather than using forces or posisitioning code. While this makes the character movement appear 
+more realistic, it requires very tight animations and we decided against using it at this stage.
+
+Beyond the players, the world they interact with also needs to be dynamic. I'll pass it on to harper to discuss the details about our level manager.
+
+
+
+Moving into semester 2 we hope to focus on adding the beautiful art assets from our design team as well as polishing the core mechanics until they shine.
+Thanks for listening and we'll see you next time.
