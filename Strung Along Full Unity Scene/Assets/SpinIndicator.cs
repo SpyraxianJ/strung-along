@@ -29,7 +29,7 @@ public class SpinIndicator : MonoBehaviour
             spriteRenderer.color = new Color(current.r, current.g, current.b, Mathf.Abs(manager.tangle) / Mathf.Max(0.0001f, manager.maxTangle/2));
         }
 
-        if (manager.tangle < 0)
+        if (manager.tangle > 0)
         {
             spriteRenderer.flipX = true;
         }
