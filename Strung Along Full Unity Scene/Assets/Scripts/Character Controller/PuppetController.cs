@@ -19,6 +19,7 @@ public class PuppetController : MonoBehaviour
     public GameObject visualReference;
     public PuppetAudio audioManager;
     public Animator puppetAnimator;
+    public PuppetContextualTutorial conTut;
 
     [Space]
 
@@ -226,6 +227,11 @@ public class PuppetController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+
+        if (move != Vector2.zero) {
+            conTut.movementTimer = 0;
+        }
+
         if (isClimbing == false) // Do normal stuff
         {
             GroundDetection();
@@ -238,6 +244,7 @@ public class PuppetController : MonoBehaviour
             isGrounded = false;
             HandleMovement();
             ClimbTick();
+            conTut.climbTimer = 0;
         }
 
         AnimationTick();
@@ -334,7 +341,7 @@ public class PuppetController : MonoBehaviour
             airTimer = airTimer + Time.fixedDeltaTime;
 
             // This is to prevent getting stuck hanging permanantly and out of stamina
-            if (airTimer > 6) {
+            if (airTimer > 2) {
                 if (stamina < 1)
                 {
                     stamina += staminaRegen * Time.fixedDeltaTime * 0.1f;
@@ -513,6 +520,8 @@ public class PuppetController : MonoBehaviour
         else
         {
 
+            conTut.climbTimer += Time.fixedDeltaTime;
+
             if (beingPulled == false)
             {
                 // Air movement stuff, using simpler calculations since precision isn't as important
@@ -571,6 +580,7 @@ public class PuppetController : MonoBehaviour
 
     public void StartJump()
     {
+        conTut.jumpTimer = 0;
         airTimer = 0;
         if ((isGrounded || timeSinceGrounded <= coyoteTime) && hasJumped == false)
         {
@@ -605,6 +615,11 @@ public class PuppetController : MonoBehaviour
             isClimbing = true;
 
             //rb.velocity = Vector3.zero; // makes climbing feel a little worse, but prevents some exploits, consider turning of if desired.
+
+            if (isGrounded) {
+                conTut.jumpTimer += 1;
+            }
+
         }
 
     }
