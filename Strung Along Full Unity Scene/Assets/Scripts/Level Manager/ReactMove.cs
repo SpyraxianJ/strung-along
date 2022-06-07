@@ -21,8 +21,6 @@ public class ReactMove : Reactor
 	//[Tooltip("Leave at 0,0,0 with relative = true to leave as-is.")]
 	//public Quaternion targetRotation;
 	//public bool relativeRotation = true;
-	
-	[Header("Non-Dynamic Properties")]
 	[Tooltip("Speed of the object.")]
 	public float speed = 0.1f;
 	[Tooltip("Maximum speed allowed.")]
@@ -31,12 +29,6 @@ public class ReactMove : Reactor
 	public bool returnToOriginalPos = false;
 	[Tooltip("Time to wait before returning.")]
 	public float returnDelay = 3;
-	
-	[Header("Dynamic Properties")]
-	[Tooltip("Syncs movement with the Activator. Very nifty.\nIgnores all Non-Dynamic Properties.")]
-	public bool dynamicReactor = false;
-	[Range(0,1)]
-	public float progress;
 	
 	[Header("Movement Debug")]
 	public Vector3 originalWorldPosition;
@@ -60,11 +52,8 @@ public class ReactMove : Reactor
 	}
 	
     public override void fire(float progress) {
-		this.progress = progress;
 		
-		if (dynamicReactor && ready) {
-			targetObject.transform.position = Vector3.Lerp(originalWorldPosition, targetWorldPosition, progress / 1.0f);
-		} else if (progress == 1.0f && ready) {
+		if (progress == 1.0f && ready) {
 			fireCount++;
 			MoveProp moverComponent;
 			moverComponent = targetObject.AddComponent<MoveProp>();
