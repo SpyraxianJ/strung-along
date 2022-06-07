@@ -25,6 +25,10 @@ public class GrimReaper : MonoBehaviour
 	
 	public void kill(PuppetController pup) {
 		
+		// untangle both puppets
+		pup.stringManager.tangle = 0;
+		pup.stringManager.bolConnected = false;
+		
 		// disable strings
 		LineRenderer anchorLineVisual = pup.thisStringRoot.lineVisual;
 		PuppetString puppetString = pup.secondPlayer ? pup.stringManager.string2Ref : pup.stringManager.string1Ref;
@@ -70,6 +74,9 @@ public class GrimReaper : MonoBehaviour
 		Rigidbody pupBody = puppet.GetComponent<Rigidbody>();
 		pupBody.velocity = Vector3.zero;
 		
+		// enable puppet
+		puppet.SetActive(true);
+		
 		// enable strings
 		LineRenderer anchorLineVisual = pup.thisStringRoot.lineVisual;
 		PuppetString puppetString = pup.secondPlayer ? pup.stringManager.string2Ref : pup.stringManager.string1Ref;
@@ -77,9 +84,6 @@ public class GrimReaper : MonoBehaviour
 		anchorLineVisual.enabled = true;
 		puppetString.GetComponent<CapsuleCollider>().enabled = true;
 		puppetString.GetComponent<Renderer>().enabled = true;
-		
-		// enable puppet
-		puppet.SetActive(true);
 		
 		Instantiate(respawnParticle, pup.transform.position, Quaternion.identity);
 		
