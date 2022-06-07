@@ -267,11 +267,17 @@ public class LevelLoader : MonoBehaviour
 		workingProps = new List<GameObject>(activeProps);
 		
 		foreach (GameObject prop in workingProps) {
-			
+			// reset activators and reactors, calling reset functions
 			toggleActivators(prop, false);
 			toggleReactors(prop, false);
 			toggleActivators(prop, true);
 			toggleReactors(prop, true);
+			
+			// if it's a rigidbody, set its position back because it may have moved
+			if (prop.TryGetComponent(out Rigidbody body) ) {
+				prop.transform.position = prop.GetComponent<StageProp>().originalPosition;
+			}
+			
 			
 		}
 		
