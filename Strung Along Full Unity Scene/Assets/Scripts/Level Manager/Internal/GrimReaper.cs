@@ -64,8 +64,11 @@ public class GrimReaper : MonoBehaviour
 		
 		// place puppet under their spawnpoint
 		GameObject puppet = pup.gameObject;
-		
 		puppet.transform.position = pup.thisStringRoot.transform.position + new Vector3(0, -4, 0);
+		
+		// set puppet velocity to zero
+		Rigidbody pupBody = puppet.GetComponent<Rigidbody>();
+		pupBody.velocity = Vector3.zero;
 		
 		// enable strings
 		LineRenderer anchorLineVisual = pup.thisStringRoot.lineVisual;
