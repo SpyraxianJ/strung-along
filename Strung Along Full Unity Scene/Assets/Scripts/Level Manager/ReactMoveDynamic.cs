@@ -41,7 +41,6 @@ public class ReactMoveDynamic : Reactor
     }
 	
 	public override void fire(float progress) {
-		
 		if (ready) {
 			targetObject.transform.position = Vector3.Lerp(originalWorldPosition, targetWorldPosition, progress / 1.0f);
 		}
@@ -49,14 +48,8 @@ public class ReactMoveDynamic : Reactor
 	}
 
     public override void reset() {
-		
-		if (fireCount > 0) {
-			// it's been fired. change pos!
-			targetObject.transform.position = originalWorldPosition;
-		}
-		
+		targetObject.transform.position = Vector3.Lerp(originalWorldPosition, targetWorldPosition, 0.0f);
 		ready = true;
-		fireCount = 0;
 	}
 	
 }
