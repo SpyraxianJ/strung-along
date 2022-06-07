@@ -110,7 +110,7 @@ public class LevelManager : MonoBehaviour
 		// check if we're loading the test level.
 		if (loadTestLevel && testLevel != null) {
 			Act act = testLevel.AddComponent<Act>();
-			act.init(1);
+			act.init(this, 1);
 			actList.Add(act);
 			totalActs++;
 			
@@ -140,7 +140,7 @@ public class LevelManager : MonoBehaviour
 				// we have a match! add it to the Act list.
 				int actNum = int.Parse( gObject.name.Substring(3) );
 				Act act = gObject.AddComponent<Act>();
-				act.init(actNum);
+				act.init(this, actNum);
 				actList.Add(act);
 				totalActs++;
 				
@@ -375,10 +375,12 @@ public class LevelManager : MonoBehaviour
 public class Act : MonoBehaviour
 {
 	[Header("Debug")]
+	public LevelManager manager;
 	public int actNumber;
 	public List<Level> levels;
 	
-	internal void init(int actNumber) {
+	internal void init(LevelManager manager, int actNumber) {
+		this.manager = manager;
 		this.actNumber = actNumber;
 		levels = new List<Level>();
 	}

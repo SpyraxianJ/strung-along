@@ -5,8 +5,6 @@ using UnityEngine.Events;
 
 public abstract class Activator : MonoBehaviour
 {
-	[Tooltip("Reference to the Level Manager object.\nMake sure to set this!")]
-	public LevelManager manager;
 	public List<Reactor> reactors;
 	[SerializeField]
 	[Tooltip("Animation curve to modify the movement of Reactors.\nOnly applies to Dynamic Reactor.")]
@@ -21,12 +19,16 @@ public abstract class Activator : MonoBehaviour
 	[Tooltip("If Player 2 can activate this.")]
 	public bool p2CanActivate = true;
 	
+	public LevelManager manager;
+	
 	public abstract void reset();
 	public abstract void checkErrors();
 	
 	public virtual void Start() {
 		checkActvErrors();
 		checkErrors();
+		
+		manager = gameObject.GetComponentInParent<Level>().act.manager;
 		
 		bool counting = false;
 		Component[] every = GetComponents<Component>();
