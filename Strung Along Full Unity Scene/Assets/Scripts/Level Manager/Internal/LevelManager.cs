@@ -198,7 +198,7 @@ public class LevelManager : MonoBehaviour
 			// check if either player has died
 			
 			if (!p1.alive || !p2.alive) {
-				loader.resetLevel(activeProps);
+				loader.resetLevel(currentLevel);
 				
 				if (!p1.alive) {
 					Debug.Log(this + ": Player 1 died ;_;");
@@ -418,6 +418,7 @@ public class Level : MonoBehaviour
 	public Spawnpoint p1Spawn;
 	public Spawnpoint p2Spawn;
 	
+	public int completions;
 	// starts at 0. when the players complete a level faster than they have before, this keeps track of it!
 	public float bestTime; 
 	

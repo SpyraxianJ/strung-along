@@ -14,6 +14,8 @@ public class Goal : MonoBehaviour
 	[Tooltip("Determines if this is the goal for Player 2. Otherwise Player 1.")]
 	public bool isPlayer2;
 	
+	public bool isActive = false;
+	
 	public static event Action<bool, bool> onPlayerGoal;
 	[Header("Debug")]
 	private Color originalColor;
@@ -39,23 +41,32 @@ public class Goal : MonoBehaviour
     void Update()
     {
         
+		if (isActive) {
+			onPlayerGoal?.Invoke(true, isPlayer2);
+			gameObject.GetComponent<Renderer>().material.color = Color.green;
+		} else {
+			onPlayerGoal?.Invoke(false, isPlayer2);
+			gameObject.GetComponent<Renderer>().material.color = originalColor;
+		}
+		
     }
 	
 	void OnTriggerEnter(Collider other) {
-		
 		if (other.gameObject == targetPlayer) {
-			onPlayerGoal?.Invoke(true, isPlayer2);
-			gameObject.GetComponent<Renderer>().material.color = Color.green;
-			StartCoroutine ( pulseAnimation() );
+			isActive = true;
 		}
 		
 	}
 	
-	void OnTriggerExit(Collider other) {
-		
+	void OnTriggerStay(Collider other) {
 		if (other.gameObject == targetPlayer) {
-			onPlayerGoal?.Invoke(false, isPlayer2);
-			gameObject.GetComponent<Renderer>().material.color = originalColor;
+			isActive = true;
+		}
+	}
+	
+	void OnTriggerExit(Collider other) {
+		if (other.gameObject == targetPlayer) {
+			isActive = false;
 		}
 		
 	}
