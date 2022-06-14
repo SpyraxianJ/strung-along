@@ -204,10 +204,12 @@ public class LevelManager : MonoBehaviour
 					Debug.Log(this + ": Player 1 died ;_;");
 					p1.alive = true;
 					reaper.respawn( player1.GetComponent<PuppetController>() );
+					reaper.respawn( player2.GetComponent<PuppetController>() );
 				}
 				if (!p2.alive) {
 					Debug.Log(this + ": Player 2 died ;_;");
 					p2.alive = true;
+					reaper.respawn( player1.GetComponent<PuppetController>() );
 					reaper.respawn( player2.GetComponent<PuppetController>() );
 				}
 				
@@ -254,6 +256,10 @@ public class LevelManager : MonoBehaviour
 	}
 	// subscribed to LevelLoader load event
 	private void loadComplete() {
+		reaper.respawn(player1.GetComponent<PuppetController>() );
+		reaper.respawn(player2.GetComponent<PuppetController>() );
+
+		
 		state = State.LevelPlaying;
 		resetTimer();
 		startTimer();
@@ -315,6 +321,8 @@ public class LevelManager : MonoBehaviour
 			nextLevel = currentLevel;
 		}
 		
+		killPuppet(player1.GetComponent<PuppetController>() );
+		killPuppet(player2.GetComponent<PuppetController>() );
 		
 		p1.atGoal = false;
 		p2.atGoal = false;

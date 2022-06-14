@@ -190,6 +190,7 @@ public class LevelLoader : MonoBehaviour
 	public void unload(List<GameObject> activeProps) {
 		workingProps = new List<GameObject>(activeProps);
 		
+		
 		foreach (GameObject prop in workingProps) {
 			
 			
