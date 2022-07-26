@@ -230,6 +230,68 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
+--- !u!1 &1524496795893629486
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 740966628123033563}
+  m_Layer: 0
+  m_Name: LeftHandIK
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &740966628123033563
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1524496795893629486}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8461784611382557436}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1936578551207315361
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3651163910954213000}
+  m_Layer: 0
+  m_Name: RightHandIK
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3651163910954213000
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1936578551207315361}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8461784611382557436}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3218912547591686011
 GameObject:
   m_ObjectHideFlags: 0
@@ -1274,6 +1336,8 @@ Transform:
   - {fileID: 7766017248817502218}
   - {fileID: 2472723945806046518}
   - {fileID: 4257685574891878373}
+  - {fileID: 740966628123033563}
+  - {fileID: 3651163910954213000}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1336,29 +1400,37 @@ MonoBehaviour:
   airborneDeceleration: 0.205
   airborneDecay: 0.01
   airborneMaxSpeed: 6
-  initialJumpForce: 6
-  jumpBoostForce: 45
-  jumpBoostTime: 0.25
+  initialJumpForce: 13.5
+  jumpBoostForce: 0.1
+  jumpBoostTime: 0.2
   jumpBoostTimer: 0
-  jumpHoldForce: 0.64
-  jumpReleaseForce: -35.2
+  jumpHoldForce: 1
+  jumpReleaseForce: -25.2
   jumpReleaseRisingDrag: 0.04
   maxFallSpeed: 100
-  gravity: 15
+  gravity: 26.5
   coyoteTime: 0.2
   groundedMaxSpeedHardCap: 0
   groundedRayNumber: 20
-  groundRayLength: 0.2
+  groundRayLength: 0.23
   groundedRayRadius: 0.5
   groundedRayDiameter: 0.3
   landingRayDiameter: 0.45
   groundMask:
     serializedVersion: 2
     m_Bits: 567
-  groundedDownPerFrame: 0.1
+  groundedDownPerFrame: 0.125
   effectiveRoot: {x: 0, y: 0, z: 0}
   visualRotateSpeed: 2000
   visualAirRotateSpeed: 100
+  grabDistance: 0.6
+  holdDistance: 0.35
+  grabbing: 0
+  grabbingObject: {fileID: 8461784611382557439}
+  grabbingMask:
+    serializedVersion: 2
+    m_Bits: 512
+  colliderThis: {fileID: 8461784611382557439}
   tempGrab: {fileID: 8411521198631206371}
 --- !u!114 &6077883536283109890
 MonoBehaviour:
@@ -1723,7 +1795,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7766017248817502218
 Transform:
   m_ObjectHideFlags: 0
@@ -1869,6 +1941,26 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &6294075237155132892
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5294238578365876113}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69b2ced3b2767884ab970ecc4b2a61ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lerpSpeed: 5
+  leftHand: {fileID: 740966628123033563}
+  rightHand: {fileID: 3651163910954213000}
+  animator: {fileID: 5800207823952729068}
+  IKLeft: 0
+  IKRight: 0
+  LeftIKCurrentWeight: 0
+  RightIKCurrentWeight: 0
 --- !u!1001 &6694259780743374420
 PrefabInstance:
   m_ObjectHideFlags: 0
