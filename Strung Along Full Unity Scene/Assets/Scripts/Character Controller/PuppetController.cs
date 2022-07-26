@@ -160,6 +160,26 @@ public class PuppetController : MonoBehaviour
     public float visualRotateSpeed;
     public float visualAirRotateSpeed;
 
+    [Space]
+
+    [Header("Grabing Variables")]
+
+    [Tooltip("How far away can the puppet grab objects from")]
+    public float grabDistance;
+
+    [Tooltip("This distance that the puppet holds objects at, should be the some or lower than the grab distance")]
+    public float holdDistance;
+
+    [Space]
+
+    public bool grabbing;
+    [Tooltip("Collider of the object that we are grabbing")]
+    public Collider grabbingObject;
+
+    public LayerMask grabbingMask;
+    public Collider colliderThis;
+    public float grabbedObjectDistance;
+
     // Private
 
     float forceAirborneTimer;
@@ -224,6 +244,8 @@ public class PuppetController : MonoBehaviour
         }
     }
 
+
+
     // Update is called once per frame
     void FixedUpdate()
     {
@@ -237,6 +259,7 @@ public class PuppetController : MonoBehaviour
             GroundDetection();
             HandleMovement();
             HandleJump(); //don't remove
+            HandleGrab();
         }
         else // Pause all normal movement stuff, just climb
         {
@@ -285,27 +308,34 @@ public class PuppetController : MonoBehaviour
 
     public void AnimationTick()
     {
-        if (tempGrab.grabbed != null)
+
+        if (grabbing == false)
         {
-            Vector3 a = (tempGrab.grabbed.gameObject.transform.position - transform.position);
-            float difference = Vector3.Distance(new Vector3(a.x, 0, a.z).normalized, new Vector3(move.x, 0, move.y).normalized);
-            visualReference.transform.rotation = Quaternion.RotateTowards(visualReference.transform.rotation, Quaternion.LookRotation(new Vector3(a.x, 0, a.z), transform.up), visualAirRotateSpeed * Time.fixedDeltaTime);
-        }
-        else {
-            if (isGrounded)
+
+            if (tempGrab.grabbed != null)
             {
-                if (new Vector3(rb.velocity.x, 0, rb.velocity.z).magnitude > 0.05)
-                {
-                    visualReference.transform.rotation = Quaternion.RotateTowards(visualReference.transform.rotation, Quaternion.LookRotation(new Vector3(rb.velocity.normalized.x, 0, rb.velocity.normalized.z), transform.up), visualRotateSpeed * Time.fixedDeltaTime);
-                }
+                Vector3 a = (tempGrab.grabbed.gameObject.transform.position - transform.position);
+                float difference = Vector3.Distance(new Vector3(a.x, 0, a.z).normalized, new Vector3(move.x, 0, move.y).normalized);
+                visualReference.transform.rotation = Quaternion.RotateTowards(visualReference.transform.rotation, Quaternion.LookRotation(new Vector3(a.x, 0, a.z), transform.up), visualAirRotateSpeed * Time.fixedDeltaTime);
             }
             else
             {
-                if (new Vector3(rb.velocity.x, 0, rb.velocity.z).magnitude > 0.05)
+                if (isGrounded)
                 {
-                    visualReference.transform.rotation = Quaternion.RotateTowards(visualReference.transform.rotation, Quaternion.LookRotation(new Vector3(rb.velocity.normalized.x, 0, rb.velocity.normalized.z), transform.up), visualAirRotateSpeed * Time.fixedDeltaTime);
+                    if (new Vector3(rb.velocity.x, 0, rb.velocity.z).magnitude > 0.05)
+                    {
+                        visualReference.transform.rotation = Quaternion.RotateTowards(visualReference.transform.rotation, Quaternion.LookRotation(new Vector3(rb.velocity.normalized.x, 0, rb.velocity.normalized.z), transform.up), visualRotateSpeed * Time.fixedDeltaTime);
+                    }
+                }
+                else
+                {
+                    if (new Vector3(rb.velocity.x, 0, rb.velocity.z).magnitude > 0.05)
+                    {
+                        visualReference.transform.rotation = Quaternion.RotateTowards(visualReference.transform.rotation, Quaternion.LookRotation(new Vector3(rb.velocity.normalized.x, 0, rb.velocity.normalized.z), transform.up), visualAirRotateSpeed * Time.fixedDeltaTime);
+                    }
                 }
             }
+
         }
     }
 
@@ -560,7 +590,7 @@ public class PuppetController : MonoBehaviour
 
         if (jumpPressed)
         {
-            rb.AddForce(Vector3.up * jumpHoldForce);
+            rb.AddForce(Vector3.up * jumpHoldForce * Mathf.Lerp(0, 10, timeSinceGrounded));
         }
         else
         {
@@ -605,21 +635,50 @@ public class PuppetController : MonoBehaviour
     // Grab stuff.
     // NOTE: A fair bit of this might seem redundant, and yeah it kind of is right now but it's foundation for when we want the ability to climb the other puppet's strings, so leave it in there for now.
 
+    void HandleGrab()
+    {
+
+        if (grabbing)
+        {
+            // disable rotation
+            grabbingObject.gameObject.transform.position = ((visualReference.transform.forward) * grabDistance * grabbedObjectDistance) + transform.position + Vector3.up;
+        }
+
+    }
+
     public void GrabStart()
     {
 
-        if (stamina > 0) {
-            // First, we need to find out where we are in relation to our own string
-            SetClimbValue();
+        // Check if we can grab an object, if we can, ignore the climb part
 
-            isClimbing = true;
+        RaycastHit hit;
 
-            //rb.velocity = Vector3.zero; // makes climbing feel a little worse, but prevents some exploits, consider turning of if desired.
+        if (Physics.Raycast(transform.position + Vector3.up, grabDistance * visualReference.transform.forward, out hit, grabbingMask) && grabbing == false)
+        {
+            grabbingObject = hit.collider;
+            grabbing = true;
+            Physics.IgnoreCollision(grabbingObject, colliderThis, true);
+            transform.position = hit.point - (visualReference.transform.forward) * grabDistance;
+            Debug.LogError("Started Grabbing " + grabbingObject.gameObject);
+            grabbedObjectDistance = Vector3.Distance(hit.point, transform.position + Vector3.up); // Not doing the thing >:(((
+        }
+        else 
+        {
+            if (stamina > 0)
+            {
+                // First, we need to find out where we are in relation to our own string
+                SetClimbValue();
 
-            if (isGrounded) {
-                conTut.jumpTimer += 1;
+                isClimbing = true;
+
+                //rb.velocity = Vector3.zero; // makes climbing feel a little worse, but prevents some exploits, consider turning of if desired.
+
+                if (isGrounded)
+                {
+                    conTut.jumpTimer += 1;
+                }
+
             }
-
         }
 
     }
@@ -631,6 +690,16 @@ public class PuppetController : MonoBehaviour
         }
         climbValue = 0;
         isClimbing = false;
+
+        // grabbing stuff
+
+        if (grabbingObject != null) {
+            Physics.IgnoreCollision(grabbingObject, colliderThis, false);
+            grabbing = false;
+        }
+        grabbingObject = null;
+        grabbedObjectDistance = 0;
+
     }
 
     public void ClimbTick() {
