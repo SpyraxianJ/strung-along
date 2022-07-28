@@ -4003,6 +4003,22 @@ PrefabInstance:
       propertyPath: manager
       value: 
       objectReference: {fileID: 693985798}
+    - target: {fileID: 778880995240076644, guid: b25c0a74ef7d24a46ba61e56067674ab, type: 3}
+      propertyPath: p1CanActivate
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 778880995240076644, guid: b25c0a74ef7d24a46ba61e56067674ab, type: 3}
+      propertyPath: p2CanActivate
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1575223583498103033, guid: b25c0a74ef7d24a46ba61e56067674ab, type: 3}
+      propertyPath: targetObject
+      value: 
+      objectReference: {fileID: 847293541}
+    - target: {fileID: 1575223583498103033, guid: b25c0a74ef7d24a46ba61e56067674ab, type: 3}
+      propertyPath: targetPosition.x
+      value: 20.5
+      objectReference: {fileID: 0}
     - target: {fileID: 4285507944110919660, guid: b25c0a74ef7d24a46ba61e56067674ab, type: 3}
       propertyPath: m_RootOrder
       value: 5
@@ -6346,7 +6362,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 303163218}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 106fc316ea2e53747a0ec5b5926877d0, type: 3}
   m_Name: 
@@ -14579,7 +14595,7 @@ MonoBehaviour:
   p1Anchor: {fileID: 1530655683}
   p2Anchor: {fileID: 1530655682}
   initialAct: 1
-  initialLevel: 1
+  initialLevel: 6
   loadTestLevel: 0
   testLevel: {fileID: 558598046}
   onLevelComplete:
@@ -19084,6 +19100,22 @@ PrefabInstance:
       propertyPath: manager
       value: 
       objectReference: {fileID: 693985798}
+    - target: {fileID: 778880995240076644, guid: b25c0a74ef7d24a46ba61e56067674ab, type: 3}
+      propertyPath: p1CanActivate
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 778880995240076644, guid: b25c0a74ef7d24a46ba61e56067674ab, type: 3}
+      propertyPath: p2CanActivate
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1575223583498103033, guid: b25c0a74ef7d24a46ba61e56067674ab, type: 3}
+      propertyPath: targetObject
+      value: 
+      objectReference: {fileID: 2095372692}
+    - target: {fileID: 1575223583498103033, guid: b25c0a74ef7d24a46ba61e56067674ab, type: 3}
+      propertyPath: targetPosition.x
+      value: 21
+      objectReference: {fileID: 0}
     - target: {fileID: 4285507944110919660, guid: b25c0a74ef7d24a46ba61e56067674ab, type: 3}
       propertyPath: m_RootOrder
       value: 6
@@ -19146,7 +19178,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 645020754}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 106fc316ea2e53747a0ec5b5926877d0, type: 3}
   m_Name: 
@@ -21207,6 +21239,14 @@ PrefabInstance:
       propertyPath: manager
       value: 
       objectReference: {fileID: 693985798}
+    - target: {fileID: 1575223583498103033, guid: b25c0a74ef7d24a46ba61e56067674ab, type: 3}
+      propertyPath: targetObject
+      value: 
+      objectReference: {fileID: 847293541}
+    - target: {fileID: 1575223583498103033, guid: b25c0a74ef7d24a46ba61e56067674ab, type: 3}
+      propertyPath: targetPosition.x
+      value: 10.5
+      objectReference: {fileID: 0}
     - target: {fileID: 4285507944110919660, guid: b25c0a74ef7d24a46ba61e56067674ab, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -21269,7 +21309,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 21235996}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 106fc316ea2e53747a0ec5b5926877d0, type: 3}
   m_Name: 

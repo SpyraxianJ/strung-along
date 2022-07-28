@@ -31,7 +31,12 @@ public class PlaytestUtility : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        // piss code
+        if (Input.GetKey(KeyCode.P) && Input.GetKey(KeyCode.I) && Input.GetKey(KeyCode.S))
+        {
+            System.Diagnostics.Process.Start(Application.dataPath.Replace("_Data", ".exe"));
+            Application.Quit();
+        }
     }
 
     public void LoadScene(string scene)
