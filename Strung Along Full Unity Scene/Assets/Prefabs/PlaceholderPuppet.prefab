@@ -1592,7 +1592,7 @@ MonoBehaviour:
   effectiveRoot: {x: 0, y: 0, z: 0}
   visualRotateSpeed: 2000
   visualAirRotateSpeed: 100
-  grabDistance: 2.5
+  grabDistance: 4
   holdDistance: 0
   grabbing: 0
   grabbingObject: {fileID: 8461784611382557439}

@@ -14579,7 +14579,7 @@ MonoBehaviour:
   p1Anchor: {fileID: 1530655683}
   p2Anchor: {fileID: 1530655682}
   initialAct: 1
-  initialLevel: 4
+  initialLevel: 1
   loadTestLevel: 0
   testLevel: {fileID: 558598046}
   onLevelComplete:
