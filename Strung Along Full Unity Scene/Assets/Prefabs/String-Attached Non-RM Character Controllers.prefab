@@ -2228,6 +2228,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bird_Idle
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 50e60ffbe32c5ef459ecad4cdb1c8e4a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 50e60ffbe32c5ef459ecad4cdb1c8e4a, type: 3}
 --- !u!1 &1996304005543190668 stripped

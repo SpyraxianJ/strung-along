@@ -20,6 +20,7 @@ public class PuppetController : MonoBehaviour
     public PuppetAudio audioManager;
     public Animator puppetAnimator;
     public PuppetContextualTutorial conTut;
+    public HandIKHandler ikHandler;
 
     [Space]
 
@@ -178,7 +179,9 @@ public class PuppetController : MonoBehaviour
 
     public LayerMask grabbingMask;
     public Collider colliderThis;
-    public float grabbedObjectDistance;
+    float grabbedObjectDistance;
+    float grabbedObjectHeight;
+    float grabStartHeight;
 
     // Private
 
@@ -263,7 +266,6 @@ public class PuppetController : MonoBehaviour
         }
         else // Pause all normal movement stuff, just climb
         {
-            Debug.Log("AA");
             isGrounded = false;
             HandleMovement();
             ClimbTick();
@@ -288,10 +290,10 @@ public class PuppetController : MonoBehaviour
             puppetAnimator.SetFloat("Speed", new Vector3(rb.velocity.x, 0, rb.velocity.z).magnitude);
             puppetAnimator.SetBool("Grounded", isGrounded);
             puppetAnimator.SetFloat("YVelocity", rb.velocity.y);
-            if (tempGrab.grabbed != null)
+            if (grabbing == true)
             {
                 puppetAnimator.SetBool("GrabbingObject", true);
-                Vector3 a = (tempGrab.grabbed.gameObject.transform.position - transform.position);
+                Vector3 a = (grabbingObject.gameObject.transform.position - transform.position);
                 float difference = Vector3.Distance(new Vector3(a.x, 0, a.z).normalized, new Vector3(move.x, 0, move.y).normalized);
                 puppetAnimator.SetFloat("ObjectRelativeMovement", difference);
                 Debug.Log(difference);
@@ -457,6 +459,12 @@ public class PuppetController : MonoBehaviour
     {
         float relativeMaxSpeedX = Math.Abs(groundedMaxSpeed); // ugly sorry, leave for now bc I may use it later, if it's past May, I probably wont lol
         float relativeMaxSpeedY = Math.Abs(groundedMaxSpeed);
+
+        if (grabbing)
+        {
+            relativeMaxSpeedX = relativeMaxSpeedX / 3;
+            relativeMaxSpeedY = relativeMaxSpeedY / 3;
+        }
 
         if (isGrounded)
         {
@@ -641,7 +649,61 @@ public class PuppetController : MonoBehaviour
         if (grabbing)
         {
             // disable rotation
-            grabbingObject.gameObject.transform.position = ((visualReference.transform.forward) * grabDistance * grabbedObjectDistance) + transform.position + Vector3.up;
+            grabbingObject.gameObject.transform.position = ((visualReference.transform.forward) * grabbedObjectDistance * (1 + holdDistance)) + transform.position + (Vector3.up * grabbedObjectHeight);
+
+            // Animator
+            puppetAnimator.SetBool("GrabbingObject", true);
+
+            // Hand IK
+
+            if (ikHandler != null) {
+                // Left
+                RaycastHit hit;
+                if (Physics.Raycast(transform.position + Vector3.up * 1.7f + -visualReference.transform.right * 0.2f, visualReference.transform.forward, out hit, holdDistance + 2.5f, grabbingMask))
+                {
+                    ikHandler.leftHand.position = hit.point;
+                    ikHandler.leftHand.rotation = Quaternion.LookRotation(Vector3.up);
+                }
+                else
+                {
+                    ikHandler.leftHand.position = ((visualReference.transform.forward) * (holdDistance + 0.5f)) + transform.position + Vector3.up * 1.7f;
+                }
+
+                // Right
+                if (Physics.Raycast(transform.position + Vector3.up * 1.7f + visualReference.transform.right * 0.0f, visualReference.transform.forward, out hit, holdDistance + 2.5f, grabbingMask))
+                {
+                    ikHandler.rightHand.position = hit.point;
+                    ikHandler.rightHand.rotation = Quaternion.LookRotation(Vector3.up);
+                }
+                else
+                {
+                    ikHandler.rightHand.position = ((visualReference.transform.forward) * (holdDistance + 0.5f)) + transform.position + Vector3.up * 1.7f;
+                }
+
+                ikHandler.IKLeft = true;
+                ikHandler.IKRight = true;
+            }
+            else
+            {
+                Debug.LogError("No HandIK on " + gameObject);
+            }
+
+            if (MathF.Abs(transform.position.y - grabStartHeight) > 0.15f) {
+                Debug.Log("Y position moving too much, letting go of object");
+                GrabRelease();
+            }
+
+        }
+        else {
+            puppetAnimator.SetBool("GrabbingObject", false);
+            if (ikHandler != null)
+            {
+                ikHandler.IKLeft = false;
+                ikHandler.IKRight = false;
+            }
+            else {
+                Debug.LogError("No HandIK on " + gameObject);
+            }
         }
 
     }
@@ -653,14 +715,20 @@ public class PuppetController : MonoBehaviour
 
         RaycastHit hit;
 
-        if (Physics.Raycast(transform.position + Vector3.up, grabDistance * visualReference.transform.forward, out hit, grabbingMask) && grabbing == false)
+        if (Physics.Raycast(transform.position + Vector3.up, visualReference.transform.forward, out hit, grabDistance, grabbingMask) && grabbing == false)
         {
+
             grabbingObject = hit.collider;
             grabbing = true;
             Physics.IgnoreCollision(grabbingObject, colliderThis, true);
-            transform.position = hit.point - (visualReference.transform.forward) * grabDistance;
-            Debug.LogError("Started Grabbing " + grabbingObject.gameObject);
-            grabbedObjectDistance = Vector3.Distance(hit.point, transform.position + Vector3.up); // Not doing the thing >:(((
+            //transform.position = hit.point - (visualReference.transform.forward) * grabDistance;
+            Debug.Log("Started Grabbing " + grabbingObject.gameObject);
+            grabbedObjectDistance = Vector3.Distance(hit.point, grabbingObject.gameObject.transform.position + Vector3.up); // Not doing the thing >:(((
+            grabbingObject.gameObject.layer = 11;
+            grabbingObject.attachedRigidbody.freezeRotation = true;
+            grabbedObjectHeight = grabbingObject.gameObject.transform.position.y;
+            grabStartHeight = transform.position.y;
+
         }
         else 
         {
@@ -696,6 +764,8 @@ public class PuppetController : MonoBehaviour
         if (grabbingObject != null) {
             Physics.IgnoreCollision(grabbingObject, colliderThis, false);
             grabbing = false;
+            grabbingObject.gameObject.layer = 9;
+            grabbingObject.attachedRigidbody.freezeRotation = true;
         }
         grabbingObject = null;
         grabbedObjectDistance = 0;

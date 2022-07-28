@@ -192,7 +192,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: c7cf1644632654b25826f171555081f1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -918,14 +918,6 @@ PrefabInstance:
     - target: {fileID: 3167654759174068985, guid: bca65c23b1594aa4dbebacacfe0c1350, type: 3}
       propertyPath: m_IsActive
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3694133943377610563, guid: bca65c23b1594aa4dbebacacfe0c1350, type: 3}
-      propertyPath: landingRayDiameter
-      value: 0.45
-      objectReference: {fileID: 0}
-    - target: {fileID: 3694133943377610563, guid: bca65c23b1594aa4dbebacacfe0c1350, type: 3}
-      propertyPath: groundedRayDiameter
-      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 3694133943377610564, guid: bca65c23b1594aa4dbebacacfe0c1350, type: 3}
       propertyPath: m_LocalPosition.z
