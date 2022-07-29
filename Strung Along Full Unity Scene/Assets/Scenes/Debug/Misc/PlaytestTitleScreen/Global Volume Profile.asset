@@ -40,7 +40,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3eb4b772797da9440885e8bd939e9560, type: 3}
   m_Name: ColorCurves
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   master:
     m_OverrideState: 0
     m_Value:
@@ -216,9 +216,9 @@ MonoBehaviour:
         m_Curve:
         - serializedVersion: 3
           time: 0
-          value: 0.13043481
-          inSlope: 0
-          outSlope: 0
+          value: 0.16425121
+          inSlope: 0.62408316
+          outSlope: 0.62408316
           tangentMode: 0
           weightedMode: 0
           inWeight: 0
