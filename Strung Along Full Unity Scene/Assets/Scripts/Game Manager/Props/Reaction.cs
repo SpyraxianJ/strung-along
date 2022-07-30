@@ -6,5 +6,5 @@ using UnityEngine;
 [System.Serializable]
 public abstract class Reaction : MonoBehaviour
 {
-	public abstract void fire();
+	public abstract void Fire(float lerp);
 }
