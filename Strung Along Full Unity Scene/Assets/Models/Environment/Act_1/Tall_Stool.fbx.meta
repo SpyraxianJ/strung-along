@@ -1,9 +1,24 @@
 fileFormatVersion: 2
 guid: a5492cc95a0bae34493ef4d2f2b8da6d
 ModelImporter:
-  serializedVersion: 21202
+  serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Tall_Stool_Metal
+    second: {fileID: 2100000, guid: 93c490893e75f1944983e8b5250b82df, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Tall_Stool_Seat
+    second: {fileID: 2100000, guid: 844e7f431a3e3c8468f9465b701348db, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Tall_Stool_Wood
+    second: {fileID: 2100000, guid: 1c4707cf45cecdd43b28ca59d218381d, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -99,6 +114,7 @@ ModelImporter:
   humanoidOversampling: 1
   avatarSetup: 0
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1
+  remapMaterialsIfMaterialImportModeIsNone: 1
   additionalBone: 0
   userData: 
   assetBundleName: 
