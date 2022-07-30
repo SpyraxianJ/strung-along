@@ -21,6 +21,7 @@ public class PuppetController : MonoBehaviour
     public Animator puppetAnimator;
     public PuppetContextualTutorial conTut;
     public HandIKHandler ikHandler;
+    public ClimbingIK climbIK;
 
     [Space]
 
@@ -113,6 +114,8 @@ public class PuppetController : MonoBehaviour
     [Tooltip("The drag applied to the puppet during the rise when jump is not held")]
     [Range(0, 1)]
     public float jumpReleaseRisingDrag;
+    [Range(0, 1)]
+    public float jumpRisingDrag;
     public float maxFallSpeed = 100;
 
     [Space]
@@ -622,6 +625,11 @@ public class PuppetController : MonoBehaviour
             {
                 rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y * (1 - jumpReleaseRisingDrag * Time.fixedDeltaTime * 100), rb.velocity.z);
             }
+        }
+
+        if (rb.velocity.y > 0)
+        {
+            rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y * (1 - jumpRisingDrag * Time.fixedDeltaTime * 100), rb.velocity.z);
         }
 
         // prevents falling too fast

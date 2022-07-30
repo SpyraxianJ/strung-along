@@ -648,6 +648,37 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thisImg: {fileID: 4461452034214250572}
   follow: {fileID: 481019245731973780}
+--- !u!1 &3667398274260632562
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7082675161112242213}
+  m_Layer: 0
+  m_Name: StringPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7082675161112242213
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3667398274260632562}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 2.305, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8461784611382557436}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4120589174526318502
 GameObject:
   m_ObjectHideFlags: 0
@@ -1478,6 +1509,7 @@ GameObject:
   - component: {fileID: 8461784611382557435}
   - component: {fileID: 6077883536283109890}
   - component: {fileID: 8461784611382557434}
+  - component: {fileID: 8208900398337834749}
   m_Layer: 6
   m_Name: PlaceholderPuppet
   m_TagString: Untagged
@@ -1506,6 +1538,7 @@ Transform:
   - {fileID: 4257685574891878373}
   - {fileID: 740966628123033563}
   - {fileID: 3651163910954213000}
+  - {fileID: 7082675161112242213}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1544,6 +1577,7 @@ MonoBehaviour:
   puppetAnimator: {fileID: 5800207823952729068}
   conTut: {fileID: 6077883536283109890}
   ikHandler: {fileID: 6294075237155132892}
+  climbIK: {fileID: 0}
   playerIndex: 0
   move: {x: 0, y: 0}
   movePressed: 0
@@ -1569,13 +1603,14 @@ MonoBehaviour:
   airborneDeceleration: 0.205
   airborneDecay: 0.01
   airborneMaxSpeed: 6
-  initialJumpForce: 13.5
+  initialJumpForce: 38
   jumpBoostForce: 0.1
   jumpBoostTime: 0.2
   jumpBoostTimer: 0
   jumpHoldForce: 1
   jumpReleaseForce: -25.2
   jumpReleaseRisingDrag: 0.04
+  jumpRisingDrag: 0.069
   maxFallSpeed: 100
   gravity: 26.5
   coyoteTime: 0.2
@@ -1639,6 +1674,21 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 3
+--- !u!114 &8208900398337834749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8461784611382557424}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb41d49e7c712e747af6575a5dbb256b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IK: {fileID: 0}
+  root: {fileID: 0}
+  distance: 0.8
 --- !u!1 &8461784611468559132
 GameObject:
   m_ObjectHideFlags: 0
