@@ -274,6 +274,7 @@ public class PuppetController : MonoBehaviour
 
         if (isClimbing == false) // Do normal stuff
         {
+            climbIK.enabled = false;
             GroundDetection();
             HandleMovement();
             HandleJump(); //don't remove
@@ -281,6 +282,7 @@ public class PuppetController : MonoBehaviour
         }
         else // Pause all normal movement stuff, just climb
         {
+            climbIK.enabled = true;
             isGrounded = false;
             HandleMovement();
             ClimbTick();

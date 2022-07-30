@@ -8,6 +8,7 @@ public class ClimbingIK : MonoBehaviour
     public HandIKHandler IK;
     public StringRoot root;
     public float distance = 0.8f;
+    public bool enabled;
 
     // Start is called before the first frame update
     void Start()
@@ -18,28 +19,32 @@ public class ClimbingIK : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (IK.IKLeft == false)
-        {
-            if (root.manager.tangle != 0)
+
+        if (enabled) {
+            if (IK.IKLeft == false)
             {
-                IK.leftHand.position = Vector3.MoveTowards(root.connectedPoint.position, root.manager.effectiveRoot, distance);
+                if (root.manager.tangle != 0)
+                {
+                    IK.leftHand.position = Vector3.MoveTowards(root.connectedPoint.position, root.manager.effectiveRoot, distance);
+                }
+                else
+                {
+                    IK.leftHand.position = Vector3.MoveTowards(root.connectedPoint.position, root.transform.position, distance);
+                }
             }
-            else
+
+            if (IK.IKRight == false)
             {
-                IK.leftHand.position = Vector3.MoveTowards(root.connectedPoint.position, root.transform.position, distance);
+                if (root.manager.tangle != 0)
+                {
+                    IK.rightHand.position = Vector3.MoveTowards(root.connectedPoint.position, root.manager.effectiveRoot, distance);
+                }
+                else
+                {
+                    IK.rightHand.position = Vector3.MoveTowards(root.connectedPoint.position, root.transform.position, distance);
+                }
             }
         }
 
-        if (IK.IKRight == false)
-        {
-            if (root.manager.tangle != 0)
-            {
-                IK.rightHand.position = Vector3.MoveTowards(root.connectedPoint.position, root.manager.effectiveRoot, distance);
-            }
-            else
-            {
-                IK.rightHand.position = Vector3.MoveTowards(root.connectedPoint.position, root.transform.position, distance);
-            }
-        }
     }
 }

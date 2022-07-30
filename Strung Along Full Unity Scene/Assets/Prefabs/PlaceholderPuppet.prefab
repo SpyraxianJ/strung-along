@@ -1577,7 +1577,7 @@ MonoBehaviour:
   puppetAnimator: {fileID: 5800207823952729068}
   conTut: {fileID: 6077883536283109890}
   ikHandler: {fileID: 6294075237155132892}
-  climbIK: {fileID: 0}
+  climbIK: {fileID: 8208900398337834749}
   jumpParticles: {fileID: 6398212522740349385, guid: 2663c79d40148d445b3edd06815879d1, type: 3}
   landParticles: {fileID: 4363317295493776453, guid: 260e3cf92ef9c294292aa31b04fed989, type: 3}
   playerIndex: 0
@@ -1691,6 +1691,7 @@ MonoBehaviour:
   IK: {fileID: 0}
   root: {fileID: 0}
   distance: 0.8
+  enabled: 0
 --- !u!1 &8461784611468559132
 GameObject:
   m_ObjectHideFlags: 0
