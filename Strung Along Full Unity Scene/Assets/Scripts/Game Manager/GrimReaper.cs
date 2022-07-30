@@ -4,26 +4,16 @@ using UnityEngine;
 
 public class GrimReaper : MonoBehaviour
 {
-	public ParticleSystem deathParticle;
-	public float deathWait = 2.0f;
-	public ParticleSystem respawnParticle;
+	public ParticleSystem _deathParticle;
+	public ParticleSystem _respawnParticle;
+	private GameStateManager _ctx;
 	
-	private LevelManager manager;
-	
-    // Start is called before the first frame update
     void Start()
     {
-		manager = GetComponent<LevelManager>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+		_ctx = GetComponent<GameStateManager>();
+    }	
 	
-	
-	public void kill(PuppetController pup) {
+	public void Kill(PuppetController pup) {
 		
 		// untangle both puppets
 		pup.stringManager.tangle = 0;
@@ -37,34 +27,22 @@ public class GrimReaper : MonoBehaviour
 		puppetString.GetComponent<CapsuleCollider>().enabled = false;
 		puppetString.GetComponent<Renderer>().enabled = false;
 		
-		// play puppet death animation here
-		
-		StartCoroutine( waitForDeathAnim(pup)  );
-		
-	}
-	
-	IEnumerator waitForDeathAnim(PuppetController pup) {
-		
-		// yield return new WaitUntil() anim has finished
-		
-		Instantiate(deathParticle, pup.transform.position, Quaternion.identity);
+		Instantiate(_deathParticle, pup.transform.position, Quaternion.identity);
 		
 		// disable puppet
 		GameObject puppet = pup.gameObject;
 		
 		puppet.SetActive(false);
 		
-		yield return new WaitForSeconds(deathWait);
-		
 		if (pup.secondPlayer) {
-			manager.p2.alive = false;
+			_ctx._p2Alive = false;
 		} else {
-			manager.p1.alive = false;
+			_ctx._p1Alive = false;
 		}
 		
 	}
 	
-	public void respawn(PuppetController pup) {
+	public void Respawn(PuppetController pup) {
 		
 		// place puppet under their spawnpoint
 		GameObject puppet = pup.gameObject;
@@ -85,7 +63,13 @@ public class GrimReaper : MonoBehaviour
 		puppetString.GetComponent<CapsuleCollider>().enabled = true;
 		puppetString.GetComponent<Renderer>().enabled = true;
 		
-		Instantiate(respawnParticle, pup.transform.position, Quaternion.identity);
+		Instantiate(_respawnParticle, pup.transform.position, Quaternion.identity);
+		
+		if (pup.secondPlayer) {
+			_ctx._p2Alive = true;
+		} else {
+			_ctx._p1Alive = true;
+		}
 		
 	}
 	

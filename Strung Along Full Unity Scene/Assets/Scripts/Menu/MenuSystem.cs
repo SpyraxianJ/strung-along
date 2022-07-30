@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MenuSystem : MonoBehaviour
 {
-	public LevelManager manager;
+	public GameStateManager _ctx;
 	
     // Start is called before the first frame update
     void Start()
@@ -19,37 +19,32 @@ public class MenuSystem : MonoBehaviour
     }
 	
 	public void startNewGame() {
-		manager.loadFirstLevel();
+		_ctx.StartGame();
+		
 	}
 	public void quitGame() {
-		manager.endLevel(false);
-		manager.setNextLevel(0, 0);
-		manager.setTimer(0);
-		manager.unloadLevel();
+		_ctx.RequestQuit();
 	}
 	
 	public void saveGameData() {
-		GameData currentGameData = new GameData(manager.getTime(), manager.getCurrentLevel(), manager.getCurrentAct() );
+		GameData currentGameData = new GameData(_ctx.GetCurrentLevel(), _ctx.GetCurrentAct(), _ctx.GetPlaytime() );
 		SaveSystem.SaveData(currentGameData);
 	}
 	
 	public void loadGameData() {
-		// stop the level currently playing
-		manager.endLevel(false);
 		
 		GameData loadGameData = SaveSystem.LoadData();
 		if (loadGameData == null) {
-			// couldnt find save file, just start new game.
-			manager.setNextLevel(1, 1);
-			manager.setTimer(0);
+			// couldnt find save file.
+			_ctx.RequestQuit();
 		}
 		else {
-			manager.setNextLevel(loadGameData.SavedAct, loadGameData.SavedLevel);
-			manager.setTimer(loadGameData.SavedTimer);
+			_ctx.RequestQuit();
+			_ctx.SetNextLevel(loadGameData.SavedAct, loadGameData.SavedLevel);
+			_ctx.SetPlaytime(loadGameData.SavedPlaytime);
 		}
 		
 		// new level set, tell levelmanager to unload current level
-		manager.unloadLevel();
 		
 	}
 	
