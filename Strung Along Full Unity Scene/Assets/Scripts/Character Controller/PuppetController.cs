@@ -25,6 +25,11 @@ public class PuppetController : MonoBehaviour
 
     [Space]
 
+    public GameObject jumpParticles;
+    public GameObject landParticles;
+
+    [Space]
+
     [SerializeField]
     private int playerIndex = 0;
 
@@ -438,9 +443,12 @@ public class PuppetController : MonoBehaviour
                     {
                         audioManager.Land();
                     }
+                    puppetAnimator.Play("Land", 0, 0.5f);
+                    Instantiate(landParticles, transform.position, Quaternion.identity);
                 }
 
                 isGrounded = true;
+
                 float avg = 0;
                 for (int i = 0; i < groundRays.Count; i++)
                 {
@@ -660,6 +668,7 @@ public class PuppetController : MonoBehaviour
                 //puppetAnimator.SetTrigger("Jump");
                 puppetAnimator.Play("JumpStart");
             }
+            Instantiate(jumpParticles, transform.position, Quaternion.identity);
         }
     }
 
