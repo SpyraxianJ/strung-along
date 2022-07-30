@@ -251,6 +251,7 @@ public class PuppetController : MonoBehaviour
     private void Update()
     {
 
+        puppetAnimator.SetFloat("ForceAir", forceAirborneTimer);
         AnimationTick();
 
     }
@@ -296,6 +297,7 @@ public class PuppetController : MonoBehaviour
             puppetAnimator.SetFloat("Speed", new Vector3(rb.velocity.x, 0, rb.velocity.z).magnitude);
             puppetAnimator.SetBool("Grounded", isGrounded);
             puppetAnimator.SetFloat("YVelocity", rb.velocity.y);
+            puppetAnimator.SetFloat("ForceAir", forceAirborneTimer);
             if (grabbing == true)
             {
                 puppetAnimator.SetBool("GrabbingObject", true);
@@ -337,9 +339,9 @@ public class PuppetController : MonoBehaviour
             {
                 if (isGrounded)
                 {
-                    if (new Vector3(rb.velocity.x, 0, rb.velocity.z).magnitude > 0.05)
+                    if (new Vector3(move.x, 0, move.y).magnitude > 0.05)
                     {
-                        visualReference.transform.rotation = Quaternion.RotateTowards(visualReference.transform.rotation, Quaternion.LookRotation(new Vector3(rb.velocity.normalized.x, 0, rb.velocity.normalized.z), transform.up), visualRotateSpeed * Time.deltaTime);
+                        visualReference.transform.rotation = Quaternion.RotateTowards(visualReference.transform.rotation, Quaternion.LookRotation(new Vector3(move.x, 0, move.y), transform.up), visualRotateSpeed * Time.deltaTime);
                     }
                 }
                 else
@@ -822,7 +824,6 @@ public class PuppetController : MonoBehaviour
 
         }
         else {
-            Debug.Log("AAAAAAAAAAAA");
             transform.position = Vector3.MoveTowards(transform.position, thisStringRoot.transform.position, climbingSpeed * Time.fixedDeltaTime);
             //transform.position = Vector3.MoveTowards(transform.position, new Vector3(thisStringRoot.transform.position.x, transform.position.y, thisStringRoot.transform.position.z), Time.fixedDeltaTime);
             transform.position += (new Vector3(thisStringRoot.transform.position.x, transform.position.y, thisStringRoot.transform.position.z) - transform.position) * Time.fixedDeltaTime/2;
