@@ -248,6 +248,12 @@ public class PuppetController : MonoBehaviour
     }
 
 
+    private void Update()
+    {
+
+        AnimationTick();
+
+    }
 
     // Update is called once per frame
     void FixedUpdate()
@@ -272,7 +278,7 @@ public class PuppetController : MonoBehaviour
             conTut.climbTimer = 0;
         }
 
-        AnimationTick();
+        //AnimationTick();
 
         //Debug.Log(move.x + " " + move.y);
 
@@ -303,6 +309,13 @@ public class PuppetController : MonoBehaviour
                 puppetAnimator.SetBool("GrabbingObject", false);
                 puppetAnimator.SetFloat("ObjectRelativeMovement", 0);
             }
+            if (isClimbing) {
+
+            }
+            else
+            {
+
+            }
             puppetAnimator.SetBool("Climbing", isClimbing);
         }
 
@@ -318,7 +331,7 @@ public class PuppetController : MonoBehaviour
             {
                 Vector3 a = (tempGrab.grabbed.gameObject.transform.position - transform.position);
                 float difference = Vector3.Distance(new Vector3(a.x, 0, a.z).normalized, new Vector3(move.x, 0, move.y).normalized);
-                visualReference.transform.rotation = Quaternion.RotateTowards(visualReference.transform.rotation, Quaternion.LookRotation(new Vector3(a.x, 0, a.z), transform.up), visualAirRotateSpeed * Time.fixedDeltaTime);
+                visualReference.transform.rotation = Quaternion.RotateTowards(visualReference.transform.rotation, Quaternion.LookRotation(new Vector3(a.x, 0, a.z), transform.up), visualAirRotateSpeed * Time.deltaTime);
             }
             else
             {
@@ -326,14 +339,14 @@ public class PuppetController : MonoBehaviour
                 {
                     if (new Vector3(rb.velocity.x, 0, rb.velocity.z).magnitude > 0.05)
                     {
-                        visualReference.transform.rotation = Quaternion.RotateTowards(visualReference.transform.rotation, Quaternion.LookRotation(new Vector3(rb.velocity.normalized.x, 0, rb.velocity.normalized.z), transform.up), visualRotateSpeed * Time.fixedDeltaTime);
+                        visualReference.transform.rotation = Quaternion.RotateTowards(visualReference.transform.rotation, Quaternion.LookRotation(new Vector3(rb.velocity.normalized.x, 0, rb.velocity.normalized.z), transform.up), visualRotateSpeed * Time.deltaTime);
                     }
                 }
                 else
                 {
                     if (new Vector3(rb.velocity.x, 0, rb.velocity.z).magnitude > 0.05)
                     {
-                        visualReference.transform.rotation = Quaternion.RotateTowards(visualReference.transform.rotation, Quaternion.LookRotation(new Vector3(rb.velocity.normalized.x, 0, rb.velocity.normalized.z), transform.up), visualAirRotateSpeed * Time.fixedDeltaTime);
+                        visualReference.transform.rotation = Quaternion.RotateTowards(visualReference.transform.rotation, Quaternion.LookRotation(new Vector3(rb.velocity.normalized.x, 0, rb.velocity.normalized.z), transform.up), visualAirRotateSpeed * Time.deltaTime);
                     }
                 }
             }
