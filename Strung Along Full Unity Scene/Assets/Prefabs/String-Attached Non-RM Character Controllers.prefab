@@ -1939,7 +1939,7 @@ MonoBehaviour:
   effectiveRootLastFrame: {x: 0, y: 0, z: 0}
   lerpToEffectiveRootSpeed: 3
   puppetDistanceEffectiveRootFactor: 1.04
-  puppetDistanceEffectiveRootFactorTangled: 1.8
+  puppetDistanceEffectiveRootFactorTangled: 2.2
   effectiveRootPuppetPositionInfluence: 0.7
   debugeffRange: 0
 --- !u!1 &3167654759249926488
@@ -2803,3 +2803,17 @@ MonoBehaviour:
   IKRight: 0
   LeftIKCurrentWeight: 0
   RightIKCurrentWeight: 0
+--- !u!114 &5396306078280841619
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8556819597391226162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 614fd00c098822e41a3bc1a4136d8ae6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  value: {x: 0, y: 0, z: 0}
+  timer: 0

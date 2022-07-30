@@ -32,6 +32,10 @@ public class ReactKill : Reactor
     {
         base.Start();
 		kills = new List<GameObject>();
+
+        // I'm sorry
+
+        targetObject = gameObject;
     }
 	
 	public override void fire(float progress) {

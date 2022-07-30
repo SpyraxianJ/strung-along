@@ -314,7 +314,7 @@ public class PuppetController : MonoBehaviour
                 Vector3 a = (grabbingObject.gameObject.transform.position - transform.position);
                 float difference = Vector3.Distance(new Vector3(a.x, 0, a.z).normalized, new Vector3(move.x, 0, move.y).normalized);
                 puppetAnimator.SetFloat("ObjectRelativeMovement", difference);
-                Debug.Log(difference);
+                //Debug.Log(difference);
             }
             else
             {

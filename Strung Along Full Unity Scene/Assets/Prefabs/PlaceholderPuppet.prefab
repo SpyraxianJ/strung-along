@@ -1609,7 +1609,7 @@ MonoBehaviour:
   jumpBoostForce: 0.1
   jumpBoostTime: 0.2
   jumpBoostTimer: 0
-  jumpHoldForce: 1
+  jumpHoldForce: 1.8
   jumpReleaseForce: -25.2
   jumpReleaseRisingDrag: 0.08
   jumpRisingDrag: 0.069
