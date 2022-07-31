@@ -13104,10 +13104,46 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1482963067}
     m_Modifications:
+    - target: {fileID: 272125373094265070, guid: b25c0a74ef7d24a46ba61e56067674ab, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: c93c35bfc7e54304caf7f35e76246396, type: 2}
     - target: {fileID: 778880995240076644, guid: b25c0a74ef7d24a46ba61e56067674ab, type: 3}
       propertyPath: manager
       value: 
       objectReference: {fileID: 693985798}
+    - target: {fileID: 778880995240076644, guid: b25c0a74ef7d24a46ba61e56067674ab, type: 3}
+      propertyPath: p1CanActivate
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 778880995240076644, guid: b25c0a74ef7d24a46ba61e56067674ab, type: 3}
+      propertyPath: p2CanActivate
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1575223583498103033, guid: b25c0a74ef7d24a46ba61e56067674ab, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1575223583498103033, guid: b25c0a74ef7d24a46ba61e56067674ab, type: 3}
+      propertyPath: targetObject
+      value: 
+      objectReference: {fileID: 2095372692}
+    - target: {fileID: 1575223583498103033, guid: b25c0a74ef7d24a46ba61e56067674ab, type: 3}
+      propertyPath: relativePosition
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1575223583498103033, guid: b25c0a74ef7d24a46ba61e56067674ab, type: 3}
+      propertyPath: targetPosition.x
+      value: 22
+      objectReference: {fileID: 0}
+    - target: {fileID: 1575223583498103033, guid: b25c0a74ef7d24a46ba61e56067674ab, type: 3}
+      propertyPath: targetPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1575223583498103033, guid: b25c0a74ef7d24a46ba61e56067674ab, type: 3}
+      propertyPath: targetPosition.z
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4285507944110919660, guid: b25c0a74ef7d24a46ba61e56067674ab, type: 3}
       propertyPath: m_RootOrder
       value: 7
@@ -13152,11 +13188,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4787102383575251299, guid: b25c0a74ef7d24a46ba61e56067674ab, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7132823817695508763, guid: b25c0a74ef7d24a46ba61e56067674ab, type: 3}
       propertyPath: m_Name
       value: Lever Cube 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 7132823817695508763, guid: b25c0a74ef7d24a46ba61e56067674ab, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 1575223583498103033, guid: b25c0a74ef7d24a46ba61e56067674ab, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: b25c0a74ef7d24a46ba61e56067674ab, type: 3}
 --- !u!4 &351406248 stripped
 Transform:
@@ -61299,6 +61344,30 @@ PrefabInstance:
       propertyPath: manager
       value: 
       objectReference: {fileID: 693985798}
+    - target: {fileID: 1575223583498103033, guid: b25c0a74ef7d24a46ba61e56067674ab, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1575223583498103033, guid: b25c0a74ef7d24a46ba61e56067674ab, type: 3}
+      propertyPath: targetObject
+      value: 
+      objectReference: {fileID: 847293541}
+    - target: {fileID: 1575223583498103033, guid: b25c0a74ef7d24a46ba61e56067674ab, type: 3}
+      propertyPath: relativePosition
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1575223583498103033, guid: b25c0a74ef7d24a46ba61e56067674ab, type: 3}
+      propertyPath: targetPosition.x
+      value: -26
+      objectReference: {fileID: 0}
+    - target: {fileID: 1575223583498103033, guid: b25c0a74ef7d24a46ba61e56067674ab, type: 3}
+      propertyPath: targetPosition.y
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1575223583498103033, guid: b25c0a74ef7d24a46ba61e56067674ab, type: 3}
+      propertyPath: targetPosition.z
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4285507944110919660, guid: b25c0a74ef7d24a46ba61e56067674ab, type: 3}
       propertyPath: m_RootOrder
       value: 8
@@ -61347,7 +61416,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Lever Cube 2
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1575223583498103033, guid: b25c0a74ef7d24a46ba61e56067674ab, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: b25c0a74ef7d24a46ba61e56067674ab, type: 3}
 --- !u!4 &1880576607 stripped
 Transform:
