@@ -47,7 +47,7 @@ public class GameStateManager : MonoBehaviour
 	[Header("Debug")]
 	public bool _p1Alive = true;
 	public bool _p2Alive = true;
-	[HideInInspector]
+	//[HideInInspector]
 	public Level _nextLevelToLoad = null;
 	[HideInInspector]
 	public Level _currentLevel = null;

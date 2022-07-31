@@ -7,4 +7,5 @@ using UnityEngine;
 public abstract class Reaction : MonoBehaviour
 {
 	public abstract void Fire(float lerp);
+	public abstract void Reset();
 }

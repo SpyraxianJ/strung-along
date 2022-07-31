@@ -17,15 +17,16 @@ public class Goal : MonoBehaviour
 	public bool _isActive = false;
 	
 	[Header("Debug")]
-	private GameStateManager _ctx;
-	private Color _originalColor;
-	private GameObject _targetPlayer; // reference to the player GameObject this goal waits for.
+	GameStateManager _ctx;
+	Color _originalColor;
+	GameObject _targetPlayer; // reference to the player GameObject this goal waits for.
 	
 	
     // Start is called before the first frame update
     void Start()
     {
-        
+        _ctx = GetComponentInParent<GameStateManager>();
+		
 		// the goal can only be triggered by the right player!
 		if (isPlayer2) {
 			_targetPlayer = _ctx._player2;
@@ -69,7 +70,7 @@ public class Goal : MonoBehaviour
 		
 	}
 	
-	void OnDisable() {
+	void Reset() {
 		_isActive = false;
 	}
 	
