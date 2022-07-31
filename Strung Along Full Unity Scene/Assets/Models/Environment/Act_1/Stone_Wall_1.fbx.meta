@@ -1,12 +1,22 @@
 fileFormatVersion: 2
 guid: 7d5cbe38fc87dc34ebcc7c2835d136e7
 ModelImporter:
-  serializedVersion: 21202
+  serializedVersion: 21300
   internalIDToNameTable:
   - first:
       74: 1827226128182048838
     second: Take 001
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Grout
+    second: {fileID: 2100000, guid: 8a82e92f5db60504f986e99632ba790a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: lambert1
+    second: {fileID: 2100000, guid: 78c64cba65e4b8740a21147dd159c92a, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -102,6 +112,7 @@ ModelImporter:
   humanoidOversampling: 1
   avatarSetup: 0
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1
+  remapMaterialsIfMaterialImportModeIsNone: 1
   additionalBone: 0
   userData: 
   assetBundleName: 

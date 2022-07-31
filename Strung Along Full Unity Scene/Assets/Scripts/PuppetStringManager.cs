@@ -10,6 +10,8 @@ public class PuppetStringManager : MonoBehaviour
 
     public GameObject puppet1;
     public GameObject puppet2;
+    public GameObject puppet1Effective;
+    public GameObject puppet2Effective;
     public GameObject stringRoot1;
     public GameObject stringRoot2;
     public PuppetString string1Ref;
@@ -76,10 +78,10 @@ public class PuppetStringManager : MonoBehaviour
 
             float startTangle = tangle;
 
-            Vector3 targetEffectiveRoot = Vector3.Lerp((stringRoot1.transform.position + stringRoot2.transform.position) / 2, (puppet1.transform.position + puppet2.transform.position) / 2, effectiveRootPuppetPositionInfluence);
+            Vector3 targetEffectiveRoot = new Vector3(((puppet1Effective.transform.position + puppet2Effective.transform.position) / 2).x, Vector3.Lerp((stringRoot1.transform.position + stringRoot2.transform.position) / 2, (puppet1Effective.transform.position + puppet2Effective.transform.position) / 2, effectiveRootPuppetPositionInfluence).y, ((puppet1Effective.transform.position + puppet2Effective.transform.position) / 2).z);
             targetEffectiveRoot =
                 new Vector3(targetEffectiveRoot.x,
-                Mathf.Lerp(Mathf.Max(puppet1.transform.position.y, puppet2.transform.position.y), Mathf.Min(stringRoot1.transform.position.y, stringRoot2.transform.position.y), -Mathf.Pow(Mathf.Lerp(puppetDistanceEffectiveRootFactor, puppetDistanceEffectiveRootFactorTangled, Mathf.Abs(tangle) / Mathf.Max(0.0001f, maxTangle)), -Vector3.Distance(puppet1.transform.position, puppet2.transform.position)) + 1),
+                Mathf.Lerp(Mathf.Max(puppet1Effective.transform.position.y, puppet2Effective.transform.position.y), Mathf.Min(stringRoot1.transform.position.y, stringRoot2.transform.position.y), -Mathf.Pow(Mathf.Lerp(puppetDistanceEffectiveRootFactor, puppetDistanceEffectiveRootFactorTangled, Mathf.Abs(tangle) / Mathf.Max(0.0001f, maxTangle)), -Vector3.Distance(puppet1Effective.transform.position, puppet2Effective.transform.position)) + 1),
                 targetEffectiveRoot.z);
 
             // end of the mathf.Lerp line uses -A^{-x}+1 where A = puppetDistanceEffectiveRootFactor, put it in https://www.desmos.com/calculator to see it
@@ -89,8 +91,8 @@ public class PuppetStringManager : MonoBehaviour
             // hight is lerped between square root of the two puppet's distance apart, further out, the lower it gets
             effectiveRoot = Vector3.Lerp(effectiveRoot, targetEffectiveRoot, lerpToEffectiveRootSpeed * Time.fixedDeltaTime);
 
-            StringTick(puppet1, stringRoot1, puppet2, stringRoot2, string1Ref.transform, string2Ref.transform, puppet1LastFrame, debug);
-            StringTick(puppet2, stringRoot2, puppet1, stringRoot1, string2Ref.transform, string1Ref.transform, puppet2LastFrame, debug2);
+            StringTick(puppet1Effective, stringRoot1, puppet2Effective, stringRoot2, string1Ref.transform, string2Ref.transform, puppet1LastFrame, debug);
+            StringTick(puppet2Effective, stringRoot2, puppet1Effective, stringRoot1, string2Ref.transform, string1Ref.transform, puppet2LastFrame, debug2);
 
             if (startTangle > 0)
             {
@@ -118,14 +120,14 @@ public class PuppetStringManager : MonoBehaviour
         else
         {
             // repeat code i know it's bad but brain has reached it's limit and won't think of a cleaner solution, will fix later if nessassary
-            StringTick(puppet1, stringRoot1, puppet2, stringRoot2, string1Ref.transform, string2Ref.transform, puppet1LastFrame, debug);
-            StringTick(puppet2, stringRoot2, puppet1, stringRoot1, string2Ref.transform, string1Ref.transform, puppet2LastFrame, debug2);
+            StringTick(puppet1Effective, stringRoot1, puppet2Effective, stringRoot2, string1Ref.transform, string2Ref.transform, puppet1LastFrame, debug);
+            StringTick(puppet2Effective, stringRoot2, puppet1Effective, stringRoot1, string2Ref.transform, string1Ref.transform, puppet2LastFrame, debug2);
         }
 
         // End variable updates
 
-        puppet1LastFrame = puppet1.transform.position;
-        puppet2LastFrame = puppet2.transform.position;
+        puppet1LastFrame = puppet1Effective.transform.position;
+        puppet2LastFrame = puppet2Effective.transform.position;
         effectiveRootLastFrame = effectiveRoot;
 
     }

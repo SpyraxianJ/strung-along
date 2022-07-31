@@ -21,6 +21,12 @@ public class PuppetController : MonoBehaviour
     public Animator puppetAnimator;
     public PuppetContextualTutorial conTut;
     public HandIKHandler ikHandler;
+    public ClimbingIK climbIK;
+
+    [Space]
+
+    public GameObject jumpParticles;
+    public GameObject landParticles;
 
     [Space]
 
@@ -113,6 +119,8 @@ public class PuppetController : MonoBehaviour
     [Tooltip("The drag applied to the puppet during the rise when jump is not held")]
     [Range(0, 1)]
     public float jumpReleaseRisingDrag;
+    [Range(0, 1)]
+    public float jumpRisingDrag;
     public float maxFallSpeed = 100;
 
     [Space]
@@ -248,6 +256,13 @@ public class PuppetController : MonoBehaviour
     }
 
 
+    private void Update()
+    {
+
+        puppetAnimator.SetFloat("ForceAir", forceAirborneTimer);
+        AnimationTick();
+
+    }
 
     // Update is called once per frame
     void FixedUpdate()
@@ -259,6 +274,7 @@ public class PuppetController : MonoBehaviour
 
         if (isClimbing == false) // Do normal stuff
         {
+            climbIK.enabled = false;
             GroundDetection();
             HandleMovement();
             HandleJump(); //don't remove
@@ -266,13 +282,14 @@ public class PuppetController : MonoBehaviour
         }
         else // Pause all normal movement stuff, just climb
         {
+            climbIK.enabled = true;
             isGrounded = false;
             HandleMovement();
             ClimbTick();
             conTut.climbTimer = 0;
         }
 
-        AnimationTick();
+        //AnimationTick();
 
         //Debug.Log(move.x + " " + move.y);
 
@@ -290,18 +307,26 @@ public class PuppetController : MonoBehaviour
             puppetAnimator.SetFloat("Speed", new Vector3(rb.velocity.x, 0, rb.velocity.z).magnitude);
             puppetAnimator.SetBool("Grounded", isGrounded);
             puppetAnimator.SetFloat("YVelocity", rb.velocity.y);
+            puppetAnimator.SetFloat("ForceAir", forceAirborneTimer);
             if (grabbing == true)
             {
                 puppetAnimator.SetBool("GrabbingObject", true);
                 Vector3 a = (grabbingObject.gameObject.transform.position - transform.position);
                 float difference = Vector3.Distance(new Vector3(a.x, 0, a.z).normalized, new Vector3(move.x, 0, move.y).normalized);
                 puppetAnimator.SetFloat("ObjectRelativeMovement", difference);
-                Debug.Log(difference);
+                //Debug.Log(difference);
             }
             else
             {
                 puppetAnimator.SetBool("GrabbingObject", false);
                 puppetAnimator.SetFloat("ObjectRelativeMovement", 0);
+            }
+            if (isClimbing) {
+
+            }
+            else
+            {
+
             }
             puppetAnimator.SetBool("Climbing", isClimbing);
         }
@@ -318,22 +343,22 @@ public class PuppetController : MonoBehaviour
             {
                 Vector3 a = (tempGrab.grabbed.gameObject.transform.position - transform.position);
                 float difference = Vector3.Distance(new Vector3(a.x, 0, a.z).normalized, new Vector3(move.x, 0, move.y).normalized);
-                visualReference.transform.rotation = Quaternion.RotateTowards(visualReference.transform.rotation, Quaternion.LookRotation(new Vector3(a.x, 0, a.z), transform.up), visualAirRotateSpeed * Time.fixedDeltaTime);
+                visualReference.transform.rotation = Quaternion.RotateTowards(visualReference.transform.rotation, Quaternion.LookRotation(new Vector3(a.x, 0, a.z), transform.up), visualAirRotateSpeed * Time.deltaTime);
             }
             else
             {
                 if (isGrounded)
                 {
-                    if (new Vector3(rb.velocity.x, 0, rb.velocity.z).magnitude > 0.05)
+                    if (new Vector3(move.x, 0, move.y).magnitude > 0.05)
                     {
-                        visualReference.transform.rotation = Quaternion.RotateTowards(visualReference.transform.rotation, Quaternion.LookRotation(new Vector3(rb.velocity.normalized.x, 0, rb.velocity.normalized.z), transform.up), visualRotateSpeed * Time.fixedDeltaTime);
+                        visualReference.transform.rotation = Quaternion.RotateTowards(visualReference.transform.rotation, Quaternion.LookRotation(new Vector3(move.x, 0, move.y), transform.up), visualRotateSpeed * Time.deltaTime);
                     }
                 }
                 else
                 {
                     if (new Vector3(rb.velocity.x, 0, rb.velocity.z).magnitude > 0.05)
                     {
-                        visualReference.transform.rotation = Quaternion.RotateTowards(visualReference.transform.rotation, Quaternion.LookRotation(new Vector3(rb.velocity.normalized.x, 0, rb.velocity.normalized.z), transform.up), visualAirRotateSpeed * Time.fixedDeltaTime);
+                        visualReference.transform.rotation = Quaternion.RotateTowards(visualReference.transform.rotation, Quaternion.LookRotation(new Vector3(rb.velocity.normalized.x, 0, rb.velocity.normalized.z), transform.up), visualAirRotateSpeed * Time.deltaTime);
                     }
                 }
             }
@@ -420,9 +445,12 @@ public class PuppetController : MonoBehaviour
                     {
                         audioManager.Land();
                     }
+                    puppetAnimator.Play("Land", 0, 0.5f);
+                    Instantiate(landParticles, transform.position, Quaternion.identity);
                 }
 
                 isGrounded = true;
+
                 float avg = 0;
                 for (int i = 0; i < groundRays.Count; i++)
                 {
@@ -609,6 +637,11 @@ public class PuppetController : MonoBehaviour
             }
         }
 
+        if (rb.velocity.y > 0)
+        {
+            rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y * (1 - jumpRisingDrag * Time.fixedDeltaTime * 100), rb.velocity.z);
+        }
+
         // prevents falling too fast
         if (rb.velocity.y < -maxFallSpeed)
         {
@@ -637,6 +670,7 @@ public class PuppetController : MonoBehaviour
                 //puppetAnimator.SetTrigger("Jump");
                 puppetAnimator.Play("JumpStart");
             }
+            Instantiate(jumpParticles, transform.position, Quaternion.identity);
         }
     }
 
@@ -812,7 +846,6 @@ public class PuppetController : MonoBehaviour
 
         }
         else {
-            Debug.Log("AAAAAAAAAAAA");
             transform.position = Vector3.MoveTowards(transform.position, thisStringRoot.transform.position, climbingSpeed * Time.fixedDeltaTime);
             //transform.position = Vector3.MoveTowards(transform.position, new Vector3(thisStringRoot.transform.position.x, transform.position.y, thisStringRoot.transform.position.z), Time.fixedDeltaTime);
             transform.position += (new Vector3(thisStringRoot.transform.position.x, transform.position.y, thisStringRoot.transform.position.z) - transform.position) * Time.fixedDeltaTime/2;

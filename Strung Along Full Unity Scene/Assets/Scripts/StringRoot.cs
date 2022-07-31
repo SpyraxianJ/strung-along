@@ -9,6 +9,7 @@ public class StringRoot : MonoBehaviour
 
     public Rigidbody connectedObject;
     public PuppetController connectedPuppet;
+    public Transform connectedPoint;
     public PuppetStringManager manager;
     public LineRenderer lineVisual;
 
@@ -85,8 +86,8 @@ public class StringRoot : MonoBehaviour
 
         }
 
-        float distance = Vector3.Distance(effectiveRoot, connectedObject.transform.position);
-        float baseDistance = Vector3.Distance(transform.position, connectedObject.transform.position);
+        float distance = Vector3.Distance(effectiveRoot, connectedPoint.position);
+        float baseDistance = Vector3.Distance(transform.position, connectedPoint.position);
 
         if (stringLength - baseDistance <= 0) // pretend we aren't tangled this frame, since our bounding area isn't limited by out tangled range
         {
@@ -96,8 +97,8 @@ public class StringRoot : MonoBehaviour
             effectiveRoot = transform.position;
             effectiveLength = stringLength;
 
-            distance = Vector3.Distance(effectiveRoot, connectedObject.transform.position);
-            baseDistance = Vector3.Distance(transform.position, connectedObject.transform.position);
+            distance = Vector3.Distance(effectiveRoot, connectedPoint.position);
+            baseDistance = Vector3.Distance(transform.position, connectedPoint.position);
         }
 
         //float distanceExtended = Mathf.Max(distance, baseDistance); // to make sure tangling doesn't ever give us MORE reach
@@ -114,7 +115,7 @@ public class StringRoot : MonoBehaviour
             }
 
 
-            Vector3 difference = (effectiveRoot - connectedObject.transform.position);
+            Vector3 difference = (effectiveRoot - connectedPoint.position);
 
             if (elasticString)
             {
@@ -150,10 +151,10 @@ public class StringRoot : MonoBehaviour
                 Vector3 crossOut = Vector3.Cross(connectedObject.velocity, difference);
 
                 angleRef.transform.rotation = Quaternion.LookRotation(crossOut); // This' Z
-                angleRef.transform.position = connectedObject.position;
+                angleRef.transform.position = connectedPoint.position;
 
                 angleRef2.transform.rotation = Quaternion.LookRotation(difference); // This' X
-                angleRef2.transform.position = connectedObject.position;
+                angleRef2.transform.position = connectedPoint.position;
 
                 // this is all disgusting
 
@@ -169,7 +170,7 @@ public class StringRoot : MonoBehaviour
 
                 //connectedObject.velocity = Vector3.Project(connectedObject.velocity, new Vector3(difference.normalized.y, -difference.normalized.x));
 
-                connectedObject.gameObject.transform.position = -(difference.normalized * effectiveLength) + effectiveRoot;
+                connectedObject.gameObject.transform.position = (connectedObject.gameObject.transform.position - connectedPoint.transform.position) -(difference.normalized * effectiveLength) + effectiveRoot;
 
             }
 
@@ -190,7 +191,7 @@ public class StringRoot : MonoBehaviour
 
         lineVisual.SetPosition(0, transform.position);
         lineVisual.SetPosition(1, effectiveRoot);
-        lineVisual.SetPosition(2, connectedObject.transform.position);
+        lineVisual.SetPosition(2, connectedPoint.position);
 
 
     }
