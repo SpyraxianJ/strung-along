@@ -31,10 +31,21 @@ public class MoveReaction : Reaction
 		
 	}
 	
-	public override void Fire(float lerp) {
-		//do the move
-		Debug.Log("fired!!!");
+	void Start() {
+		Spawnpoint isSpawn;
+		if (_target.TryGetComponent<Spawnpoint>(out isSpawn)) {
+			GameStateManager ctx = GetComponentInParent<GameStateManager>();
+			if (isSpawn._isPlayer2) {
+				_target = ctx._p2Anchor.transform;
+			} else {
+				_target = ctx._p1Anchor.transform;
+			}
+			
+		}
 		
+	}
+	
+	public override void Fire(float lerp) {
 		Vector3 originalPos = _target.GetComponent<StageProp>().originalPosition;
 		Vector3 newPos = originalPos + _moveVector;
 		
