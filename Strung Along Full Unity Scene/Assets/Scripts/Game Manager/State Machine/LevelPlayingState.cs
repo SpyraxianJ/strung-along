@@ -13,7 +13,7 @@ public class LevelPlayingState : LevelBaseState
 	
 	public override void UpdateState(GameStateManager ctx) {
 		// to win, both goals need to be active and both puppets need to be alive.
-		bool winCondition = ctx._currentLevel.p1Goal._isActive && ctx._currentLevel.p2Goal._isActive && ctx._p1Alive && ctx._p2Alive;
+		bool winCondition = ctx._currentLevel._p1Goal._isActive && ctx._currentLevel._p2Goal._isActive && ctx._p1Alive && ctx._p2Alive;
 		// to lose, either puppet must die.
 		bool failCondition = !ctx._p1Alive || !ctx._p2Alive;
 		
@@ -52,8 +52,8 @@ public class LevelPlayingState : LevelBaseState
 	
 	void Reset(Level level) {
 		
-		level.p1Goal._isActive = false;
-		level.p2Goal._isActive = false;
+		level._p1Goal._isActive = false;
+		level._p2Goal._isActive = false;
 		
 		level.FreezeAll();
 		level.UnfreezeAll();

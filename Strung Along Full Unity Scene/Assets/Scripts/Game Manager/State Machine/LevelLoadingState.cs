@@ -25,14 +25,14 @@ public class LevelLoadingState : LevelBaseState
 		}
 
 		// move player anchors
-		MoveAnchor(ctx._p1Anchor, ctx._currentLevel.p1Spawn.GetComponent<StageProp>().originalPosition);
-		MoveAnchor(ctx._p2Anchor, ctx._currentLevel.p2Spawn.GetComponent<StageProp>().originalPosition);
+		MoveAnchor(ctx._p1Anchor, ctx._currentLevel._p1Spawn.GetComponent<StageProp>().originalPosition);
+		MoveAnchor(ctx._p2Anchor, ctx._currentLevel._p2Spawn.GetComponent<StageProp>().originalPosition);
 		
 		if (_loadProgress >= 1.0f) {
 			// all props are in position!
 			ctx._currentLevel.UnfreezeAll();
-			SetStrings(ctx._p1Anchor, ctx._currentLevel.p1Spawn.stringLength, ctx._currentLevel.p1Spawn.elasticString);
-			SetStrings(ctx._p2Anchor, ctx._currentLevel.p2Spawn.stringLength, ctx._currentLevel.p2Spawn.elasticString);
+			SetStrings(ctx._p1Anchor, ctx._currentLevel._p1Spawn._stringLength, ctx._currentLevel._p1Spawn._elasticString);
+			SetStrings(ctx._p2Anchor, ctx._currentLevel._p2Spawn._stringLength, ctx._currentLevel._p2Spawn._elasticString);
 			ctx.SwitchState(ctx.PlayingState);
 		} else {
 			_loadProgress += (Time.deltaTime / ctx._loadTime);

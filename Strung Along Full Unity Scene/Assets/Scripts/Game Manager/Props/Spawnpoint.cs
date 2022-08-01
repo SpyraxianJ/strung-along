@@ -4,42 +4,42 @@ using UnityEngine;
 
 public class Spawnpoint : MonoBehaviour
 {	
-	public bool isPlayer2 = false;
+	public bool _isPlayer2 = false;
 	[SerializeField]
-	private float distanceFromGround;
+	float _distanceFromGround;
 	[Space]
 	[Header("Per-Level String Properties")]
-	public bool elasticString = false;
-	public float stringLength = 12f;
+	public bool _elasticString = false;
+	public float _stringLength = 12f;
 	
 	
 	void OnDrawGizmos() {
-		Gizmos.color = isPlayer2 ? Color.red : Color.blue;
-		Vector3 direction = transform.TransformDirection(Vector3.down) * stringLength;
+		Gizmos.color = _isPlayer2 ? Color.red : Color.blue;
+		Vector3 direction = transform.TransformDirection(Vector3.down) * _stringLength;
 		Gizmos.DrawRay(transform.position, direction);
 	}
 	
 	void OnDrawGizmosSelected() {
 		Vector3 point = new Vector3(transform.position.x, 0f, transform.position.z);
-		distanceFromGround = Vector3.Distance(transform.position, point);
+		_distanceFromGround = Vector3.Distance(transform.position, point);
 		float radius;
 		
-		RaycastHit[] hits = Physics.RaycastAll(transform.position, Vector3.down, stringLength);
+		RaycastHit[] hits = Physics.RaycastAll(transform.position, Vector3.down, _stringLength);
 		
 		foreach (RaycastHit hit in hits) {
 			if (hit.transform.IsChildOf(gameObject.transform.parent) ) {
-				distanceFromGround = hit.distance;
+				_distanceFromGround = hit.distance;
 				point = hit.point;
 				break;
 			}
 		}
 		
-		radius = Mathf.Sqrt(stringLength * stringLength - distanceFromGround * distanceFromGround);
+		radius = Mathf.Sqrt(_stringLength * _stringLength - _distanceFromGround * _distanceFromGround);
 		
 		Gizmos.matrix *= Matrix4x4.Translate( new Vector3(0, point.y + 0.1f, 0) );
 		Gizmos.matrix *= Matrix4x4.Scale( new Vector3(1, 0, 1) );
 		
-		Gizmos.color = isPlayer2 ? Color.red : Color.blue;
+		Gizmos.color = _isPlayer2 ? Color.red : Color.blue;
 		Gizmos.DrawWireSphere(point, radius);
 		Gizmos.DrawSphere(point, 0.25f);
 		
@@ -53,10 +53,5 @@ public class Spawnpoint : MonoBehaviour
 		Destroy(gameObject.GetComponent<Renderer>() );
 		
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-		
-    }
+	
 }

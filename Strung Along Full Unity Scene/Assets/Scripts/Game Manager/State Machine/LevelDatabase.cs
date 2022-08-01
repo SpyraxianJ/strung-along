@@ -67,10 +67,10 @@ public class Act : MonoBehaviour
 public class Level : MonoBehaviour
 {
 	public List<StageProp> _props;
-	public Goal p1Goal;
-	public Goal p2Goal;
-	public Spawnpoint p1Spawn;
-	public Spawnpoint p2Spawn;
+	public Goal _p1Goal;
+	public Goal _p2Goal;
+	public Spawnpoint _p1Spawn;
+	public Spawnpoint _p2Spawn;
 	
 	void Start() {
 		_props = new List<StageProp>();
@@ -83,18 +83,18 @@ public class Level : MonoBehaviour
 				if (prop.GetComponent<Spawnpoint>() ) {
 					// the prop is a spawnpoint. but whose?!
 					Spawnpoint newSpawn = prop.GetComponent<Spawnpoint>();
-					if (newSpawn.isPlayer2) {
-						p2Spawn = newSpawn;
+					if (newSpawn._isPlayer2) {
+						_p2Spawn = newSpawn;
 					} else {
-						p1Spawn = newSpawn;
+						_p1Spawn = newSpawn;
 					}
 				} else if (prop.GetComponent<Goal>() ) {
 					// the prop is a goal. but whose?!
 					Goal newGoal = prop.GetComponent<Goal>();
-					if (newGoal.isPlayer2) {
-						p2Goal = newGoal;
+					if (newGoal._isPlayer2) {
+						_p2Goal = newGoal;
 					} else {
-						p1Goal = newGoal;
+						_p1Goal = newGoal;
 					}
 				}
 				
