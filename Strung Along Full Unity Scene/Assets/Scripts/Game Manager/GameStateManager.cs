@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.Events;
 
 public class GameStateManager : MonoBehaviour
 {
@@ -59,6 +60,10 @@ public class GameStateManager : MonoBehaviour
 	public GrimReaper _reaper;
 	[HideInInspector]
 	public LevelDatabase _database;
+	
+	// events for camera
+	public UnityEvent _OnPlayingStart;
+	public UnityEvent _OnPlayingExit;
 	
 	
     void Start()
