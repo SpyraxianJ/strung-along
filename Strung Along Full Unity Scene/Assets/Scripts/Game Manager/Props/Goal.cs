@@ -5,11 +5,11 @@ using UnityEngine;
 
 public class Goal : MonoBehaviour
 {
-	[Tooltip("Determines if this is the goal for Player 2. Otherwise Player 1.")]
+	public LayerMask _puppetMask;
 	public bool _isPlayer2;
 	public bool _isActive = false;
 	
-	LayerMask _puppetMask;
+	
 	
 	GameStateManager _ctx;
 	GameObject _targetPlayer; // reference to the player GameObject this goal waits for.

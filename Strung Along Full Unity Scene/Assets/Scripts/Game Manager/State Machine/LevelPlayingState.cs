@@ -9,6 +9,7 @@ public class LevelPlayingState : LevelBaseState
 		Reset(ctx._currentLevel);
 		ctx._reaper.Respawn(ctx._player1.GetComponent<PuppetController>() );
 		ctx._reaper.Respawn(ctx._player2.GetComponent<PuppetController>() );
+		ctx._reaper._puppetsCanDie = true;
 		ctx._OnPlayingStart?.Invoke();
 	}
 	
@@ -40,10 +41,12 @@ public class LevelPlayingState : LevelBaseState
 			
 		} else if (winCondition) {
 			// invoke any win stuff!
+			ctx._reaper._puppetsCanDie = false;
 			ctx._OnPlayingExit?.Invoke();
 			ctx.SwitchState(ctx.UnloadingState);
 			
 		} else if (ctx._quitting) {
+			ctx._reaper._puppetsCanDie = false;
 			ctx._OnPlayingExit?.Invoke();
 			ctx.SwitchState(ctx.UnloadingState);
 		}

@@ -46,6 +46,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f79788eacebc8bb4aa84bcfd64e62768, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _puppetMask:
+    serializedVersion: 2
+    m_Bits: 64
   _isPlayer2: 1
   _isActive: 0
 --- !u!108 &3011588064193669461
