@@ -20,7 +20,7 @@ public class GridPoint : MonoBehaviour
     void Update()
     {
         if (displayLines) {
-            DisplayLines();
+            DisplayLines(Color.blue);
         }
     }
 
@@ -36,11 +36,11 @@ public class GridPoint : MonoBehaviour
         }
     }
 
-    public void DisplayLines()
+    public void DisplayLines(Color col)
     {
         for (int i = 0; i < connectedPoints.Count; i++)
         {
-            Debug.DrawLine(transform.position, connectedPoints[i].transform.position);
+            Debug.DrawLine(transform.position, connectedPoints[i].transform.position, col);
         }
     }
 

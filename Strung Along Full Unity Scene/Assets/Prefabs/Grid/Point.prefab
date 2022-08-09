@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   connectedPoints: []
-  displayLines: 1
+  displayLines: 0
 --- !u!1 &5339959656886370441
 GameObject:
   m_ObjectHideFlags: 0
