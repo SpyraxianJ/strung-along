@@ -40,7 +40,7 @@ public class GridGenerator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        //GenerateGrid(true); // For testing only
     }
 
     public void GenerateGrid(bool destoryPoints)
@@ -49,8 +49,12 @@ public class GridGenerator : MonoBehaviour
         if (destoryPoints) {
             for (int i = 0; i < manager.points.Count; i++)
             {
-                Destroy(manager.points[i].gameObject);
+                if (manager.points[i] != null)
+                {
+                    Destroy(manager.points[i].gameObject);
+                }
             }
+            manager.points.RemoveAll(s => s == null);
         }
 
         List<GridPoint> newPoints = new List<GridPoint>();
@@ -61,7 +65,7 @@ public class GridGenerator : MonoBehaviour
             for (int x = 0; x < gridWidth; x++)
             {
                 // The (x * 1f) and (z * 1f) are there so C# turns them into a float, there is like an actual command for it, but I forgot it, oops
-                newPoints.Add(Instantiate(pointPrefab, new Vector3(((x * 1f) / Mathf.Max(gridWidth - 1, 1) * gridSize.x) - gridSize.x / 2, 0, ((z * 1f) / Mathf.Max(gridWidth - 1, 1) * gridSize.y) - gridSize.y / 2) + root, Quaternion.identity).GetComponent<GridPoint>());
+                newPoints.Add(Instantiate(pointPrefab, new Vector3(((x * 1f) / Mathf.Max(gridWidth - 1, 1) * gridSize.x) - gridSize.x / 2, 0, ((z * 1f) / Mathf.Max(gridDepth - 1, 1) * gridSize.y) - gridSize.y / 2) + root, Quaternion.identity).GetComponent<GridPoint>());
 
                 // Vertical connections
                 if (newPoints.Count - gridWidth > 0) {
@@ -76,6 +80,7 @@ public class GridGenerator : MonoBehaviour
             }
         }
 
+        // Set as children of manager
         for (int i = 0; i < newPoints.Count; i++)
         {
             newPoints[i].gameObject.transform.SetParent(manager.gameObject.transform);
