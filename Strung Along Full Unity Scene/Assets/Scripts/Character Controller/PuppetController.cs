@@ -936,9 +936,7 @@ public class PuppetController : MonoBehaviour
     public void ForceToGrid()
     {
 
-
-
-        // Grid redirecting
+        // Grid redirecting (Doing force to line after, so you can change your grid before getting forced onto it)
 
         GridPoint at = null;
 
@@ -979,6 +977,19 @@ public class PuppetController : MonoBehaviour
             Debug.DrawLine(gridPoint1.transform.position + new Vector3(UnityEngine.Random.Range(-0.05f, 0.05f), UnityEngine.Random.Range(-0.05f, 0.05f), UnityEngine.Random.Range(-0.05f, 0.05f)), gridPoint2.transform.position + new Vector3(UnityEngine.Random.Range(-0.05f, 0.05f), UnityEngine.Random.Range(-0.05f, 0.05f), UnityEngine.Random.Range(-0.05f, 0.05f)));
         }
 
+        // Force to current line
+
+        Vector3 relativePosition = transform.position - gridPoint1.transform.position;
+
+        Vector3 relativeLineVector = gridPoint1.transform.position - gridPoint2.transform.position;
+
+        relativePosition = new Vector3(relativePosition.x, 0, relativePosition.z); // Don't want to touch the Y axis here
+        relativeLineVector = new Vector3(relativeLineVector.x, 0, relativeLineVector.z); // or here
+
+        // todo: project velocity as well
+
+        Vector3 newPos = Vector3.Project(relativePosition, relativeLineVector) + gridPoint1.transform.position;
+        transform.position = new Vector3(newPos.x, transform.position.y, newPos.z);
 
     }
 
