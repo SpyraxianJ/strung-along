@@ -32,7 +32,7 @@ public class GridGenerator : MonoBehaviour
     public Vector3 root;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         GenerateGrid(true); // temp
     }

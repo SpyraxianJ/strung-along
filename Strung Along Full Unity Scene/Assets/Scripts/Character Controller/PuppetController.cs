@@ -22,6 +22,7 @@ public class PuppetController : MonoBehaviour
     public PuppetContextualTutorial conTut;
     public HandIKHandler ikHandler;
     public ClimbingIK climbIK;
+    public GridManager gridManager;
 
     [Space]
 
@@ -72,6 +73,11 @@ public class PuppetController : MonoBehaviour
     public float staminaDrain;
     [Tooltip("How long it takes to regen all stamina while on the ground")]
     public float staminaRegen;
+
+    [Space]
+
+    public GridPoint gridPoint1;
+    public GridPoint gridPoint2;
 
     [Space]
 
@@ -164,6 +170,11 @@ public class PuppetController : MonoBehaviour
 
     [Space]
 
+    [Tooltip("This is the distance the player can be from a point to travel along a different line from the one they are currently on")]
+    public float pointRedirectDistance;
+
+    [Space]
+
     [Header("Animation Variables")]
 
     public float visualRotateSpeed;
@@ -253,6 +264,8 @@ public class PuppetController : MonoBehaviour
                 Debug.LogWarning("The other puppet connected to " + this + " is using the same controls as it's assigned other puppet, consider changing one of them or reassigning the other puppet");
             }
         }
+
+        EstimateGridPoints();
     }
 
 
@@ -331,6 +344,14 @@ public class PuppetController : MonoBehaviour
             puppetAnimator.SetBool("Climbing", isClimbing);
         }
 
+        if (gridPoint1 != null && gridPoint2 != null)
+        {
+            ForceToGrid();
+        }
+        else {
+            Debug.LogError("Oopsie, poopsie! " + this + " is not aligned to the grid! Tell Tim there was a fwucky wucky (and also ideally what happened that lead to this, I mean if there isn't a grid manager in the scene and connected to the player that might do it lol).");
+        }
+
     }
 
     public void AnimationTick()
@@ -381,6 +402,7 @@ public class PuppetController : MonoBehaviour
 
         if (isGrounded)
         {
+            conTut.climbTimer = 0;
             transform.position = transform.position - transform.up * groundedDownPerFrame;
 
             if (stamina < 1)
@@ -882,6 +904,81 @@ public class PuppetController : MonoBehaviour
         {
             climbValue = (transform.position.y - transform.position.y) / (thisStringRoot.transform.position.y - transform.position.y);
         }
+
+    }
+
+    public void EstimateGridPoints() // Used for getting the puppets to a grid point
+    {
+
+
+        float closest = 999;
+        float second = 999;
+
+        for (int i = 0; i < gridManager.points.Count; i++)
+        {
+            if (Vector3.Distance(transform.position, gridManager.points[i].transform.position) < closest)
+            {
+                second = closest;
+                gridPoint2 = gridPoint1;
+                closest = Vector3.Distance(transform.position, gridManager.points[i].transform.position);
+                gridPoint1 = gridManager.points[i];
+            }
+            else {
+                if (Vector3.Distance(transform.position, gridManager.points[i].transform.position) < second)
+                {
+                    second = Vector3.Distance(transform.position, gridManager.points[i].transform.position);
+                    gridPoint2 = gridManager.points[i];
+                }
+            }
+        }
+    }
+
+    public void ForceToGrid()
+    {
+
+
+
+        // Grid redirecting
+
+        GridPoint at = null;
+
+        if (Vector3.Distance(new Vector3(gridPoint1.transform.position.x, transform.position.y, gridPoint1.transform.position.z), transform.position) <= pointRedirectDistance)
+        {
+            at = gridPoint1;
+        }
+        if (Vector3.Distance(new Vector3(gridPoint2.transform.position.x, transform.position.y, gridPoint2.transform.position.z), transform.position) <= pointRedirectDistance)
+        {
+            at = gridPoint2;
+        }
+
+        if (at != null)
+        {
+            // We are close enough to change to a different line
+
+            float closest = 999;
+            gridPoint1 = at;
+
+            for (int i = 0; i < at.connectedPoints.Count; i++)
+            {
+                if (Vector3.Distance(transform.position, at.connectedPoints[i].transform.position) < closest && at.connectedPoints[i] != at)
+                {
+                    closest = Vector3.Distance(transform.position, at.connectedPoints[i].transform.position);
+                    gridPoint2 = at.connectedPoints[i];
+                }
+            }
+
+        }
+
+        // Debug lighting up current line
+
+        Debug.DrawLine(gridPoint1.transform.position, gridPoint2.transform.position);
+
+        // it's my budget method of making a big line lmao
+        for (int i = 0; i < 20; i++)
+        {
+            Debug.DrawLine(gridPoint1.transform.position + new Vector3(UnityEngine.Random.Range(-0.05f, 0.05f), UnityEngine.Random.Range(-0.05f, 0.05f), UnityEngine.Random.Range(-0.05f, 0.05f)), gridPoint2.transform.position + new Vector3(UnityEngine.Random.Range(-0.05f, 0.05f), UnityEngine.Random.Range(-0.05f, 0.05f), UnityEngine.Random.Range(-0.05f, 0.05f)));
+        }
+
 
     }
 
