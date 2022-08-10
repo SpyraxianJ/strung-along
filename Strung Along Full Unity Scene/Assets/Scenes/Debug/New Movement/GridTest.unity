@@ -991,6 +991,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: String-Attached Non-RM Character Controllers
       objectReference: {fileID: 0}
+    - target: {fileID: 3694133943377610563, guid: bca65c23b1594aa4dbebacacfe0c1350, type: 3}
+      propertyPath: gridManager
+      value: 
+      objectReference: {fileID: 1891670416}
+    - target: {fileID: 6331177286643695836, guid: bca65c23b1594aa4dbebacacfe0c1350, type: 3}
+      propertyPath: gridManager
+      value: 
+      objectReference: {fileID: 1891670416}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bca65c23b1594aa4dbebacacfe0c1350, type: 3}
 --- !u!1 &1115472088

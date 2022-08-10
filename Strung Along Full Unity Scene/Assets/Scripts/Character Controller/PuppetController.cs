@@ -958,9 +958,15 @@ public class PuppetController : MonoBehaviour
 
             for (int i = 0; i < at.connectedPoints.Count; i++)
             {
-                if (Vector3.Distance(transform.position, at.connectedPoints[i].transform.position) < closest && at.connectedPoints[i] != at)
+
+                // Because points might not be evenly spread, we need to move based on distance to directions, not just positions
+
+                Vector3 direction = at.connectedPoints[i].transform.position - gridPoint1.transform.position;
+                direction = new Vector3(direction.x, 0, direction.z).normalized;
+
+                if (Vector3.Distance(transform.position - gridPoint1.transform.position, direction) < closest && at.connectedPoints[i] != at)
                 {
-                    closest = Vector3.Distance(transform.position, at.connectedPoints[i].transform.position);
+                    closest = Vector3.Distance(transform.position - gridPoint1.transform.position, direction);
                     gridPoint2 = at.connectedPoints[i];
                 }
             }
