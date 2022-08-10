@@ -7,14 +7,14 @@ using System;
 
 public class GameData
 {
-    public float SavedTimer;
     public int SavedLevel;
     public int SavedAct;
+	public float SavedPlaytime;
 
-    public GameData(float time, int level, int act)
+    public GameData(int level, int act, float time)
     {
-        SavedTimer = time;
         SavedLevel = level;
         SavedAct = act;
+		SavedPlaytime = time;
     }
 }

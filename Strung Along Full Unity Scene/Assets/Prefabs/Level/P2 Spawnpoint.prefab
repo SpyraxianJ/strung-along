@@ -96,7 +96,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46075f8c80db791419c33df5a3cd2e71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isPlayer2: 1
-  distanceFromGround: 0
-  elasticString: 0
-  stringLength: 12
+  _isPlayer2: 1
+  _distanceFromGround: 0
+  _elasticString: 0
+  _stringLength: 12

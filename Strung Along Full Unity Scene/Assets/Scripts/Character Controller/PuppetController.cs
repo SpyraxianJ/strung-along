@@ -762,6 +762,8 @@ public class PuppetController : MonoBehaviour
             grabbingObject.attachedRigidbody.freezeRotation = true;
             grabbedObjectHeight = grabbingObject.gameObject.transform.position.y;
             grabStartHeight = transform.position.y;
+			// HELLO harper here. my objects want to know when they're being grabbed (and by who) so bam
+			grabbingObject.gameObject.SendMessage("OnGrab", this);
 
         }
         else 
@@ -800,6 +802,7 @@ public class PuppetController : MonoBehaviour
             grabbing = false;
             grabbingObject.gameObject.layer = 9;
             grabbingObject.attachedRigidbody.freezeRotation = true;
+			grabbingObject.gameObject.SendMessage("OnReleased", this);
         }
         grabbingObject = null;
         grabbedObjectDistance = 0;
