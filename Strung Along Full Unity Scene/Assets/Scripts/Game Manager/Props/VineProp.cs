@@ -9,7 +9,6 @@ public class VineProp : MonoBehaviour
 	
 	GrimReaper _reaper;
 	Material _mat;
-	Color _glowColor;
 	
 	void OnDrawGizmos() {
 		Gizmos.color = Color.red;
@@ -18,18 +17,10 @@ public class VineProp : MonoBehaviour
 	
     void Start() {
         _reaper = GetComponentInParent<GrimReaper>();
-		
-		_mat = transform.GetChild(1).GetComponent<MeshRenderer>().material;
-		_mat.EnableKeyword("_EMISSION");
-		_glowColor = _mat.color;
     }
 	
 	void Update() {
-		HandleGlow();
-	}
-	
-	void HandleGlow() {
-		_mat.SetColor("_EmissionColor", Color.Lerp(Color.black, _glowColor, Mathf.PingPong(Time.time / 2f, 1f) ) );
+		
 	}
 	
 

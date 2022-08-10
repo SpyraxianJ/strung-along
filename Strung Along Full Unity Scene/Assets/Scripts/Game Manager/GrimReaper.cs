@@ -19,10 +19,8 @@ public class GrimReaper : MonoBehaviour
 		
 		if (_puppetsCanDie) {
 			
-			// untangle both puppets
-			pup.stringManager.tangle = 0;
-			pup.stringManager.bolConnected = false;
-		
+			Untangle(pup);
+			
 			// disable strings
 			LineRenderer anchorLineVisual = pup.thisStringRoot.lineVisual;
 			PuppetString puppetString = pup.secondPlayer ? pup.stringManager.string2Ref : pup.stringManager.string1Ref;
@@ -52,6 +50,8 @@ public class GrimReaper : MonoBehaviour
 	
 	public void Respawn(PuppetController pup) {
 		
+		Untangle(pup);
+		
 		// place puppet under their spawnpoint
 		GameObject puppet = pup.gameObject;
 		puppet.transform.position = pup.thisStringRoot.transform.position + new Vector3(0, -4, 0);
@@ -78,6 +78,13 @@ public class GrimReaper : MonoBehaviour
 		} else {
 			_ctx._p1Alive = true;
 		}
+		
+	}
+	
+	void Untangle(PuppetController pup) {
+		// untangle both puppets
+		pup.stringManager.tangle = 0;
+		pup.stringManager.bolConnected = false;
 		
 	}
 	
