@@ -6,14 +6,11 @@ public class LevelEmptyState : LevelBaseState
 		// TODO: ragdoll puppets!
 		Debug.Log("Stage is clear!");
 		ctx._currentLevel = null;
-		
-		// TODO: level skip!
 	}
 	
 	public override void UpdateState(GameStateManager ctx) {
 		// in this state we sort out what level to load next. in most cases
 		// just check which level is next in line and load that one!
-		ctx._quitting = false;
 		
 		if (ctx._nextLevelToLoad != null) {
 			

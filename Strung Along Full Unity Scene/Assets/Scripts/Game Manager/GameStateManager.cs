@@ -55,7 +55,7 @@ public class GameStateManager : MonoBehaviour
 	[HideInInspector]
 	public float _totalPlaytime = 0.0f;
 	[HideInInspector]
-	public bool _quitting = false;
+	public bool _interrupt = false;
 	[HideInInspector]
 	public GrimReaper _reaper;
 	[HideInInspector]
@@ -97,11 +97,19 @@ public class GameStateManager : MonoBehaviour
 	public void SetNextLevel(int act, int level) {
 		_nextLevelToLoad = _database.GetByIndex(act, level);
 	}
-	// tell the game to quit. it'll wait until it's ready to do so.
+	// tell the game to quit. this is checked in LevelPlayingState, and if it's
+	// true, the level will end. the next level in line is set to null so that the
+	// game essentially waits for the player to choose what to do next.
 	public void RequestQuit() {
-		_quitting = true;
+		_interrupt = true;
 		_nextLevelToLoad = null;
 	}
+	// tell the game to quit, but don't prevent it from loading whatever level is
+	// next in line. this simply acts as skipping the level!
+	public void RequestSkip() {
+		_interrupt = true;
+	}
+	
 	// get the current level number.
 	public int GetCurrentLevel() {
 		return _database.GetLevelNum(_currentLevel);

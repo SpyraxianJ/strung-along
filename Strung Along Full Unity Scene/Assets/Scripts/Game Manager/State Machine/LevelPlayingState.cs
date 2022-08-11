@@ -45,10 +45,13 @@ public class LevelPlayingState : LevelBaseState
 			ctx._OnPlayingExit?.Invoke();
 			ctx.SwitchState(ctx.UnloadingState);
 			
-		} else if (ctx._quitting) {
+		} else if (ctx._interrupt) {
+			// the player has requested the game end. rude.
+			ctx._interrupt = false;
 			ctx._reaper._puppetsCanDie = false;
 			ctx._OnPlayingExit?.Invoke();
 			ctx.SwitchState(ctx.UnloadingState);
+			
 		}
 		
 		ctx._totalPlaytime += Time.unscaledDeltaTime;
