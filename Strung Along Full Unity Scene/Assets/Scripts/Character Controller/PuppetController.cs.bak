@@ -681,7 +681,7 @@ public class PuppetController : MonoBehaviour
     {
 		
 		// debug grab ray
-		Debug.DrawRay( transform.position + Vector3.up, visualReference.transform.forward * grabDistance, Color.red);
+		Debug.DrawRay( transform.position + (Vector3.up * 3.0f), visualReference.transform.forward * grabDistance, Color.red);
 		
 
         if (grabbing)
