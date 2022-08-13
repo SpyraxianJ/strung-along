@@ -27,24 +27,21 @@ public class LeverProp : MonoBehaviour
 	int _SFXincrement = 10; // every X degrees
 	int _SFXticker = 0; // keeps track of how many multiples of _SFXincrement we are from start position
 	
-	GameStateManager _ctx;
 	Transform _leverBase;
 	Transform _leverHandle;
 	AudioSource _speaker;
-	Color _p2Color = new Color(0.02676473f, 0.3199194f, 0.7647059f);
+	Color _p1Color = new Color(0.02676473f, 0.3199194f, 0.7647059f);
 	Color _eitherColor = new Color(0.8f, 0.8f, 0.8f);
 	float _deadzone = 5.0f; // euler: leeway before activating
 	float _turnAngle = 50.0f; // euler: maximum turn amount
-	[Header("Debug")]
-	public bool _grabbed = false; // true if a valid puppet is grabbing it.
+	bool _grabbed = false; // true if a valid puppet is grabbing it.
 	float _activationFactor = 0.0f; // 0 for no turn, 1 for full turn (max power), -1 for other direction
 	
     // Start is called before the first frame update
     void Start()
     {
-        _ctx = GetComponentInParent<GameStateManager>();
-		_leverBase = transform.GetChild(0).GetChild(0);
-		_leverHandle = transform.GetChild(0).GetChild(1);
+		_leverBase = transform.GetChild(0);
+		_leverHandle = transform.GetChild(1);
 		_speaker = _leverBase.GetComponent<AudioSource>();
 		
 		// change color of lever depending on who can use it.
@@ -62,10 +59,10 @@ public class LeverProp : MonoBehaviour
 		Material[] handleMats = _leverHandle.GetComponent<MeshRenderer>().materials;
 		if (_player1 && _player2) {
 			handleMats[1].color = _eitherColor;
-		} else if (_player2) {
-			handleMats[1].color = _p2Color;
+		} else if (_player1) {
+			handleMats[1].color = _p1Color;
 		}
-		// by default the ball is red, so if only P1 can use it no need to change.
+		// by default the ball is red, so if only P2 can use it no need to change.
 		_leverHandle.GetComponent<MeshRenderer>().materials = handleMats;
 	}
 	
@@ -122,20 +119,37 @@ public class LeverProp : MonoBehaviour
 	
 	// sent by puppets when they grab something
 	void OnGrab(PuppetController pup) {
-		
-		if (pup.gameObject == _ctx._player1 && _player1) {
+		if (!pup.secondPlayer && _player1) {
 			_grabbed = true;
 			SetSpringy(false);
-		} else if (pup.gameObject == _ctx._player2 && _player2) {
+		} else if (pup.secondPlayer && _player2) {
 			_grabbed = true;
 			SetSpringy(false);
 		} else {
 			// grabbed by the WRONG PUPPET!!!!!!!!! AHHHHHHHHHHHHHHH!!!!!!!!!!!!!!!!!!!!!
 			pup.GrabRelease();
-			pup.GetComponent<Rigidbody>().AddExplosionForce(10.0f, _leverBase.position, 5.0f, 3.0f);
+			_leverHandle.GetComponent<Rigidbody>().angularVelocity = new Vector3(0, 0, 3);
 		}
 		
 	}
+	
+	// sent for every frame puppets are grabbing this
+	void OnGrabbing(PuppetController pup) {
+		// puppet can't move while turning a lever
+		pup.GetComponent<Rigidbody>().velocity = Vector3.zero;
+		// lever cant be knocked around by physics while grabbed
+		_leverHandle.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+		
+		// instead, movement input will turn the lever!
+		// TODO: support for up-down levers.
+		float leverTurn = -pup.move.x * Time.fixedDeltaTime * 100f;
+		Quaternion newRot = _leverHandle.rotation;
+		Vector3 newEulerRot = newRot.eulerAngles;
+		newEulerRot.z += leverTurn;
+		newRot.eulerAngles = newEulerRot;
+		_leverHandle.rotation = newRot;
+	}
+	
 	// sent by puppets when they release something
 	void OnReleased(PuppetController pup) {
 		_grabbed = false;

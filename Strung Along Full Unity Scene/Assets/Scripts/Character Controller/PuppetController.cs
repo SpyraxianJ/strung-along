@@ -680,14 +680,19 @@ public class PuppetController : MonoBehaviour
     void HandleGrab()
     {
 		
-		// debug grab ray
+		// HARPER: debug grab ray
 		Debug.DrawRay( transform.position + Vector3.up, visualReference.transform.forward * grabDistance, Color.red);
 		
 
         if (grabbing)
         {
-            // disable rotation
+            // HARPER: send message to grabbed object each frame
+			grabbingObject.gameObject.SendMessage("OnGrabbing", this, SendMessageOptions.DontRequireReceiver);
+			
+			
+			// disable rotation
             grabbingObject.gameObject.transform.position = ((visualReference.transform.forward) * grabbedObjectDistance * (1 + holdDistance)) + transform.position + (Vector3.up * grabbedObjectHeight);
+			
 
             // Animator
             puppetAnimator.SetBool("GrabbingObject", true);
@@ -753,7 +758,7 @@ public class PuppetController : MonoBehaviour
 
         RaycastHit hit;
 
-        if (Physics.Raycast(transform.position + Vector3.up, visualReference.transform.forward, out hit, grabDistance, grabbingMask) && grabbing == false)
+        if (Physics.Raycast(transform.position + Vector3.up, visualReference.transform.forward, out hit, grabDistance, grabbingMask, QueryTriggerInteraction.Collide) && grabbing == false)
         {
 
             grabbingObject = hit.collider;
@@ -763,11 +768,11 @@ public class PuppetController : MonoBehaviour
             Debug.Log("Started Grabbing " + grabbingObject.gameObject);
             grabbedObjectDistance = Vector3.Distance(hit.point, grabbingObject.gameObject.transform.position + Vector3.up); // Not doing the thing >:(((
             grabbingObject.gameObject.layer = 11;
-            grabbingObject.attachedRigidbody.freezeRotation = true;
+			if (grabbingObject.attachedRigidbody) grabbingObject.attachedRigidbody.freezeRotation = true;
             grabbedObjectHeight = grabbingObject.gameObject.transform.position.y;
             grabStartHeight = transform.position.y;
 			// HELLO harper here. my objects want to know when they're being grabbed (and by who) so bam
-			grabbingObject.gameObject.SendMessage("OnGrab", this);
+			grabbingObject.gameObject.SendMessage("OnGrab", this, SendMessageOptions.DontRequireReceiver);
 
         }
         else 
@@ -805,8 +810,8 @@ public class PuppetController : MonoBehaviour
             Physics.IgnoreCollision(grabbingObject, colliderThis, false);
             grabbing = false;
             grabbingObject.gameObject.layer = 9;
-            grabbingObject.attachedRigidbody.freezeRotation = true;
-			grabbingObject.gameObject.SendMessage("OnReleased", this);
+            //grabbingObject.attachedRigidbody.freezeRotation = true;
+			grabbingObject.gameObject.SendMessage("OnReleased", this, SendMessageOptions.DontRequireReceiver);
         }
         grabbingObject = null;
         grabbedObjectDistance = 0;
