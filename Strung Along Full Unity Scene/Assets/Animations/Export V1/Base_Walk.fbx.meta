@@ -1,0 +1,534 @@
+fileFormatVersion: 2
+guid: d10505b06f771e74aa15dabe39ac8952
+ModelImporter:
+  serializedVersion: 21202
+  internalIDToNameTable:
+  - first:
+      74: 1827226128182048838
+    second: Take 001
+  externalObjects: {}
+  materials:
+    materialImportMode: 2
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    removeConstantScaleCurves: 1
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 3
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Take 001
+      takeName: Take 001
+      internalID: 0
+      firstFrame: 1
+      lastFrame: 30
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0.96
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    nodeNameCollisionStrategy: 1
+    fileIdsGeneration: 2
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    bakeAxisConversion: 0
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    optimizeBones: 0
+    meshOptimizationFlags: -1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 1
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
+  importAnimation: 1
+  humanDescription:
+    serializedVersion: 3
+    human:
+    - boneName: Weight_Painted_V1:Hip_Joint
+      humanName: Hips
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Weight_Painted_V1:L_Top_Leg_Joint
+      humanName: LeftUpperLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Weight_Painted_V1:R_Top_Leg_Joint
+      humanName: RightUpperLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Weight_Painted_V1:L_Knee_Joint
+      humanName: LeftLowerLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Weight_Painted_V1:R_Knee_Joint
+      humanName: RightLowerLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Weight_Painted_V1:L_Ankle_Joint
+      humanName: LeftFoot
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Weight_Painted_V1:R_Ankle_Joint
+      humanName: RightFoot
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Weight_Painted_V1:Lower_Spine_Joint
+      humanName: Spine
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Weight_Painted_V1:Middle_Spine_Joint
+      humanName: Chest
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Weight_Painted_V1:Head_Joint
+      humanName: Head
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Weight_Painted_V1:L_Shoulder_Joint
+      humanName: LeftUpperArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Weight_Painted_V1:R_Shoulder_Joint
+      humanName: RightUpperArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Weight_Painted_V1:L_Elbow_Joint
+      humanName: LeftLowerArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Weight_Painted_V1:R_Elbow_Joint
+      humanName: RightLowerArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Weight_Painted_V1:L_Wrist_Joint
+      humanName: LeftHand
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Weight_Painted_V1:R_Wrist_Joint
+      humanName: RightHand
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Weight_Painted_V1:L_Toe_Joint
+      humanName: LeftToes
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Weight_Painted_V1:R_Toe_Joint
+      humanName: RightToes
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Weight_Painted_V1:Upper_Spine_Joint
+      humanName: UpperChest
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    skeleton:
+    - name: Base_Walk(Clone)
+      parentName: 
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Weight_Painted_V1:Master_CTRL
+      parentName: Base_Walk(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Weight_Painted_V1:Master_Null
+      parentName: Weight_Painted_V1:Master_CTRL
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Weight_Painted_V1:Root_Control
+      parentName: Weight_Painted_V1:Master_Null
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Weight_Painted_V1:RFL_R
+      parentName: Weight_Painted_V1:Master_Null
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Weight_Painted_V1:RFL_Heel_R_NULL
+      parentName: Weight_Painted_V1:RFL_R
+      position: {x: 0.10791829, y: 0.0068233507, z: 0.14552692}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Weight_Painted_V1:RFL_Heel_R_JNT
+      parentName: Weight_Painted_V1:RFL_R
+      position: {x: 0.10830195, y: 0.0068233507, z: 0.14552692}
+      rotation: {x: -8.659561e-17, y: 0.7071068, z: 8.659561e-17, w: 0.7071068}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Weight_Painted_V1:RFL_Toe_R_JNT
+      parentName: Weight_Painted_V1:RFL_Heel_R_JNT
+      position: {x: -0.1414708, y: -6.661338e-18, z: -7.105427e-17}
+      rotation: {x: 6.123234e-17, y: 1, z: -6.123234e-17, w: -6.123234e-17}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Weight_Painted_V1:RFL_Ball_R_JNT
+      parentName: Weight_Painted_V1:RFL_Toe_R_JNT
+      position: {x: -0.025928732, y: 4.440892e-18, z: -1.7763568e-17}
+      rotation: {x: 2.7755576e-17, y: 4.5393024e-25, z: -0.2978729, w: 0.9546056}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Weight_Painted_V1:RFL_Ankle_R_JNT
+      parentName: Weight_Painted_V1:RFL_Ball_R_JNT
+      position: {x: -0.09318532, y: 7.105427e-17, z: 5.3290704e-17}
+      rotation: {x: -0.21062793, y: 0.67500806, z: 0.21062793, w: 0.67500806}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Weight_Painted_V1:RFL_L
+      parentName: Weight_Painted_V1:Master_Null
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Weight_Painted_V1:RFL_Heel_L_NULL
+      parentName: Weight_Painted_V1:RFL_L
+      position: {x: -0.108378, y: 0.007126277, z: -0.23395143}
+      rotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Weight_Painted_V1:RFL_Heel_L_JNT
+      parentName: Weight_Painted_V1:RFL_L
+      position: {x: -0.108378, y: 0.0068233507, z: -0.2344731}
+      rotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Weight_Painted_V1:RFL_Toe_JNT
+      parentName: Weight_Painted_V1:RFL_Heel_L_JNT
+      position: {x: -0.1414708, y: -2.220446e-18, z: -3.5527136e-17}
+      rotation: {x: 6.123234e-17, y: 1, z: -6.123234e-17, w: -6.123234e-17}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Weight_Painted_V1:RFL_Ball_L_JNT
+      parentName: Weight_Painted_V1:RFL_Toe_JNT
+      position: {x: -0.025928732, y: -1.9984014e-17, z: -3.5527136e-17}
+      rotation: {x: 2.100103e-25, y: -5.2761338e-17, z: -0.2978729, w: 0.9546056}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Weight_Painted_V1:RFL_Ankle_L_JNT
+      parentName: Weight_Painted_V1:RFL_Ball_L_JNT
+      position: {x: -0.09318532, y: 1.7763568e-17, z: 1.0658141e-16}
+      rotation: {x: -0.21062793, y: 0.67500806, z: 0.21062793, w: 0.67500806}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Weight_Painted_V1:Foot_R_CTRL
+      parentName: Weight_Painted_V1:Master_Null
+      position: {x: 0.10738213, y: -0.006785047, z: 0.1374978}
+      rotation: {x: 0, y: 0, z: 1, w: -6.123234e-17}
+      scale: {x: 6.56472, y: 13.266658, z: 13.266658}
+    - name: Weight_Painted_V1:Foot_L_CTRL
+      parentName: Weight_Painted_V1:Master_Null
+      position: {x: -0.10831787, y: 0.0070891, z: -0.23450832}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 6.56472, y: 13.266658, z: 13.266658}
+    - name: Weight_Painted_V1:Hip_Null
+      parentName: Weight_Painted_V1:Master_Null
+      position: {x: -0, y: 0.52774405, z: -0.019817907}
+      rotation: {x: -0.7061828, y: 0.7061828, z: -0.036137998, w: -0.036137998}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Weight_Painted_V1:Center_CTRL
+      parentName: Weight_Painted_V1:Hip_Null
+      position: {x: 0.07578957, y: 0, z: 0.0077772345}
+      rotation: {x: -5.89806e-17, y: 3.469447e-18, z: 2.389e-42, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Weight_Painted_V1:Hip_Joint
+      parentName: Weight_Painted_V1:Master_Null
+      position: {x: 0, y: 0.5150114, z: -0.019817907}
+      rotation: {x: -0.7061828, y: 0.7061828, z: -0.036137987, w: -0.036137987}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Weight_Painted_V1:Lower_Spine_Joint
+      parentName: Weight_Painted_V1:Hip_Joint
+      position: {x: -0.050855387, y: 7.888609e-33, z: -4.440892e-18}
+      rotation: {x: 0, y: -0.053203855, z: -0, w: 0.9985837}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Weight_Painted_V1:Middle_Spine_Joint
+      parentName: Weight_Painted_V1:Lower_Spine_Joint
+      position: {x: -0.0669759, y: -3.903558e-21, z: -5.3290704e-17}
+      rotation: {x: 0, y: -0.028459452, z: -0, w: 0.9995949}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Weight_Painted_V1:Upper_Spine_Joint
+      parentName: Weight_Painted_V1:Middle_Spine_Joint
+      position: {x: -0.16214734, y: 1.8080461e-10, z: -1.8886571e-11}
+      rotation: {x: -0.10436737, y: 0.055193625, z: 0.005801084, w: 0.9929892}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Weight_Painted_V1:Head_Joint
+      parentName: Weight_Painted_V1:Upper_Spine_Joint
+      position: {x: -0.030382704, y: 0.0000000014546839, z: 0.0000000018133978}
+      rotation: {x: 0.10458615, y: -0.044037126, z: 0.03103058, w: 0.9930557}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Weight_Painted_V1:Head_Top_Joint
+      parentName: Weight_Painted_V1:Head_Joint
+      position: {x: -0.1541312, y: 1.7135192e-17, z: -3.16588e-16}
+      rotation: {x: -0.7070848, y: 0.7070848, z: -0.0055810264, w: 0.0055810264}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Weight_Painted_V1:R_Shoulder_Joint
+      parentName: Weight_Painted_V1:Upper_Spine_Joint
+      position: {x: 0.016190676, y: -0.10684742, z: -0.00031243265}
+      rotation: {x: 0.68722713, y: 0.7249085, z: 0.041914802, w: -0.021676397}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Weight_Painted_V1:R_Elbow_Joint
+      parentName: Weight_Painted_V1:R_Shoulder_Joint
+      position: {x: -0.14516921, y: -0.0000000010204019, z: 0.000000022431667}
+      rotation: {x: 0.036442686, y: 0.030942654, z: 0.028753273, w: 0.99844265}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Weight_Painted_V1:R_Wrist_Joint
+      parentName: Weight_Painted_V1:R_Elbow_Joint
+      position: {x: -0.13420582, y: -1.4210854e-16, z: 1.1546319e-16}
+      rotation: {x: -0.012871229, y: -0.039637875, z: -0.077354014, w: 0.9961324}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Weight_Painted_V1:R_Hand_Joint
+      parentName: Weight_Painted_V1:R_Wrist_Joint
+      position: {x: -0.037446383, y: -1.4210854e-16, z: 8.881784e-18}
+      rotation: {x: 0.009040078, y: 0.06771818, z: -0.059916954, w: 0.9958627}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Weight_Painted_V1:R_Finger_Joint
+      parentName: Weight_Painted_V1:R_Hand_Joint
+      position: {x: -0.038133025, y: 4.5270887e-17, z: 8.0008615e-18}
+      rotation: {x: 0.04652328, y: -0.05003057, z: -0.7305983, w: 0.67938113}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Weight_Painted_V1:L_Shoulder_Joint
+      parentName: Weight_Painted_V1:Upper_Spine_Joint
+      position: {x: 0.016191004, y: 0.10684702, z: -0.00031241987}
+      rotation: {x: -0.67966664, y: 0.7312254, z: 0.0074596917, w: 0.057509072}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Weight_Painted_V1:L_Elbow_Joint
+      parentName: Weight_Painted_V1:L_Shoulder_Joint
+      position: {x: -0.14516924, y: -2.662233e-10, z: -0.000000006107194}
+      rotation: {x: -0.031122383, y: 0.020938598, z: -0.028373292, w: 0.9988934}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Weight_Painted_V1:L_Wrist_Joint
+      parentName: Weight_Painted_V1:L_Elbow_Joint
+      position: {x: -0.13420533, y: 1.4210854e-16, z: 0}
+      rotation: {x: 0.012639062, y: -0.042239517, z: 0.079309136, w: 0.99587464}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Weight_Painted_V1:L_Hand_Joint
+      parentName: Weight_Painted_V1:L_Wrist_Joint
+      position: {x: -0.03744681, y: 0, z: 6.217249e-17}
+      rotation: {x: -0.00904026, y: 0.06771905, z: 0.05990895, w: 0.99586314}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Weight_Painted_V1:L_Finger_Joint
+      parentName: Weight_Painted_V1:L_Hand_Joint
+      position: {x: -0.03813256, y: -8.631698e-17, z: 1.1465053e-17}
+      rotation: {x: 0.7306013, y: -0.67937785, z: 0.046523664, w: -0.050031435}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Weight_Painted_V1:L_Top_Leg_Joint
+      parentName: Weight_Painted_V1:Hip_Joint
+      position: {x: 0.030039744, y: 0.0703073, z: 0.00079209055}
+      rotation: {x: -0.063612215, y: 0.99450374, z: -0.040623687, w: 0.07256387}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Weight_Painted_V1:L_Knee_Joint
+      parentName: Weight_Painted_V1:L_Top_Leg_Joint
+      position: {x: -0.23026271, y: -9.347203e-17, z: 4.398506e-17}
+      rotation: {x: 0.031616207, y: -0.20831342, z: 0.05524556, w: 0.9759886}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Weight_Painted_V1:L_Ankle_Joint
+      parentName: Weight_Painted_V1:L_Knee_Joint
+      position: {x: -0.21636455, y: -8.3796384e-19, z: 4.3173058e-17}
+      rotation: {x: -0.05443213, y: 0.6591901, z: -0.010586375, w: 0.749929}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Weight_Painted_V1:L_Toe_Joint
+      parentName: Weight_Painted_V1:L_Ankle_Joint
+      position: {x: -0.093091026, y: -2.528134e-17, z: -4.0245583e-17}
+      rotation: {x: -1.1700353e-16, y: 0.29529426, z: 3.6163115e-17, w: 0.95540637}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Weight_Painted_V1:L_Toe_Tip_Joint
+      parentName: Weight_Painted_V1:L_Toe_Joint
+      position: {x: -0.026416395, y: -1.7763568e-17, z: 1.4622366e-17}
+      rotation: {x: 6.123234e-17, y: 1, z: -6.123234e-17, w: -6.123234e-17}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Weight_Painted_V1:L_Heel_Joint
+      parentName: Weight_Painted_V1:L_Toe_Tip_Joint
+      position: {x: -0.14104, y: -1.5987211e-16, z: 3.2501098e-17}
+      rotation: {x: 6.123234e-17, y: 1, z: -6.123234e-17, w: -6.123234e-17}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Weight_Painted_V1:R_Top_Leg_Joint
+      parentName: Weight_Painted_V1:Hip_Joint
+      position: {x: 0.03003949, y: -0.07030731, z: 0.00079205737}
+      rotation: {x: 0.037364714, y: 0.99815714, z: 0.0005186013, w: -0.04781084}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Weight_Painted_V1:R_Knee_Joint
+      parentName: Weight_Painted_V1:R_Top_Leg_Joint
+      position: {x: -0.23026255, y: -3.7653033e-17, z: 3.444606e-17}
+      rotation: {x: -0.030591324, y: -0.33553675, z: -0.060517572, w: 0.93958336}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Weight_Painted_V1:R_Ankle_Joint
+      parentName: Weight_Painted_V1:R_Knee_Joint
+      position: {x: -0.21636496, y: 1.0426715e-17, z: -1.9433968e-16}
+      rotation: {x: 0.009430973, y: 0.66661286, z: 0.03046294, w: 0.7447217}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Weight_Painted_V1:R_Toe_Joint
+      parentName: Weight_Painted_V1:R_Ankle_Joint
+      position: {x: -0.09309099, y: -8.195647e-19, z: 7.355227e-17}
+      rotation: {x: 0, y: 0.29529437, z: -0, w: 0.95540637}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Weight_Painted_V1:R_Toe_Tip_Joint
+      parentName: Weight_Painted_V1:R_Toe_Joint
+      position: {x: -0.026416395, y: 1.0431545e-17, z: -5.1949333e-18}
+      rotation: {x: 6.123234e-17, y: 1, z: -6.123234e-17, w: -6.123234e-17}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Weight_Painted_V1:R_Heel_Joint
+      parentName: Weight_Painted_V1:R_Toe_Tip_Joint
+      position: {x: -0.14103995, y: -1.1079138e-16, z: -8.3885795e-17}
+      rotation: {x: 6.123234e-17, y: 1, z: -6.123234e-17, w: -6.123234e-17}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Weight_Painted_V1:Base_Model
+      parentName: Base_Walk(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 1
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 1
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
+  animationType: 3
+  humanoidOversampling: 1
+  avatarSetup: 1
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
