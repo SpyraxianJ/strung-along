@@ -230,7 +230,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 102226030}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.1251533, y: 1.52, z: 0.028087545}
+  m_LocalPosition: {x: 0, y: 1.52, z: 0}
   m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -481,9 +481,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   manager: {fileID: 554465596}
   pointPrefab: {fileID: 5095665899243040662, guid: 00c086f9aa6dec6438eb6313a03ca0d4, type: 3}
-  gridSize: {x: 30, y: 30}
+  gridSize: {x: 30, y: 20}
   gridWidth: 6
-  gridDepth: 8
+  gridDepth: 4
   root: {x: 0, y: 2, z: 0}
 --- !u!114 &554465596
 MonoBehaviour:
@@ -1046,6 +1046,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3167654758654512373, guid: bca65c23b1594aa4dbebacacfe0c1350, type: 3}
+      propertyPath: stringLength
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 3167654758654512375, guid: bca65c23b1594aa4dbebacacfe0c1350, type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
@@ -1053,6 +1057,10 @@ PrefabInstance:
     - target: {fileID: 3167654758904775390, guid: bca65c23b1594aa4dbebacacfe0c1350, type: 3}
       propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3167654758976716786, guid: bca65c23b1594aa4dbebacacfe0c1350, type: 3}
+      propertyPath: stringLength
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 3167654758976716787, guid: bca65c23b1594aa4dbebacacfe0c1350, type: 3}
       propertyPath: m_LocalPosition.z

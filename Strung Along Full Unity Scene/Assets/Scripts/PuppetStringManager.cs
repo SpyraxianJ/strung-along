@@ -78,18 +78,21 @@ public class PuppetStringManager : MonoBehaviour
 
             float startTangle = tangle;
 
-            Vector3 targetEffectiveRoot = new Vector3(((puppet1Effective.transform.position + puppet2Effective.transform.position) / 2).x, Vector3.Lerp((stringRoot1.transform.position + stringRoot2.transform.position) / 2, (puppet1Effective.transform.position + puppet2Effective.transform.position) / 2, effectiveRootPuppetPositionInfluence).y, ((puppet1Effective.transform.position + puppet2Effective.transform.position) / 2).z);
-            targetEffectiveRoot =
-                new Vector3(targetEffectiveRoot.x,
-                Mathf.Lerp(Mathf.Max(puppet1Effective.transform.position.y, puppet2Effective.transform.position.y), Mathf.Min(stringRoot1.transform.position.y, stringRoot2.transform.position.y), -Mathf.Pow(Mathf.Lerp(puppetDistanceEffectiveRootFactor, puppetDistanceEffectiveRootFactorTangled, Mathf.Abs(tangle) / Mathf.Max(0.0001f, maxTangle)), -Vector3.Distance(puppet1Effective.transform.position, puppet2Effective.transform.position)) + 1),
-                targetEffectiveRoot.z);
+            Vector3 targetEffectiveRoot = new Vector3(((puppet1Effective.transform.position + puppet2Effective.transform.position) / 2).x, 
+                Vector3.Lerp((stringRoot1.transform.position + stringRoot2.transform.position) / 2, new Vector3((puppet1Effective.transform.position + puppet2Effective.transform.position).x, (stringRoot1.transform.position + stringRoot2.transform.position).y, (puppet1Effective.transform.position + puppet2Effective.transform.position).z) / 2, effectiveRootPuppetPositionInfluence).y, 
+                ((puppet1Effective.transform.position + puppet2Effective.transform.position) / 2).z);
+            //targetEffectiveRoot =
+            //    new Vector3(targetEffectiveRoot.x,
+            //    Mathf.Lerp(Mathf.Max(puppet1Effective.transform.position.y, puppet2Effective.transform.position.y), Mathf.Min(stringRoot1.transform.position.y, stringRoot2.transform.position.y), -Mathf.Pow(Mathf.Lerp(puppetDistanceEffectiveRootFactor, puppetDistanceEffectiveRootFactorTangled, Mathf.Abs(tangle) / Mathf.Max(0.0001f, maxTangle)), -Vector3.Distance(puppet1Effective.transform.position, puppet2Effective.transform.position)) + 1),
+            //   targetEffectiveRoot.z);
+            targetEffectiveRoot = new Vector3(targetEffectiveRoot.x, targetEffectiveRoot.y - 2, targetEffectiveRoot.z);
 
-            // end of the mathf.Lerp line uses -A^{-x}+1 where A = puppetDistanceEffectiveRootFactor, put it in https://www.desmos.com/calculator to see it
-            // It's used as a budget way of simulating the phenomena of how the string effective root gets lower the closer the two objects or puppets are to each other
-            // Much of this was made using observations I found from playing with strings a lot, some of it is probably wrong, but it's the best guess I have
+           // end of the mathf.Lerp line uses -A^{-x}+1 where A = puppetDistanceEffectiveRootFactor, put it in https://www.desmos.com/calculator to see it
+           // It's used as a budget way of simulating the phenomena of how the string effective root gets lower the closer the two objects or puppets are to each other
+           // Much of this was made using observations I found from playing with strings a lot, some of it is probably wrong, but it's the best guess I have
 
-            // hight is lerped between square root of the two puppet's distance apart, further out, the lower it gets
-            effectiveRoot = Vector3.Lerp(effectiveRoot, targetEffectiveRoot, lerpToEffectiveRootSpeed * Time.fixedDeltaTime);
+           // hight is lerped between square root of the two puppet's distance apart, further out, the lower it gets
+           effectiveRoot = Vector3.Lerp(effectiveRoot, targetEffectiveRoot, lerpToEffectiveRootSpeed * Time.fixedDeltaTime);
 
             StringTick(puppet1Effective, stringRoot1, puppet2Effective, stringRoot2, string1Ref.transform, string2Ref.transform, puppet1LastFrame, debug);
             StringTick(puppet2Effective, stringRoot2, puppet1Effective, stringRoot1, string2Ref.transform, string1Ref.transform, puppet2LastFrame, debug2);
