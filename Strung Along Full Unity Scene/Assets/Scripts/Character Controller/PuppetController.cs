@@ -992,7 +992,10 @@ public class PuppetController : MonoBehaviour
         relativePosition = new Vector3(relativePosition.x, 0, relativePosition.z); // Don't want to touch the Y axis here
         relativeLineVector = new Vector3(relativeLineVector.x, 0, relativeLineVector.z); // or here
 
-        // todo: project velocity as well
+        Vector3 rbOld = rb.velocity;
+        rb.velocity = Vector3.Project(rb.velocity, relativeLineVector);
+        rb.velocity = new Vector3(rb.velocity.x, rbOld.y, rb.velocity.z);
+        rb.velocity = Vector3.Lerp(rb.velocity, rbOld, 0.95f);
 
         Vector3 newPos = Vector3.Project(relativePosition, relativeLineVector) + gridPoint1.transform.position;
         transform.position = new Vector3(newPos.x, transform.position.y, newPos.z);

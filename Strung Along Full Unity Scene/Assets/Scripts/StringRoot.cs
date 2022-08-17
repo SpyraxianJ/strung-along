@@ -121,74 +121,41 @@ public class StringRoot : MonoBehaviour
             Vector3 difference = (effectiveRoot - connectedPoint.position);
             difference = new Vector3(difference.x, 0, difference.z);
 
-            // ignore elastic
-            if (elasticString)
-            {
+            // this entire section is a nightmare sorry
 
-                if (stretchTime < 0)
-                {
-                    stretchTime = 0 + Time.fixedDeltaTime;
-                }
-                else
-                {
-                    stretchTime = stretchTime + Time.fixedDeltaTime;
-                }
+            Vector3 crossOut = Vector3.Cross(connectedObject.velocity, difference);
 
-                float pullForce = 0;
+            angleRef.transform.rotation = Quaternion.LookRotation(crossOut); // This' Z
+            angleRef.transform.position = connectedPoint.position;
 
-                if (timeUntilMaxForce > 0) // Ensures we don't divide by 0, or anything less than 0
-                {
-                    pullForce = difference.magnitude * stringForcePerUnit * stretchOverTime.Evaluate(stretchTime / timeUntilMaxForce);
-                }
-                else
-                {
-                    pullForce = difference.magnitude * stringForcePerUnit;
-                }
+            angleRef2.transform.rotation = Quaternion.LookRotation(difference); // This' X
+            angleRef2.transform.position = connectedPoint.position;
 
-                connectedObject.AddForce(difference.normalized * pullForce, ForceMode.Acceleration);
+            // this is all disgusting
 
-            }
-            else
-            {
+            //Debug.Log("VelocityBefore: " + connectedObject.velocity);
 
-                // this entire section is a nightmare sorry
+            Vector3 oldVel = connectedObject.velocity;
 
-                Vector3 crossOut = Vector3.Cross(connectedObject.velocity, difference);
+            connectedObject.velocity =
+                Vector3.Project(connectedObject.velocity, angleRef2.transform.up) +
+                Vector3.Project(connectedObject.velocity, angleRef2.transform.right);
 
-                angleRef.transform.rotation = Quaternion.LookRotation(crossOut); // This' Z
-                angleRef.transform.position = connectedPoint.position;
+            connectedObject.velocity = connectedObject.velocity * (1 - (Time.fixedDeltaTime * 0.5f));
 
-                angleRef2.transform.rotation = Quaternion.LookRotation(difference); // This' X
-                angleRef2.transform.position = connectedPoint.position;
+            connectedObject.velocity = new Vector3(connectedObject.velocity.x, oldVel.y, connectedObject.velocity.z);
 
-                // this is all disgusting
+            //Debug.Log("VelocityAfter: " + connectedObject.velocity);
 
-                //Debug.Log("VelocityBefore: " + connectedObject.velocity);
+            //connectedObject.velocity = Vector3.Project(connectedObject.velocity, new Vector3(difference.normalized.y, -difference.normalized.x));
 
-                Vector3 oldVel = connectedObject.velocity;
+            float oldY = connectedObject.transform.position.y;
+            Vector3 vector = (connectedObject.gameObject.transform.position - connectedPoint.transform.position);
 
-                connectedObject.velocity =
-                    Vector3.Project(connectedObject.velocity, angleRef2.transform.up) +
-                    Vector3.Project(connectedObject.velocity, angleRef2.transform.right);
+            vector = (connectedObject.gameObject.transform.position - connectedPoint.transform.position);
 
-                connectedObject.velocity = connectedObject.velocity * (1 - (Time.fixedDeltaTime * 0.5f));
-
-                connectedObject.velocity = new Vector3(connectedObject.velocity.x, oldVel.y, connectedObject.velocity.z);
-
-                //Debug.Log("VelocityAfter: " + connectedObject.velocity);
-
-                //connectedObject.velocity = Vector3.Project(connectedObject.velocity, new Vector3(difference.normalized.y, -difference.normalized.x));
-
-                float oldY = connectedObject.transform.position.y;
-                Vector3 vector = (connectedObject.gameObject.transform.position - connectedPoint.transform.position);
-
-                vector = (connectedObject.gameObject.transform.position - connectedPoint.transform.position);
-
-                connectedObject.gameObject.transform.position = new Vector3(vector.x, vector.y, vector.z) - (difference.normalized * effectiveLength) + effectiveRoot;
-                connectedObject.transform.position = new Vector3(connectedObject.transform.position.x, oldY, connectedObject.transform.position.z);
-                
-
-            }
+            connectedObject.gameObject.transform.position = new Vector3(vector.x, vector.y, vector.z) - (difference.normalized * effectiveLength) + effectiveRoot;
+            connectedObject.transform.position = new Vector3(connectedObject.transform.position.x, oldY, connectedObject.transform.position.z);
 
         }
         else
@@ -198,6 +165,24 @@ public class StringRoot : MonoBehaviour
             if (connectedPuppet != null) {
                 connectedPuppet.beingPulled = false;
             }
+        }
+
+        if (elasticString)
+        {
+
+            if (distance > stringStretchLength)
+            {
+
+                Vector3 difference = (effectiveRoot - connectedPoint.position);
+                difference = new Vector3(difference.x, 0, difference.z);
+
+                connectedObject.AddForce(difference * stringForcePerUnit);
+            }
+
+        }
+        else
+        {
+            stretchTime = -1;
         }
 
         // Do all the stuff on the Y axis here
