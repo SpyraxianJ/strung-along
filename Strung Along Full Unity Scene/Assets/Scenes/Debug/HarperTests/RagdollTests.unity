@@ -431,14 +431,6 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 486925422360887237, guid: bca65c23b1594aa4dbebacacfe0c1350, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 486925422360887237, guid: bca65c23b1594aa4dbebacacfe0c1350, type: 3}
-      propertyPath: m_BounceIntensity
-      value: 0.1
-      objectReference: {fileID: 0}
     - target: {fileID: 662431753055219757, guid: bca65c23b1594aa4dbebacacfe0c1350, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -492,10 +484,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3167654758663956093, guid: bca65c23b1594aa4dbebacacfe0c1350, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3167654758904775378, guid: bca65c23b1594aa4dbebacacfe0c1350, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
@@ -559,10 +547,6 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: 0.0001945505
       objectReference: {fileID: 0}
-    - target: {fileID: 3694133943377610563, guid: bca65c23b1594aa4dbebacacfe0c1350, type: 3}
-      propertyPath: puppetAnimator
-      value: 
-      objectReference: {fileID: 1190948156}
     - target: {fileID: 3694133943377610568, guid: bca65c23b1594aa4dbebacacfe0c1350, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -571,21 +555,9 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3694133943459511972, guid: bca65c23b1594aa4dbebacacfe0c1350, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 3698575045305542258, guid: bca65c23b1594aa4dbebacacfe0c1350, type: 3}
       propertyPath: m_IsActive
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3863170216761945969, guid: bca65c23b1594aa4dbebacacfe0c1350, type: 3}
-      propertyPath: m_AdditionalLightsShadowResolutionTier
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4017668338264277829, guid: bca65c23b1594aa4dbebacacfe0c1350, type: 3}
-      propertyPath: IK
-      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4110773208157772973, guid: bca65c23b1594aa4dbebacacfe0c1350, type: 3}
       propertyPath: m_IsActive
@@ -603,29 +575,13 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 6005918561166722266, guid: bca65c23b1594aa4dbebacacfe0c1350, type: 3}
-      propertyPath: IK
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 6331177286643695831, guid: bca65c23b1594aa4dbebacacfe0c1350, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6331177286643695836, guid: bca65c23b1594aa4dbebacacfe0c1350, type: 3}
-      propertyPath: puppetAnimator
-      value: 
-      objectReference: {fileID: 1535768737}
-    - target: {fileID: 6505913639927969219, guid: bca65c23b1594aa4dbebacacfe0c1350, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6743165718549289778, guid: bca65c23b1594aa4dbebacacfe0c1350, type: 3}
       propertyPath: m_IsActive
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7086703296965671002, guid: bca65c23b1594aa4dbebacacfe0c1350, type: 3}
-      propertyPath: m_BounceIntensity
-      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 7901989021593417650, guid: bca65c23b1594aa4dbebacacfe0c1350, type: 3}
       propertyPath: m_IsActive
@@ -692,11 +648,6 @@ Transform:
 --- !u!1 &1144800029 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6331177286643695831, guid: bca65c23b1594aa4dbebacacfe0c1350, type: 3}
-  m_PrefabInstance: {fileID: 652238498}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &1190948156 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 8752156893678441125, guid: bca65c23b1594aa4dbebacacfe0c1350, type: 3}
   m_PrefabInstance: {fileID: 652238498}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1486438057
@@ -814,11 +765,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 39.6, y: -34.01, z: 0}
---- !u!95 &1535768737 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 2156387903631496506, guid: bca65c23b1594aa4dbebacacfe0c1350, type: 3}
-  m_PrefabInstance: {fileID: 652238498}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1704781647
 GameObject:
   m_ObjectHideFlags: 0

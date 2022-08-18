@@ -120,7 +120,7 @@ GameObject:
   - component: {fileID: 3167654757932207532}
   - component: {fileID: 3167654757932207533}
   m_Layer: 5
-  m_Name: Tangle Amount
+  m_Name: TangleText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -201,7 +201,7 @@ GameObject:
   - component: {fileID: 3167654758055356962}
   - component: {fileID: 3167654758055356963}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: Tangle Display
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1067,10 +1067,6 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
-    - target: {fileID: 1779473841223801236, guid: 22b6b98194cdd0841b47984bfc299e19, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.2
-      objectReference: {fileID: 0}
     - target: {fileID: 1779473841372733555, guid: 22b6b98194cdd0841b47984bfc299e19, type: 3}
       propertyPath: m_LocalPosition.x
       value: -11
@@ -1114,6 +1110,10 @@ PrefabInstance:
     - target: {fileID: 3415473452676315877, guid: 22b6b98194cdd0841b47984bfc299e19, type: 3}
       propertyPath: m_RootOrder
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4498712641908052620, guid: 22b6b98194cdd0841b47984bfc299e19, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 4629626341588736641, guid: 22b6b98194cdd0841b47984bfc299e19, type: 3}
       propertyPath: m_IsActive
@@ -1166,6 +1166,10 @@ PrefabInstance:
     - target: {fileID: 6374922963606796139, guid: 22b6b98194cdd0841b47984bfc299e19, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6554510272091526419, guid: 22b6b98194cdd0841b47984bfc299e19, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 7333252170612374086, guid: 22b6b98194cdd0841b47984bfc299e19, type: 3}
       propertyPath: m_RootOrder
