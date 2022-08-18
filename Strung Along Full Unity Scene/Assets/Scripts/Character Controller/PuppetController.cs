@@ -350,6 +350,7 @@ public class PuppetController : MonoBehaviour
         }
         else {
             Debug.LogError("Oopsie, poopsie! " + this + " is not aligned to the grid! Tell Tim there was a fwucky wucky (and also ideally what happened that lead to this, I mean if there isn't a grid manager in the scene and connected to the player that might do it lol).");
+            EstimateGridPoints();
         }
 
     }
@@ -964,7 +965,7 @@ public class PuppetController : MonoBehaviour
                 Vector3 direction = at.connectedPoints[i].transform.position - gridPoint1.transform.position;
                 direction = new Vector3(direction.x, 0, direction.z).normalized;
 
-                if (Vector3.Distance(transform.position - gridPoint1.transform.position, direction) < closest && at.connectedPoints[i] != at)
+                if (Vector3.Distance(transform.position + (new Vector3(move.x, 0, move.y) * 0.1f) - gridPoint1.transform.position, direction) < closest && at.connectedPoints[i] != at)
                 {
                     closest = Vector3.Distance(transform.position - gridPoint1.transform.position, direction);
                     gridPoint2 = at.connectedPoints[i];

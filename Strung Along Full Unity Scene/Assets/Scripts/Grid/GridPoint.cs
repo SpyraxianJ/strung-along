@@ -28,11 +28,21 @@ public class GridPoint : MonoBehaviour
     {
         for (int i = 0; i < connectedPoints.Count; i++)
         {
-            if (connectedPoints[i].connectedPoints.Contains(this) == false)
+
+            if (connectedPoints[i] == null)
             {
-                connectedPoints[i].connectedPoints.Add(this);
-                Debug.Log("Grid Point " + this + " initilization connected itself to " + connectedPoints[i]);
+                connectedPoints.RemoveAt(i);
+                i = i - 1;
             }
+            else
+            {
+                if (connectedPoints[i].connectedPoints.Contains(this) == false)
+                {
+                    connectedPoints[i].connectedPoints.Add(this);
+                    Debug.Log("Grid Point " + this + " initilization connected itself to " + connectedPoints[i]);
+                }
+            }
+
         }
     }
 

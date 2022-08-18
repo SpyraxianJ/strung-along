@@ -31,10 +31,17 @@ public class GridGenerator : MonoBehaviour
     [Tooltip("This is the position in world space the grid will be generated to")]
     public Vector3 root;
 
+    [Space]
+
+    [Tooltip("Don't generate")]
+    public bool Dont;
+
     // Start is called before the first frame update
     void Awake()
     {
-        GenerateGrid(true); // temp
+        if (Dont == false) {
+            GenerateGrid(true);
+        }
     }
 
     // Update is called once per frame
