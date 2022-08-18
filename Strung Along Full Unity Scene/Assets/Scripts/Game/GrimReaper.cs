@@ -27,7 +27,6 @@ public class GrimReaper : MonoBehaviour
 		
 			anchorLineVisual.enabled = false;
 			puppetString.GetComponent<CapsuleCollider>().enabled = false;
-			puppetString.GetComponent<Renderer>().enabled = false;
 		
 			Instantiate(_deathParticle, pup.transform.position, Quaternion.identity);
 		
@@ -69,7 +68,6 @@ public class GrimReaper : MonoBehaviour
 		
 		anchorLineVisual.enabled = true;
 		puppetString.GetComponent<CapsuleCollider>().enabled = true;
-		puppetString.GetComponent<Renderer>().enabled = true;
 		
 		Instantiate(_respawnParticle, pup.transform.position, Quaternion.identity);
 		

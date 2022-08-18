@@ -243,23 +243,28 @@ ModelImporter:
         length: 0
         modified: 0
     skeleton:
-    - name: Combined Rig and fixed Bird 1(Clone)
+    - name: Combined Rig and fixed Bird(Clone)
       parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Base
-      parentName: Combined Rig and fixed Bird 1(Clone)
+      parentName: Combined Rig and fixed Bird(Clone)
       position: {x: -9.05942e-16, y: 1.0158544e-15, z: -2.3980816e-15}
       rotation: {x: -4.32978e-17, y: 0.7071067, z: 0.7071068, w: -4.3297806e-17}
       scale: {x: 0.01, y: 0.01, z: 0.01}
+    - name: Bird
+      parentName: Combined Rig and fixed Bird(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -6.123234e-17, y: 1, z: 1.4272087e-14, w: -8.739133e-31}
+      scale: {x: 1, y: 1, z: 1}
     - name: Bunny
-      parentName: Combined Rig and fixed Bird 1(Clone)
+      parentName: Combined Rig and fixed Bird(Clone)
       position: {x: -0.0000000020678634, y: -6.945114e-10, z: 0.000000008523023}
       rotation: {x: -4.32978e-17, y: 0.7071067, z: 0.7071068, w: -4.3297806e-17}
       scale: {x: 0.01, y: 0.01, z: 0.01}
     - name: Master_CTRL
-      parentName: Combined Rig and fixed Bird 1(Clone)
+      parentName: Combined Rig and fixed Bird(Clone)
       position: {x: -0, y: 0, z: 0}
       rotation: {x: -4.32978e-17, y: 0.7071067, z: 0.7071068, w: -4.3297806e-17}
       scale: {x: 0.01, y: 0.01, z: 0.01}
@@ -273,81 +278,6 @@ ModelImporter:
       position: {x: -1.3855581e-15, y: 1.582409, z: -0.05945372}
       rotation: {x: -0.7061827, y: 0.7061828, z: -0.036137924, w: -0.036137983}
       scale: {x: 0.99999994, y: 0.99999976, z: 1}
-    - name: Lower_Spine_Joint
-      parentName: Hip_Joint
-      position: {x: -0.15256621, y: -0.000000057220454, z: 0.0000000071525528}
-      rotation: {x: 4.0302667e-16, y: -0.05320375, z: 2.4320575e-15, w: 0.9985837}
-      scale: {x: 1, y: 1, z: 1}
-    - name: Middle_Spine_Joint
-      parentName: Lower_Spine_Joint
-      position: {x: -0.20092788, y: -0.000000028610243, z: -0.0000000089407015}
-      rotation: {x: -1.7180722e-15, y: -0.028459523, z: 8.399464e-16, w: 0.9995949}
-      scale: {x: 1, y: 1, z: 1}
-    - name: Upper_Spine_Joint
-      parentName: Middle_Spine_Joint
-      position: {x: -0.48644176, y: -0.00000005720442, z: -0.0000000071525648}
-      rotation: {x: -0.0024330318, y: 0.055497546, z: 0.0001352474, w: 0.9984559}
-      scale: {x: 0.9999999, y: 0.99999994, z: 0.9999998}
-    - name: Head_Joint
-      parentName: Upper_Spine_Joint
-      position: {x: -0.091147974, y: 5.552465e-12, z: -0.000000021871465}
-      rotation: {x: 0.000000004180646, y: -0.01706933, z: -0.000000100600914, w: 0.9998543}
-      scale: {x: 1, y: 1, z: 0.9999998}
-    - name: Head_Top_Joint
-      parentName: Head_Joint
-      position: {x: -0.46239394, y: -0.00000014282763, z: -0.000000043520167}
-      rotation: {x: 0.7070849, y: -0.70708466, z: 0.0055809747, w: -0.005581019}
-      scale: {x: 0.9999999, y: 0.99999964, z: 1}
-    - name: R_Shoulder_Joint
-      parentName: Upper_Spine_Joint
-      position: {x: 0.048572287, y: -0.32054234, z: -0.00093729276}
-      rotation: {x: 0.69584304, y: 0.71778524, z: 0.017686792, w: 0.016556017}
-      scale: {x: 0.9999999, y: 1.0000005, z: 0.9999998}
-    - name: R_Elbow_Joint
-      parentName: R_Shoulder_Joint
-      position: {x: -0.43550783, y: 0.00000018392689, z: 0.000000042841567}
-      rotation: {x: 0.019783074, y: 0.036025807, z: -0.0050936327, w: 0.99914205}
-      scale: {x: 1.0000001, y: 1, z: 0.99999994}
-    - name: R_Wrist_Joint
-      parentName: R_Elbow_Joint
-      position: {x: -0.40261754, y: -0.00000007817521, z: -0.000000017881392}
-      rotation: {x: -0.012606068, y: -0.04264787, z: -0.07969046, w: 0.99582714}
-      scale: {x: 1, y: 1, z: 1.0000001}
-    - name: R_Hand_Joint
-      parentName: R_Wrist_Joint
-      position: {x: -0.11233906, y: -0.00000012066798, z: 0.0000000044638}
-      rotation: {x: 0.009040063, y: 0.0677182, z: -0.05991682, w: 0.9958627}
-      scale: {x: 1, y: 1.0000002, z: 1.0000002}
-    - name: R_Finger_Joint
-      parentName: R_Hand_Joint
-      position: {x: -0.11439916, y: -0.00000007396331, z: 0.000000001117587}
-      rotation: {x: 0.046523243, y: -0.050030604, z: -0.7305981, w: 0.6793813}
-      scale: {x: 1.0000001, y: 0.99999994, z: 0.99999994}
-    - name: L_Shoulder_Joint
-      parentName: Upper_Spine_Joint
-      position: {x: 0.048573337, y: 0.3205411, z: -0.0009372579}
-      rotation: {x: -0.695675, y: 0.71789503, z: -0.017057046, w: 0.019290108}
-      scale: {x: 1, y: 0.9999998, z: 0.9999997}
-    - name: L_Elbow_Joint
-      parentName: L_Shoulder_Joint
-      position: {x: -0.435508, y: -0.00000012089498, z: 0.000000039388723}
-      rotation: {x: -0.019784274, y: 0.03595132, z: 0.0050556357, w: 0.9991449}
-      scale: {x: 1, y: 1.0000001, z: 1}
-    - name: L_Wrist_Joint
-      parentName: L_Elbow_Joint
-      position: {x: -0.40261614, y: 0.00000005868729, z: 0.000000011175871}
-      rotation: {x: 0.012595815, y: -0.042773873, z: 0.079812825, w: 0.99581206}
-      scale: {x: 1.0000001, y: 1, z: 1.0000001}
-    - name: L_Hand_Joint
-      parentName: L_Wrist_Joint
-      position: {x: -0.11234039, y: -0.0000000031397211, z: -0.00000000225471}
-      rotation: {x: -0.009040257, y: 0.067719065, z: 0.059909035, w: 0.99586314}
-      scale: {x: 0.9999999, y: 1, z: 0.99999994}
-    - name: L_Finger_Joint
-      parentName: L_Hand_Joint
-      position: {x: -0.11439765, y: 0.000000016198028, z: -0.000000009164214}
-      rotation: {x: 0.7306015, y: -0.6793776, z: 0.046523646, w: -0.050031416}
-      scale: {x: 1, y: 1, z: 1}
     - name: L_Top_Leg_Joint
       parentName: Hip_Joint
       position: {x: 0.09011927, y: 0.21092188, z: 0.002376267}
@@ -378,6 +308,81 @@ ModelImporter:
       position: {x: -0.4231201, y: 0.00000005564626, z: -0.00000012536759}
       rotation: {x: 0.000000020217728, y: 1, z: 7.44897e-15, w: 0.00000019470718}
       scale: {x: 1, y: 1, z: 1}
+    - name: Lower_Spine_Joint
+      parentName: Hip_Joint
+      position: {x: -0.15256621, y: -0.000000057220454, z: 0.0000000071525528}
+      rotation: {x: 4.0302667e-16, y: -0.05320375, z: 2.4320575e-15, w: 0.9985837}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Middle_Spine_Joint
+      parentName: Lower_Spine_Joint
+      position: {x: -0.20092788, y: -0.000000028610243, z: -0.0000000089407015}
+      rotation: {x: -1.7180722e-15, y: -0.028459523, z: 8.399464e-16, w: 0.9995949}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Upper_Spine_Joint
+      parentName: Middle_Spine_Joint
+      position: {x: -0.48644176, y: -0.00000005720442, z: -0.0000000071525648}
+      rotation: {x: -0.0024330318, y: 0.055497546, z: 0.0001352474, w: 0.9984559}
+      scale: {x: 0.9999999, y: 0.99999994, z: 0.9999998}
+    - name: Head_Joint
+      parentName: Upper_Spine_Joint
+      position: {x: -0.091147974, y: 5.552465e-12, z: -0.000000021871465}
+      rotation: {x: 0.000000004180646, y: -0.01706933, z: -0.000000100600914, w: 0.9998543}
+      scale: {x: 1, y: 1, z: 0.9999998}
+    - name: Head_Top_Joint
+      parentName: Head_Joint
+      position: {x: -0.46239394, y: -0.00000014282763, z: -0.000000043520167}
+      rotation: {x: 0.7070849, y: -0.70708466, z: 0.0055809747, w: -0.005581019}
+      scale: {x: 0.9999999, y: 0.99999964, z: 1}
+    - name: L_Shoulder_Joint
+      parentName: Upper_Spine_Joint
+      position: {x: 0.048573337, y: 0.3205411, z: -0.0009372579}
+      rotation: {x: -0.695675, y: 0.71789503, z: -0.017057046, w: 0.019290108}
+      scale: {x: 1, y: 0.9999998, z: 0.9999997}
+    - name: L_Elbow_Joint
+      parentName: L_Shoulder_Joint
+      position: {x: -0.435508, y: -0.00000012089498, z: 0.000000039388723}
+      rotation: {x: -0.019784274, y: 0.03595132, z: 0.0050556357, w: 0.9991449}
+      scale: {x: 1, y: 1.0000001, z: 1}
+    - name: L_Wrist_Joint
+      parentName: L_Elbow_Joint
+      position: {x: -0.40261614, y: 0.00000005868729, z: 0.000000011175871}
+      rotation: {x: 0.012595816, y: -0.042773873, z: 0.07981283, w: 0.99581206}
+      scale: {x: 1.0000001, y: 1, z: 1.0000001}
+    - name: L_Hand_Joint
+      parentName: L_Wrist_Joint
+      position: {x: -0.11234039, y: -0.0000000031397211, z: -0.00000000225471}
+      rotation: {x: -0.009040257, y: 0.067719065, z: 0.059909035, w: 0.99586314}
+      scale: {x: 0.9999999, y: 1, z: 0.99999994}
+    - name: L_Finger_Joint
+      parentName: L_Hand_Joint
+      position: {x: -0.11439765, y: 0.000000016198028, z: -0.000000009164214}
+      rotation: {x: 0.7306015, y: -0.6793776, z: 0.046523646, w: -0.050031416}
+      scale: {x: 1, y: 1, z: 1}
+    - name: R_Shoulder_Joint
+      parentName: Upper_Spine_Joint
+      position: {x: 0.048572287, y: -0.32054234, z: -0.00093729276}
+      rotation: {x: 0.69584304, y: 0.71778524, z: 0.017686792, w: 0.016556017}
+      scale: {x: 0.9999999, y: 1.0000005, z: 0.9999998}
+    - name: R_Elbow_Joint
+      parentName: R_Shoulder_Joint
+      position: {x: -0.43550783, y: 0.00000018392689, z: 0.000000042841567}
+      rotation: {x: 0.019783074, y: 0.036025807, z: -0.0050936327, w: 0.99914205}
+      scale: {x: 1.0000001, y: 1, z: 0.99999994}
+    - name: R_Wrist_Joint
+      parentName: R_Elbow_Joint
+      position: {x: -0.40261754, y: -0.00000007817521, z: -0.000000017881392}
+      rotation: {x: -0.012606068, y: -0.04264787, z: -0.07969046, w: 0.99582714}
+      scale: {x: 1, y: 1, z: 1.0000001}
+    - name: R_Hand_Joint
+      parentName: R_Wrist_Joint
+      position: {x: -0.11233906, y: -0.00000012066798, z: 0.0000000044638}
+      rotation: {x: 0.009040063, y: 0.0677182, z: -0.05991682, w: 0.9958627}
+      scale: {x: 1, y: 1.0000002, z: 1.0000002}
+    - name: R_Finger_Joint
+      parentName: R_Hand_Joint
+      position: {x: -0.11439916, y: -0.00000007396331, z: 0.000000001117587}
+      rotation: {x: 0.046523243, y: -0.050030604, z: -0.7305981, w: 0.6793813}
+      scale: {x: 1.0000001, y: 0.99999994, z: 0.99999994}
     - name: R_Top_Leg_Joint
       parentName: Hip_Joint
       position: {x: 0.09011845, y: -0.21092202, z: 0.0023761531}
@@ -407,11 +412,6 @@ ModelImporter:
       parentName: R_Toe_Tip_Joint
       position: {x: -0.4231199, y: 0.000000013691765, z: 0.000000003803328}
       rotation: {x: -0.000000020813479, y: 1, z: 1.3764383e-15, w: -0.0000000754979}
-      scale: {x: 1, y: 1, z: 1}
-    - name: Bird
-      parentName: Combined Rig and fixed Bird 1(Clone)
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: -6.123234e-17, y: 1, z: 1.4272087e-14, w: -8.739133e-31}
       scale: {x: 1, y: 1, z: 1}
     armTwist: 0.5
     foreArmTwist: 0.5
