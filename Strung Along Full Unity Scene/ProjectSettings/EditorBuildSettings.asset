@@ -6,13 +6,10 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Debug/Misc/PlaytestTitleScreen.unity
-    guid: 3a2a7549ec0749743a74ff79bab31a9b
+    path: Assets/Scenes/Title.unity
+    guid: 9e0ce34d962c7094da15cdba2c53231b
   - enabled: 1
-    path: Assets/Scenes/Debug/Old StageScene/StageSceneOld.unity
-    guid: e6a2620f0401eb349a9e8f4f0c55671f
-  - enabled: 1
-    path: Assets/Scenes/Debug/Menu/MenuScenes.unity
-    guid: 5ecc90d39d5c6431086333ed9e417b41
+    path: Assets/Scenes/StageScene.unity
+    guid: 86ad6e35b4185994bba19bbd33a57a8b
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: e79db781513570f44956d1d6db17933c, type: 2}
