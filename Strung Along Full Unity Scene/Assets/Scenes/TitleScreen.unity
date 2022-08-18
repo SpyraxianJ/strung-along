@@ -15249,6 +15249,7 @@ GameObject:
   - component: {fileID: 1576032245}
   - component: {fileID: 1576032250}
   - component: {fileID: 1576032251}
+  - component: {fileID: 1576032252}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -15271,6 +15272,7 @@ MonoBehaviour:
   gameName: StageScene
   pressAnyKeyCanvas: {fileID: 1576032248}
   crossFade: {fileID: 366244080}
+  musicCrossFade: {fileID: 1576032252}
 --- !u!114 &1576032246
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15462,6 +15464,26 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!95 &1576032252
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1576032244}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 22100000, guid: 8b3b4c9f1dac09c4fa07943735bba62d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1650450556
 GameObject:
   m_ObjectHideFlags: 0

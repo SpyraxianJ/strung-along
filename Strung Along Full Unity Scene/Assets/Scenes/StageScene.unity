@@ -5690,6 +5690,7 @@ GameObject:
   m_Component:
   - component: {fileID: 344478610}
   - component: {fileID: 344478609}
+  - component: {fileID: 344478611}
   m_Layer: 0
   m_Name: Music Player
   m_TagString: Untagged
@@ -5808,6 +5809,26 @@ Transform:
   m_Father: {fileID: 84371605}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &344478611
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 344478608}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 22100000, guid: 8b3b4c9f1dac09c4fa07943735bba62d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &346185806
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10833,6 +10854,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _ctx: {fileID: 693985801}
   crossFade: {fileID: 294277948}
+  musicCrossFade: {fileID: 344478611}
 --- !u!1 &589062327
 GameObject:
   m_ObjectHideFlags: 0

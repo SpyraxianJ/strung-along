@@ -9,7 +9,7 @@ public class StartGameListener : MonoBehaviour
     public string gameName = "StageScene";
     public Canvas pressAnyKeyCanvas;
     private bool fadeIn = false, fadeOut = false, menuDone = false;
-    public Animator crossFade;
+    public Animator crossFade, musicCrossFade;
 
     private void Start()
     {
@@ -19,6 +19,7 @@ public class StartGameListener : MonoBehaviour
     public IEnumerator LaunchGame()
     {
         crossFade.SetTrigger("StartCrossFade");
+        musicCrossFade.SetTrigger("StartCrossFade");
         yield return new WaitForSeconds(1f);
         SceneManager.LoadScene(gameName);
     }

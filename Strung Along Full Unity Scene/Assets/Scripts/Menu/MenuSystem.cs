@@ -5,18 +5,17 @@ using UnityEngine;
 public class MenuSystem : MonoBehaviour
 {
 	public GameStateManager _ctx;
-	public Animator crossFade;
+	public Animator crossFade, musicCrossFade;
 	
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
 		StartCoroutine(LaunchScene());
 	}
 
 	public IEnumerator LaunchScene()
 	{
-		crossFade.SetTrigger("EndCrossFade");
-		yield return new WaitForSeconds(1f);
+		yield return new WaitForSeconds(0f);
 		startNewGame();
 	}
 
