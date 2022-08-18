@@ -17,6 +17,7 @@ public class MenuSystem : MonoBehaviour
 	{
 		crossFade.SetTrigger("EndCrossFade");
 		yield return new WaitForSeconds(1f);
+		startNewGame();
 	}
 
 	public void startNewGame() {
