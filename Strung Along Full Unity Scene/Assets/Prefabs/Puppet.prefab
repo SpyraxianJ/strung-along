@@ -1378,6 +1378,7 @@ MonoBehaviour:
   conTut: {fileID: 6077883536283109890}
   ikHandler: {fileID: 7156046317726047647}
   climbIK: {fileID: 8208900398337834749}
+  gridManager: {fileID: 0}
   jumpParticles: {fileID: 6398212522740349385, guid: 2663c79d40148d445b3edd06815879d1, type: 3}
   landParticles: {fileID: 4363317295493776453, guid: 260e3cf92ef9c294292aa31b04fed989, type: 3}
   playerIndex: 0
@@ -1395,8 +1396,10 @@ MonoBehaviour:
   stamina: 0
   staminaDrain: 0.5
   staminaRegen: 1
+  gridPoint1: {fileID: 0}
+  gridPoint2: {fileID: 0}
   groundedAcceleration: 1
-  groundedDeceleration: 0.2
+  groundedDeceleration: 0.08
   pulledAcceleration: 3
   pulledDrag: 0
   pulledAirborneThreshold: 0
@@ -1418,7 +1421,7 @@ MonoBehaviour:
   coyoteTime: 0.2
   groundedMaxSpeedHardCap: 0
   groundedRayNumber: 20
-  groundRayLength: 0.23
+  groundRayLength: 0.35
   groundedRayRadius: 0.5
   groundedRayDiameter: 0.3
   landingRayDiameter: 0.45
@@ -1427,6 +1430,7 @@ MonoBehaviour:
     m_Bits: 567
   groundedDownPerFrame: 0.125
   effectiveRoot: {x: 0, y: 0, z: 0}
+  pointRedirectDistance: 1
   visualRotateSpeed: 2000
   visualAirRotateSpeed: 100
   grabDistance: 4

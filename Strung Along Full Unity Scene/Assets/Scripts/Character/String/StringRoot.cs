@@ -19,6 +19,8 @@ public class StringRoot : MonoBehaviour
 
     [Tooltip("This is how far the connectedObject can go from this object before being pulled back")]
     public float stringLength;
+    [Tooltip("This is how far the connectedObject can go from this object before it starts to be pulled, ignored on Y")]
+    public float stringStretchLength;
     [Tooltip("This is the smallest the string can go from being tangled, should be smaller than string length")]
     public float minimumStringLength;
 
@@ -86,10 +88,11 @@ public class StringRoot : MonoBehaviour
 
         }
 
-        float distance = Vector3.Distance(effectiveRoot, connectedPoint.position);
-        float baseDistance = Vector3.Distance(transform.position, connectedPoint.position);
+        float distance = Vector3.Distance(new Vector3(effectiveRoot.x, connectedPoint.position.y, effectiveRoot.z), connectedPoint.position);
+        float baseDistance = Vector3.Distance(new Vector3(transform.position.x, connectedPoint.position.y, transform.position.z), connectedPoint.position);
 
-        if (stringLength - baseDistance <= 0) // pretend we aren't tangled this frame, since our bounding area isn't limited by out tangled range
+        // 0 == 1 is to pause it
+        if (stringLength - baseDistance <= 0 && 0 == 1) // pretend we aren't tangled this frame, since our bounding area isn't limited by out tangled range
         {
 
             //Debug.Log("lol2 " + effectiveLength);
@@ -116,63 +119,43 @@ public class StringRoot : MonoBehaviour
 
 
             Vector3 difference = (effectiveRoot - connectedPoint.position);
+            difference = new Vector3(difference.x, 0, difference.z);
 
-            if (elasticString)
-            {
+            // this entire section is a nightmare sorry
 
-                if (stretchTime < 0)
-                {
-                    stretchTime = 0 + Time.fixedDeltaTime;
-                }
-                else
-                {
-                    stretchTime = stretchTime + Time.fixedDeltaTime;
-                }
+            Vector3 crossOut = Vector3.Cross(connectedObject.velocity, difference);
 
-                float pullForce = 0;
+            angleRef.transform.rotation = Quaternion.LookRotation(crossOut); // This' Z
+            angleRef.transform.position = connectedPoint.position;
 
-                if (timeUntilMaxForce > 0) // Ensures we don't divide by 0, or anything less than 0
-                {
-                    pullForce = difference.magnitude * stringForcePerUnit * stretchOverTime.Evaluate(stretchTime / timeUntilMaxForce);
-                }
-                else
-                {
-                    pullForce = difference.magnitude * stringForcePerUnit;
-                }
+            angleRef2.transform.rotation = Quaternion.LookRotation(difference); // This' X
+            angleRef2.transform.position = connectedPoint.position;
 
-                connectedObject.AddForce(difference.normalized * pullForce, ForceMode.Acceleration);
+            // this is all disgusting
 
-            }
-            else
-            {
+            //Debug.Log("VelocityBefore: " + connectedObject.velocity);
 
-                // this entire section is a nightmare sorry
+            Vector3 oldVel = connectedObject.velocity;
 
-                Vector3 crossOut = Vector3.Cross(connectedObject.velocity, difference);
+            connectedObject.velocity =
+                Vector3.Project(connectedObject.velocity, angleRef2.transform.up) +
+                Vector3.Project(connectedObject.velocity, angleRef2.transform.right);
 
-                angleRef.transform.rotation = Quaternion.LookRotation(crossOut); // This' Z
-                angleRef.transform.position = connectedPoint.position;
+            connectedObject.velocity = connectedObject.velocity * (1 - (Time.fixedDeltaTime * 0.5f));
 
-                angleRef2.transform.rotation = Quaternion.LookRotation(difference); // This' X
-                angleRef2.transform.position = connectedPoint.position;
+            connectedObject.velocity = new Vector3(connectedObject.velocity.x, oldVel.y, connectedObject.velocity.z);
 
-                // this is all disgusting
+            //Debug.Log("VelocityAfter: " + connectedObject.velocity);
 
-                //Debug.Log("VelocityBefore: " + connectedObject.velocity);
+            //connectedObject.velocity = Vector3.Project(connectedObject.velocity, new Vector3(difference.normalized.y, -difference.normalized.x));
 
-                connectedObject.velocity =
-                    Vector3.Project(connectedObject.velocity, angleRef2.transform.up) +
-                    Vector3.Project(connectedObject.velocity, angleRef2.transform.right);
+            float oldY = connectedObject.transform.position.y;
+            Vector3 vector = (connectedObject.gameObject.transform.position - connectedPoint.transform.position);
 
-                connectedObject.velocity = connectedObject.velocity * (1 - (Time.fixedDeltaTime * 0.5f));
+            vector = (connectedObject.gameObject.transform.position - connectedPoint.transform.position);
 
-                //Debug.Log("VelocityAfter: " + connectedObject.velocity);
-
-                //connectedObject.velocity = Vector3.Project(connectedObject.velocity, new Vector3(difference.normalized.y, -difference.normalized.x));
-
-                connectedObject.gameObject.transform.position = (connectedObject.gameObject.transform.position - connectedPoint.transform.position) -(difference.normalized * effectiveLength) + effectiveRoot;
-
-            }
+            connectedObject.gameObject.transform.position = new Vector3(vector.x, vector.y, vector.z) - (difference.normalized * effectiveLength) + effectiveRoot;
+            connectedObject.transform.position = new Vector3(connectedObject.transform.position.x, oldY, connectedObject.transform.position.z);
 
         }
         else
@@ -182,6 +165,40 @@ public class StringRoot : MonoBehaviour
             if (connectedPuppet != null) {
                 connectedPuppet.beingPulled = false;
             }
+        }
+
+        if (elasticString)
+        {
+
+            if (distance > stringStretchLength)
+            {
+
+                Vector3 difference = (effectiveRoot - connectedPoint.position);
+                difference = new Vector3(difference.x, 0, difference.z);
+
+                connectedObject.AddForce(difference * stringForcePerUnit);
+            }
+
+        }
+        else
+        {
+            stretchTime = -1;
+        }
+
+        // Do all the stuff on the Y axis here
+
+        // real root instead of effective used to simplify Y axis stuf and make knot position visual only
+        if (connectedObject.transform.position.y < transform.position.y - effectiveLength)
+        {
+            connectedObject.velocity = new Vector3(connectedObject.velocity.x, 0, connectedObject.velocity.z);
+            connectedObject.transform.position = new Vector3(connectedObject.transform.position.x, transform.position.y - effectiveLength, connectedObject.transform.position.z);
+            // If we are pulled up, pull in a bit as well
+
+            Vector3 difference = (effectiveRoot - connectedPoint.position);
+            difference = new Vector3(difference.x, 0, difference.z);
+
+            connectedObject.AddForce(difference * 3f);
+            connectedObject.velocity = connectedObject.velocity * Mathf.Min(Mathf.Abs((1 - Time.fixedDeltaTime)), 1);
         }
 
         if (manager.tangle != 0) // This is done bc we might overwrite this earlier, just putting it back for the line render or anythign else that might need it
