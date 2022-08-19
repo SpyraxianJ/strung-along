@@ -3,10 +3,15 @@ using UnityEngine;
 public class LevelPlayingState : LevelBaseState
 {
 	float _deathTimer = 0.0f;
+	int _attemptCount = 0;
+	float _levelTime = 0.0f;
 	
 	public override void EnterState(GameStateManager ctx) {
 		Debug.Log("Level Start!");
 		Reset(ctx._currentLevel);
+		_attemptCount = 1;
+		_levelTime = 0.0f;
+		
 		ctx._reaper.Respawn(ctx._player1.GetComponent<PuppetController>() );
 		ctx._reaper.Respawn(ctx._player2.GetComponent<PuppetController>() );
 		ctx._reaper._puppetsCanDie = true;
@@ -29,6 +34,7 @@ public class LevelPlayingState : LevelBaseState
 			if (_deathTimer >= ctx._deathTime) {
 				// death timer reached, respawn the lads.
 				Reset(ctx._currentLevel);
+				_attemptCount++;
 				ctx._reaper.Respawn(ctx._player1.GetComponent<PuppetController>() );
 				ctx._reaper.Respawn(ctx._player2.GetComponent<PuppetController>() );
 				
@@ -55,6 +61,7 @@ public class LevelPlayingState : LevelBaseState
 		}
 		
 		ctx._totalPlaytime += Time.unscaledDeltaTime;
+		_levelTime += Time.unscaledDeltaTime;
 	}
 	
 	
@@ -67,14 +74,16 @@ public class LevelPlayingState : LevelBaseState
 		level.UnfreezeAll();
 		
 		foreach (StageProp prop in level._props) {
-			
 			prop.transform.position = prop.originalPosition;
-			
 		}
-		
-		
-		
-		
+	}
+	
+	public int GetAttempts() {
+		return _attemptCount;
+	}
+	
+	public float GetTime() {
+		return _levelTime;
 	}
 	
 }

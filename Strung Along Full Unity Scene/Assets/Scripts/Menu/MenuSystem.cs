@@ -40,8 +40,7 @@ public class MenuSystem : MonoBehaviour
 			_ctx.RequestQuit();
 		}
 		else {
-			_ctx.RequestQuit();
-			_ctx.SetNextLevel(loadGameData.SavedAct, loadGameData.SavedLevel);
+			_ctx.RequestLevel(loadGameData.SavedAct, loadGameData.SavedLevel);
 			_ctx.SetPlaytime(loadGameData.SavedPlaytime);
 		}
 		

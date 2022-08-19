@@ -89,14 +89,13 @@ public class GameStateManager : MonoBehaviour
 	
 	// UI integration functions
 	
+	// START GAME
 	// start the game from the first level!
 	public void StartGame() {
 		_nextLevelToLoad = _database.GetFirstLevel();
 	}
-	// start the game from a specific level.
-	public void SetNextLevel(int act, int level) {
-		_nextLevelToLoad = _database.GetByIndex(act, level);
-	}
+	
+	// QUIT LEVEL
 	// tell the game to quit. this is checked in LevelPlayingState, and if it's
 	// true, the level will end. the next level in line is set to null so that the
 	// game essentially waits for the player to choose what to do next.
@@ -104,22 +103,46 @@ public class GameStateManager : MonoBehaviour
 		_interrupt = true;
 		_nextLevelToLoad = null;
 	}
+	
+	// SKIP LEVEL
 	// tell the game to quit, but don't prevent it from loading whatever level is
 	// next in line. this simply acts as skipping the level!
 	public void RequestSkip() {
 		_interrupt = true;
 	}
 	
-	// get the current level number.
+	// LEVEL SELECT
+	// tell the game to quit whatever level is playing and load the
+	// requested level.
+	public void RequestLevel(int act, int level) {
+		_interrupt = true;
+		_nextLevelToLoad = _database.GetByIndex(act, level);
+	}
+	
+	// CURRENT LEVEL INFO
+	// current level number.
 	public int GetCurrentLevel() {
 		return _database.GetLevelNum(_currentLevel);
 	}
+	// current act number.
 	public int GetCurrentAct() {
 		return _database.GetActNum(_currentLevel);
 	}
+	// number of attempts at the current level.
+	public int GetLevelAttempts() {
+		return PlayingState.GetAttempts();
+	}
+	// playtime of the current level.
+	public float GetLevelPlaytime() {
+		return PlayingState.GetTime();
+	}
+	
+	// GAME INFO
+	// get the total time players have been in the game for.
 	public float GetPlaytime() {
 		return _totalPlaytime;
 	}
+	// set the total playtime. used for the save+load function.
 	public void SetPlaytime(float t) {
 		_totalPlaytime = t;
 	}
