@@ -953,6 +953,7 @@ public class PuppetController : MonoBehaviour
         // Grid redirecting (Doing force to line after, so you can change your grid before getting forced onto it)
 
         GridPoint at = null;
+        GridPoint oldG1 = gridPoint1;
 
         if (Vector3.Distance(new Vector3(gridPoint1.transform.position.x, transform.position.y, gridPoint1.transform.position.z), transform.position) <= pointRedirectDistance)
         {
@@ -978,13 +979,31 @@ public class PuppetController : MonoBehaviour
                 Vector3 direction = at.connectedPoints[i].transform.position - gridPoint1.transform.position;
                 direction = new Vector3(direction.x, 0, direction.z).normalized;
 
-                if (Vector3.Distance(transform.position + (new Vector3(move.x, 0, move.y) * 0.1f) - gridPoint1.transform.position, direction) < closest && at.connectedPoints[i] != at)
+                // This is weird uhh, it makes sure we don't snap to lines that are the exact same directionas our current line
+
+                //if ()
+
+                if (Vector3.Distance(transform.position + (new Vector3(move.x, 0, move.y) * 0.3f) - gridPoint1.transform.position, direction) < closest && at.connectedPoints[i] != at)
                 {
                     closest = Vector3.Distance(transform.position - gridPoint1.transform.position, direction);
                     gridPoint2 = at.connectedPoints[i];
                 }
             }
 
+        }
+
+        // After (potentally) changing line, make sure we are not beyond said line
+
+        if (Vector3.Distance(new Vector3(gridPoint1.transform.position.x, transform.position.y, gridPoint1.transform.position.z), new Vector3(gridPoint2.transform.position.x, transform.position.y, gridPoint2.transform.position.z)) <
+            Vector3.Distance(new Vector3(gridPoint1.transform.position.x, transform.position.y, gridPoint1.transform.position.z), transform.position))
+        {
+            //transform.position = new Vector3(gridPoint2.transform.position.x, transform.position.y, gridPoint2.transform.position.z);
+        }
+
+        if (Vector3.Distance(new Vector3(gridPoint1.transform.position.x, transform.position.y, gridPoint1.transform.position.z), new Vector3(gridPoint2.transform.position.x, transform.position.y, gridPoint2.transform.position.z)) <
+            Vector3.Distance(new Vector3(gridPoint2.transform.position.x, transform.position.y, gridPoint2.transform.position.z), transform.position))
+        {
+            //transform.position = new Vector3(gridPoint1.transform.position.x, transform.position.y, gridPoint1.transform.position.z);
         }
 
         // Debug lighting up current line

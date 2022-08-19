@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[ExecuteAlways]
 public class GridPoint : MonoBehaviour
 {
 
@@ -17,6 +18,7 @@ public class GridPoint : MonoBehaviour
     }
 
     // Update is called once per frame
+    [ExecuteAlways]
     void Update()
     {
         if (displayLines) {
@@ -46,6 +48,7 @@ public class GridPoint : MonoBehaviour
         }
     }
 
+    [ExecuteAlways]
     public void DisplayLines(Color col)
     {
         for (int i = 0; i < connectedPoints.Count; i++)
