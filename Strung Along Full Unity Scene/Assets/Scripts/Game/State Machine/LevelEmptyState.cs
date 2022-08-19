@@ -16,6 +16,7 @@ public class LevelEmptyState : LevelBaseState
 			
 			ctx._currentLevel = ctx._nextLevelToLoad;
 			ctx._nextLevelToLoad = ctx._database.GetLevelAfter(ctx._currentLevel);
+			// TODO: check for next act and do the whole shebang.
 			
 			
 			

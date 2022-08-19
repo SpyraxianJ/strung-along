@@ -100,7 +100,7 @@ public class GameStateManager : MonoBehaviour
 	// true, the level will end. the next level in line is set to null so that the
 	// game essentially waits for the player to choose what to do next.
 	public void RequestQuit() {
-		_interrupt = true;
+		_interrupt = _currentState == PlayingState ? true : false;
 		_nextLevelToLoad = null;
 	}
 	
@@ -108,14 +108,14 @@ public class GameStateManager : MonoBehaviour
 	// tell the game to quit, but don't prevent it from loading whatever level is
 	// next in line. this simply acts as skipping the level!
 	public void RequestSkip() {
-		_interrupt = true;
+		_interrupt = _currentState == PlayingState ? true : false;
 	}
 	
 	// LEVEL SELECT
 	// tell the game to quit whatever level is playing and load the
 	// requested level.
 	public void RequestLevel(int act, int level) {
-		_interrupt = true;
+		_interrupt = _currentState == PlayingState ? true : false;
 		_nextLevelToLoad = _database.GetByIndex(act, level);
 	}
 	
