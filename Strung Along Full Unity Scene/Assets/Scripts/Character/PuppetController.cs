@@ -270,7 +270,7 @@ public class PuppetController : MonoBehaviour
 
     private void Update()
     {
-
+        gridManager = FindObjectOfType<GridManager>();
         puppetAnimator.SetFloat("ForceAir", forceAirborneTimer);
         AnimationTick();
 

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[ExecuteAlways]
 public class GridGenerator : MonoBehaviour
 {
 
@@ -36,18 +37,13 @@ public class GridGenerator : MonoBehaviour
     [Tooltip("Don't generate")]
     public bool Dont;
 
-    // Start is called before the first frame update
-    void Awake()
-    {
-        if (Dont == false) {
-            GenerateGrid(true);
-        }
-    }
 
     // Update is called once per frame
     void Update()
     {
-        //GenerateGrid(true); // For testing only
+        manager = transform.parent.Find("GridManager").GetComponent<GridManager>();
+        if (Dont == false)
+            GenerateGrid(true);
     }
 
     public void GenerateGrid(bool destoryPoints)
@@ -94,6 +90,6 @@ public class GridGenerator : MonoBehaviour
         }
 
         manager.GetChildrenPoints();
-
+        Dont = true;
     }
 }

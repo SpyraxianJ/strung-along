@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &3888766946172929021
+--- !u!1 &3086011900647816006
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,22 +8,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 3888766946172929018}
-  - component: {fileID: 3888766946172929019}
+  - component: {fileID: 7198645963217889365}
+  - component: {fileID: 3436268706055164056}
   m_Layer: 0
-  m_Name: GridManager
+  m_Name: GridGenerator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &3888766946172929018
+--- !u!4 &7198645963217889365
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3888766946172929021}
+  m_GameObject: {fileID: 3086011900647816006}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -32,17 +32,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3888766946172929019
+--- !u!114 &3436268706055164056
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3888766946172929021}
+  m_GameObject: {fileID: 3086011900647816006}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e34cc0c2bb4ac054aa50280c4912e3f4, type: 3}
+  m_Script: {fileID: 11500000, guid: 7be236c08efac5348943d8396b328b43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  points: []
-  displayLines: 1
+  manager: {fileID: 3888766946172929019, guid: 85dd50124f70fc246bbb1b6bb9a4f485, type: 3}
+  pointPrefab: {fileID: 5095665899243040662, guid: 00c086f9aa6dec6438eb6313a03ca0d4, type: 3}
+  gridSize: {x: 24, y: 14}
+  gridWidth: 6
+  gridDepth: 4
+  root: {x: 0, y: 2, z: 0}
+  Dont: 0
