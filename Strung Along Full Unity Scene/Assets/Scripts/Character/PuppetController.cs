@@ -833,13 +833,13 @@ public class PuppetController : MonoBehaviour
         if (grabbingObject != null) {
             Physics.IgnoreCollision(grabbingObject, colliderThis, false);
             grabbing = false;
-            grabbingObject.gameObject.layer = 9;
+            if (grabbingObject.gameObject.layer != 6)
+                grabbingObject.gameObject.layer = 9;
             //grabbingObject.attachedRigidbody.freezeRotation = true;
 			grabbingObject.gameObject.SendMessage("OnReleased", this, SendMessageOptions.DontRequireReceiver);
         }
         grabbingObject = null;
         grabbedObjectDistance = 0;
-
     }
 
     public void ClimbTick() {
