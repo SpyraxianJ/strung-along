@@ -15,7 +15,7 @@ public class WriteTakes : MonoBehaviour
 
     private void Update()
     {
-        takes.text = "0"; //+ gameManager.GetLevelAttempts();
+        takes.text = (gameManager.GetLevelAttempts() + 1).ToString();
         actScene.text = gameManager.GetCurrentAct() + "\n" + gameManager.GetCurrentLevel();
     }
 }
