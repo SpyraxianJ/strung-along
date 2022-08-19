@@ -26776,7 +26776,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 2.1233141, y: 1}
+    m_SensorSize: {x: 2.3310657, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -26792,7 +26792,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1514352412}
-  m_LocalRotation: {x: 0.18067288, y: 0.000000032771677, z: -0.0000000060200227, w: 0.9835433}
+  m_LocalRotation: {x: 0.1806729, y: 0.0000000137998635, z: -0.0000000025349784, w: 0.9835433}
   m_LocalPosition: {x: 0, y: 10.39, z: -18.91}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -26816,6 +26816,11 @@ MonoBehaviour:
   _cameraTarget: {fileID: 821339576}
   _dollyVector: {x: 0, y: 1, z: 4}
   _stageFollowDepth: 9
+--- !u!1 &1518765134 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8413576543956323619, guid: 1462c6951bbec0f47813e2babe9ce9ae, type: 3}
+  m_PrefabInstance: {fileID: 7516376796028224735}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1520672633
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -30966,7 +30971,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 2.1233141, y: 1}
+    m_SensorSize: {x: 2.3310657, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -40300,7 +40305,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2100873781075435840, guid: 1462c6951bbec0f47813e2babe9ce9ae, type: 3}
   m_PrefabInstance: {fileID: 7516376796028224735}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1518765134}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
@@ -40311,3 +40316,18 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2234383583612665257, guid: 1462c6951bbec0f47813e2babe9ce9ae, type: 3}
   m_PrefabInstance: {fileID: 7516376796028224735}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8596712912279714167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1518765134}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 224cc598292e11f4e8c12918ee2cdb5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  takes: {fileID: 0}
+  actScene: {fileID: 0}
+  gameManager: {fileID: 0}
