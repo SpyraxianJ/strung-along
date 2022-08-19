@@ -14,21 +14,31 @@ public class LevelDatabase : MonoBehaviour
 		// get all children of the object and add them as acts
         for (int i = 0; i < transform.childCount; i++) {
 			GameObject act = transform.GetChild(i).gameObject;
-			if (act.activeInHierarchy) {
+			if (act.activeSelf) {
 				_acts.Add( act.AddComponent<Act>() );
 			}
 		}
-		
-		
     }
 	
 	public Level GetFirstLevel() {
-		return transform.GetChild(0).GetChild(0).GetComponent<Level>();
+		return _acts[0]._levels[0];
 	}
 	
 	public Level GetLevelAfter(Level level) {
-		return level.transform.parent.GetChild(  level.transform.GetSiblingIndex() + 1 ).GetComponent<Level>();
-		// TODO: return NULL if it's a new act and react accordingly!
+		
+		Act parentAct = level.transform.parent.GetComponent<Act>();
+		int nextIndex = parentAct._levels.IndexOf(level) + 1;
+				
+		if (nextIndex > parentAct._levels.Count && _acts.IndexOf(parentAct) + 1 > _acts.Count) {
+			// next level doesn't exist, end of game.
+			return null;
+		} else if (nextIndex > parentAct._levels.Count) {
+			// next level is in the next act.
+			return _acts[ _acts.IndexOf(parentAct) + 1 ]._levels[0];
+		} else {
+			// next level is in this act.
+			return parentAct._levels[nextIndex];
+		}
 	}
 	
 	public Level GetByIndex(int act, int level) {
@@ -55,7 +65,7 @@ public class Act : MonoBehaviour
 		
 		for (int i = 0; i < transform.childCount; i++) {
 			GameObject level = transform.GetChild(i).gameObject;
-			if (level.activeInHierarchy) {
+			if (level.activeSelf) {
 				_levels.Add( level.AddComponent<Level>() );
 			}
 		}
@@ -77,7 +87,7 @@ public class Level : MonoBehaviour
 		
 		for (int i = 0; i < transform.childCount; i++) {
 			GameObject prop = transform.GetChild(i).gameObject;
-			if (prop.activeInHierarchy) {
+			if (prop.activeSelf) {
 				_props.Add( prop.AddComponent<StageProp>() );
 				
 				if (prop.GetComponent<Spawnpoint>() ) {

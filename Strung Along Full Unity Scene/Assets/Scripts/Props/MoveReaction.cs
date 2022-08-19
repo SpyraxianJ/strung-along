@@ -14,6 +14,8 @@ public class MoveReaction : Reaction
 	public float _duration = 2.0f;
 	
 	float _progress = 0.0f;
+	Vector3 startPos = Vector3.zero;
+	Vector3 endPos = Vector3.zero;
 	
 	void OnDrawGizmos() {
 		if (_target != null) {
@@ -46,12 +48,15 @@ public class MoveReaction : Reaction
 	}
 	
 	public override void Fire(float lerp) {
-		Vector3 originalPos = _target.GetComponent<StageProp>().originalPosition;
-		Vector3 newPos = originalPos + _moveVector;
+		if (_progress == 0.0f) {
+			startPos = _target.transform.position;
+			endPos = startPos + _moveVector;
+		}
+		
 		
 		_progress += lerp / _duration;
 		_progress = Mathf.Clamp01(_progress);
-		_target.transform.position = Vector3.Lerp(originalPos, newPos, _progress);
+		_target.transform.position = Vector3.Lerp(startPos, endPos, _progress);
 	}
 	
 	public override void Reset() {

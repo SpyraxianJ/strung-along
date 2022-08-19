@@ -30,7 +30,7 @@ public class RagdollToggle : MonoBehaviour
 	void Update() {
 		
 		// temporary for debug purpose, won't be in final implementation
-		if (ragdolled) On(false); else Off();
+		if (ragdolled) On(true); else Off();
 		
 	}
 	
