@@ -44,10 +44,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7be236c08efac5348943d8396b328b43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  manager: {fileID: 3888766946172929019, guid: 85dd50124f70fc246bbb1b6bb9a4f485, type: 3}
+  manager: {fileID: 0}
   pointPrefab: {fileID: 5095665899243040662, guid: 00c086f9aa6dec6438eb6313a03ca0d4, type: 3}
-  gridSize: {x: 24, y: 14}
-  gridWidth: 6
-  gridDepth: 4
-  root: {x: 0, y: 2, z: 0}
+  gridSize: {x: 27.06, y: 15.98333}
+  gridWidth: 11
+  gridDepth: 7
+  root: {x: 0, y: 0.1, z: 0.53}
   Dont: 0
