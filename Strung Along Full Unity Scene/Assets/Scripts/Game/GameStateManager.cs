@@ -122,11 +122,11 @@ public class GameStateManager : MonoBehaviour
 	// CURRENT LEVEL INFO
 	// current level number.
 	public int GetCurrentLevel() {
-		return _database.GetLevelNum(_currentLevel);
+		return _currentLevel == null ? -1 : _database.GetLevelNum(_currentLevel);
 	}
 	// current act number.
 	public int GetCurrentAct() {
-		return _database.GetActNum(_currentLevel);
+		return _currentLevel == null ? -1 : _database.GetActNum(_currentLevel);
 	}
 	// number of attempts at the current level.
 	public int GetLevelAttempts() {

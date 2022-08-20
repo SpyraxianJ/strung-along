@@ -13,15 +13,17 @@ public class PuppetController : MonoBehaviour
 
     [Tooltip("This is the other playable puppet, it should never be empty otherwise it will probably cause errors")]
     public PuppetController otherPuppet;
+	[HideInInspector]
     public PuppetStringManager stringManager;
     public StringRoot thisStringRoot;
-    public StaminaBar staminaUI;
+    StaminaBar staminaUI;
     public GameObject visualReference;
-    public PuppetAudio audioManager;
-    public Animator puppetAnimator;
-    public PuppetContextualTutorial conTut;
-    public HandIKHandler ikHandler;
-    public ClimbingIK climbIK;
+    PuppetAudio audioManager;
+    Animator puppetAnimator;
+    PuppetContextualTutorial conTut;
+    HandIKHandler ikHandler;
+    ClimbingIK climbIK;
+	[HideInInspector]
     public GridManager gridManager;
 
     [Space]
@@ -31,8 +33,6 @@ public class PuppetController : MonoBehaviour
 
     [Space]
 
-    [SerializeField]
-    private int playerIndex = 0;
 
     private Rigidbody rb;
 
@@ -42,7 +42,7 @@ public class PuppetController : MonoBehaviour
     public bool jumpReleased = true;
     public bool grabPressed;
 
-    private float speed = 0;
+    float speed = 0;
     [Tooltip("Determines if the puppet is currently on the ground or not, public for unity inspector debugging purposes, can be made private later without issue")]
     public bool isGrounded = true; // Keep public, other things use this as a reference
     public bool isClimbing = false;
@@ -55,15 +55,15 @@ public class PuppetController : MonoBehaviour
     [Tooltip("Used to determine if this puppet is the second player, if true it will use the second player's controls and other play-specific things")]
     public bool secondPlayer;
     //private variables to be changed depening on player
-    private string playerHorizontalInput;
-    private string playerVerticalInput;
-    private string playerJumpInput;
-    [Tooltip("If true, movement is limited to prevent exploiting string mechanics")]
+    string playerHorizontalInput;
+    string playerVerticalInput;
+    string playerJumpInput;
+    [HideInInspector]
     public bool beingPulled;
 
     [Tooltip("This is how much we have climbed up our string currently, used to make it so the string can move and we move with it.")]
     // Goes between 0-1, knot is always at 0.5 if it exists
-    public float climbValue;
+    float climbValue;
 
     [Space]
 
@@ -76,8 +76,8 @@ public class PuppetController : MonoBehaviour
 
     [Space]
 
-    public GridPoint gridPoint1;
-    public GridPoint gridPoint2;
+    GridPoint gridPoint1;
+    GridPoint gridPoint2;
 
     [Space]
 
@@ -214,7 +214,7 @@ public class PuppetController : MonoBehaviour
 
     public int GetPlayerIndex()
     {
-        return playerIndex;
+        return secondPlayer ? 1 : 0;
     }
 
 
@@ -253,6 +253,13 @@ public class PuppetController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+		conTut = GetComponent<PuppetContextualTutorial>();
+		ikHandler = GetComponent<HandIKHandler>();
+		climbIK = GetComponent<ClimbingIK>();
+		puppetAnimator = visualReference.GetComponentInChildren<Animator>();
+		stringManager = transform.parent.parent.GetComponent<PuppetStringManager>();
+		staminaUI = GetComponentInChildren<StaminaBar>();
+		audioManager = GetComponentInChildren<PuppetAudio>();
 
         if (otherPuppet == null)
         {
@@ -263,96 +270,72 @@ public class PuppetController : MonoBehaviour
                 Debug.LogWarning("The other puppet connected to " + this + " is using the same controls as it's assigned other puppet, consider changing one of them or reassigning the other puppet");
             }
         }
-
-        EstimateGridPoints();
     }
 
-
-    private void Update()
+    void Update()
     {
-        gridManager = FindObjectOfType<GridManager>();
-        puppetAnimator.SetFloat("ForceAir", forceAirborneTimer);
         AnimationTick();
 
     }
 
-    // Update is called once per frame
     void FixedUpdate()
     {
-
-        if (move != Vector2.zero) {
-            conTut.movementTimer = 0;
-        }
-
-        if (isClimbing == false) // Do normal stuff
+		// handle movement
+		HandleMovement();
+		conTut.movementTimer = move != Vector2.zero ? 0 : conTut.movementTimer;
+        if (isClimbing == false)
         {
             climbIK.enabled = false;
             GroundDetection();
-            HandleMovement();
             HandleJump(); //don't remove
             HandleGrab();
         }
-        else // Pause all normal movement stuff, just climb
+        else // climbing means no ground movement and abilities
         {
             climbIK.enabled = true;
             isGrounded = false;
-            HandleMovement();
             ClimbTick();
             conTut.climbTimer = 0;
         }
-
-        //AnimationTick();
-
-        //Debug.Log(move.x + " " + move.y);
-
-        // Temp gross grab compatability
-		/**
-        if (tempGrab.grabbed != null && isClimbing == true)
-        {
-            GrabRelease();
+		
+		// force movement to grid
+		if (gridManager && gridPoint1 && gridPoint2) {
+            ForceToGrid();
         }
-		**/
-
+        else if (gridManager) {
+            Debug.Log("Realigning " + this + " to grid.");
+            EstimateGridPoints();
+        } else {
+			gridPoint1 = null;
+			gridPoint2 = null;
+		}
+		
+		// simulate gravity
         rb.AddForce(Vector3.down * gravity, ForceMode.Acceleration);
 
         // Animator Variables
-
         if (puppetAnimator != null) {
             puppetAnimator.SetFloat("Speed", new Vector3(rb.velocity.x, 0, rb.velocity.z).magnitude);
             puppetAnimator.SetBool("Grounded", isGrounded);
+			puppetAnimator.SetBool("Climbing", isClimbing);
             puppetAnimator.SetFloat("YVelocity", rb.velocity.y);
             puppetAnimator.SetFloat("ForceAir", forceAirborneTimer);
-            if (grabbing == true)
+            if (grabbing)
             {
                 puppetAnimator.SetBool("GrabbingObject", true);
                 Vector3 a = (grabbingObject.gameObject.transform.position - transform.position);
                 float difference = Vector3.Distance(new Vector3(a.x, 0, a.z).normalized, new Vector3(move.x, 0, move.y).normalized);
                 puppetAnimator.SetFloat("ObjectRelativeMovement", difference);
-                //Debug.Log(difference);
             }
             else
             {
                 puppetAnimator.SetBool("GrabbingObject", false);
                 puppetAnimator.SetFloat("ObjectRelativeMovement", 0);
             }
-            if (isClimbing) {
-
-            }
-            else
-            {
-
-            }
-            puppetAnimator.SetBool("Climbing", isClimbing);
+            
         }
 
-        if (gridPoint1 != null && gridPoint2 != null)
-        {
-            ForceToGrid();
-        }
-        else {
-            Debug.LogError("Oopsie, poopsie! " + this + " is not aligned to the grid! Tell Tim there was a fwucky wucky (and also ideally what happened that lead to this, I mean if there isn't a grid manager in the scene and connected to the player that might do it lol).");
-            EstimateGridPoints();
-        }
+        
 
     }
 
@@ -361,30 +344,21 @@ public class PuppetController : MonoBehaviour
 
         if (grabbing == false)
         {
-
-            if (/**tempGrab.grabbed != null**/ false)
+			if (isGrounded)
             {
-                //Vector3 a = (tempGrab.grabbed.gameObject.transform.position - transform.position);
-                //float difference = Vector3.Distance(new Vector3(a.x, 0, a.z).normalized, new Vector3(move.x, 0, move.y).normalized);
-                //visualReference.transform.rotation = Quaternion.RotateTowards(visualReference.transform.rotation, Quaternion.LookRotation(new Vector3(a.x, 0, a.z), transform.up), visualAirRotateSpeed * Time.deltaTime);
+                if (new Vector3(move.x, 0, move.y).magnitude > 0.05)
+                {
+                    visualReference.transform.rotation = Quaternion.RotateTowards(visualReference.transform.rotation, Quaternion.LookRotation(new Vector3(move.x, 0, move.y), transform.up), visualRotateSpeed * Time.deltaTime);
+                }
             }
             else
             {
-                if (isGrounded)
+                if (new Vector3(rb.velocity.x, 0, rb.velocity.z).magnitude > 0.05)
                 {
-                    if (new Vector3(move.x, 0, move.y).magnitude > 0.05)
-                    {
-                        visualReference.transform.rotation = Quaternion.RotateTowards(visualReference.transform.rotation, Quaternion.LookRotation(new Vector3(move.x, 0, move.y), transform.up), visualRotateSpeed * Time.deltaTime);
-                    }
-                }
-                else
-                {
-                    if (new Vector3(rb.velocity.x, 0, rb.velocity.z).magnitude > 0.05)
-                    {
-                        visualReference.transform.rotation = Quaternion.RotateTowards(visualReference.transform.rotation, Quaternion.LookRotation(new Vector3(rb.velocity.normalized.x, 0, rb.velocity.normalized.z), transform.up), visualAirRotateSpeed * Time.deltaTime);
-                    }
+                    visualReference.transform.rotation = Quaternion.RotateTowards(visualReference.transform.rotation, Quaternion.LookRotation(new Vector3(rb.velocity.normalized.x, 0, rb.velocity.normalized.z), transform.up), visualAirRotateSpeed * Time.deltaTime);
                 }
             }
+			
 
         }
     }

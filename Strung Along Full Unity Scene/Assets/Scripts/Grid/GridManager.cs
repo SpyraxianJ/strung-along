@@ -32,7 +32,11 @@ public class GridManager : MonoBehaviour
 
     public void GetChildrenPoints() // Expensive, only use on start where possible.
     {
+		points = new List<GridPoint>( gameObject.GetComponentsInChildren<GridPoint>() );
+		
+		/**
         GridPoint[] childrenPoints = gameObject.GetComponentsInChildren<GridPoint>();
+		
         for (int i = 0; i < childrenPoints.Length; i++)
         {
             if (points.Contains(childrenPoints[i]) == false)
@@ -40,5 +44,6 @@ public class GridManager : MonoBehaviour
                 points.Add(childrenPoints[i]);
             }
         }
+		**/
     }
 }

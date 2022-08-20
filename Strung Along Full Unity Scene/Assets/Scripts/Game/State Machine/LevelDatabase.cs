@@ -29,10 +29,10 @@ public class LevelDatabase : MonoBehaviour
 		Act parentAct = level.transform.parent.GetComponent<Act>();
 		int nextIndex = parentAct._levels.IndexOf(level) + 1;
 				
-		if (nextIndex > parentAct._levels.Count && _acts.IndexOf(parentAct) + 1 > _acts.Count) {
+		if (nextIndex >= parentAct._levels.Count && _acts.IndexOf(parentAct) + 1 >= _acts.Count) {
 			// next level doesn't exist, end of game.
 			return null;
-		} else if (nextIndex > parentAct._levels.Count) {
+		} else if (nextIndex >= parentAct._levels.Count) {
 			// next level is in the next act.
 			return _acts[ _acts.IndexOf(parentAct) + 1 ]._levels[0];
 		} else {
@@ -81,6 +81,7 @@ public class Level : MonoBehaviour
 	public Goal _p2Goal;
 	public Spawnpoint _p1Spawn;
 	public Spawnpoint _p2Spawn;
+	public GridManager _grid;
 	
 	void Start() {
 		_props = new List<StageProp>();
@@ -90,22 +91,23 @@ public class Level : MonoBehaviour
 			if (prop.activeSelf) {
 				_props.Add( prop.AddComponent<StageProp>() );
 				
-				if (prop.GetComponent<Spawnpoint>() ) {
+				if ( prop.TryGetComponent(out Spawnpoint spawn) ) {
 					// the prop is a spawnpoint. but whose?!
-					Spawnpoint newSpawn = prop.GetComponent<Spawnpoint>();
-					if (newSpawn._isPlayer2) {
-						_p2Spawn = newSpawn;
+					if (spawn._isPlayer2) {
+						_p2Spawn = spawn;
 					} else {
-						_p1Spawn = newSpawn;
+						_p1Spawn = spawn;
 					}
-				} else if (prop.GetComponent<Goal>() ) {
+				} else if ( prop.TryGetComponent(out Goal goal) ) {
 					// the prop is a goal. but whose?!
-					Goal newGoal = prop.GetComponent<Goal>();
-					if (newGoal._isPlayer2) {
-						_p2Goal = newGoal;
+					if (goal._isPlayer2) {
+						_p2Goal = goal;
 					} else {
-						_p1Goal = newGoal;
+						_p1Goal = goal;
 					}
+				} else if ( prop.TryGetComponent(out GridManager grid) ) {
+					// the prop is the GridManager object!
+					_grid = grid;
 				}
 				
 			}
