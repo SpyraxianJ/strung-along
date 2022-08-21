@@ -26304,7 +26304,7 @@ RectTransform:
   - {fileID: 1812859664}
   - {fileID: 1841962567}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -65778,7 +65778,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7775148, y: 1}
+    m_SensorSize: {x: 2.1233141, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -67078,7 +67078,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3167654759174068984, guid: bca65c23b1594aa4dbebacacfe0c1350, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3167654759174068984, guid: bca65c23b1594aa4dbebacacfe0c1350, type: 3}
       propertyPath: m_LocalPosition.x
@@ -74412,7 +74412,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7775148, y: 1}
+    m_SensorSize: {x: 2.1233141, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -77121,6 +77121,18 @@ PrefabInstance:
     - target: {fileID: 1810861810102240245, guid: ead20634c13d50f4196301df198ea5cd, type: 3}
       propertyPath: manager
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5090096671559530969, guid: ead20634c13d50f4196301df198ea5cd, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7379082532507227392, guid: ead20634c13d50f4196301df198ea5cd, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7637413363510569690, guid: ead20634c13d50f4196301df198ea5cd, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ead20634c13d50f4196301df198ea5cd, type: 3}
@@ -86154,6 +86166,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 883736983}
     m_Modifications:
+    - target: {fileID: 3100615035522947098, guid: 51420cc2f94a3bb4c85c75e5d6e97644, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4561013603890085865, guid: 51420cc2f94a3bb4c85c75e5d6e97644, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5232859100892353585, guid: 51420cc2f94a3bb4c85c75e5d6e97644, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 8010899097883391301, guid: 51420cc2f94a3bb4c85c75e5d6e97644, type: 3}
       propertyPath: m_Name
       value: P1 Goal
