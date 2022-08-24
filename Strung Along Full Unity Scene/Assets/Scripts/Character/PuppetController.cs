@@ -953,21 +953,32 @@ public class PuppetController : MonoBehaviour
                 Vector3 direction = at.connectedPoints[i].transform.position - gridPoint1.transform.position;
                 direction = new Vector3(direction.x, 0, direction.z).normalized;
 
-                // This is weird uhh, it makes sure we don't snap to lines that are the exact same directionas our current line
+                // This is weird uhh, it makes sure we don't snap to lines that are the exact same directions our current line
 
-                //if ()
-
-                if (Vector3.Distance(transform.position + (new Vector3(move.x, 0, move.y) * 0.3f) - gridPoint1.transform.position, direction) < closest && at.connectedPoints[i] != at)
+                if ((oldG1.transform.position - gridPoint2.transform.position).normalized == (at.transform.position - at.connectedPoints[i].transform.position).normalized & (oldG1.transform.position - gridPoint2.transform.position).normalized == -(at.transform.position - at.connectedPoints[i].transform.position).normalized)
                 {
-                    closest = Vector3.Distance(transform.position - gridPoint1.transform.position, direction);
-                    gridPoint2 = at.connectedPoints[i];
+                    if (Vector3.Distance(transform.position + (new Vector3(move.x, 0, move.y)) - gridPoint1.transform.position, direction) < closest && at.connectedPoints[i] != at)
+                    {
+                        closest = Vector3.Distance(transform.position - gridPoint1.transform.position, direction);
+                        gridPoint2 = at.connectedPoints[i];
+                    }
                 }
+                else
+                {
+                    if (Vector3.Distance(transform.position + (new Vector3(move.x, 0, move.y) * 0.9f) - gridPoint1.transform.position, direction) < closest && at.connectedPoints[i] != at)
+                    {
+                        closest = Vector3.Distance(transform.position - gridPoint1.transform.position, direction);
+                        gridPoint2 = at.connectedPoints[i];
+                    }
+                }
+
             }
 
         }
 
         // After (potentally) changing line, make sure we are not beyond said line
 
+        // Currently disabled, has issues that makes it feel weird but here if we need it later, has a strange "snapping" effect when moving between lines
         if (Vector3.Distance(new Vector3(gridPoint1.transform.position.x, transform.position.y, gridPoint1.transform.position.z), new Vector3(gridPoint2.transform.position.x, transform.position.y, gridPoint2.transform.position.z)) <
             Vector3.Distance(new Vector3(gridPoint1.transform.position.x, transform.position.y, gridPoint1.transform.position.z), transform.position))
         {
@@ -1005,7 +1016,7 @@ public class PuppetController : MonoBehaviour
         rb.velocity = Vector3.Lerp(rb.velocity, rbOld, 0.95f);
 
         Vector3 newPos = Vector3.Project(relativePosition, relativeLineVector) + gridPoint1.transform.position;
-        transform.position = new Vector3(newPos.x, transform.position.y, newPos.z);
+        transform.position = Vector3.Lerp(new Vector3(newPos.x, transform.position.y, newPos.z), transform.position, 0.5f);
 
     }
 

@@ -42,8 +42,12 @@ public class GridGenerator : MonoBehaviour
     void Update()
     {
         manager = transform.parent.Find("GridManager").GetComponent<GridManager>();
+    }
+
+    void Start()
+    {
         if (Dont == false)
-            GenerateGrid(true);
+            GenerateGrid(true); // Grid only needs to be generated once since it can be quite intensive, call directly if needed again
     }
 
     public void GenerateGrid(bool destoryPoints)

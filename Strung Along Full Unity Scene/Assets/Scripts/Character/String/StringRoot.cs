@@ -10,6 +10,7 @@ public class StringRoot : MonoBehaviour
     public Rigidbody connectedObject;
     public PuppetController connectedPuppet;
     public Transform connectedPoint;
+    public Transform connectedVisualPoint;
     public PuppetStringManager manager;
     public LineRenderer lineVisual;
 
@@ -208,7 +209,7 @@ public class StringRoot : MonoBehaviour
 
         lineVisual.SetPosition(0, transform.position);
         lineVisual.SetPosition(1, effectiveRoot);
-        lineVisual.SetPosition(2, connectedPoint.position);
+        lineVisual.SetPosition(2, connectedVisualPoint.position);
 
 
     }

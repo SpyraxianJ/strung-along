@@ -200,25 +200,15 @@ public class PuppetStringManager : MonoBehaviour
             Vector3 rotateVector = new Vector3(stringDirection.normalized.z, 0, -stringDirection.normalized.x);
 
 
-            //Debug.Log(Vector3.Project(differenceLastFrame, rotateVector));
-
-            // THIS IS THE FINAL VALUE THAT SHOWS HOW MUCH WE ROTATED YES I FINALLY DID IT OMG IT ACTUALLY WORKS I THINK AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+            // Final value that shows how much we rotated
             float rotateAroundValue = Vector3.Dot(differenceLastFrame, rotateVector);
-
-            //Debug.Log(rotateAroundValue);
-
-            // I never thought I'd see the day...
-            // tangle = tangle + rotateAroundValue;
-            // actually not quite, we need to multiply this value based on the distance we are away (exponential decay) to get a more accurate value
-            // Actually that's wrong, it /2 * pi * r
-            // Ok that's also wrong but I give up for now, I'll figure it out later when it's not 5:41am
 
             float finalRotateValue = rotateAroundValue / (Mathf.Max(0.000000001f, 2 * Mathf.PI * stringDirection.magnitude));
 
             // I never thought I'd see the day...
             tangle += finalRotateValue;
 
-            // bad, i'll fix this if it becomes a problem
+            // slightly inefficent
             PuppetController puppetCont = puppet.GetComponent<PuppetController>();
 
             if (puppetCont != null) {
