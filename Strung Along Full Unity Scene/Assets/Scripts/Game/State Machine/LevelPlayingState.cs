@@ -32,7 +32,7 @@ public class LevelPlayingState : LevelBaseState
 		ctx._player2.GetComponent<PuppetController>().gridManager = ctx._currentLevel._grid;
 		
 		// activate gameplay camera
-		ctx._OnPlayingStart?.Invoke();
+		ctx._camera.SwitchCam(1);
 	}
 	
 	public override void UpdateState(GameStateManager ctx) {
@@ -74,7 +74,7 @@ public class LevelPlayingState : LevelBaseState
 		ctx._reaper._puppetsCanDie = false;
 		ctx._player1.GetComponent<PuppetController>().gridManager = null;
 		ctx._player2.GetComponent<PuppetController>().gridManager = null;
-		ctx._OnPlayingExit?.Invoke();
+		ctx._camera.SwitchCam(0);
 		ctx.SwitchState(ctx.UnloadingState);
 	}
 	

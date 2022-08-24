@@ -12,6 +12,7 @@ public class GameStateManager : MonoBehaviour
 	LevelBaseState _currentState;
 	public LevelEmptyState EmptyState = new LevelEmptyState();
 	public LevelLoadingState LoadingState = new LevelLoadingState();
+	public LevelFirstPlayingState FirstPlayingState = new LevelFirstPlayingState();
 	public LevelPlayingState PlayingState = new LevelPlayingState();
 	public LevelUnloadingState UnloadingState = new LevelUnloadingState();
 	
@@ -60,16 +61,14 @@ public class GameStateManager : MonoBehaviour
 	public GrimReaper _reaper;
 	[HideInInspector]
 	public LevelDatabase _database;
-	
-	// events for camera
-	public UnityEvent _OnPlayingStart;
-	public UnityEvent _OnPlayingExit;
-	
+	[HideInInspector]
+	public StageCamController _camera;
 	
     void Start()
     {
 		_reaper = GetComponent<GrimReaper>();
 		_database = GetComponent<LevelDatabase>();
+		_camera = GetComponentInParent<StageCamController>();
 		
 		
         _currentState = EmptyState;
