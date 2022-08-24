@@ -31,6 +31,9 @@ public class GameStateManager : MonoBehaviour
 	public GameObject _player2;
 	public StringRoot _p1Anchor; // refs to string anchor locations
 	public StringRoot _p2Anchor;
+	public StageCamController _camera;
+	public StagelightController _lights;
+	public CinematicsDirector _cinematics;
 	
 	[Header("Transition Settings")]
 	[Tooltip("Time in seconds it takes for props to move into the level.")]
@@ -61,14 +64,15 @@ public class GameStateManager : MonoBehaviour
 	public GrimReaper _reaper;
 	[HideInInspector]
 	public LevelDatabase _database;
-	[HideInInspector]
-	public StageCamController _camera;
+
+
 	
     void Start()
     {
 		_reaper = GetComponent<GrimReaper>();
 		_database = GetComponent<LevelDatabase>();
-		_camera = GetComponentInParent<StageCamController>();
+		//_camera = GetComponentInParent<StageCamController>();
+		//_lights = 
 		
 		
         _currentState = EmptyState;

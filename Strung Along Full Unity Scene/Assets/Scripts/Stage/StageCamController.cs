@@ -30,5 +30,9 @@ public class StageCamController : MonoBehaviour
 			_cameras[cam].Priority = 10;
 		}
 	}
+	
+	public Vector3 Position() {
+		return _brain.transform.position;
+	}
 
 }
