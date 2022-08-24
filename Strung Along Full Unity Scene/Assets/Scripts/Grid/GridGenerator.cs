@@ -41,7 +41,15 @@ public class GridGenerator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        manager = transform.parent.Find("GridManager").GetComponent<GridManager>();
+        try
+        {
+            manager = transform.parent.Find("GridManager").GetComponent<GridManager>();
+        }
+        catch (System.Exception)
+        {
+            // This prevents spitting out an error during the editor
+            //throw;
+        }
     }
 
     void Start()
