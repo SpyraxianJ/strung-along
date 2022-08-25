@@ -5,6 +5,7 @@ using UnityEngine.Playables;
 
 public class CinematicsDirector : MonoBehaviour
 {
+	public PlayableAsset _fadeOut;
 	public PlayableAsset _intro;
 	public PlayableAsset _actChange;
 	public PlayableAsset _endOfGame;

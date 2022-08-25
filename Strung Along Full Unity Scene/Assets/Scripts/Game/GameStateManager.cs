@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
-using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class GameStateManager : MonoBehaviour
 {
@@ -105,6 +105,15 @@ public class GameStateManager : MonoBehaviour
 	public void RequestQuit() {
 		_interrupt = _currentState == PlayingState ? true : false;
 		_nextLevelToLoad = null;
+	}
+	
+	// QUIT LEVEL (TO TITLE SCREEN)
+	public void QuitToTitle() {
+		_cinematics.PlayCutscene( _cinematics._fadeOut );
+		Invoke("LoadTitleScene", (float)_cinematics._fadeOut.duration);
+	}
+	void LoadTitleScene() {
+		SceneManager.LoadScene("TitleScreen");
 	}
 	
 	// SKIP LEVEL
