@@ -2,8 +2,6 @@ using UnityEngine;
 
 public class LevelPlayingState : LevelBaseState
 {
-	bool winCondition = false;
-	bool failCondition = false;
 	float _deathTimer = 0.0f;
 	int _attemptCount = 0;
 	float _levelTime = 0.0f;
@@ -19,11 +17,6 @@ public class LevelPlayingState : LevelBaseState
 		_attemptCount = 1;
 		_levelTime = 0.0f;
 		
-		// to win, both goals need to be active and both puppets need to be alive.
-		winCondition = ctx._currentLevel._p1Goal._isActive && ctx._currentLevel._p2Goal._isActive && ctx._p1Alive && ctx._p2Alive;
-		// to lose, either puppet must die.
-		failCondition = !ctx._p1Alive || !ctx._p2Alive;
-		
 		// set puppets up for gameplay
 		ctx._reaper.Respawn(ctx._player1.GetComponent<PuppetController>() );
 		ctx._reaper.Respawn(ctx._player2.GetComponent<PuppetController>() );
@@ -36,7 +29,7 @@ public class LevelPlayingState : LevelBaseState
 	}
 	
 	public override void UpdateState(GameStateManager ctx) {
-		if (failCondition) {
+		if ( Fail(ctx) ) {
 			// a puppet has died!
 			Time.timeScale = ctx._deathSlowdown; // slow down the game
 			_deathTimer += Time.unscaledDeltaTime; // count death timer
@@ -57,7 +50,7 @@ public class LevelPlayingState : LevelBaseState
 				ctx._deathEffect.GetComponent<CanvasGroup>().alpha = 0.0f;
 			}
 			
-		} else if (winCondition) {
+		} else if ( Win(ctx) ) {
 			// invoke any win stuff!
 			PlayExit(ctx);
 		} else if (ctx._interrupt) {
@@ -76,6 +69,15 @@ public class LevelPlayingState : LevelBaseState
 		ctx._player2.GetComponent<PuppetController>().gridManager = null;
 		ctx._camera.SwitchCam(0);
 		ctx.SwitchState(ctx.UnloadingState);
+	}
+	
+	// to win, both goals need to be active and both puppets need to be alive.
+	bool Win(GameStateManager ctx) {
+		return ctx._currentLevel._p1Goal._isActive && ctx._currentLevel._p2Goal._isActive && ctx._p1Alive && ctx._p2Alive;
+	}
+	// to lose, either puppet must die.
+	bool Fail(GameStateManager ctx) {
+		return !ctx._p1Alive || !ctx._p2Alive;
 	}
 	
 	void Reset(Level level) {
