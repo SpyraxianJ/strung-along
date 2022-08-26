@@ -25,7 +25,7 @@ public class KillBox : MonoBehaviour
 	
 	void CheckTouch() {
 		Collider[] hits;
-		hits = Physics.OverlapBox(transform.position, _detector / 2f, transform.rotation, _puppetMask);
+		hits = Physics.OverlapBox(transform.position, _detector / 2f, transform.localRotation, _puppetMask);
 		
 		foreach (Collider hit in hits) {
 			

@@ -99,4 +99,4 @@ MonoBehaviour:
   _isPlayer2: 1
   _distanceFromGround: 0
   _elasticString: 0
-  _stringLength: 12
+  _stringLength: 16

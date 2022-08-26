@@ -4,10 +4,9 @@ using UnityEngine;
 
 public class Spawnpoint : MonoBehaviour
 {	
+	[HideInInspector]
 	public bool _isPlayer2 = false;
-	[SerializeField]
 	float _distanceFromGround;
-	[Space]
 	[Header("Per-Level String Properties")]
 	public bool _elasticString = false;
 	public float _stringLength = 12f;

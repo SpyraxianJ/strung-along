@@ -1023,7 +1023,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _puppetMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   _detector: {x: 2.47, y: 2.31, z: 2.46}
   _reaper: {fileID: 0}
 --- !u!1 &7560810648138760425
