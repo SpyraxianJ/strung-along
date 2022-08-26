@@ -6,7 +6,7 @@ public class Spawnpoint : MonoBehaviour
 {	
 	[HideInInspector]
 	public bool _isPlayer2 = false;
-	float _distanceFromGround;
+	//float _distanceFromGround; // obsolete: for the previous sphere approach to string lengths
 	[Header("Per-Level String Properties")]
 	public bool _elasticString = false;
 	public float _stringLength = 12f;
@@ -20,27 +20,28 @@ public class Spawnpoint : MonoBehaviour
 	
 	void OnDrawGizmosSelected() {
 		Vector3 point = new Vector3(transform.position.x, 0f, transform.position.z);
-		_distanceFromGround = Vector3.Distance(transform.position, point);
-		float radius;
+		//_distanceFromGround = Vector3.Distance(transform.position, point);
+		
 		
 		RaycastHit[] hits = Physics.RaycastAll(transform.position, Vector3.down, _stringLength);
 		
 		foreach (RaycastHit hit in hits) {
 			if (hit.transform.IsChildOf(gameObject.transform.parent) ) {
-				_distanceFromGround = hit.distance;
+				//_distanceFromGround = hit.distance;
 				point = hit.point;
 				break;
 			}
 		}
 		
-		radius = Mathf.Sqrt(_stringLength * _stringLength - _distanceFromGround * _distanceFromGround);
+		//float radius;
+		//radius = Mathf.Sqrt(_stringLength * _stringLength - _distanceFromGround * _distanceFromGround);
 		
 		Gizmos.matrix *= Matrix4x4.Translate( new Vector3(0, point.y + 0.1f, 0) );
 		Gizmos.matrix *= Matrix4x4.Scale( new Vector3(1, 0, 1) );
 		
 		Gizmos.color = _isPlayer2 ? Color.red : Color.blue;
-		Gizmos.DrawWireSphere(point, radius);
-		Gizmos.DrawSphere(point, 0.25f);
+		//Gizmos.DrawWireSphere(point, radius);
+		Gizmos.DrawSphere(point, 0.5f);
 		
 	}
 	
