@@ -1025,7 +1025,7 @@ MonoBehaviour:
   _puppetMask:
     serializedVersion: 2
     m_Bits: 64
-  _detector: {x: 2.47, y: 2.31, z: 2.46}
+  _detector: {x: 2.25, y: 2.13, z: 2.22}
   _reaper: {fileID: 0}
 --- !u!114 &3748692473876070139
 MonoBehaviour:
@@ -1040,7 +1040,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   originalPosition: {x: 0, y: 0, z: 0}
-  stageMoveDirection: 2
+  stageMoveDirection: 3
 --- !u!1 &7560810648138760425
 GameObject:
   m_ObjectHideFlags: 0

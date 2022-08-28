@@ -42,8 +42,11 @@ public class LevelUnloadingState : LevelBaseState
 			case GameStateManager.Direction.Top:
 				offstagePosition = prop.originalPosition + new Vector3(0, GameStateManager.TOP_BOUNDARY, 0);
 				break;
-			case GameStateManager.Direction.Side:
-				offstagePosition = prop.originalPosition - new Vector3(GameStateManager.SIDE_BOUNDARY, 0, 0);
+			case GameStateManager.Direction.Left:
+				offstagePosition = prop.originalPosition - new Vector3(GameStateManager.LEFT_BOUNDARY, 0, 0);
+				break;
+			case GameStateManager.Direction.Right:
+				offstagePosition = prop.originalPosition - new Vector3(GameStateManager.RIGHT_BOUNDARY, 0, 0);
 				break;
 			case GameStateManager.Direction.Bottom:
 				offstagePosition = prop.originalPosition + new Vector3(0, GameStateManager.BOTTOM_BOUNDARY, 0);

@@ -18,11 +18,13 @@ public class GameStateManager : MonoBehaviour
 	
 	public const float TOP_BOUNDARY = 24f; // the "top" of the level. Y coordinate.
 	public const float BOTTOM_BOUNDARY = -10f;
-	public const float SIDE_BOUNDARY = 34f; // the "side" of the level. X coordinate.
-	
+	public const float RIGHT_BOUNDARY = 34f;
+	public const float LEFT_BOUNDARY = -34f;// the "side" of the level. X coordinate.
+
 	public enum Direction {
 		Top,
-		Side,
+		Left,
+		Right,
 		Bottom
 	}
 	
