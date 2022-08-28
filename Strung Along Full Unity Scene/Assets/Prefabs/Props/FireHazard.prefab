@@ -984,6 +984,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7560810647920278840}
   - component: {fileID: 372435463969971059}
+  - component: {fileID: 3748692473876070139}
   m_Layer: 0
   m_Name: FireHazard
   m_TagString: Untagged
@@ -1026,6 +1027,20 @@ MonoBehaviour:
     m_Bits: 64
   _detector: {x: 2.47, y: 2.31, z: 2.46}
   _reaper: {fileID: 0}
+--- !u!114 &3748692473876070139
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7560810647920278841}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7322f25711bfaca4f8399a3ea355af22, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  originalPosition: {x: 0, y: 0, z: 0}
+  stageMoveDirection: 2
 --- !u!1 &7560810648138760425
 GameObject:
   m_ObjectHideFlags: 0

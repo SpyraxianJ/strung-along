@@ -89,7 +89,12 @@ public class Level : MonoBehaviour
 		for (int i = 0; i < transform.childCount; i++) {
 			GameObject prop = transform.GetChild(i).gameObject;
 			if (prop.activeSelf) {
-				_props.Add( prop.AddComponent<StageProp>() );
+				
+				if ( prop.TryGetComponent(out StageProp sp) ) {
+					_props.Add(sp);
+				} else {
+					_props.Add( prop.AddComponent<StageProp>() );
+				}
 				
 				if ( prop.TryGetComponent(out Spawnpoint spawn) ) {
 					// the prop is a spawnpoint. but whose?!
@@ -109,6 +114,8 @@ public class Level : MonoBehaviour
 					// the prop is the GridManager object!
 					_grid = grid;
 				}
+				
+				prop.GetComponent<StageProp>().Init();
 				
 			}
 		}
@@ -132,64 +139,3 @@ public class Level : MonoBehaviour
 	
 }
 
-public class StageProp : MonoBehaviour
-{
-	public Vector3 originalPosition;
-	public GameStateManager.Direction stageMoveDirection;
-	
-	void Start() {
-		
-		this.originalPosition = this.transform.position;
-		
-		if (TryGetComponent<StagePropOverride>(out StagePropOverride spo) ) {
-			stageMoveDirection = GameStateManager.Direction.Top;
-			Destroy(spo);
-		} else {
-			stageMoveDirection = GameStateManager.Direction.Top;
-		}
-		
-		this.gameObject.SetActive(false);
-		
-	}
-	
-	public void Freeze() {
-		
-		Collider[] colliders = GetComponents<Collider>();
-		foreach (Collider comp in colliders) {
-			comp.enabled = false;
-		}
-		/**
-		Activator[] activators = GetComponents<Activator>();
-		foreach (Activator comp in activators) {
-			comp.reset();
-			comp.enabled = false;
-		}
-		
-		Reactor[] reactors = GetComponents<Reactor>();
-		foreach (Reactor comp in reactors) {
-			comp.reset();
-			comp.enabled = false;
-		}
-		**/
-	}
-	
-	public void Unfreeze() {
-		
-		Collider[] colliders = GetComponents<Collider>();
-		foreach (Collider comp in colliders) {
-			comp.enabled = true;
-		}
-		/**
-		Activator[] activators = GetComponents<Activator>();
-		foreach (Activator comp in activators) {
-			comp.enabled = true;
-		}
-		
-		Reactor[] reactors = GetComponents<Reactor>();
-		foreach (Reactor comp in reactors) {
-			comp.enabled = true;
-		}
-		**/
-	}
-	
-}
