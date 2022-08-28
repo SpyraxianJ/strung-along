@@ -50,9 +50,13 @@ public class GameStateManager : MonoBehaviour
 	
 	
 	[Header("Debug")]
+	[Tooltip("it was getting annoying")]
+	public bool _skipIntroCinematic = false;
+	[HideInInspector]
 	public bool _p1Alive = true;
+	[HideInInspector]
 	public bool _p2Alive = true;
-	//[HideInInspector]
+	[HideInInspector]
 	public Level _nextLevelToLoad = null;
 	[HideInInspector]
 	public Level _currentLevel = null;

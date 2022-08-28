@@ -6,16 +6,26 @@ using UnityEngine.Playables;
 public class LevelFirstPlayingState : LevelBaseState
 {
     public override void EnterState(GameStateManager ctx) {
-		Debug.Log("Playing first level intro cinematic.");
 		
-		ctx._lights.DimMains();
-		ctx._camera.SwitchCam(2);
+		if (ctx._skipIntroCinematic) {
+			Debug.Log("Skipping intro cinematic. Make sure to uncheck this for final builds.");
+			
+		} else {
+			Debug.Log("Playing first level intro cinematic.");
+			
+			ctx._lights.DimMains();
+			ctx._camera.SwitchCam(2);
+			
+			ctx._cinematics.PlayCutscene(ctx._cinematics._intro);
 		
-		ctx._cinematics.PlayCutscene(ctx._cinematics._intro);
+			// teleport under their string roots
+			ctx._player1.transform.position = ctx._player1.GetComponent<PuppetController>().thisStringRoot.transform.position + new Vector3(0, -4, 0);
+			ctx._player2.transform.position = ctx._player2.GetComponent<PuppetController>().thisStringRoot.transform.position + new Vector3(0, -4, 0);
+			
+		}
 		
-		// teleport under their string roots
-		ctx._player1.transform.position = ctx._player1.GetComponent<PuppetController>().thisStringRoot.transform.position + new Vector3(0, -4, 0);
-		ctx._player2.transform.position = ctx._player2.GetComponent<PuppetController>().thisStringRoot.transform.position + new Vector3(0, -4, 0);
+		
+		
 
 	}
 
