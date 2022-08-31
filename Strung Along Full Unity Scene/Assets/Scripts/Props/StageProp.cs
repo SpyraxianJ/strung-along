@@ -29,6 +29,7 @@ Keep in mind it only cares about FIRST-LEVEL children. If you've got a level chi
 stageMoveDirection
 	Top: default. enter and exit from the top of the stage.
 	Left/Right: enter and exit from the left/right
+	Scrolling: enter from the right, exit to the left. like a sidescrolling game.
 	Bottom: enter and exit from the bottom of the stage.
 
 */
