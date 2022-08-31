@@ -53,6 +53,7 @@ public class PuppetController : MonoBehaviour
     [Tooltip("This player can grab grab the other player")]
     public bool canSlingshot;
     public float SlingshotForce;
+    public float SlingshotForceYMulti;
 
     [Space]
 
@@ -605,13 +606,17 @@ public class PuppetController : MonoBehaviour
             {
                 // Air movement stuff, using simpler calculations since precision isn't as important
 
-                rb.AddForce(new Vector3(move.normalized.x, 0, move.normalized.y) * airborneAcceleration, ForceMode.Acceleration);
+                if (new Vector2(rb.velocity.x, rb.velocity.z).magnitude < airborneMaxSpeed) // Can only accelerate in the air when velocity is low enough
+                    rb.AddForce(new Vector3(move.normalized.x, 0, move.normalized.y) * airborneAcceleration, ForceMode.Acceleration);
 
                 // deceleration (force soft, hard stopping in the air sounds ugly, but I can add if it if nessassary)
 
                 if (new Vector2(rb.velocity.x, rb.velocity.z).magnitude >= airborneMaxSpeed)
                 {
-                    rb.velocity = new Vector3(rb.velocity.x * (1 - airborneDeceleration), rb.velocity.y, rb.velocity.z * (1 - airborneDeceleration)); // Uses 1 - groundedDeceleration to make the variable more intuitive for designers to adjust
+                    // Using project so the player can choose to slow down if they move that way, not forced to slow down, otherwise they are just prevented from accelerating
+                    // rb.velocity = new Vector3(rb.velocity.x * (1 - airborneDeceleration), rb.velocity.y, rb.velocity.z * (1 - airborneDeceleration)); // Uses 1 - groundedDeceleration to make the variable more intuitive for designers to adjust
+                    Vector3 vel = Vector3.Project(new Vector3(move.x, 0, move.y), new Vector3(rb.velocity.x * airborneDeceleration, 0, rb.velocity.z * airborneDeceleration));
+                    rb.velocity -= vel;
                 }
 
             }
@@ -704,9 +709,12 @@ public class PuppetController : MonoBehaviour
         {
             // HARPER: send message to grabbed object each frame
 			grabbingObject.gameObject.SendMessage("OnGrabbing", this, SendMessageOptions.DontRequireReceiver);
-			
-			
-			// disable rotation
+
+
+            // disable rotation
+            if (Vector3.Distance(grabbingObject.gameObject.transform.position, ((visualReference.transform.forward) * grabbedObjectDistance * (1 + holdDistance)) + transform.position + (Vector3.up * grabbedObjectHeight)) > 1f) {
+                // we are trying to move it more than a unit in a frame, cancel the grab
+            }
             grabbingObject.gameObject.transform.position = ((visualReference.transform.forward) * grabbedObjectDistance * (1 + holdDistance)) + transform.position + (Vector3.up * grabbedObjectHeight);
 			
 
@@ -844,6 +852,11 @@ public class PuppetController : MonoBehaviour
         // Undoing the ignoreraycast change
         gameObject.layer = layer; // should be 6 but just in case
 
+        if (grabbingObject != null)
+        {
+            grabbingObject.gameObject.transform.position = ((visualReference.transform.forward) * grabbedObjectDistance * (1 + holdDistance)) + transform.position + (Vector3.up * grabbedObjectHeight);
+        }
+
     }
 
     public void GrabRelease()
@@ -860,9 +873,14 @@ public class PuppetController : MonoBehaviour
         {
             otherPuppet.beingPuppetPulled = false;
             Physics.IgnoreCollision(grabbingObject, colliderThis, false);
-            grabbingObject.attachedRigidbody.velocity = (otherPuppet.thisStringRoot.transform.position - grabbingObject.transform.position).normalized * SlingshotForce;
-            grabbingObject.transform.position = grabbingObject.transform.position + (grabbingObject.attachedRigidbody.velocity * Time.fixedDeltaTime); // ensures we get lift if applicable
-            otherPuppet.isGrounded = false;
+
+            if (otherPuppet.beingPulled) {
+                grabbingObject.attachedRigidbody.velocity = (otherPuppet.thisStringRoot.transform.position - grabbingObject.transform.position).normalized * SlingshotForce;
+                grabbingObject.attachedRigidbody.velocity = new Vector3(grabbingObject.attachedRigidbody.velocity.x, grabbingObject.attachedRigidbody.velocity.y * SlingshotForceYMulti, grabbingObject.attachedRigidbody.velocity.z);
+                grabbingObject.transform.position = grabbingObject.transform.position + (grabbingObject.attachedRigidbody.velocity * Time.fixedDeltaTime); // ensures we get lift if applicable
+                otherPuppet.isGrounded = false;
+            }
+
             grabbingObject.gameObject.SendMessage("OnReleased", this, SendMessageOptions.DontRequireReceiver);
         }
         else

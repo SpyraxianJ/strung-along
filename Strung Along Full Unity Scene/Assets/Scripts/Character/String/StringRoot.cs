@@ -158,6 +158,15 @@ public class StringRoot : MonoBehaviour
             connectedObject.gameObject.transform.position = new Vector3(vector.x, vector.y, vector.z) - (difference.normalized * effectiveLength) + effectiveRoot;
             connectedObject.transform.position = new Vector3(connectedObject.transform.position.x, oldY, connectedObject.transform.position.z);
 
+            if (connectedPuppet != null)
+            {
+                if (connectedPuppet.otherPuppet.grabbingObject.gameObject == connectedPuppet.gameObject)
+                {
+                    connectedPuppet.otherPuppet.GrabRelease(); // prevent overpulling
+                    Debug.Log("Force release");
+                }
+            }
+
         }
         else
         {
@@ -184,6 +193,7 @@ public class StringRoot : MonoBehaviour
                 if (puppet != null)
                 {
                     // send pulled message
+                    Debug.Log("Pee pee");
                     puppet.beingPulled = true;
                 }
 
