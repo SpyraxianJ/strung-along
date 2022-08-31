@@ -84,8 +84,8 @@ public class PuppetController : MonoBehaviour
 
     [Space]
 
-    GridPoint gridPoint1;
-    GridPoint gridPoint2;
+    public GridPoint gridPoint1;
+    public GridPoint gridPoint2;
 
     [Space]
 
@@ -1045,7 +1045,6 @@ public class PuppetController : MonoBehaviour
                 {
                     closest = Vector3.Distance(transform.position - gridPoint1.transform.position, direction);
                     gridPoint2 = at.connectedPoints[i];
-                    Debug.Log(closest);
                 }
 
                 if ((oldG1.transform.position - gridPoint2.transform.position).normalized == (at.transform.position - at.connectedPoints[i].transform.position).normalized & (oldG1.transform.position - gridPoint2.transform.position).normalized == -(at.transform.position - at.connectedPoints[i].transform.position).normalized)
