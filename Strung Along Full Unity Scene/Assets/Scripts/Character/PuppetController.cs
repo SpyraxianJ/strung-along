@@ -1008,6 +1008,9 @@ public class PuppetController : MonoBehaviour
     public void ForceToGrid()
     {
 
+        Debug.DrawLine(gridPoint1.transform.position, gridPoint1.transform.position + Vector3.up * 100f, Color.green);
+        Debug.DrawLine(gridPoint2.transform.position, gridPoint2.transform.position + Vector3.up * 100f, Color.magenta);
+
         // Grid redirecting (Doing force to line after, so you can change your grid before getting forced onto it)
 
         GridPoint at = null;
@@ -1035,25 +1038,19 @@ public class PuppetController : MonoBehaviour
                 // Because points might not be evenly spread, we need to move based on distance to directions, not just positions
 
                 Vector3 direction = at.connectedPoints[i].transform.position - gridPoint1.transform.position;
-                direction = new Vector3(direction.x, 0, direction.z).normalized;
+                direction = new Vector3(direction.x, 0, direction.z).normalized * 10f;
 
-                // This is weird uhh, it makes sure we don't snap to lines that are the exact same directions our current line
+
+                if (Vector3.Distance((transform.position + (new Vector3(move.x, 0, move.y) * 6f) - gridPoint1.transform.position), direction) <= closest && at.connectedPoints[i] != at)
+                {
+                    closest = Vector3.Distance(transform.position - gridPoint1.transform.position, direction);
+                    gridPoint2 = at.connectedPoints[i];
+                    Debug.Log(closest);
+                }
 
                 if ((oldG1.transform.position - gridPoint2.transform.position).normalized == (at.transform.position - at.connectedPoints[i].transform.position).normalized & (oldG1.transform.position - gridPoint2.transform.position).normalized == -(at.transform.position - at.connectedPoints[i].transform.position).normalized)
                 {
-                    if (Vector3.Distance(transform.position + (new Vector3(move.x, 0, move.y)) - gridPoint1.transform.position, direction) < closest && at.connectedPoints[i] != at)
-                    {
-                        closest = Vector3.Distance(transform.position - gridPoint1.transform.position, direction);
-                        gridPoint2 = at.connectedPoints[i];
-                    }
-                }
-                else
-                {
-                    if (Vector3.Distance(transform.position + (new Vector3(move.x, 0, move.y) * 0.9f) - gridPoint1.transform.position, direction) < closest && at.connectedPoints[i] != at)
-                    {
-                        closest = Vector3.Distance(transform.position - gridPoint1.transform.position, direction);
-                        gridPoint2 = at.connectedPoints[i];
-                    }
+                    // Old, here in case it's required again
                 }
 
             }
