@@ -12,7 +12,7 @@ public class LevelLoadingState : LevelBaseState
 		SetStrings(ctx._p1Anchor, 4.0f, false);
 		SetStrings(ctx._p2Anchor, 4.0f, false);
 		
-		ctx._currentLevel.FreezeAll();
+		ctx._currentLevel.ToggleColliders(false);
 	}
 	
 	public override void UpdateState(GameStateManager ctx) {
@@ -30,7 +30,7 @@ public class LevelLoadingState : LevelBaseState
 		
 		if (_loadProgress >= 1.0f) {
 			// all props are in position!
-			ctx._currentLevel.UnfreezeAll();
+			ctx._currentLevel.ToggleColliders(true);
 			SetStrings(ctx._p1Anchor, ctx._currentLevel._p1Spawn._stringLength, ctx._currentLevel._p1Spawn._elasticString);
 			SetStrings(ctx._p2Anchor, ctx._currentLevel._p2Spawn._stringLength, ctx._currentLevel._p2Spawn._elasticString);
 			

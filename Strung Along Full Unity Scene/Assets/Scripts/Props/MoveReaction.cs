@@ -61,7 +61,8 @@ public class MoveReaction : Reaction
 	
 	public override void Reset() {
 		_progress = 0.0f;
-		//_target.transform.position = _target.GetComponent<StageProp>().originalPosition;
+		startPos = Vector3.zero;
+		endPos = Vector3.zero;
 	}
 	
 }

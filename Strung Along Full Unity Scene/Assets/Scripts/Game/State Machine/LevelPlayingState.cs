@@ -13,7 +13,7 @@ public class LevelPlayingState : LevelBaseState
 	
 	void PlaySetup(GameStateManager ctx) {
 		// reset the level to starting parameters
-		Reset(ctx._currentLevel);
+		Reset(ctx);
 		_attemptCount = 1;
 		_levelTime = 0.0f;
 		
@@ -38,7 +38,7 @@ public class LevelPlayingState : LevelBaseState
 			
 			if (_deathTimer >= ctx._deathTime) {
 				// death timer reached, respawn the lads.
-				Reset(ctx._currentLevel);
+				Reset(ctx);
 				_attemptCount++;
 				ctx._reaper.Respawn(ctx._player1.GetComponent<PuppetController>() );
 				ctx._reaper.Respawn(ctx._player2.GetComponent<PuppetController>() );
@@ -80,16 +80,10 @@ public class LevelPlayingState : LevelBaseState
 		return !ctx._p1Alive || !ctx._p2Alive;
 	}
 	
-	void Reset(Level level) {
-		level._p1Goal._isActive = false;
-		level._p2Goal._isActive = false;
-		
-		level.FreezeAll();
-		level.UnfreezeAll();
-		
-		foreach (StageProp prop in level._props) {
-			prop.transform.position = prop.originalPosition;
-		}
+	void Reset(GameStateManager ctx) {
+		ctx._currentLevel.Reset(); // reset all props
+		ctx._p1Anchor.transform.position = ctx._currentLevel._p1Spawn.GetComponent<StageProp>().originalPosition;
+		ctx._p2Anchor.transform.position = ctx._currentLevel._p2Spawn.GetComponent<StageProp>().originalPosition; // make sure anchors are reset too
 	}
 	
 	public int GetAttempts() {

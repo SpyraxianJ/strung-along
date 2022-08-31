@@ -123,15 +123,21 @@ public class Level : MonoBehaviour
 		
 	}
 	
-	public void FreezeAll() {
+	public void ToggleColliders(bool toggle) {
 		foreach (StageProp prop in _props) {
-			prop.Freeze();
+			prop.ToggleColliders(toggle);
 		}
 	}
 	
-	public void UnfreezeAll() {
+	public void Reset() {
+		_p1Goal.Reset();
+		_p2Goal.Reset();
+		
 		foreach (StageProp prop in _props) {
-			prop.Unfreeze();
+			IResettable[] resets = prop.GetComponents<IResettable>();
+			foreach (IResettable comp in resets) {
+				comp.Reset();
+			}
 		}
 	}
 	

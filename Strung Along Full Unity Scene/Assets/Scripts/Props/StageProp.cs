@@ -28,34 +28,31 @@ Keep in mind it only cares about FIRST-LEVEL children. If you've got a level chi
 
 stageMoveDirection
 	Top: default. enter and exit from the top of the stage.
-	Side: enter from the right and exit to the left of the stage. very snazzy.
+	Left/Right: enter and exit from the left/right
 	Bottom: enter and exit from the bottom of the stage.
 
 */
 
-public class StageProp : MonoBehaviour
+public class StageProp : MonoBehaviour, IResettable
 {
 	[HideInInspector]
 	public Vector3 originalPosition;
 	public GameStateManager.Direction stageMoveDirection;
 	
 	public void Init() {
-		this.originalPosition = this.transform.position; 
-		this.gameObject.SetActive(false);
+		originalPosition = transform.position; 
+		gameObject.SetActive(false);
 	}
 	
-	public void Freeze() {
+	public void ToggleColliders(bool toggle) {
 		Collider[] colliders = GetComponents<Collider>();
 		foreach (Collider comp in colliders) {
-			comp.enabled = false;
+			comp.enabled = toggle;
 		}
 	}
 	
-	public void Unfreeze() {
-		Collider[] colliders = GetComponents<Collider>();
-		foreach (Collider comp in colliders) {
-			comp.enabled = true;
-		}
+	public void Reset() {
+		transform.position = originalPosition;
 	}
 	
 }

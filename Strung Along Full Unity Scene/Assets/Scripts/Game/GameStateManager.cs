@@ -33,9 +33,11 @@ public class GameStateManager : MonoBehaviour
 	public GameObject _player2;
 	public StringRoot _p1Anchor; // refs to string anchor locations
 	public StringRoot _p2Anchor;
-	public StageCamController _camera;
-	public StagelightController _lights;
-	public CinematicsDirector _cinematics;
+	[HideInInspector] public GrimReaper _reaper;
+	[HideInInspector] public LevelDatabase _database;
+	[HideInInspector] public StageCamController _camera;
+	[HideInInspector] public StagelightController _lights;
+	[HideInInspector] public CinematicsDirector _cinematics;
 	
 	[Header("Transition Settings")]
 	[Tooltip("Time in seconds it takes for props to move into the level.")]
@@ -50,35 +52,21 @@ public class GameStateManager : MonoBehaviour
 	[Tooltip("Volume effect that fades in when a puppet dies. Also fades in any Image placed as a child.")]
 	public Volume _deathEffect;
 	
-	
 	[Header("Debug")]
 	[Tooltip("it was getting annoying")]
 	public bool _skipIntroCinematic = false;
-	[HideInInspector]
-	public bool _p1Alive = true;
-	[HideInInspector]
-	public bool _p2Alive = true;
-	[HideInInspector]
-	public Level _nextLevelToLoad = null;
-	[HideInInspector]
-	public Level _currentLevel = null;
-	[HideInInspector]
-	public float _totalPlaytime = 0.0f;
-	[HideInInspector]
-	public bool _interrupt = false;
-	[HideInInspector]
-	public GrimReaper _reaper;
-	[HideInInspector]
-	public LevelDatabase _database;
+	[HideInInspector] public bool _p1Alive = true;
+	[HideInInspector] public bool _p2Alive = true;
+	[HideInInspector] public Level _nextLevelToLoad = null;
+	[HideInInspector] public Level _currentLevel = null;
+	[HideInInspector] public float _totalPlaytime = 0.0f;
+	[HideInInspector] public bool _interrupt = false;
 
-
-	
-    void Start()
-    {
+    void Start() {
 		_reaper = GetComponent<GrimReaper>();
 		_database = GetComponent<LevelDatabase>();
-		//_camera = GetComponentInParent<StageCamController>();
-		//_lights = 
+		_camera = FindObjectOfType<StageCamController>();
+		_lights = FindObjectOfType<StagelightController>();
 		
 		
         _currentState = EmptyState;
@@ -86,8 +74,7 @@ public class GameStateManager : MonoBehaviour
 		
     }
 
-    void Update()
-    {
+    void Update() {
         _currentState.UpdateState(this);
     }
 	

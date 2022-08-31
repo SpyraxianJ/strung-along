@@ -5,7 +5,7 @@ using UnityEngine;
 /*
 The lever fires a reaction when it's triggered.
 */
-public class LeverProp : MonoBehaviour
+public class LeverProp : MonoBehaviour, IResettable
 {
 	
 	public List<Reaction> _reactions;
@@ -154,5 +154,12 @@ public class LeverProp : MonoBehaviour
 	void OnReleased(PuppetController pup) {
 		_grabbed = false;
 		SetSpringy(_springy);
+	}
+	
+	public void Reset() {
+		_grabbed = false;
+		SetSpringy(_springy);
+		_leverHandle.rotation = Quaternion.identity;
+		_SFXticker = 0;
 	}
 }

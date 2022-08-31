@@ -9,7 +9,7 @@ public class LevelUnloadingState : LevelBaseState
 		Debug.Log("Clearing the Stage...");
 		_unloadProgress = 0.0f;
 		
-		ctx._currentLevel.FreezeAll();
+		ctx._currentLevel.ToggleColliders(false);
 	}
 	
 	public override void UpdateState(GameStateManager ctx) {
@@ -26,7 +26,7 @@ public class LevelUnloadingState : LevelBaseState
 				prop.gameObject.SetActive(false);
 			}
 			
-			ctx._currentLevel.UnfreezeAll();
+			ctx._currentLevel.ToggleColliders(true);
 			ctx.SwitchState(ctx.EmptyState);
 		} else {
 			_unloadProgress += (Time.deltaTime / ctx._unloadTime);

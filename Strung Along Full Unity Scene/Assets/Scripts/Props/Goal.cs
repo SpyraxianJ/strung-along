@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Goal : MonoBehaviour
+public class Goal : MonoBehaviour, IResettable
 {
 	public LayerMask _puppetMask;
 	public bool _isPlayer2;
@@ -97,7 +97,7 @@ public class Goal : MonoBehaviour
 		}
 	}
 	
-	void Reset() {
+	public void Reset() {
 		_isActive = false;
 	}
 	

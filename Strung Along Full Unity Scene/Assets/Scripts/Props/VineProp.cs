@@ -2,6 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/**
+
+DEPRECATED: use KillBox instead.
+
+**/
 public class VineProp : MonoBehaviour
 {
 	public LayerMask _puppetMask;
