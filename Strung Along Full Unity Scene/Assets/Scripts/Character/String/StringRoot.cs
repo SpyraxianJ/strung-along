@@ -171,6 +171,8 @@ public class StringRoot : MonoBehaviour
         if (elasticString)
         {
 
+            PuppetController puppet = connectedObject.GetComponent<PuppetController>();
+
             if (distance > stringStretchLength)
             {
 
@@ -178,6 +180,19 @@ public class StringRoot : MonoBehaviour
                 difference = new Vector3(difference.x, 0, difference.z);
 
                 connectedObject.AddForce(difference * stringForcePerUnit);
+
+                if (puppet != null)
+                {
+                    // send pulled message
+                    puppet.beingPulled = true;
+                }
+
+            }
+
+            if (puppet != null)
+            {
+                // send not pulled message
+                puppet.beingPulled = false;
             }
 
         }

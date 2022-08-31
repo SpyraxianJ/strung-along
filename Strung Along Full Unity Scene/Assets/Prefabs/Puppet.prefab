@@ -1383,9 +1383,11 @@ MonoBehaviour:
   isGrounded: 1
   isClimbing: 0
   groundedMaxSpeed: 6
-  bolCanSlingshot: 0
+  canSlingshot: 0
+  SlingshotForce: 20
   secondPlayer: 0
-  beingPulled: 0
+  beingPuppetPulled: 0
+  beingStringPulled: 0
   stamina: 0
   staminaDrain: 0.5
   staminaRegen: 1

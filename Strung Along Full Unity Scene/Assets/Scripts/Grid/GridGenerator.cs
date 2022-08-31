@@ -50,12 +50,13 @@ public class GridGenerator : MonoBehaviour
             // This prevents spitting out an error during the editor
             //throw;
         }
+        if (Dont == false)
+            GenerateGrid(true); // Grid only needs to be generated once since it can be quite intensive, call directly if needed again
+
     }
 
     void Start()
     {
-        if (Dont == false)
-            GenerateGrid(true); // Grid only needs to be generated once since it can be quite intensive, call directly if needed again
     }
 
     public void GenerateGrid(bool destoryPoints)
@@ -66,7 +67,7 @@ public class GridGenerator : MonoBehaviour
             {
                 if (manager.points[i] != null)
                 {
-                    Destroy(manager.points[i].gameObject);
+                    DestroyImmediate(manager.points[i].gameObject);
                 }
             }
             manager.points.RemoveAll(s => s == null);
