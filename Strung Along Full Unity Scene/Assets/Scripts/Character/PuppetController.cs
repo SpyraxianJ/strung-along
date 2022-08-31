@@ -50,6 +50,11 @@ public class PuppetController : MonoBehaviour
 
     [Space]
 
+    [Tooltip("This player can grab grab the other player")]
+    public bool bolCanSlingshot;
+
+    [Space]
+
     [Header("State")]
 
     [Tooltip("Used to determine if this puppet is the second player, if true it will use the second player's controls and other play-specific things")]
@@ -197,6 +202,8 @@ public class PuppetController : MonoBehaviour
     public Collider grabbingObject;
 
     public LayerMask grabbingMask;
+    [Tooltip("Grabbing mask for when slingshot is active")]
+    public LayerMask grabbingMaskSlingshot;
     public Collider colliderThis;
     float grabbedObjectDistance;
     float grabbedObjectHeight;
@@ -315,7 +322,7 @@ public class PuppetController : MonoBehaviour
 
         // Animator Variables
         if (puppetAnimator != null) {
-            puppetAnimator.SetFloat("Speed", new Vector3(rb.velocity.x, 0, rb.velocity.z).magnitude);
+            puppetAnimator.SetFloat("Speed", Mathf.Lerp(new Vector3(rb.velocity.x, 0, rb.velocity.z).magnitude, puppetAnimator.GetFloat("Speed"), 0.8f));
             puppetAnimator.SetBool("Grounded", isGrounded);
 			puppetAnimator.SetBool("Climbing", isClimbing);
             puppetAnimator.SetFloat("YVelocity", rb.velocity.y);
@@ -752,45 +759,78 @@ public class PuppetController : MonoBehaviour
     public void GrabStart()
     {
 
+        // To ignore raycasts
+        int layer = gameObject.layer;
+        gameObject.layer = 2;
+
         // Check if we can grab an object, if we can, ignore the climb part
 
-        RaycastHit hit;
+        RaycastHit playerHit;
 
-        if (Physics.Raycast(transform.position + Vector3.up, visualReference.transform.forward, out hit, grabDistance, grabbingMask, QueryTriggerInteraction.Collide) && grabbing == false)
+        // We check players grabbing each other before anything else
+        if (bolCanSlingshot && Physics.Raycast(transform.position + Vector3.up, visualReference.transform.forward, out playerHit, grabDistance, grabbingMaskSlingshot, QueryTriggerInteraction.Collide) && grabbing == false)
         {
-
-            grabbingObject = hit.collider;
-            grabbing = true;
-            Physics.IgnoreCollision(grabbingObject, colliderThis, true);
-            //transform.position = hit.point - (visualReference.transform.forward) * grabDistance;
-            Debug.Log("Started Grabbing " + grabbingObject.gameObject);
-            grabbedObjectDistance = Vector3.Distance(hit.point, grabbingObject.gameObject.transform.position + Vector3.up); // Not doing the thing >:(((
-            grabbingObject.gameObject.layer = 11;
-			if (grabbingObject.attachedRigidbody) grabbingObject.attachedRigidbody.freezeRotation = true;
-            grabbedObjectHeight = grabbingObject.gameObject.transform.position.y;
-            grabStartHeight = transform.position.y;
-			// HELLO harper here. my objects want to know when they're being grabbed (and by who) so bam
-			grabbingObject.gameObject.SendMessage("OnGrab", this, SendMessageOptions.DontRequireReceiver);
-
-        }
-        else 
-        {
-            if (stamina > 0)
+            if (playerHit.collider == otherPuppet.gameObject)
             {
-                // First, we need to find out where we are in relation to our own string
-                SetClimbValue();
+                grabbingObject = playerHit.collider;
+                grabbing = true;
+                Physics.IgnoreCollision(grabbingObject, colliderThis, true);
+                //transform.position = hit.point - (visualReference.transform.forward) * grabDistance;
+                Debug.Log("Started Grabbing " + grabbingObject.gameObject);
+                grabbedObjectDistance = Vector3.Distance(playerHit.point, grabbingObject.gameObject.transform.position + Vector3.up); // Not doing the thing >:(((
+                grabbedObjectHeight = grabbingObject.gameObject.transform.position.y;
+                grabStartHeight = transform.position.y;
 
-                isClimbing = true;
-
-                //rb.velocity = Vector3.zero; // makes climbing feel a little worse, but prevents some exploits, consider turning of if desired.
-
-                if (isGrounded)
-                {
-                    conTut.jumpTimer += 1;
-                }
-
+                // Not sure if you still need this for when players are grabbed, but it's here anyway o7
+                grabbingObject.gameObject.SendMessage("OnGrab", this, SendMessageOptions.DontRequireReceiver);
+            }
+            else
+            {
+                Debug.LogWarning("The player just tried to grab something on the player layer that wasn't the other puppet, might be an issue");
             }
         }
+        else {
+            RaycastHit hit;
+
+            if (Physics.Raycast(transform.position + Vector3.up, visualReference.transform.forward, out hit, grabDistance, grabbingMask, QueryTriggerInteraction.Collide) && grabbing == false)
+            {
+
+                grabbingObject = hit.collider;
+                grabbing = true;
+                Physics.IgnoreCollision(grabbingObject, colliderThis, true);
+                //transform.position = hit.point - (visualReference.transform.forward) * grabDistance;
+                Debug.Log("Started Grabbing " + grabbingObject.gameObject);
+                grabbedObjectDistance = Vector3.Distance(hit.point, grabbingObject.gameObject.transform.position + Vector3.up); // Not doing the thing >:(((
+                grabbingObject.gameObject.layer = 11;
+                if (grabbingObject.attachedRigidbody) grabbingObject.attachedRigidbody.freezeRotation = true;
+                grabbedObjectHeight = grabbingObject.gameObject.transform.position.y;
+                grabStartHeight = transform.position.y;
+                // HELLO harper here. my objects want to know when they're being grabbed (and by who) so bam
+                grabbingObject.gameObject.SendMessage("OnGrab", this, SendMessageOptions.DontRequireReceiver);
+
+            }
+            else
+            {
+                if (stamina > 0)
+                {
+                    // First, we need to find out where we are in relation to our own string
+                    SetClimbValue();
+
+                    isClimbing = true;
+
+                    //rb.velocity = Vector3.zero; // makes climbing feel a little worse, but prevents some exploits, consider turning of if desired.
+
+                    if (isGrounded)
+                    {
+                        conTut.jumpTimer += 1;
+                    }
+
+                }
+            }
+        }
+
+        // Undoing the ignoreraycast change
+        gameObject.layer = layer; // should be 6 but just in case
 
     }
 

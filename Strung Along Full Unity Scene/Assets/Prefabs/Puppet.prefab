@@ -1353,9 +1353,9 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.5
-  m_Height: 1.75
+  m_Height: 2.5
   m_Direction: 1
-  m_Center: {x: 0, y: 1, z: 0}
+  m_Center: {x: 0, y: 1.375, z: 0}
 --- !u!114 &8461784611382557435
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1371,17 +1371,10 @@ MonoBehaviour:
   otherPuppet: {fileID: 0}
   stringManager: {fileID: 0}
   thisStringRoot: {fileID: 0}
-  staminaUI: {fileID: 9045823292228298602}
   visualReference: {fileID: 8461784611468559132}
-  audioManager: {fileID: 4515963582889413070}
-  puppetAnimator: {fileID: 7046403660172629478}
-  conTut: {fileID: 6077883536283109890}
-  ikHandler: {fileID: 7156046317726047647}
-  climbIK: {fileID: 8208900398337834749}
   gridManager: {fileID: 0}
   jumpParticles: {fileID: 6398212522740349385, guid: 2663c79d40148d445b3edd06815879d1, type: 3}
   landParticles: {fileID: 4363317295493776453, guid: 260e3cf92ef9c294292aa31b04fed989, type: 3}
-  playerIndex: 0
   move: {x: 0, y: 0}
   movePressed: 0
   jumpPressed: 0
@@ -1390,14 +1383,12 @@ MonoBehaviour:
   isGrounded: 1
   isClimbing: 0
   groundedMaxSpeed: 6
+  bolCanSlingshot: 0
   secondPlayer: 0
   beingPulled: 0
-  climbValue: 0
   stamina: 0
   staminaDrain: 0.5
   staminaRegen: 1
-  gridPoint1: {fileID: 0}
-  gridPoint2: {fileID: 0}
   groundedAcceleration: 1
   groundedDeceleration: 0.08
   pulledAcceleration: 3
@@ -1440,6 +1431,9 @@ MonoBehaviour:
   grabbingMask:
     serializedVersion: 2
     m_Bits: 2560
+  grabbingMaskSlingshot:
+    serializedVersion: 2
+    m_Bits: 64
   colliderThis: {fileID: 8461784611382557439}
 --- !u!114 &6077883536283109890
 MonoBehaviour:
@@ -1448,19 +1442,19 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8461784611382557424}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fc4fbfb967b10aa41909741ea4726c9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   lerpSpeed: 10
-  movementTime: 10
-  movementTimer: 0
+  movementTime: 60
+  movementTimer: 50
   movementImage: {fileID: 2789193651490055493}
   climbTime: 10
   climbTimer: 0
   climbImage: {fileID: 481019245731973780}
-  jumpTime: 5
+  jumpTime: 10
   jumpTimer: 0
   jumpImage: {fileID: 4784249668392848641}
 --- !u!54 &8461784611382557434
