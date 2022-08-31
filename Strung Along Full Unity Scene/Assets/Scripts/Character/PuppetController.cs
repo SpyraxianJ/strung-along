@@ -770,7 +770,7 @@ public class PuppetController : MonoBehaviour
         // We check players grabbing each other before anything else
         if (bolCanSlingshot && Physics.Raycast(transform.position + Vector3.up, visualReference.transform.forward, out playerHit, grabDistance, grabbingMaskSlingshot, QueryTriggerInteraction.Collide) && grabbing == false)
         {
-            if (playerHit.collider == otherPuppet.gameObject)
+            if (playerHit.collider.gameObject == otherPuppet.gameObject)
             {
                 grabbingObject = playerHit.collider;
                 grabbing = true;
@@ -786,7 +786,7 @@ public class PuppetController : MonoBehaviour
             }
             else
             {
-                Debug.LogWarning("The player just tried to grab something on the player layer that wasn't the other puppet, might be an issue");
+                Debug.LogWarning("The player just tried to grab something on the player layer that wasn't the other puppet, might be an issue: Was " + playerHit.collider.gameObject + " and should have been " + otherPuppet.gameObject);
             }
         }
         else {
