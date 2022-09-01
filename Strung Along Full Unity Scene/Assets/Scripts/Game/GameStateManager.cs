@@ -14,16 +14,16 @@ public class GameStateManager : MonoBehaviour
 	
 	// level states
 	public LevelLoadingState LoadingState = new LevelLoadingState();
-	// public LevelStartState StartState = new LevelStartState();
+	public LevelStartState StartState = new LevelStartState();
 	public LevelPlayingState PlayingState = new LevelPlayingState();
-	// public LevelEndState EndState = new LevelEndState();
+	public LevelEndState EndState = new LevelEndState();
 	public LevelUnloadingState UnloadingState = new LevelUnloadingState();
 	
 	// event states
 	public EventFirstPlayState FirstPlayState = new EventFirstPlayState();
-	// public EventActChangeState ActChangeState = new EventActChangeState();
-	// public EventWallBreakState WallBreakState = new EventWallBreakState();
-	// public EventGameEndState GameEndState = new EventGameEndState();
+	public EventActChangeState ActChangeState = new EventActChangeState();
+	public EventWallBreakState WallBreakState = new EventWallBreakState();
+	public EventGameEndState GameEndState = new EventGameEndState();
 	
 	
 	public const float TOP_BOUNDARY = 24f; // the "top" of the level. Y coordinate.
