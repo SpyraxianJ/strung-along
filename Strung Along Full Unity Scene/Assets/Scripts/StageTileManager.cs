@@ -8,7 +8,7 @@ public class StageTileManager : MonoBehaviour
     public List<Transform> tiles;
     public List<Vector3> tilesPos, tilesPosDropped;
     public Transform platforms;
-    private float moveVelocity = 3f;
+    private float moveVelocity = 2f;
     // Start is called before the first frame update
     void Start()
     {

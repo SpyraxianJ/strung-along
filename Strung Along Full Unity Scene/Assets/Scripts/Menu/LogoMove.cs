@@ -39,6 +39,7 @@ public class LogoMove : MonoBehaviour
         }
         else
             stageOne.intensity = lightIntensity;
+
         if (flicker2)
         {
             if (timeVar % 4 == 0)
