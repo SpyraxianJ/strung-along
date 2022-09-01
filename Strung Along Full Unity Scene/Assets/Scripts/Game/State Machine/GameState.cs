@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public abstract class LevelBaseState
+public abstract class GameState
 {
 	public abstract void EnterState(GameStateManager ctx);
 	

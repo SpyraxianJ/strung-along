@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class LevelUnloadingState : LevelBaseState
+public class LevelUnloadingState : GameState
 {
 	
 	float _unloadProgress = 0.0f;

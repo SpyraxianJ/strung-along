@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class LevelLoadingState : LevelBaseState
+public class LevelLoadingState : GameState
 {
 	
 	float _loadProgress = 0.0f;
@@ -34,9 +34,10 @@ public class LevelLoadingState : LevelBaseState
 			SetStrings(ctx._p1Anchor, ctx._currentLevel._p1Spawn._stringLength, ctx._currentLevel._p1Spawn._elasticString);
 			SetStrings(ctx._p2Anchor, ctx._currentLevel._p2Spawn._stringLength, ctx._currentLevel._p2Spawn._elasticString);
 			
-			if (ctx._currentLevel == ctx._database.GetFirstLevel() ) {
+			if (ctx._firstPlayEvent) {
 				// it's the first level: play the intro cinematic.
-				ctx.SwitchState(ctx.FirstPlayingState);
+				ctx.SwitchState(ctx.FirstPlayState);
+				ctx._firstPlayEvent = false;
 			} else {
 				// otherwise just go to next level.
 				ctx.SwitchState(ctx.PlayingState);

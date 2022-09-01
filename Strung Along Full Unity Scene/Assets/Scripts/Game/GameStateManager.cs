@@ -8,13 +8,23 @@ using UnityEngine.SceneManagement;
 
 public class GameStateManager : MonoBehaviour
 {
-	// state machine control
-	LevelBaseState _currentState;
-	public LevelEmptyState EmptyState = new LevelEmptyState();
+	// state machine
+	GameState _currentState;
+	public GameEmptyState EmptyState = new GameEmptyState();
+	
+	// level states
 	public LevelLoadingState LoadingState = new LevelLoadingState();
-	public LevelFirstPlayingState FirstPlayingState = new LevelFirstPlayingState();
+	// public LevelStartState StartState = new LevelStartState();
 	public LevelPlayingState PlayingState = new LevelPlayingState();
+	// public LevelEndState EndState = new LevelEndState();
 	public LevelUnloadingState UnloadingState = new LevelUnloadingState();
+	
+	// event states
+	public EventFirstPlayState FirstPlayState = new EventFirstPlayState();
+	// public EventActChangeState ActChangeState = new EventActChangeState();
+	// public EventWallBreakState WallBreakState = new EventWallBreakState();
+	// public EventGameEndState GameEndState = new EventGameEndState();
+	
 	
 	public const float TOP_BOUNDARY = 24f; // the "top" of the level. Y coordinate.
 	public const float BOTTOM_BOUNDARY = -10f;
@@ -52,9 +62,10 @@ public class GameStateManager : MonoBehaviour
 	[Tooltip("Volume effect that fades in when a puppet dies. Also fades in any Image placed as a child.")]
 	public Volume _deathEffect;
 	
-	[Header("Debug")]
-	[Tooltip("it was getting annoying")]
-	public bool _skipIntroCinematic = false;
+	[Header("Gameplay Flags")]
+	public bool _firstPlayEvent = true;
+	//public bool _
+	
 	[HideInInspector] public bool _p1Alive = true;
 	[HideInInspector] public bool _p2Alive = true;
 	[HideInInspector] public Level _nextLevelToLoad = null;
@@ -78,7 +89,7 @@ public class GameStateManager : MonoBehaviour
         _currentState.UpdateState(this);
     }
 	
-	public void SwitchState(LevelBaseState state) {
+	public void SwitchState(GameState state) {
 		_currentState = state;
 		_currentState.EnterState(this);
 	}

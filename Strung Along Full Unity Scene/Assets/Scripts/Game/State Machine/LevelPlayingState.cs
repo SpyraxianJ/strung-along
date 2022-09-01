@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class LevelPlayingState : LevelBaseState
+public class LevelPlayingState : GameState
 {
 	float _deathTimer = 0.0f;
 	int _attemptCount = 0;
