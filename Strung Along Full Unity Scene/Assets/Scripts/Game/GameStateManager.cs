@@ -21,9 +21,9 @@ public class GameStateManager : MonoBehaviour
 	
 	// event states
 	public EventFirstPlayState FirstPlayState = new EventFirstPlayState();
-	// public EventActChangeState ActChangeState = new EventActChangeState();
-	// public EventWallBreakState WallBreakState = new EventWallBreakState();
-	// public EventGameEndState GameEndState = new EventGameEndState();
+	public EventActChangeState ActChangeState = new EventActChangeState();
+	public EventWallBreakState WallBreakState = new EventWallBreakState();
+	public EventGameEndState GameEndState = new EventGameEndState();
 	
 	
 	public const float TOP_BOUNDARY = 24f; // the "top" of the level. Y coordinate.
