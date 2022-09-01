@@ -14,9 +14,9 @@ public class GameStateManager : MonoBehaviour
 	
 	// level states
 	public LevelLoadingState LoadingState = new LevelLoadingState();
-	// public LevelStartState StartState = new LevelStartState();
+	public LevelStartState StartState = new LevelStartState();
 	public LevelPlayingState PlayingState = new LevelPlayingState();
-	// public LevelEndState EndState = new LevelEndState();
+	public LevelEndState EndState = new LevelEndState();
 	public LevelUnloadingState UnloadingState = new LevelUnloadingState();
 	
 	// event states
