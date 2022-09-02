@@ -43,16 +43,16 @@ public class StagelightController : MonoBehaviour
 	}
 	
 	IEnumerator MainsFlicker() {
-		foreach (Light light in _mains) {
-			if (Random.Range(0, 200) == 69  ) {
-				light.intensity = _mainIntensity * 0.5f;
-			} else {
-				light.intensity = _mainIntensity;
-			}
-		}
+		//foreach (Light light in _mains) {
+		//	if (Random.Range(0, 200) == 69  ) {
+		//		light.intensity = _mainIntensity * 0.5f;
+		//	} else {
+		//		light.intensity = _mainIntensity;
+		//	}
+		//}
 		
 		yield return null;
-		_mainsRoutine = StartCoroutine( MainsFlicker() );
+		//_mainsRoutine = StartCoroutine( MainsFlicker() );
 	}
 	
 	IEnumerator FadeMainsTo(float targetIntensity) {
@@ -71,16 +71,16 @@ public class StagelightController : MonoBehaviour
 	}
 	
 	IEnumerator FrontFlicker() {
-		foreach (Light light in _front) {
-			if (Random.Range(0, 200) == 69  ) {
-				light.intensity = 1.0f;
-			} else {
-				light.intensity = Random.Range(_frontIntensity * 0.8f, _frontIntensity);
-			}
-		}
+		//foreach (Light light in _front) {
+		//	if (Random.Range(0, 200) == 69  ) {
+		//		light.intensity = 1.0f;
+		//	} else {
+		//		light.intensity = Random.Range(_frontIntensity * 0.8f, _frontIntensity);
+		//	}
+		//}
 		
 		yield return null;
-		_frontRoutine = StartCoroutine( FrontFlicker() );
+		//_frontRoutine = StartCoroutine( FrontFlicker() );
 	}
 	
 	IEnumerator FrontPingPong(int iterations) {
