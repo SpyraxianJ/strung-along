@@ -17,8 +17,8 @@ public class LeverProp : MonoBehaviour, IResettable
 	//[Tooltip("Can the lever be activated by a prop pushing it? Ignores any player exclusivity.")]
 	//public bool _physics = false;
 	[Header("Lever Properties")]
-	[Tooltip("Should the lever bounce back to it's neutral position?")]
-	public bool _springy = true;
+	//[Tooltip("Should the lever bounce back to it's neutral position?")]
+	bool _springy = true;
 	[Tooltip("Pulling right causes reaction as normal, pulling left goes in reverse direction.")]
 	public bool _twoWay = true;
 	
@@ -96,6 +96,7 @@ public class LeverProp : MonoBehaviour, IResettable
 		// in deadzone, lever isn't activating.
 		// otherwise fire to reactors a factor of how far the lever is turned.
 		_activationFactor = Mathf.Abs(currentAngle) < _deadzone ? 0.0f : Mathf.Clamp(currentAngle / (_turnAngle + _deadzone), -1.0f, 1.0f);
+		if (!_twoWay) _activationFactor = Mathf.Abs(_activationFactor);
 		
 	}
 	
@@ -139,6 +140,9 @@ public class LeverProp : MonoBehaviour, IResettable
 		pup.GetComponent<Rigidbody>().velocity = Vector3.zero;
 		// lever cant be knocked around by physics while grabbed
 		_leverHandle.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+		// lever can't be pushed or push objects while moving
+		_leverHandle.GetComponent<Collider>().enabled = false;
+		
 		
 		// instead, movement input will turn the lever!
 		// TODO: support for up-down levers.
@@ -153,11 +157,13 @@ public class LeverProp : MonoBehaviour, IResettable
 	// sent by puppets when they release something
 	void OnReleased(PuppetController pup) {
 		_grabbed = false;
+		_leverHandle.GetComponent<Collider>().enabled = true;
 		SetSpringy(_springy);
 	}
 	
 	public void Reset() {
 		_grabbed = false;
+		_leverHandle.GetComponent<Collider>().enabled = true;
 		SetSpringy(_springy);
 		_leverHandle.rotation = Quaternion.identity;
 		_SFXticker = 0;
