@@ -64,14 +64,14 @@ public class GameStateManager : MonoBehaviour
 	
 	[Header("Gameplay Flags")]
 	public bool _firstPlayEvent = true;
-	//public bool _
-	
+	[HideInInspector] public bool _interrupt = false;
 	[HideInInspector] public bool _p1Alive = true;
 	[HideInInspector] public bool _p2Alive = true;
+	
 	[HideInInspector] public Level _nextLevelToLoad = null;
 	[HideInInspector] public Level _currentLevel = null;
 	[HideInInspector] public float _totalPlaytime = 0.0f;
-	[HideInInspector] public bool _interrupt = false;
+	
 
     void Start() {
 		_reaper = GetComponent<GrimReaper>();
