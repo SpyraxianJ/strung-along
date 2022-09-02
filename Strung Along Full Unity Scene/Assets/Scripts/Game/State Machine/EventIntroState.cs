@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
 
-public class EventFirstPlayState : GameState
+public class EventIntroState : GameState
 {
     public override void EnterState(GameStateManager ctx) {
 		Debug.Log("Playing first level intro cinematic.");
@@ -20,17 +20,16 @@ public class EventFirstPlayState : GameState
 	}
 
 	public override void UpdateState(GameStateManager ctx) {
-		if (ctx._cinematics._director.state == PlayState.Playing) {
-			
+		
+		if ( ctx._cinematics.Playing() ) {
 			ctx._cinematics.DisablePlayers(ctx._player1, ctx._player2);
 			ctx._cinematics.ForceLook(ctx._player1, ctx._camera.Position());
 			ctx._cinematics.ForceLook(ctx._player2, ctx._camera.Position());
-			
-			
 		} else {
 			ctx._lights.BrightenMains();
 			ctx.SwitchState(ctx.PlayingState);
 		}
+		
 		
 		
 		

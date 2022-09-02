@@ -12,7 +12,7 @@ public class GameStateManager : MonoBehaviour
 	GameState _currentState;
 	public GameEmptyState EmptyState = new GameEmptyState();
 	
-	// level states
+	// level loop states
 	public LevelLoadingState LoadingState = new LevelLoadingState();
 	public LevelStartState StartState = new LevelStartState();
 	public LevelPlayingState PlayingState = new LevelPlayingState();
@@ -20,7 +20,7 @@ public class GameStateManager : MonoBehaviour
 	public LevelUnloadingState UnloadingState = new LevelUnloadingState();
 	
 	// event states
-	public EventFirstPlayState FirstPlayState = new EventFirstPlayState();
+	public EventIntroState IntroState = new EventIntroState();
 	public EventActChangeState ActChangeState = new EventActChangeState();
 	public EventWallBreakState WallBreakState = new EventWallBreakState();
 	public EventGameEndState GameEndState = new EventGameEndState();
@@ -63,7 +63,7 @@ public class GameStateManager : MonoBehaviour
 	public Volume _deathEffect;
 	
 	[Header("Gameplay Flags")]
-	public bool _firstPlayEvent = true;
+	public bool _playIntro = true;
 	[HideInInspector] public bool _interrupt = false;
 	[HideInInspector] public bool _p1Alive = true;
 	[HideInInspector] public bool _p2Alive = true;

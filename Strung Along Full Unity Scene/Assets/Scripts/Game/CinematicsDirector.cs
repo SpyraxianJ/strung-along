@@ -20,6 +20,10 @@ public class CinematicsDirector : MonoBehaviour
         _director = GetComponent<PlayableDirector>();
     }
 	
+	public bool Playing() {
+		return _director.state == PlayState.Playing;
+	}
+	
 	public void PlayCutscene(PlayableAsset cinematic) {
 		_director.Stop();
 		_director.playableAsset = cinematic;
