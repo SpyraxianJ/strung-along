@@ -8,8 +8,6 @@ public class EventIntroState : GameState
     public override void EnterState(GameStateManager ctx) {
 		Debug.Log("Playing first level intro cinematic.");
 		
-		ctx._camera.SwitchCam(2);
-		
 		ctx._cinematics.PlayCutscene(ctx._cinematics._intro);
 	
 		// teleport under their string roots
