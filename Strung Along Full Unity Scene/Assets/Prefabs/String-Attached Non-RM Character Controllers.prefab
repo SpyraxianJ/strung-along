@@ -286,7 +286,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3167654758654512363}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 11, y: 11, z: -2}
+  m_LocalPosition: {x: 11, y: 11, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -598,7 +598,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3167654758976716791}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -11, y: 11, z: -2}
+  m_LocalPosition: {x: -11, y: 11, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1017,10 +1017,6 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 0.2
       objectReference: {fileID: 0}
-    - target: {fileID: 1779473841372733555, guid: 22b6b98194cdd0841b47984bfc299e19, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -2
-      objectReference: {fileID: 0}
     - target: {fileID: 1779473841372733556, guid: 22b6b98194cdd0841b47984bfc299e19, type: 3}
       propertyPath: staminaUI
       value: 
@@ -1172,10 +1168,6 @@ PrefabInstance:
     - target: {fileID: 8946709668202817516, guid: 22b6b98194cdd0841b47984bfc299e19, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8946709668202817516, guid: 22b6b98194cdd0841b47984bfc299e19, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -2
       objectReference: {fileID: 0}
     - target: {fileID: 9078391232204267763, guid: 22b6b98194cdd0841b47984bfc299e19, type: 3}
       propertyPath: secondPlayer

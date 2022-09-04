@@ -910,11 +910,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thisPuppet: {fileID: 8461784611382557435}
   footsteps:
-  - {fileID: 8300000, guid: 74dee302409163c408c63a7b5c78e7c9, type: 3}
-  - {fileID: 8300000, guid: b85f57e03db35154f92db8c60deaf141, type: 3}
-  - {fileID: 8300000, guid: 652df8450ac798742b8fa27859c06cd9, type: 3}
-  - {fileID: 8300000, guid: 9f2e22b6fe1959048bd458b20929925a, type: 3}
-  - {fileID: 8300000, guid: 41ed619dd8fb1494b8a0a7b26f946fa1, type: 3}
+  - {fileID: 8300000, guid: 731c29973d102d64ab09e20650e91581, type: 3}
+  - {fileID: 8300000, guid: f83b6ea71c95d6d4183e76b6fea393aa, type: 3}
   landings:
   - {fileID: 8300000, guid: 3361b0ce69cbf19499c2a5174e72576f, type: 3}
   jumps:
@@ -934,8 +931,8 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
-  m_Volume: 1
+  m_PlayOnAwake: 0
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -1392,6 +1389,8 @@ MonoBehaviour:
   stamina: 0
   staminaDrain: 0.5
   staminaRegen: 1
+  gridPoint1: {fileID: 0}
+  gridPoint2: {fileID: 0}
   groundedAcceleration: 1
   groundedDeceleration: 0.08
   pulledAcceleration: 3
@@ -1445,7 +1444,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8461784611382557424}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fc4fbfb967b10aa41909741ea4726c9a, type: 3}
   m_Name: 

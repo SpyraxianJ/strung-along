@@ -8,7 +8,6 @@ public class EventIntroState : GameState
     public override void EnterState(GameStateManager ctx) {
 		Debug.Log("Playing first level intro cinematic.");
 		
-		ctx._lights.DimMains();
 		ctx._camera.SwitchCam(2);
 		
 		ctx._cinematics.PlayCutscene(ctx._cinematics._intro);
@@ -26,13 +25,8 @@ public class EventIntroState : GameState
 			ctx._cinematics.ForceLook(ctx._player1, ctx._camera.Position());
 			ctx._cinematics.ForceLook(ctx._player2, ctx._camera.Position());
 		} else {
-			ctx._lights.BrightenMains();
 			ctx.SwitchState(ctx.PlayingState);
 		}
-		
-		
-		
-		
 		
 	}
 	
