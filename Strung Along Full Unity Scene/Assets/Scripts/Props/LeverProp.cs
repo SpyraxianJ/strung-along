@@ -17,8 +17,6 @@ public class LeverProp : MonoBehaviour, IResettable
 	//[Tooltip("Can the lever be activated by a prop pushing it? Ignores any player exclusivity.")]
 	//public bool _physics = false;
 	[Header("Lever Properties")]
-	//[Tooltip("Should the lever bounce back to it's neutral position?")]
-	bool _springy = true;
 	[Tooltip("Pulling right causes reaction as normal, pulling left goes in reverse direction.")]
 	public bool _twoWay = true;
 	
@@ -47,7 +45,7 @@ public class LeverProp : MonoBehaviour, IResettable
 		// change color of lever depending on who can use it.
 		SetColor();
 		// update spring. we turn spring off when its being grabbed.
-		SetSpringy(_springy);
+		SetSpringy(true);
 		
 		// set lever centre of mass to the pivot point (which is just zero)
 		_leverHandle.GetComponent<Rigidbody>().centerOfMass = Vector3.zero;
@@ -158,13 +156,11 @@ public class LeverProp : MonoBehaviour, IResettable
 	void OnReleased(PuppetController pup) {
 		_grabbed = false;
 		_leverHandle.GetComponent<Collider>().enabled = true;
-		SetSpringy(_springy);
+		SetSpringy(true);
 	}
 	
 	public void Reset() {
-		_grabbed = false;
-		_leverHandle.GetComponent<Collider>().enabled = true;
-		SetSpringy(_springy);
+		OnReleased(null);
 		_leverHandle.rotation = Quaternion.identity;
 		_SFXticker = 0;
 	}

@@ -20,9 +20,11 @@ Grab Handle and tells the Lever what's goin on.
 public class GrabListener : MonoBehaviour
 {
 	public GameObject _listener;
+	Vector3 resetPos = Vector3.zero;
 	
 	void Start() {
 		GetComponent<Collider>().isTrigger = true;
+		resetPos = transform.localPosition;
 	}
 
 	void OnGrab(PuppetController pup) {
@@ -34,7 +36,7 @@ public class GrabListener : MonoBehaviour
 	}
 	
 	void OnReleased(PuppetController pup) {
-		transform.localPosition = Vector3.zero;
+		transform.localPosition = resetPos;
 		_listener.SendMessage("OnReleased", pup);
 	}
 	

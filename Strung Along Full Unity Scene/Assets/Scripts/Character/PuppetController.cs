@@ -800,9 +800,6 @@ public class PuppetController : MonoBehaviour
                 grabbedObjectHeight = grabbingObject.gameObject.transform.position.y;
                 grabStartHeight = transform.position.y;
                 otherPuppet.beingPuppetPulled = false;
-
-                // Not sure if you still need this for when players are grabbed, but it's here anyway o7
-                grabbingObject.gameObject.SendMessage("OnGrab", this, SendMessageOptions.DontRequireReceiver);
             }
             else
             {
@@ -818,11 +815,9 @@ public class PuppetController : MonoBehaviour
                 grabbingObject = hit.collider;
                 grabbing = true;
                 Physics.IgnoreCollision(grabbingObject, colliderThis, true);
-                //transform.position = hit.point - (visualReference.transform.forward) * grabDistance;
                 Debug.Log("Started Grabbing " + grabbingObject.gameObject);
                 grabbedObjectDistance = Vector3.Distance(hit.point, grabbingObject.gameObject.transform.position + Vector3.up); // Not doing the thing >:(((
                 grabbingObject.gameObject.layer = 11;
-                if (grabbingObject.attachedRigidbody) grabbingObject.attachedRigidbody.freezeRotation = true;
                 grabbedObjectHeight = grabbingObject.gameObject.transform.position.y;
                 grabStartHeight = transform.position.y;
                 // HELLO harper here. my objects want to know when they're being grabbed (and by who) so bam
@@ -881,7 +876,6 @@ public class PuppetController : MonoBehaviour
                 otherPuppet.isGrounded = false;
             }
 
-            grabbingObject.gameObject.SendMessage("OnReleased", this, SendMessageOptions.DontRequireReceiver);
         }
         else
         {
