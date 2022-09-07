@@ -163,6 +163,12 @@ public class PuppetController : MonoBehaviour
     public float groundedRayDiameter = 0.3f;
     [Tooltip("This is how wide the landing detection rays are around the puppet, MUST BE LARGER THAN groundedRayRadius by 0.05")]
     public float landingRayDiameter = 0.45f;
+    [Tooltip("How smooth the force that keeps the player on the lines will be, setting to 1 basically allows you to move anywhere")]
+    [Range(0f, 1f)]
+    public float lineForceSmoothness = 0.6f;
+    [Tooltip("How easy it is to change lines, boosting this will make it so angles further than 45 degrees from the intended direction may still change to that line over parralel lines")]
+    [Range(0f, 5f)]
+    public float directionChangeBoost = 1f;
 
     [Space]
 
@@ -1066,12 +1072,21 @@ public class PuppetController : MonoBehaviour
                 Vector3 direction = at.connectedPoints[i].transform.position - gridPoint1.transform.position;
                 direction = new Vector3(direction.x, 0, direction.z).normalized * 10f;
 
+                float penalty = 0f;
 
-                if (Vector3.Distance((transform.position + (new Vector3(move.x, 0, move.y) * 6f) - new Vector3(gridPoint1.transform.position.x, transform.position.y, gridPoint1.transform.position.z)), direction) <= closest && at.connectedPoints[i] != at)
+                float angle = Vector3.Angle(gridPoint1.transform.position - gridPoint2.transform.position, gridPoint1.transform.position - at.connectedPoints[i].transform.position);
+                if (angle > 170 && angle < 190)
                 {
+                    penalty = directionChangeBoost;
+                }
+
+                if (Vector3.Distance((transform.position + (new Vector3(move.x, 0, move.y) * Mathf.Min((6f - penalty), 1f)) - new Vector3(gridPoint1.transform.position.x, transform.position.y, gridPoint1.transform.position.z)), direction) <= closest && at.connectedPoints[i] != at)
+                {
+
                     closest = Vector3.Distance(transform.position - gridPoint1.transform.position, direction);
                     g2 = at.connectedPoints[i];
                 }
+
 
                 if ((oldG1.transform.position - gridPoint2.transform.position).normalized == (at.transform.position - at.connectedPoints[i].transform.position).normalized & (oldG1.transform.position - gridPoint2.transform.position).normalized == -(at.transform.position - at.connectedPoints[i].transform.position).normalized)
                 {
@@ -1158,7 +1173,7 @@ public class PuppetController : MonoBehaviour
         rb.velocity = Vector3.Lerp(rb.velocity, rbOld, 0.95f);
 
         Vector3 newPos = Vector3.Project(relativePosition, relativeLineVector) + gridPoint1.transform.position;
-        transform.position = Vector3.Lerp(new Vector3(newPos.x, transform.position.y, newPos.z), transform.position, 0.5f);
+        transform.position = Vector3.Lerp(new Vector3(newPos.x, transform.position.y, newPos.z), transform.position, 0.9f);
 
     }
 
