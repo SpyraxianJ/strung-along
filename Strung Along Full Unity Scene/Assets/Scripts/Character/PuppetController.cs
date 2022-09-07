@@ -791,15 +791,34 @@ public class PuppetController : MonoBehaviour
         {
             if (playerHit.collider.gameObject == otherPuppet.gameObject)
             {
-                grabbingObject = playerHit.collider;
-                grabbing = true;
-                Physics.IgnoreCollision(grabbingObject, colliderThis, true);
-                //transform.position = hit.point - (visualReference.transform.forward) * grabDistance;
-                Debug.Log("Started Grabbing " + grabbingObject.gameObject);
-                grabbedObjectDistance = Vector3.Distance(playerHit.point, grabbingObject.gameObject.transform.position + Vector3.up); // Not doing the thing >:(((
-                grabbedObjectHeight = grabbingObject.gameObject.transform.position.y;
-                grabStartHeight = transform.position.y;
-                otherPuppet.beingPuppetPulled = false;
+
+
+                if (otherPuppet.grabbingObject.gameObject == this.gameObject)
+                {
+
+                    // Add in any additional effects you want on grab release here
+                    otherPuppet.GetComponent<Rigidbody>().velocity += (otherPuppet.transform.position - transform.position).normalized * 1f;
+                    gameObject.layer = layer;
+
+                    // Playing idle for now
+                    puppetAnimator.Play("Movement");
+                    otherPuppet.puppetAnimator.Play("Movement");
+
+                    otherPuppet.GrabRelease();
+
+                }
+                else {
+                    grabbingObject = playerHit.collider;
+                    grabbing = true;
+                    Physics.IgnoreCollision(grabbingObject, colliderThis, true);
+                    //transform.position = hit.point - (visualReference.transform.forward) * grabDistance;
+                    Debug.Log("Started Grabbing " + grabbingObject.gameObject);
+                    grabbedObjectDistance = Vector3.Distance(playerHit.point, grabbingObject.gameObject.transform.position + Vector3.up); // Not doing the thing >:(((
+                    grabbedObjectHeight = grabbingObject.gameObject.transform.position.y;
+                    grabStartHeight = transform.position.y;
+                    otherPuppet.beingPuppetPulled = false;
+                }
+
             }
             else
             {
@@ -890,7 +909,8 @@ public class PuppetController : MonoBehaviour
             }
         }
 
-        grabbingObject = null;
+        grabbing = false;
+        grabbingObject = colliderThis;
         grabbedObjectDistance = 0;
     }
 
