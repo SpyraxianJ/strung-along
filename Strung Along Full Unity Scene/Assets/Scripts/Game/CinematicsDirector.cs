@@ -25,10 +25,19 @@ public class CinematicsDirector : MonoBehaviour
 	}
 	
 	public void PlayCutscene(PlayableAsset cinematic) {
+		SkipCutscene();
 		_director.Stop();
 		_director.playableAsset = cinematic;
 		_director.RebuildGraph();
 		_director.Play();
+	}
+	
+	public void SkipCutscene() {
+		if (Playing() ) {
+			_director.time = _director.duration;
+			_director.Evaluate();
+		}
+		
 	}
 	
 	// during cinematics we often want the puppets to stand still and play an animation or something.

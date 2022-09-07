@@ -5,6 +5,8 @@ public class GameEmptyState : GameState
 	public override void EnterState(GameStateManager ctx) {
 		Debug.Log("Stage is clear!");
 		ctx._currentLevel = null;
+		
+		CheckFlags(ctx);
 	}
 	
 	public override void UpdateState(GameStateManager ctx) {
@@ -18,4 +20,14 @@ public class GameEmptyState : GameState
 		}
 		
 	}
+	
+	void CheckFlags(GameStateManager ctx) {
+		
+		if (ctx._playIntro) {
+			ctx.SwitchState(ctx.IntroState);
+			ctx._playIntro = false;
+		}
+		
+	}
+	
 }

@@ -34,14 +34,7 @@ public class LevelLoadingState : GameState
 			SetStrings(ctx._p1Anchor, ctx._currentLevel._p1Spawn._stringLength, ctx._currentLevel._p1Spawn._elasticString);
 			SetStrings(ctx._p2Anchor, ctx._currentLevel._p2Spawn._stringLength, ctx._currentLevel._p2Spawn._elasticString);
 			
-			if (ctx._playIntro) {
-				// it's the first level: play the intro cinematic.
-				ctx.SwitchState(ctx.IntroState);
-				ctx._playIntro = false;
-			} else {
-				// otherwise just go to next level.
-				ctx.SwitchState(ctx.PlayingState);
-			}
+			ctx.SwitchState(ctx.PlayingState);
 		} else {
 			_loadProgress += (Time.deltaTime / ctx._loadTime);
 		}

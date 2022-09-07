@@ -63,7 +63,9 @@ public class GameStateManager : MonoBehaviour
 	public Volume _deathEffect;
 	
 	[Header("Gameplay Flags")]
-	public bool _playIntro = true;
+	public bool _skipIntro = false;
+	
+	[HideInInspector] public bool _playIntro = true;
 	[HideInInspector] public bool _interrupt = false;
 	[HideInInspector] public bool _p1Alive = true;
 	[HideInInspector] public bool _p2Alive = true;
@@ -120,11 +122,13 @@ public class GameStateManager : MonoBehaviour
 		SceneManager.LoadScene("TitleScreen");
 	}
 	
-	// SKIP LEVEL
+	// SKIP LEVEL OR CUTSCENE
 	// tell the game to quit, but don't prevent it from loading whatever level is
 	// next in line. this simply acts as skipping the level!
+	// it also skips cutscenes, if one is playing.
 	public void RequestSkip() {
 		_interrupt = _currentState == PlayingState ? true : false;
+		_cinematics.SkipCutscene();
 	}
 	
 	// LEVEL SELECT
