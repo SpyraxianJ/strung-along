@@ -1035,16 +1035,21 @@ public class PuppetController : MonoBehaviour
         // Grid redirecting (Doing force to line after, so you can change your grid before getting forced onto it)
 
         GridPoint at = null;
+        GridPoint notAt = null;
         GridPoint oldG1 = gridPoint1;
 
         if (Vector3.Distance(new Vector3(gridPoint1.transform.position.x, transform.position.y, gridPoint1.transform.position.z), transform.position) <= pointRedirectDistance)
         {
             at = gridPoint1;
+            notAt = gridPoint2;
         }
         if (Vector3.Distance(new Vector3(gridPoint2.transform.position.x, transform.position.y, gridPoint2.transform.position.z), transform.position) <= pointRedirectDistance)
         {
             at = gridPoint2;
+            notAt = gridPoint1;
         }
+
+        GridPoint g2 = null;
 
         if (at != null)
         {
@@ -1062,10 +1067,10 @@ public class PuppetController : MonoBehaviour
                 direction = new Vector3(direction.x, 0, direction.z).normalized * 10f;
 
 
-                if (Vector3.Distance((transform.position + (new Vector3(move.x, 0, move.y) * 6f) - gridPoint1.transform.position), direction) <= closest && at.connectedPoints[i] != at)
+                if (Vector3.Distance((transform.position + (new Vector3(move.x, 0, move.y) * 6f) - new Vector3(gridPoint1.transform.position.x, transform.position.y, gridPoint1.transform.position.z)), direction) <= closest && at.connectedPoints[i] != at)
                 {
                     closest = Vector3.Distance(transform.position - gridPoint1.transform.position, direction);
-                    gridPoint2 = at.connectedPoints[i];
+                    g2 = at.connectedPoints[i];
                 }
 
                 if ((oldG1.transform.position - gridPoint2.transform.position).normalized == (at.transform.position - at.connectedPoints[i].transform.position).normalized & (oldG1.transform.position - gridPoint2.transform.position).normalized == -(at.transform.position - at.connectedPoints[i].transform.position).normalized)
@@ -1074,6 +1079,42 @@ public class PuppetController : MonoBehaviour
                 }
 
             }
+
+        }
+
+        if (g2 != null)
+        {
+            // We tried to change lines
+
+            float angle = Vector3.Angle(gridPoint1.transform.position - gridPoint2.transform.position, gridPoint1.transform.position - g2.transform.position);
+
+            if (angle > 170 && angle < 190)
+            {
+                // We are moving roughly in the same direction, check again if we should ACTUALLY change lines
+                Vector3 aimDirection = g2.transform.position - at.transform.position;
+                Vector3 currentDirection = notAt.transform.position - at.transform.position;
+                Vector3 playerTransform = transform.position - at.transform.position;
+
+                aimDirection = new Vector3(aimDirection.x, 0, aimDirection.z);
+                currentDirection = new Vector3(currentDirection.x, 0, currentDirection.z);
+                playerTransform = new Vector3(playerTransform.x, 0, playerTransform.z);
+
+                if (Vector3.Distance(aimDirection.normalized, playerTransform.normalized) > Vector3.Distance(currentDirection.normalized, playerTransform.normalized))
+                {
+                    Debug.Log("We are not close enough, not switching lines");
+                }
+                else
+                {
+                    gridPoint2 = g2;
+                }
+
+            }
+            else
+            {
+                gridPoint2 = g2;
+            }
+
+            Debug.Log(Vector3.Angle(gridPoint1.transform.position - gridPoint2.transform.position, gridPoint1.transform.position - g2.transform.position));
 
         }
 

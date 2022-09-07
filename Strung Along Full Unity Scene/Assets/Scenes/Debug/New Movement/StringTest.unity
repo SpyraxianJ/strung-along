@@ -2377,7 +2377,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3167654758654512373, guid: bca65c23b1594aa4dbebacacfe0c1350, type: 3}
       propertyPath: stringLength
-      value: 12
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 3167654758654512373, guid: bca65c23b1594aa4dbebacacfe0c1350, type: 3}
       propertyPath: elasticString
@@ -2389,11 +2389,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3167654758654512373, guid: bca65c23b1594aa4dbebacacfe0c1350, type: 3}
       propertyPath: stringStretchLength
-      value: 11
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 3167654758654512375, guid: bca65c23b1594aa4dbebacacfe0c1350, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3167654758654512375, guid: bca65c23b1594aa4dbebacacfe0c1350, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 8.88
       objectReference: {fileID: 0}
     - target: {fileID: 3167654758654512375, guid: bca65c23b1594aa4dbebacacfe0c1350, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2409,7 +2413,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3167654758976716786, guid: bca65c23b1594aa4dbebacacfe0c1350, type: 3}
       propertyPath: stringLength
-      value: 12
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 3167654758976716786, guid: bca65c23b1594aa4dbebacacfe0c1350, type: 3}
       propertyPath: elasticString
@@ -2421,11 +2425,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3167654758976716786, guid: bca65c23b1594aa4dbebacacfe0c1350, type: 3}
       propertyPath: stringStretchLength
-      value: 11
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 3167654758976716787, guid: bca65c23b1594aa4dbebacacfe0c1350, type: 3}
       propertyPath: m_LocalPosition.x
       value: -3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3167654758976716787, guid: bca65c23b1594aa4dbebacacfe0c1350, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 8.88
       objectReference: {fileID: 0}
     - target: {fileID: 3167654758976716787, guid: bca65c23b1594aa4dbebacacfe0c1350, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3586,12 +3594,12 @@ GameObject:
   - component: {fileID: 2006293137}
   - component: {fileID: 2006293136}
   m_Layer: 0
-  m_Name: LineVisualizer
+  m_Name: LineVisualizer(Broken)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &2006293136
 MonoBehaviour:
   m_ObjectHideFlags: 0
