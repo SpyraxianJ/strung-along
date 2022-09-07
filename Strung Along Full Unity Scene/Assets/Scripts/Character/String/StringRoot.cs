@@ -45,8 +45,10 @@ public class StringRoot : MonoBehaviour
     public float debugDistance;
     public float debugeffRange;
     float stretchTime;
-    Transform angleRef;
-    Transform angleRef2;
+    [HideInInspector]
+    public Transform angleRef;
+    [HideInInspector]
+    public Transform angleRef2;
 
     // Start is called before the first frame update
     void Awake()
@@ -243,6 +245,9 @@ public class StringRoot : MonoBehaviour
         lineVisual.SetPosition(1, effectiveRoot);
         lineVisual.SetPosition(2, connectedVisualPoint.position);
 
+        if (connectedPuppet != null) {
+            connectedPuppet.effectiveRoot = effectiveRoot;
+        }
 
     }
 

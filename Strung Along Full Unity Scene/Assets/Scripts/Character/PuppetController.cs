@@ -68,6 +68,7 @@ public class PuppetController : MonoBehaviour
     [HideInInspector]
     public bool beingPuppetPulled;
     public bool beingPulled;
+    float distanceToHook;
 
     [Tooltip("This is how much we have climbed up our string currently, used to make it so the string can move and we move with it.")]
     // Goes between 0-1, knot is always at 0.5 if it exists
@@ -863,6 +864,7 @@ public class PuppetController : MonoBehaviour
                     SetClimbValue();
 
                     isClimbing = true;
+                    distanceToHook = Vector3.Distance(transform.position, effectiveRoot);
 
                     //rb.velocity = Vector3.zero; // makes climbing feel a little worse, but prevents some exploits, consider turning of if desired.
 
@@ -929,51 +931,42 @@ public class PuppetController : MonoBehaviour
 
     public void ClimbTick() {
         airTimer = 0;
-        // We don't want y velocity here, just keep it at 0 to be safe
-        rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
 
-        SetClimbValue();
+        // Swinging code is adapted from the old, inelastic string code
 
-        if (stringManager.tangle != 0)
-        {
+        Vector3 difference = (effectiveRoot - transform.position);
 
-            if (transform.position.y < stringManager.effectiveRoot.y)
-            {
-                // Under 0.5
+        Vector3 crossOut = Vector3.Cross(rb.velocity, difference);
 
-                // temp simple patch
-                transform.position = Vector3.MoveTowards(transform.position, stringManager.effectiveRoot, climbingSpeed * Time.fixedDeltaTime);
-                //transform.position = Vector3.MoveTowards(transform.position, new Vector3(stringManager.effectiveRoot.x, transform.position.y, stringManager.effectiveRoot.z), Time.fixedDeltaTime);
-                transform.position += (new Vector3(stringManager.effectiveRoot.x, transform.position.y, stringManager.effectiveRoot.z) - transform.position) * Time.fixedDeltaTime/2;
+        thisStringRoot.angleRef.transform.rotation = Quaternion.LookRotation(crossOut); // This' Z
+        thisStringRoot.angleRef.transform.position = transform.position;
 
-                // TEMP FAKE GRAVITY :))))
-                rb.AddForce((stringManager.effectiveRoot - transform.position) * 2);
-                rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
-            }
-            else
-            {
-                // Over 0.5
+        thisStringRoot.angleRef2.transform.rotation = Quaternion.LookRotation(difference); // This' X
+        thisStringRoot.angleRef2.transform.position = transform.position;
 
-                // Should do this for both when we can climb the other's string
-                transform.position = Vector3.Lerp(stringManager.effectiveRoot, thisStringRoot.transform.position, (climbValue - 0.5f) * 5);
+        Vector3 oldVel = rb.velocity;
 
-                transform.position = Vector3.MoveTowards(transform.position, thisStringRoot.transform.position, climbingSpeed * Time.fixedDeltaTime);
-                transform.position += (new Vector3(thisStringRoot.transform.position.x, transform.position.y, thisStringRoot.transform.position.z) - transform.position) * Time.fixedDeltaTime/2;
+        rb.velocity =
+            Vector3.Project(rb.velocity, thisStringRoot.angleRef2.transform.up) +
+            Vector3.Project(rb.velocity, thisStringRoot.angleRef2.transform.right);
 
-            }
+        rb.velocity = rb.velocity * (1 - (Time.fixedDeltaTime * 0.5f));
 
-        }
-        else {
-            transform.position = Vector3.MoveTowards(transform.position, thisStringRoot.transform.position, climbingSpeed * Time.fixedDeltaTime);
-            //transform.position = Vector3.MoveTowards(transform.position, new Vector3(thisStringRoot.transform.position.x, transform.position.y, thisStringRoot.transform.position.z), Time.fixedDeltaTime);
-            transform.position += (new Vector3(thisStringRoot.transform.position.x, transform.position.y, thisStringRoot.transform.position.z) - transform.position) * Time.fixedDeltaTime/2;
+        rb.velocity = new Vector3(rb.velocity.x, oldVel.y, rb.velocity.z);
 
-            // TEMP FAKE GRAVITY :))))
-            rb.AddForce((thisStringRoot.transform.position - transform.position) * 5);
-            rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
-        }
+        float oldY = rb.transform.position.y;
+        Vector3 vector = (rb.gameObject.transform.position - rb.transform.position);
 
-        stamina -= staminaDrain * Time.fixedDeltaTime;
+        vector = (rb.gameObject.transform.position - rb.transform.position);
+
+        //rb.gameObject.transform.position = new Vector3(vector.x, vector.y, vector.z) - (difference.normalized * grabStartHeight) + effectiveRoot;
+        rb.transform.position = new Vector3(rb.transform.position.x, oldY, rb.transform.position.z);
+
+
+
+
+
+        //stamina -= staminaDrain * Time.fixedDeltaTime;
 
         staminaUI.UpdateStaminaVisual(stamina);
 
@@ -1173,6 +1166,9 @@ public class PuppetController : MonoBehaviour
         rb.velocity = Vector3.Lerp(rb.velocity, rbOld, 0.95f);
 
         Vector3 newPos = Vector3.Project(relativePosition, relativeLineVector) + gridPoint1.transform.position;
+
+        // Force back if we have extended beyond our line
+
         transform.position = Vector3.Lerp(new Vector3(newPos.x, transform.position.y, newPos.z), transform.position, 0.9f);
 
     }
