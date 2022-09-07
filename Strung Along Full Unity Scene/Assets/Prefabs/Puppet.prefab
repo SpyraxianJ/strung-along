@@ -1381,8 +1381,8 @@ MonoBehaviour:
   isClimbing: 0
   groundedMaxSpeed: 6
   canSlingshot: 1
-  SlingshotForce: 20
-  SlingshotForceYMulti: 2
+  SlingshotForce: 30
+  SlingshotForceYMulti: 2.5
   secondPlayer: 0
   beingPuppetPulled: 0
   beingPulled: 0
@@ -1437,6 +1437,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   colliderThis: {fileID: 8461784611382557439}
+  timeSinceSlingshot: 0
 --- !u!114 &6077883536283109890
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -188,12 +188,19 @@ public class StringRoot : MonoBehaviour
                 Vector3 difference = (effectiveRoot - connectedPoint.position);
                 difference = new Vector3(difference.x, 0, difference.z);
 
+                if (puppet != null)
+                {
+                    float y = connectedObject.velocity.y;
+                    connectedObject.velocity = connectedObject.velocity * Mathf.Lerp(1f, 0.8f, puppet.timeSinceSlingshot - 1);
+                    connectedObject.velocity = new Vector3(connectedObject.velocity.x, y, connectedObject.velocity.z);
+
+                }
+
                 connectedObject.AddForce(difference * stringForcePerUnit);
 
                 if (puppet != null)
                 {
                     // send pulled message
-                    Debug.Log("Pee pee");
                     puppet.beingPulled = true;
                 }
 

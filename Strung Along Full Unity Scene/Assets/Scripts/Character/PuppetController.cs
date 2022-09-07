@@ -211,6 +211,7 @@ public class PuppetController : MonoBehaviour
     float grabbedObjectDistance;
     float grabbedObjectHeight;
     float grabStartHeight;
+    public float timeSinceSlingshot;
 
     // Private
 
@@ -347,7 +348,7 @@ public class PuppetController : MonoBehaviour
 
         }
 
-        
+        timeSinceSlingshot += Time.fixedDeltaTime;
 
     }
 
@@ -616,7 +617,12 @@ public class PuppetController : MonoBehaviour
                     // Using project so the player can choose to slow down if they move that way, not forced to slow down, otherwise they are just prevented from accelerating
                     // rb.velocity = new Vector3(rb.velocity.x * (1 - airborneDeceleration), rb.velocity.y, rb.velocity.z * (1 - airborneDeceleration)); // Uses 1 - groundedDeceleration to make the variable more intuitive for designers to adjust
                     Vector3 vel = Vector3.Project(new Vector3(move.x, 0, move.y), new Vector3(rb.velocity.x * airborneDeceleration, 0, rb.velocity.z * airborneDeceleration));
-                    rb.velocity -= vel;
+
+                    // If this helps us reduce speed, not gain it, we can do it
+                    if ((rb.velocity - vel).magnitude < rb.velocity.magnitude)
+                    {
+                        rb.velocity -= vel;
+                    }
                 }
 
             }
@@ -893,6 +899,7 @@ public class PuppetController : MonoBehaviour
                 grabbingObject.attachedRigidbody.velocity = new Vector3(grabbingObject.attachedRigidbody.velocity.x, grabbingObject.attachedRigidbody.velocity.y * SlingshotForceYMulti, grabbingObject.attachedRigidbody.velocity.z);
                 grabbingObject.transform.position = grabbingObject.transform.position + (grabbingObject.attachedRigidbody.velocity * Time.fixedDeltaTime); // ensures we get lift if applicable
                 otherPuppet.isGrounded = false;
+                otherPuppet.timeSinceSlingshot = 0;
             }
 
         }
