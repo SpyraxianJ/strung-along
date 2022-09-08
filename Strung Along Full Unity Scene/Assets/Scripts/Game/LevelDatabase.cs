@@ -4,8 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class LevelDatabase : MonoBehaviour
-{
-	
+{	
 	public List<Act> _acts;
 	
     void Start() {
@@ -24,20 +23,28 @@ public class LevelDatabase : MonoBehaviour
 		return _acts[0]._levels[0];
 	}
 	
+	// get the level after this level. null if next act or end of game.
 	public Level GetLevelAfter(Level level) {
-		
 		Act parentAct = level.transform.parent.GetComponent<Act>();
 		int nextIndex = parentAct._levels.IndexOf(level) + 1;
-				
-		if (nextIndex >= parentAct._levels.Count && _acts.IndexOf(parentAct) + 1 >= _acts.Count) {
-			// next level doesn't exist, end of game.
-			return null;
-		} else if (nextIndex >= parentAct._levels.Count) {
-			// next level is in the next act.
-			return _acts[ _acts.IndexOf(parentAct) + 1 ]._levels[0];
-		} else {
-			// next level is in this act.
+		
+		if (nextIndex < parentAct._levels.Count) {
 			return parentAct._levels[nextIndex];
+		} else {
+			return null;
+		}
+	}
+	
+	// get the first level of the act after this level's act. null if end of game.
+	public Level GetActAfter(Level level) {
+		Act parentAct = level.transform.parent.GetComponent<Act>();
+		int nextIndex = _acts.IndexOf(parentAct) + 1;
+		
+		if (nextIndex < _acts.Count) {
+			return _acts[nextIndex]._levels[0];
+		} else {
+			// next act doesn't exist, end of game.
+			return null;
 		}
 	}
 	

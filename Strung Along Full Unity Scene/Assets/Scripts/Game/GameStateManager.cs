@@ -64,8 +64,11 @@ public class GameStateManager : MonoBehaviour
 	
 	[Header("Gameplay Flags")]
 	public bool _skipIntro = false;
+	public bool _skipActChanges = false;
 	
 	[HideInInspector] public bool _playIntro = true;
+	[HideInInspector] public bool _actChange = false;
+	[HideInInspector] public bool _gameEnd = false;
 	[HideInInspector] public bool _interrupt = false;
 	[HideInInspector] public bool _p1Alive = true;
 	[HideInInspector] public bool _p2Alive = true;

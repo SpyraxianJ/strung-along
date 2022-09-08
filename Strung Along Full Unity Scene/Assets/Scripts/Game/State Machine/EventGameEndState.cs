@@ -9,7 +9,7 @@ public class EventGameEndState : GameState
 	}
 
 	public override void UpdateState(GameStateManager ctx) {
-		
+		Debug.Log("End of the game! Thanks for playing!!!!");
 	}
 	
 }
