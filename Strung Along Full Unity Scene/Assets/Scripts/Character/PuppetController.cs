@@ -863,8 +863,8 @@ public class PuppetController : MonoBehaviour
                     // First, we need to find out where we are in relation to our own string
                     SetClimbValue();
 
-                    isClimbing = true;
-                    distanceToHook = Vector3.Distance(transform.position, effectiveRoot);
+                    //isClimbing = true;
+                    //distanceToHook = Vector3.Distance(transform.position, effectiveRoot);
 
                     //rb.velocity = Vector3.zero; // makes climbing feel a little worse, but prevents some exploits, consider turning of if desired.
 
@@ -1073,7 +1073,7 @@ public class PuppetController : MonoBehaviour
                     penalty = directionChangeBoost;
                 }
 
-                if (Vector3.Distance((transform.position + (new Vector3(move.x, 0, move.y) * Mathf.Min((6f - penalty), 1f)) - new Vector3(gridPoint1.transform.position.x, transform.position.y, gridPoint1.transform.position.z)), direction) <= closest && at.connectedPoints[i] != at)
+                if (Vector3.Distance((transform.position + (new Vector3(move.x, 0, move.y) * Mathf.Min((6f - penalty), 1f)) - new Vector3(gridPoint1.transform.position.x, transform.position.y, gridPoint1.transform.position.z)), new Vector3(direction.x, transform.position.y, direction.z)) <= closest && at.connectedPoints[i] != at)
                 {
 
                     closest = Vector3.Distance(transform.position - gridPoint1.transform.position, direction);
