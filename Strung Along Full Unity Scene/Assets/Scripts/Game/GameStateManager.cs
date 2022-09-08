@@ -62,8 +62,9 @@ public class GameStateManager : MonoBehaviour
 	[Tooltip("Volume effect that fades in when a puppet dies. Also fades in any Image placed as a child.")]
 	public Volume _deathEffect;
 	
-	[Header("Gameplay Flags")]
+	[Header("no time for this fancy bullshit")]
 	public bool _skipIntro = false;
+	public bool _skipLevelSwitch = false;
 	public bool _skipActChanges = false;
 	
 	[HideInInspector] public bool _playIntro = true;

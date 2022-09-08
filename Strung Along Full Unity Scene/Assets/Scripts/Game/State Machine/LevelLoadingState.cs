@@ -7,7 +7,12 @@ public class LevelLoadingState : GameState
 	
 	public override void EnterState(GameStateManager ctx) {
 		Debug.Log("Level Loading...");
-		_loadProgress = 0.0f;
+		if (ctx._skipLevelSwitch) {
+			_loadProgress = 1.0f;
+		} else {
+			_loadProgress = 0.0f;
+		}
+		
 		
 		SetStrings(ctx._p1Anchor, 4.0f, false);
 		SetStrings(ctx._p2Anchor, 4.0f, false);

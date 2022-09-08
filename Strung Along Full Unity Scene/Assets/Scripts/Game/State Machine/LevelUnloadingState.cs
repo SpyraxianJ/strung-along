@@ -7,7 +7,11 @@ public class LevelUnloadingState : GameState
 	
 	public override void EnterState(GameStateManager ctx) {
 		Debug.Log("Clearing the Stage...");
-		_unloadProgress = 0.0f;
+		if (ctx._skipLevelSwitch) {
+			_unloadProgress = 1.0f;
+		} else {
+			_unloadProgress = 0.0f;
+		}
 		
 		ctx._currentLevel.ToggleColliders(false);
 	}
