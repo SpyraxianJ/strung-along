@@ -52,7 +52,7 @@ public class StageProp : MonoBehaviour, IResettable
 		}
 	}
 	
-	public void Reset() {
+	public virtual void Reset() {
 		transform.position = originalPosition;
 	}
 	

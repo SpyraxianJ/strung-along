@@ -1116,7 +1116,7 @@ public class PuppetController : MonoBehaviour
                 gridPoint2 = g2;
             }
 
-            Debug.Log(Vector3.Angle(gridPoint1.transform.position - gridPoint2.transform.position, gridPoint1.transform.position - g2.transform.position));
+            //Debug.Log(Vector3.Angle(gridPoint1.transform.position - gridPoint2.transform.position, gridPoint1.transform.position - g2.transform.position));
 
         }
 
