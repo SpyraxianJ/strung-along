@@ -1080,12 +1080,6 @@ public class PuppetController : MonoBehaviour
                     g2 = at.connectedPoints[i];
                 }
 
-
-                if ((oldG1.transform.position - gridPoint2.transform.position).normalized == (at.transform.position - at.connectedPoints[i].transform.position).normalized & (oldG1.transform.position - gridPoint2.transform.position).normalized == -(at.transform.position - at.connectedPoints[i].transform.position).normalized)
-                {
-                    // Old, here in case it's required again
-                }
-
             }
 
         }
@@ -1168,6 +1162,22 @@ public class PuppetController : MonoBehaviour
         Vector3 newPos = Vector3.Project(relativePosition, relativeLineVector) + gridPoint1.transform.position;
 
         // Force back if we have extended beyond our line
+
+        //Debug.Log("1 to 2: " + Vector3.Distance(new Vector3(gridPoint1.transform.position.x, 0, gridPoint1.transform.position.z), new Vector3(gridPoint2.transform.position.x, 0, gridPoint2.transform.position.z)));
+        //Debug.Log("P to 1: " + Vector3.Distance(new Vector3(gridPoint1.transform.position.x, 0, gridPoint1.transform.position.z), new Vector3(newPos.x, 0, newPos.z)));
+        //Debug.Log("P to 2: " + Vector3.Distance(new Vector3(gridPoint2.transform.position.x, 0, gridPoint2.transform.position.z), new Vector3(newPos.x, 0, newPos.z)));
+
+        if (Vector3.Distance(new Vector3(gridPoint1.transform.position.x, 0, gridPoint1.transform.position.z), new Vector3(gridPoint2.transform.position.x, 0, gridPoint2.transform.position.z)) <
+            Vector3.Distance(new Vector3(gridPoint1.transform.position.x, 0, gridPoint1.transform.position.z), new Vector3(newPos.x, 0, newPos.z)))
+        {
+            newPos = new Vector3(gridPoint2.transform.position.x, newPos.y, gridPoint2.transform.position.z);
+        }
+
+        if (Vector3.Distance(new Vector3(gridPoint2.transform.position.x, 0, gridPoint2.transform.position.z), new Vector3(gridPoint1.transform.position.x, 0, gridPoint1.transform.position.z)) <
+            Vector3.Distance(new Vector3(gridPoint2.transform.position.x, 0, gridPoint2.transform.position.z), new Vector3(newPos.x, 0, newPos.z)))
+        {
+            newPos = new Vector3(gridPoint1.transform.position.x, newPos.y, gridPoint1.transform.position.z);
+        }
 
         transform.position = Vector3.Lerp(new Vector3(newPos.x, transform.position.y, newPos.z), transform.position, 0.9f);
 
