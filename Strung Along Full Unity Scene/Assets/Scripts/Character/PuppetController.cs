@@ -893,7 +893,7 @@ public class PuppetController : MonoBehaviour
                     isClimbing = true;
                     distanceToHook = Vector3.Distance(transform.position, effectiveRoot);
 
-                    rb.velocity = rb.velocity / 5f;
+                    rb.velocity = (rb.velocity.normalized * Mathf.Min(rb.velocity.magnitude, 5f)) / 3f;
 
                     if (isGrounded)
                     {
@@ -920,7 +920,9 @@ public class PuppetController : MonoBehaviour
 
         if (isClimbing) {
             //rb.velocity *= 0.5f;
-            rb.velocity = (transform.position - lastpos) / Time.fixedDeltaTime;
+            rb.velocity = (transform.position - lastpos) / (Time.fixedDeltaTime);
+            rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y / 2, rb.velocity.z);
+            rb.velocity += Vector3.up * 0.5f; // should give a nice lil' pop upwards after releasing
         }
         climbValue = 0;
         isClimbing = false;
