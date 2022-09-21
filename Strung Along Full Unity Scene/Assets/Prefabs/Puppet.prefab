@@ -1382,7 +1382,7 @@ MonoBehaviour:
   groundedMaxSpeed: 6
   canSlingshot: 1
   SlingshotForce: 30
-  SlingshotForceYMulti: 2.5
+  SlingshotForceYMulti: 5
   secondPlayer: 0
   beingPuppetPulled: 0
   beingPulled: 0
@@ -1396,7 +1396,7 @@ MonoBehaviour:
   pulledAcceleration: 3
   pulledDrag: 0
   pulledAirborneThreshold: 0
-  swingSpeed: 0.5
+  swingSpeed: 1
   airborneAcceleration: 20
   airborneDeceleration: 0.205
   airborneDecay: 0.01

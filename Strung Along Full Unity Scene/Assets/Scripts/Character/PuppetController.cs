@@ -347,8 +347,9 @@ public class PuppetController : MonoBehaviour
             // simulate gravity
             rb.AddForce(Vector3.down * gravity, ForceMode.Acceleration);
         }
-        else {
-            rb.AddForce(Vector3.down * gravity * swingSpeed, ForceMode.Acceleration);
+        else
+        {
+            rb.AddForce(Vector3.down * gravity * swingSpeed * Mathf.Min(((distanceToHook - (effectiveRoot.y - transform.position.y)) / distanceToHook), 1), ForceMode.Acceleration);
         }
 
         // Animator Variables
@@ -528,6 +529,7 @@ public class PuppetController : MonoBehaviour
             timeSinceGrounded = 0;
         }
     }
+
     void HandleMovement()
     {
         float relativeMaxSpeedX = Math.Abs(groundedMaxSpeed); // ugly sorry, leave for now bc I may use it later, if it's past May, I probably wont lol
@@ -999,7 +1001,7 @@ public class PuppetController : MonoBehaviour
 
         rb.velocity = Vector3.Lerp(rb.velocity, oldVel, 1 - swingSpeed);
 
-
+        rb.AddForce(move);
 
         //stamina -= staminaDrain * Time.fixedDeltaTime;
 
