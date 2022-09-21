@@ -98,11 +98,13 @@ public class PuppetController : MonoBehaviour
     public float pulledDrag;
     public float pulledAirborneThreshold;
 
+
     [Space]
 
     [Header("Climbing Attributes")]
 
-    public float climbingSpeed;
+    [Range(0, 1)]
+    public float swingSpeed = 0.5f;
 
     [Space]
 
@@ -226,6 +228,7 @@ public class PuppetController : MonoBehaviour
     float timeSinceGrounded;
     bool hasJumped;
     bool stopVel;
+    Vector3 lastpos;
 
     [Space]
 
@@ -306,11 +309,12 @@ public class PuppetController : MonoBehaviour
 
     void FixedUpdate()
     {
-		// handle movement
-		HandleMovement();
-		conTut.movementTimer = move != Vector2.zero ? 0 : conTut.movementTimer;
+        conTut.movementTimer = move != Vector2.zero ? 0 : conTut.movementTimer;
         if (isClimbing == false)
         {
+            // handle movement
+            HandleMovement();
+
             climbIK.enabled = false;
             GroundDetection();
             HandleJump(); //don't remove
@@ -318,6 +322,8 @@ public class PuppetController : MonoBehaviour
         }
         else // climbing means no ground movement and abilities
         {
+            // ignore handle movement on climb
+
             climbIK.enabled = true;
             isGrounded = false;
             ClimbTick();
@@ -335,9 +341,15 @@ public class PuppetController : MonoBehaviour
 			gridPoint1 = null;
 			gridPoint2 = null;
 		}
-		
-		// simulate gravity
-        rb.AddForce(Vector3.down * gravity, ForceMode.Acceleration);
+
+        if (isClimbing == false)
+        {
+            // simulate gravity
+            rb.AddForce(Vector3.down * gravity, ForceMode.Acceleration);
+        }
+        else {
+            rb.AddForce(Vector3.down * gravity * swingSpeed, ForceMode.Acceleration);
+        }
 
         // Animator Variables
         if (puppetAnimator != null) {
@@ -369,6 +381,8 @@ public class PuppetController : MonoBehaviour
             stopVel = false;
             rb.velocity = Vector3.zero;
         }
+
+        lastpos = transform.position;
 
     }
 
@@ -876,14 +890,14 @@ public class PuppetController : MonoBehaviour
                     // First, we need to find out where we are in relation to our own string
                     //SetClimbValue();
 
-                    //isClimbing = true;
-                    //distanceToHook = Vector3.Distance(transform.position, effectiveRoot);
+                    isClimbing = true;
+                    distanceToHook = Vector3.Distance(transform.position, effectiveRoot);
 
-                    //rb.velocity = Vector3.zero; // makes climbing feel a little worse, but prevents some exploits, consider turning of if desired.
+                    rb.velocity = rb.velocity / 5f;
 
                     if (isGrounded)
                     {
-                    //    conTut.jumpTimer += 1;
+                        conTut.jumpTimer += 1;
                     }
 
                 }
@@ -902,8 +916,11 @@ public class PuppetController : MonoBehaviour
 
     public void GrabRelease()
     {
+        rb.useGravity = true;
+
         if (isClimbing) {
             //rb.velocity *= 0.5f;
+            rb.velocity = (transform.position - lastpos) / Time.fixedDeltaTime;
         }
         climbValue = 0;
         isClimbing = false;
@@ -945,6 +962,8 @@ public class PuppetController : MonoBehaviour
     public void ClimbTick() {
         airTimer = 0;
 
+        rb.useGravity = false;  
+
         // Swinging code is adapted from the old, inelastic string code
 
         Vector3 difference = (effectiveRoot - transform.position);
@@ -963,7 +982,7 @@ public class PuppetController : MonoBehaviour
             Vector3.Project(rb.velocity, thisStringRoot.angleRef2.transform.up) +
             Vector3.Project(rb.velocity, thisStringRoot.angleRef2.transform.right);
 
-        rb.velocity = rb.velocity * (1 - (Time.fixedDeltaTime * 0.5f));
+        rb.velocity = rb.velocity * (1 - (Time.fixedDeltaTime * 0.5f));// * 0.999f;
 
         rb.velocity = new Vector3(rb.velocity.x, oldVel.y, rb.velocity.z);
 
@@ -973,9 +992,10 @@ public class PuppetController : MonoBehaviour
         vector = (rb.gameObject.transform.position - rb.transform.position);
 
         //rb.gameObject.transform.position = new Vector3(vector.x, vector.y, vector.z) - (difference.normalized * grabStartHeight) + effectiveRoot;
-        rb.transform.position = new Vector3(rb.transform.position.x, oldY, rb.transform.position.z);
+        //rb.transform.position = new Vector3(rb.transform.position.x, oldY, rb.transform.position.z);
+        transform.position = effectiveRoot + -difference.normalized * distanceToHook;
 
-
+        rb.velocity = Vector3.Lerp(rb.velocity, oldVel, 1 - swingSpeed);
 
 
 
