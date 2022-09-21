@@ -47,7 +47,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   connectedPoints: []
-  displayLines: 1
+  lineRenderers: []
+  lineRenderer: {fileID: 1830957149897361243, guid: af2ebe86fdb16054eb269e31d91946a8, type: 3}
 --- !u!33 &876819186334951968
 MeshFilter:
   m_ObjectHideFlags: 0
