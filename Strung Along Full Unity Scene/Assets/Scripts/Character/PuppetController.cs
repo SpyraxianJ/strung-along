@@ -235,6 +235,11 @@ public class PuppetController : MonoBehaviour
         return secondPlayer ? 1 : 0;
     }
 
+    private void OnEnable()
+    {
+        rb.velocity = Vector3.zero;
+    }
+
 
     List<RaycastHit> objectRayGenerator(int rayNumber, float rayLength, float rayRadius, bool useOffset)
     {
