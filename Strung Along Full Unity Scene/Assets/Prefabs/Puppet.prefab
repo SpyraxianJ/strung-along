@@ -1428,7 +1428,7 @@ MonoBehaviour:
   pointRedirectDistance: 1
   visualRotateSpeed: 2000
   visualAirRotateSpeed: 100
-  grabDistance: 4
+  grabDistance: 2
   holdDistance: 0.15
   grabbing: 0
   grabbingObject: {fileID: 8461784611382557439}
@@ -1712,6 +1712,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9eec3f09f25ea5d4c87d9564ddaba02f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  height: 0
 --- !u!95 &7046403660172629478 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 16f43de8996f26b4389688703c0ad4d3, type: 3}

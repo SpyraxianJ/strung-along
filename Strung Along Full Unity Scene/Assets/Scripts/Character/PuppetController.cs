@@ -23,7 +23,7 @@ public class PuppetController : MonoBehaviour
     PuppetContextualTutorial conTut;
     HandIKHandler ikHandler;
     ClimbingIK climbIK;
-	[HideInInspector]
+	//[HideInInspector]
     public GridManager gridManager;
 
     [Space]
@@ -216,7 +216,7 @@ public class PuppetController : MonoBehaviour
     public LayerMask grabbingMaskSlingshot;
     public Collider colliderThis;
     float grabbedObjectDistance;
-    float grabbedObjectHeight;
+    public float grabbedObjectHeight;
     float grabStartHeight;
     public float timeSinceSlingshot;
 
@@ -225,6 +225,7 @@ public class PuppetController : MonoBehaviour
     float forceAirborneTimer;
     float timeSinceGrounded;
     bool hasJumped;
+    bool stopVel;
 
     [Space]
 
@@ -238,6 +239,8 @@ public class PuppetController : MonoBehaviour
     private void OnEnable()
     {
         rb.velocity = Vector3.zero;
+        EstimateGridPoints();
+        stopVel = true;
     }
 
 
@@ -361,6 +364,11 @@ public class PuppetController : MonoBehaviour
         }
 
         timeSinceSlingshot += Time.fixedDeltaTime;
+
+        if (stopVel) {
+            stopVel = false;
+            rb.velocity = Vector3.zero;
+        }
 
     }
 
@@ -711,7 +719,6 @@ public class PuppetController : MonoBehaviour
     }
 
     // Grab stuff.
-    // NOTE: A fair bit of this might seem redundant, and yeah it kind of is right now but it's foundation for when we want the ability to climb the other puppet's strings, so leave it in there for now.
 
     void HandleGrab()
     {
@@ -733,7 +740,8 @@ public class PuppetController : MonoBehaviour
             if (Vector3.Distance(grabbingObject.gameObject.transform.position, ((visualReference.transform.forward) * grabbedObjectDistance * (1 + holdDistance)) + transform.position + (Vector3.up * grabbedObjectHeight)) > 1f) {
                 // we are trying to move it more than a unit in a frame, cancel the grab
             }
-            grabbingObject.gameObject.transform.position = ((visualReference.transform.forward) * grabbedObjectDistance * (1 + holdDistance)) + transform.position + (Vector3.up * grabbedObjectHeight);
+            grabbingObject.gameObject.transform.position = ((visualReference.transform.forward) * grabbedObjectDistance * (1 + holdDistance)) + transform.position;
+            grabbingObject.transform.position = new Vector3(grabbingObject.transform.position.x, grabbedObjectHeight, grabbingObject.transform.position.z);
 			
 
             // Animator
@@ -866,7 +874,7 @@ public class PuppetController : MonoBehaviour
                 if (stamina > 0)
                 {
                     // First, we need to find out where we are in relation to our own string
-                    SetClimbValue();
+                    //SetClimbValue();
 
                     //isClimbing = true;
                     //distanceToHook = Vector3.Distance(transform.position, effectiveRoot);
@@ -875,7 +883,7 @@ public class PuppetController : MonoBehaviour
 
                     if (isGrounded)
                     {
-                        conTut.jumpTimer += 1;
+                    //    conTut.jumpTimer += 1;
                     }
 
                 }
@@ -885,9 +893,9 @@ public class PuppetController : MonoBehaviour
         // Undoing the ignoreraycast change
         gameObject.layer = layer; // should be 6 but just in case
 
-        if (grabbingObject != null)
+        if (grabbingObject != null && grabbingObject != this.gameObject)
         {
-            grabbingObject.gameObject.transform.position = ((visualReference.transform.forward) * grabbedObjectDistance * (1 + holdDistance)) + transform.position + (Vector3.up * grabbedObjectHeight);
+            //grabbingObject.gameObject.transform.position = ((visualReference.transform.forward) * grabbedObjectDistance * (1 + holdDistance)) + transform.position + (Vector3.up * grabbedObjectHeight);
         }
 
     }

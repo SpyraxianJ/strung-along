@@ -393,6 +393,8 @@ MonoBehaviour:
     m_RotationOrder: 4
   debugDistance: 0
   debugeffRange: 0
+  angleRef: {fileID: 0}
+  angleRef2: {fileID: 0}
 --- !u!120 &3167654758654512374
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -705,6 +707,8 @@ MonoBehaviour:
     m_RotationOrder: 4
   debugDistance: 0
   debugeffRange: 0
+  angleRef: {fileID: 0}
+  angleRef2: {fileID: 0}
 --- !u!120 &3167654758976716785
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -872,7 +876,7 @@ MonoBehaviour:
   puppet1LastFrame: {x: 0, y: 0, z: 0}
   puppet2LastFrame: {x: 0, y: 0, z: 0}
   effectiveRootLastFrame: {x: 0, y: 0, z: 0}
-  lerpToEffectiveRootSpeed: 3
+  lerpToEffectiveRootSpeed: 30
   puppetDistanceEffectiveRootFactor: 1.04
   puppetDistanceEffectiveRootFactorTangled: 2.2
   effectiveRootPuppetPositionInfluence: 0.7

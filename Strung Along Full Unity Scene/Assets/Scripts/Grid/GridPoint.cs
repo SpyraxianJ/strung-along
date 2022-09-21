@@ -37,7 +37,7 @@ public class GridPoint : MonoBehaviour
 
                     try
                     {
-                        DecalLineRenderer line = Instantiate(lineRenderer).GetComponent<DecalLineRenderer>();
+                        DecalLineRenderer line = Instantiate(lineRenderer, transform).GetComponent<DecalLineRenderer>();
 
                         line.SetPosition(transform, connectedPoints[i].transform);
 
