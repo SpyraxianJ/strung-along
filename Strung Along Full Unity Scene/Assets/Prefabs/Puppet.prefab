@@ -1396,7 +1396,7 @@ MonoBehaviour:
   pulledAcceleration: 3
   pulledDrag: 0
   pulledAirborneThreshold: 0
-  climbingSpeed: 2
+  swingSpeed: 0.5
   airborneAcceleration: 20
   airborneDeceleration: 0.205
   airborneDecay: 0.01
@@ -1406,10 +1406,10 @@ MonoBehaviour:
   jumpBoostTime: 0.2
   jumpBoostTimer: 0
   jumpHoldForce: 1.8
-  jumpReleaseForce: -25.2
+  jumpReleaseForce: -15
   jumpReleaseRisingDrag: 0.08
   jumpRisingDrag: 0.069
-  maxFallSpeed: 100
+  maxFallSpeed: 40
   gravity: 26.5
   coyoteTime: 0.2
   groundedMaxSpeedHardCap: 0
@@ -1439,6 +1439,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   colliderThis: {fileID: 8461784611382557439}
+  grabbedObjectHeight: 0
   timeSinceSlingshot: 0
 --- !u!114 &6077883536283109890
 MonoBehaviour:
