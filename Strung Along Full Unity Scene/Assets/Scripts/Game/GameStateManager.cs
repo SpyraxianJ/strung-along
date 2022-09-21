@@ -76,6 +76,7 @@ public class GameStateManager : MonoBehaviour
 	
 	[HideInInspector] public Level _nextLevelToLoad = null;
 	[HideInInspector] public Level _currentLevel = null;
+	[HideInInspector] public int _currentAct = 0;
 	[HideInInspector] public float _totalPlaytime = 0.0f;
 	
 
@@ -138,9 +139,14 @@ public class GameStateManager : MonoBehaviour
 	// LEVEL SELECT
 	// tell the game to quit whatever level is playing and load the
 	// requested level.
-	public void RequestLevel(int act, int level) {
+	public void RequestAct(int act)
+    {
+		_currentAct = act;
+    } 
+
+	public void RequestLevel(int level) {
 		_interrupt = _currentState == PlayingState ? true : false;
-		_nextLevelToLoad = _database.GetByIndex(act, level);
+		_nextLevelToLoad = _database.GetByIndex(_currentAct, level);
 	}
 	
 	// CURRENT LEVEL INFO

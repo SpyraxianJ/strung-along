@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class PauseMenu : MonoBehaviour
 {
     public static bool GameIsPaused = false;
-    public GameObject PauseMenuUI;
+    public GameObject PauseMenuUI, LevelSelectUI;
 
     // Update is called once per frame
     void Update()
@@ -40,4 +40,13 @@ public class PauseMenu : MonoBehaviour
         GameIsPaused = true;
     }
 	
+    public void OpenLevelSelectUI()
+    {
+        LevelSelectUI.SetActive(true);
+    }
+
+    public void CloseLevelSelectUI()
+    {
+        LevelSelectUI.SetActive(false);
+    }
 }
