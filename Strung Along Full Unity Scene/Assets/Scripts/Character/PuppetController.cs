@@ -1014,7 +1014,7 @@ public class PuppetController : MonoBehaviour
 
         rb.velocity = Vector3.Lerp(rb.velocity, oldVel, 1 - swingSpeed);
 
-        rb.AddForce(move);
+        rb.AddForce(move * 5f);
 
         //stamina -= staminaDrain * Time.fixedDeltaTime;
 
