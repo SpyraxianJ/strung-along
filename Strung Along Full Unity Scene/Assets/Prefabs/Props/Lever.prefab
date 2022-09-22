@@ -100,7 +100,7 @@ MonoBehaviour:
   - {fileID: 559494192706913132}
   _player1: 1
   _player2: 1
-  _twoWay: 1
+  _leftToActivate: 0
   _turningSound:
   - {fileID: 8300000, guid: cc4408b13d971f643818855bdbe4cbaf, type: 3}
 --- !u!114 &559494192706913132

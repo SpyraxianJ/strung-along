@@ -14,13 +14,11 @@ public class LeverProp : MonoBehaviour, IResettable
 	[Header("Exclusivity")]
 	public bool _player1 = true;
 	public bool _player2 = true;
-	//[Tooltip("Can the lever be activated by a prop pushing it? Ignores any player exclusivity.")]
-	//public bool _physics = false;
 	[Header("Lever Properties")]
-	[Tooltip("Pulling right causes reaction as normal, pulling left goes in reverse direction.")]
-	public bool _twoWay = true;
+	[Tooltip("The lever activates when pulling left instead of right.")]
+	public bool _leftToActivate = true;
 	
-	[Tooltip("Played for every 10 degrees the lever turns.\nThis means about 5 plays from neutral > fully active.")]
+	[HideInInspector]
 	public List<AudioClip> _turningSound;
 	int _SFXincrement = 10; // every X degrees
 	int _SFXticker = 0; // keeps track of how many multiples of _SFXincrement we are from start position
@@ -94,7 +92,7 @@ public class LeverProp : MonoBehaviour, IResettable
 		// in deadzone, lever isn't activating.
 		// otherwise fire to reactors a factor of how far the lever is turned.
 		_activationFactor = Mathf.Abs(currentAngle) < _deadzone ? 0.0f : Mathf.Clamp(currentAngle / (_turnAngle + _deadzone), -1.0f, 1.0f);
-		if (!_twoWay) _activationFactor = Mathf.Abs(_activationFactor);
+		if (_leftToActivate) _activationFactor *= -1f;
 		
 	}
 	
@@ -144,7 +142,7 @@ public class LeverProp : MonoBehaviour, IResettable
 		
 		// instead, movement input will turn the lever!
 		// TODO: support for up-down levers.
-		float leverTurn = -pup.move.x * Time.fixedDeltaTime * 100f;
+		float leverTurn = -pup.move.x * Time.fixedDeltaTime * 200f;
 		Quaternion newRot = _leverHandle.rotation;
 		Vector3 newEulerRot = newRot.eulerAngles;
 		newEulerRot.z += leverTurn;
