@@ -61,7 +61,7 @@ public class PlayerInputHandler : MonoBehaviour
         else if (context.canceled)
         {
             player.grabPressed = false;
-            player.GrabRelease();
+            player.GrabRelease(false);
         }
     }
 }

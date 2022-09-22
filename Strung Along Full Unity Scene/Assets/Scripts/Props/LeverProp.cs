@@ -126,7 +126,7 @@ public class LeverProp : MonoBehaviour, IResettable
 			SetSpringy(false);
 		} else {
 			// grabbed by the WRONG PUPPET!!!!!!!!! AHHHHHHHHHHHHHHH!!!!!!!!!!!!!!!!!!!!!
-			pup.GrabRelease();
+			pup.GrabRelease(false);
 			_leverHandle.GetComponent<Rigidbody>().angularVelocity = new Vector3(0, 0, 3);
 		}
 		

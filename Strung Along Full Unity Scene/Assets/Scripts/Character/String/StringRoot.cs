@@ -165,7 +165,7 @@ public class StringRoot : MonoBehaviour
             {
                 if (connectedPuppet.otherPuppet.grabbingObject.gameObject == connectedPuppet.gameObject)
                 {
-                    connectedPuppet.otherPuppet.GrabRelease(); // prevent overpulling
+                    connectedPuppet.otherPuppet.GrabRelease(false); // prevent overpulling
                     Debug.Log("Force release");
                 }
             }

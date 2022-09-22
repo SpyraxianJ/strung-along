@@ -222,6 +222,8 @@ public class PuppetController : MonoBehaviour
     float grabStartHeight;
     public float timeSinceSlingshot;
 
+    public Vector3 positionPuppetGrabbed;
+
     // Private
 
     float forceAirborneTimer;
@@ -799,7 +801,14 @@ public class PuppetController : MonoBehaviour
 
             if (MathF.Abs(transform.position.y - grabStartHeight) > 0.15f) {
                 Debug.Log("Y position moving too much, letting go of object");
-                GrabRelease();
+                GrabRelease(false);
+            }
+
+            if (grabbingObject == otherPuppet.gameObject && Vector3.Distance(positionPuppetGrabbed, transform.position) > 2f)
+            {
+
+                GrabRelease(true);
+
             }
 
         }
@@ -846,7 +855,9 @@ public class PuppetController : MonoBehaviour
                     puppetAnimator.Play("Movement");
                     otherPuppet.puppetAnimator.Play("Movement");
 
-                    otherPuppet.GrabRelease();
+                    otherPuppet.GrabRelease(false);
+
+                    positionPuppetGrabbed = transform.position;
 
                 }
                 else {
@@ -916,7 +927,7 @@ public class PuppetController : MonoBehaviour
 
     }
 
-    public void GrabRelease()
+    public void GrabRelease(bool slingshot)
     {
         rb.useGravity = true;
 
@@ -931,7 +942,7 @@ public class PuppetController : MonoBehaviour
 
         // grabbing stuff
 
-        if (grabbingObject.gameObject == otherPuppet.gameObject)
+        if (grabbingObject.gameObject == otherPuppet.gameObject || slingshot)
         {
             otherPuppet.beingPuppetPulled = false;
             Physics.IgnoreCollision(grabbingObject, colliderThis, false);
@@ -1008,7 +1019,7 @@ public class PuppetController : MonoBehaviour
         staminaUI.UpdateStaminaVisual(stamina);
 
         if (stamina < 0) {
-            GrabRelease();
+            GrabRelease(false);
         }
 
     }
