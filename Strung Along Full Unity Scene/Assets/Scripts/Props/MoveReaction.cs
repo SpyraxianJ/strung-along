@@ -103,7 +103,7 @@ public class MoveReaction : Reaction
 		yield return null;
 		
 		if (_progress == 1.0f) {
-			_oneShotRoutine = null;
+			StopCoroutine(_oneShotRoutine);
 		} else {
 			_oneShotRoutine = StartCoroutine( Move() );
 		}
