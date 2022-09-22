@@ -69,6 +69,7 @@ public class StringRoot : MonoBehaviour
         // Used for tangleing
         Vector3 effectiveRoot = transform.position;
         float effectiveLength = stringLength;
+        stringStretchLength = stringLength - 0.3f;
 
         if (manager.tangle != 0) {
 

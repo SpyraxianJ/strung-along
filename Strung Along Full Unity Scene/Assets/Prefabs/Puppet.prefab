@@ -1381,8 +1381,8 @@ MonoBehaviour:
   isClimbing: 0
   groundedMaxSpeed: 6
   canSlingshot: 1
-  SlingshotForce: 30
-  SlingshotForceYMulti: 5
+  SlingshotForce: 60
+  SlingshotForceYMulti: 3
   secondPlayer: 0
   beingPuppetPulled: 0
   beingPulled: 0

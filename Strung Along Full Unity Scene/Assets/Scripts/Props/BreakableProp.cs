@@ -72,12 +72,13 @@ public class BreakableProp : StageProp
 		
 			if (slingHit || _easyBreak) {
 				OnDamage(collision.GetContact(0), collision.relativeVelocity);
-			}
+            }
 		}
-		
-	}
-	
-	void OnDamage(ContactPoint contact, Vector3 velocity) {
+
+
+    }
+
+    void OnDamage(ContactPoint contact, Vector3 velocity) {
 		_hitsTaken++;
 		Debug.Log(this + " just took a hit at " + contact.point + ", force " + velocity + ", angle " + Vector3.Angle(contact.normal, velocity) + ". HP: " + (_hits - _hitsTaken) + "/" + _hits);
 		
@@ -85,7 +86,10 @@ public class BreakableProp : StageProp
 			_activeChild.SetActive(false);
 		} else {
 			GetComponent<Renderer>().enabled = false;
-		}
+
+            // temp for playtest sorry just delete this line after 22/09/2022, box collider was staying after destruction
+            gameObject.SetActive(false);
+        }
 		
 		_activeChild = transform.GetChild(_hitsTaken - 1).gameObject;
 		_activeChild.SetActive(true);
@@ -99,7 +103,8 @@ public class BreakableProp : StageProp
 	void OnBreak(ContactPoint contact, Vector3 velocity) {
 		Debug.Log(this + " is broken!!!!!");
 		GetComponent<Collider>().enabled = false;
-		// TODO: here we could add a force to _activeChild based on the impact velocity and point.
+        // TODO: here we could add a force to _activeChild based on the impact velocity and point.
+
 	}
 	
 	public override void Reset() {
@@ -114,12 +119,19 @@ public class BreakableProp : StageProp
 		
 		GetComponent<Renderer>().enabled = true;
 		GetComponent<Collider>().enabled = true;
-		
-		// set all rigidbody position and rotation to the recorded value at the start of the level
-		for (int r = 0; r < _rbs.Length; r++) {
-			_rbs[r].transform.position = _rbPosRot[r, 0];
-			_rbs[r].transform.eulerAngles = _rbPosRot[r, 1];
-		}
+
+        // set all rigidbody position and rotation to the recorded value at the start of the level
+        try  // temp for playtest sorry just remove the try catch thingy and just take the for loop out
+        {
+            for (int r = 0; r < _rbs.Length; r++)
+            {
+                _rbs[r].transform.position = _rbPosRot[r, 0];
+                _rbs[r].transform.eulerAngles = _rbPosRot[r, 1];
+            }
+        }
+        catch (System.Exception)
+        {
+        }
 		
 	}
 	
