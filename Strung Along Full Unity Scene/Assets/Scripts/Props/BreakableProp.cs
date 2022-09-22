@@ -88,7 +88,7 @@ public class BreakableProp : StageProp
 			GetComponent<Renderer>().enabled = false;
 
             // temp for playtest sorry just delete this line after 22/09/2022, box collider was staying after destruction
-            gameObject.SetActive(false);
+            //gameObject.SetActive(false);
         }
 		
 		_activeChild = transform.GetChild(_hitsTaken - 1).gameObject;

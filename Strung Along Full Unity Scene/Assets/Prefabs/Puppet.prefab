@@ -1382,7 +1382,7 @@ MonoBehaviour:
   groundedMaxSpeed: 6
   canSlingshot: 1
   SlingshotForce: 60
-  SlingshotForceYMulti: 3
+  SlingshotForceYMulti: 2
   secondPlayer: 0
   beingPuppetPulled: 0
   beingPulled: 0
@@ -1441,6 +1441,7 @@ MonoBehaviour:
   colliderThis: {fileID: 8461784611382557439}
   grabbedObjectHeight: 0
   timeSinceSlingshot: 0
+  positionPuppetGrabbed: {x: 0, y: 0, z: 0}
 --- !u!114 &6077883536283109890
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -804,9 +804,9 @@ public class PuppetController : MonoBehaviour
                 GrabRelease(false);
             }
 
-            if (grabbingObject == otherPuppet.gameObject && Vector3.Distance(positionPuppetGrabbed, transform.position) > 2f)
+            if (grabbingObject.gameObject == otherPuppet.gameObject && Vector3.Distance(positionPuppetGrabbed, transform.position) > 2f)
             {
-
+                // haha
                 GrabRelease(true);
 
             }
@@ -836,6 +836,8 @@ public class PuppetController : MonoBehaviour
         // Check if we can grab an object, if we can, ignore the climb part
 
         RaycastHit playerHit;
+
+        positionPuppetGrabbed = transform.position;
 
         // We check players grabbing each other before anything else
         if (canSlingshot && Physics.Raycast(transform.position + Vector3.up, visualReference.transform.forward, out playerHit, grabDistance, grabbingMaskSlingshot, QueryTriggerInteraction.Collide) && grabbing == false)
@@ -947,7 +949,7 @@ public class PuppetController : MonoBehaviour
             otherPuppet.beingPuppetPulled = false;
             Physics.IgnoreCollision(grabbingObject, colliderThis, false);
 
-            if (otherPuppet.beingPulled) {
+            if (otherPuppet.beingPulled || slingshot) {
                 grabbingObject.attachedRigidbody.velocity = (otherPuppet.thisStringRoot.transform.position - grabbingObject.transform.position).normalized * SlingshotForce;
                 grabbingObject.attachedRigidbody.velocity = new Vector3(grabbingObject.attachedRigidbody.velocity.x, grabbingObject.attachedRigidbody.velocity.y * SlingshotForceYMulti, grabbingObject.attachedRigidbody.velocity.z);
                 grabbingObject.transform.position = grabbingObject.transform.position + (grabbingObject.attachedRigidbody.velocity * Time.fixedDeltaTime); // ensures we get lift if applicable
