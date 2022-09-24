@@ -51,16 +51,17 @@ public class GrimReaper : MonoBehaviour
 		
 		Untangle(pup);
 		
-		// place puppet under their spawnpoint
 		GameObject puppet = pup.gameObject;
-		puppet.transform.position = pup.thisStringRoot.transform.position + new Vector3(0, -4, 0);
+		
+		// disable puppet: this is in case an already alive puppet is respawned, otherwise setting their position fails.
+		puppet.SetActive(false);
 		
 		// set puppet velocity to zero
 		Rigidbody pupBody = puppet.GetComponent<Rigidbody>();
 		pupBody.velocity = Vector3.zero;
 		
-		// enable puppet
-		puppet.SetActive(true);
+		// place puppet under their spawnpoint
+		puppet.transform.position = pup.thisStringRoot.transform.position + new Vector3(0, -4, 0);
 		
 		// enable strings
 		LineRenderer anchorLineVisual = pup.thisStringRoot.lineVisual;
@@ -68,6 +69,9 @@ public class GrimReaper : MonoBehaviour
 		
 		anchorLineVisual.enabled = true;
 		puppetString.GetComponent<CapsuleCollider>().enabled = true;
+		
+		// enable puppet
+		puppet.SetActive(true);
 		
 		Instantiate(_respawnParticle, pup.transform.position, Quaternion.identity);
 		
