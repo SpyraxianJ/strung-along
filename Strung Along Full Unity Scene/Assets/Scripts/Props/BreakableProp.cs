@@ -34,7 +34,7 @@ public class BreakableProp : StageProp
 	Rigidbody[] _rbs;
 	Vector3[,] _rbPosRot;
 	
-	float _requiredAngle = 45.0f;
+	float _requiredAngle = 75.0f;
 	float _requiredVelocity = 2.0f;
 	float _requiredSlingTime = 3.0f;
 	
@@ -62,6 +62,7 @@ public class BreakableProp : StageProp
 	void OnCollisionEnter(Collision collision) {
 		
 		// object needs at least 1 HP, and only consider collisions that are within a certain angle. so grazing the object won't break it.
+		Debug.Log( Vector3.Angle(collision.GetContact(0).normal, collision.relativeVelocity) );
 		bool validHit = _hitsTaken < _hits && Vector3.Angle(collision.GetContact(0).normal, collision.relativeVelocity) < _requiredAngle;
 		
 		if (validHit) {
@@ -86,9 +87,6 @@ public class BreakableProp : StageProp
 			_activeChild.SetActive(false);
 		} else {
 			GetComponent<Renderer>().enabled = false;
-
-            // temp for playtest sorry just delete this line after 22/09/2022, box collider was staying after destruction
-            //gameObject.SetActive(false);
         }
 		
 		_activeChild = transform.GetChild(_hitsTaken - 1).gameObject;
@@ -121,16 +119,10 @@ public class BreakableProp : StageProp
 		GetComponent<Collider>().enabled = true;
 
         // set all rigidbody position and rotation to the recorded value at the start of the level
-        try  // temp for playtest sorry just remove the try catch thingy and just take the for loop out
+        for (int r = 0; r < _rbs.Length; r++)
         {
-            for (int r = 0; r < _rbs.Length; r++)
-            {
-                _rbs[r].transform.position = _rbPosRot[r, 0];
-                _rbs[r].transform.eulerAngles = _rbPosRot[r, 1];
-            }
-        }
-        catch (System.Exception)
-        {
+            _rbs[r].transform.position = _rbPosRot[r, 0];
+            _rbs[r].transform.eulerAngles = _rbPosRot[r, 1];
         }
 		
 	}
