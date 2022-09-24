@@ -62,7 +62,6 @@ public class BreakableProp : StageProp
 	void OnCollisionEnter(Collision collision) {
 		
 		// object needs at least 1 HP, and only consider collisions that are within a certain angle. so grazing the object won't break it.
-		Debug.Log( Vector3.Angle(collision.GetContact(0).normal, collision.relativeVelocity) );
 		bool validHit = _hitsTaken < _hits && Vector3.Angle(collision.GetContact(0).normal, collision.relativeVelocity) < _requiredAngle;
 		
 		if (validHit) {
@@ -101,8 +100,26 @@ public class BreakableProp : StageProp
 	void OnBreak(ContactPoint contact, Vector3 velocity) {
 		Debug.Log(this + " is broken!!!!!");
 		GetComponent<Collider>().enabled = false;
+		
+		// since shards were getting in the way, shrink them after impact.
+		for (int r = 0; r < _rbs.Length; r++)
+        {
+            StartCoroutine( ShrinkDebris(_rbs[r]) );
+        }
+		
         // TODO: here we could add a force to _activeChild based on the impact velocity and point.
-
+	}
+	
+	IEnumerator ShrinkDebris(Rigidbody r) {
+		float progress = 0.0f;
+		float duration = 1.0f; // time to shrink
+		float shrinkFactor = 0.5f; // shrink each piece by this amount
+		
+		while (progress < 1.0f) {
+			r.transform.localScale = Vector3.Lerp(Vector3.one, Vector3.one * shrinkFactor, progress);
+			progress += Time.deltaTime / duration;
+			yield return null;
+		}
 	}
 	
 	public override void Reset() {
@@ -118,11 +135,12 @@ public class BreakableProp : StageProp
 		GetComponent<Renderer>().enabled = true;
 		GetComponent<Collider>().enabled = true;
 
-        // set all rigidbody position and rotation to the recorded value at the start of the level
-        for (int r = 0; r < _rbs.Length; r++)
-        {
+        // set all rigidbody position, rotation and scale to the recorded value at the start of the level
+		StopAllCoroutines();
+        for (int r = 0; r < _rbs.Length; r++) {
             _rbs[r].transform.position = _rbPosRot[r, 0];
             _rbs[r].transform.eulerAngles = _rbPosRot[r, 1];
+			_rbs[r].transform.localScale = Vector3.one; 
         }
 		
 	}
