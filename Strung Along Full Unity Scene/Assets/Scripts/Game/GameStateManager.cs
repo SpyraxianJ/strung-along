@@ -63,6 +63,8 @@ public class GameStateManager : MonoBehaviour
 	public Volume _deathEffect;
 	
 	[Header("no time for this fancy bullshit")]
+	[Tooltip("Instead of loading 1-1, show level select on game start.")]
+	public bool _levelSelectOnStart = false;
 	public bool _skipIntro = false;
 	public bool _skipLevelSwitch = false;
 	public bool _skipActChanges = false;
@@ -106,7 +108,14 @@ public class GameStateManager : MonoBehaviour
 	// START GAME
 	// start the game from the first level!
 	public void StartGame() {
-		_nextLevelToLoad = _database.GetFirstLevel();
+		if (_levelSelectOnStart) {
+			_skipIntro = true;
+			PauseMenu menu = FindObjectOfType<PauseMenu>();
+			menu.Pause();
+			menu.OpenLevelSelectUI();
+		} else {
+			_nextLevelToLoad = _database.GetFirstLevel();
+		}
 	}
 	
 	// QUIT LEVEL
