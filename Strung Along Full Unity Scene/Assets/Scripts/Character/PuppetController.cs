@@ -895,20 +895,14 @@ public class PuppetController : MonoBehaviour
 
     public void GrabRelease(bool slingshot)
     {
-        rb.useGravity = true;
-
-        if (grabbedType == GrabbedType.OtherPuppet || slingshot)
+        if (grabbedType == GrabbedType.OtherPuppet)
         {
-            otherPuppet.beingPuppetPulled = false;
             Physics.IgnoreCollision(grabbingObject, GetComponent<Collider>(), false);
-			
             grabbingObject.attachedRigidbody.velocity = (otherPuppet.thisStringRoot.transform.position - grabbingObject.transform.position).normalized * SlingshotForce;
-            grabbingObject.attachedRigidbody.velocity = new Vector3(grabbingObject.attachedRigidbody.velocity.x, grabbingObject.attachedRigidbody.velocity.y * SlingshotForceYMulti, grabbingObject.attachedRigidbody.velocity.z);
+			grabbingObject.attachedRigidbody.velocity.Scale(new Vector3(1f, SlingshotForceYMulti, 1f));
             grabbingObject.transform.position = grabbingObject.transform.position + (grabbingObject.attachedRigidbody.velocity * Time.fixedDeltaTime); // ensures we get lift if applicable
-            otherPuppet.isGrounded = false;
+			otherPuppet.beingPuppetPulled = false;
             otherPuppet.timeSinceSlingshot = 0;
-            
-
         }
         else if (grabbedType == GrabbedType.Prop)
         {
