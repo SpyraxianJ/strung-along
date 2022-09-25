@@ -30,7 +30,6 @@ public class LevelUnloadingState : GameState
 				prop.gameObject.SetActive(false);
 			}
 			
-			ctx._currentLevel.ToggleColliders(true);
 			ctx.SwitchState(ctx.EmptyState);
 		} else {
 			_unloadProgress += (Time.deltaTime / ctx._unloadTime);
