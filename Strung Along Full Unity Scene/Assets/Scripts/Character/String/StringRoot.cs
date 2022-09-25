@@ -161,7 +161,7 @@ public class StringRoot : MonoBehaviour
             connectedObject.gameObject.transform.position = new Vector3(vector.x, vector.y, vector.z) - (difference.normalized * effectiveLength) + effectiveRoot;
             connectedObject.transform.position = new Vector3(connectedObject.transform.position.x, oldY, connectedObject.transform.position.z);
 
-            if (connectedPuppet != null)
+            if (connectedPuppet != null && connectedPuppet.otherPuppet.grabbingObject != null)
             {
                 if (connectedPuppet.otherPuppet.grabbingObject.gameObject == connectedPuppet.gameObject)
                 {

@@ -7,6 +7,13 @@ using static UnityEngine.InputSystem.InputAction;
 
 public class PuppetController : MonoBehaviour
 {
+	public enum GrabbedType {
+		None,
+		String,
+		OtherPuppet,
+		Prop
+	}
+	
     PlayerControls controls;
 
     [Header("References")]
@@ -208,15 +215,18 @@ public class PuppetController : MonoBehaviour
     public float holdDistance;
 
     [Space]
-
+	
     public bool grabbing;
     [Tooltip("Collider of the object that we are grabbing")]
     public Collider grabbingObject;
+	[Tooltip("The type of object we've grabbed.")]
+	public GrabbedType grabbedType = GrabbedType.None;
 
+	[Space]
+	
     public LayerMask grabbingMask;
     [Tooltip("Grabbing mask for when slingshot is active")]
     public LayerMask grabbingMaskSlingshot;
-    public Collider colliderThis;
     float grabbedObjectDistance;
     public float grabbedObjectHeight;
     float grabStartHeight;
@@ -243,8 +253,8 @@ public class PuppetController : MonoBehaviour
 
     private void OnEnable()
     {
-        rb.velocity = Vector3.zero;
-        EstimateGridPoints();
+        GetComponent<Rigidbody>().velocity = Vector3.zero;
+        if (gridManager) EstimateGridPoints();
         stopVel = true;
     }
 
@@ -740,14 +750,6 @@ public class PuppetController : MonoBehaviour
 
     void HandleGrab()
     {
-		
-		// HARPER: debug grab ray
-		Debug.DrawRay( transform.position + Vector3.up, visualReference.transform.forward * grabDistance, Color.red);
-
-        if (grabbingObject == null) {
-            grabbing = false;
-        }
-
         if (grabbing)
         {
             // HARPER: send message to grabbed object each frame
@@ -766,7 +768,6 @@ public class PuppetController : MonoBehaviour
             puppetAnimator.SetBool("GrabbingObject", true);
 
             // Hand IK
-
             if (ikHandler != null) {
                 // Left
                 RaycastHit hit;
@@ -798,17 +799,17 @@ public class PuppetController : MonoBehaviour
             {
                 Debug.LogError("No HandIK on " + gameObject);
             }
+			
+			if (grabbedType == GrabbedType.OtherPuppet && Vector3.Distance(positionPuppetGrabbed, transform.position) > 2f)
+            {
+                // automatic release of grabbed puppet.
+                // GrabRelease(true);
+
+            }
 
             if (MathF.Abs(transform.position.y - grabStartHeight) > 0.15f) {
                 Debug.Log("Y position moving too much, letting go of object");
                 GrabRelease(false);
-            }
-
-            if (grabbingObject.gameObject == otherPuppet.gameObject && Vector3.Distance(positionPuppetGrabbed, transform.position) > 2f)
-            {
-                // haha
-                GrabRelease(true);
-
             }
 
         }
@@ -828,104 +829,67 @@ public class PuppetController : MonoBehaviour
 
     public void GrabStart()
     {
-
-        // To ignore raycasts
-        int layer = gameObject.layer;
-        gameObject.layer = 2;
-
-        // Check if we can grab an object, if we can, ignore the climb part
-
-        RaycastHit playerHit;
-
-        positionPuppetGrabbed = transform.position;
-
-        // We check players grabbing each other before anything else
-        if (canSlingshot && Physics.Raycast(transform.position + Vector3.up, visualReference.transform.forward, out playerHit, grabDistance, grabbingMaskSlingshot, QueryTriggerInteraction.Collide) && grabbing == false)
-        {
-            if (playerHit.collider.gameObject == otherPuppet.gameObject)
-            {
-
-
-                if (otherPuppet.grabbingObject.gameObject == this.gameObject)
-                {
-
-                    // Add in any additional effects you want on grab release here
-                    otherPuppet.GetComponent<Rigidbody>().velocity += (otherPuppet.transform.position - transform.position).normalized * 1f;
-                    gameObject.layer = layer;
-
-                    // Playing idle for now
-                    puppetAnimator.Play("Movement");
-                    otherPuppet.puppetAnimator.Play("Movement");
-
-                    otherPuppet.GrabRelease(false);
-
-                    positionPuppetGrabbed = transform.position;
-
-                }
-                else {
-                    grabbingObject = playerHit.collider;
-                    grabbing = true;
-                    Physics.IgnoreCollision(grabbingObject, colliderThis, true);
-                    //transform.position = hit.point - (visualReference.transform.forward) * grabDistance;
-                    Debug.Log("Started Grabbing " + grabbingObject.gameObject);
-                    grabbedObjectDistance = Vector3.Distance(playerHit.point, grabbingObject.gameObject.transform.position + Vector3.up); // Not doing the thing >:(((
-                    grabbedObjectHeight = grabbingObject.gameObject.transform.position.y;
-                    grabStartHeight = transform.position.y;
-                    otherPuppet.beingPuppetPulled = false;
-                }
-
-            }
-            else
-            {
-                Debug.LogWarning("The player just tried to grab something on the player layer that wasn't the other puppet, might be an issue: Was " + playerHit.collider.gameObject + " and should have been " + otherPuppet.gameObject);
-            }
-        }
-        else {
-            RaycastHit hit;
-
-            if (Physics.Raycast(transform.position + Vector3.up, visualReference.transform.forward, out hit, grabDistance, grabbingMask, QueryTriggerInteraction.Collide) && grabbing == false)
-            {
-
-                grabbingObject = hit.collider;
+		LayerMask allGrabMask = grabbingMask | grabbingMaskSlingshot;
+		Vector3 grabSpherePosition = (visualReference.transform.position) + (visualReference.transform.forward * 1f) + (Vector3.up * 1f);
+        Collider[] grabs = Physics.OverlapSphere(grabSpherePosition, grabDistance / 2f, allGrabMask, QueryTriggerInteraction.Collide );
+		
+		grabbingObject = null;
+		grabbedType = GrabbedType.None;
+		// check all hits: prioritise other puppet.
+		foreach (Collider c in grabs) {
+			bool puppetCheck = (c == otherPuppet.GetComponent<Collider>() && canSlingshot);
+			bool meCheck = (c == GetComponent<Collider>() && !isGrounded && stamina > 0);
+			bool propCheck = !c.GetComponent<PuppetController>();
+			
+			if ( puppetCheck ) {
+				// check grabbing the other puppet.
+				grabbingObject = c;
+				grabbedType = GrabbedType.OtherPuppet;
+				break;
+			} else if ( meCheck ) {
+				// check grabbing ourselves. can only do this in the air.
+				grabbingObject = c;
+				grabbedType = GrabbedType.String;
+			} else if ( propCheck ) {
+				// check grabbing a non-puppet, so a prop.
+				grabbingObject = c;
+				grabbedType = GrabbedType.Prop;
+			}
+		}
+		
+		switch (grabbedType) {
+			case GrabbedType.None:
+				break;
+			case GrabbedType.String:
+                isClimbing = true;
+                distanceToHook = Vector3.Distance(transform.position, effectiveRoot);
+                rb.velocity = (rb.velocity.normalized * Mathf.Min(rb.velocity.magnitude, 5f)) / 3f;
+				break;
+			case GrabbedType.OtherPuppet:
                 grabbing = true;
-                Physics.IgnoreCollision(grabbingObject, colliderThis, true);
-                Debug.Log("Started Grabbing " + grabbingObject.gameObject);
-                grabbedObjectDistance = Vector3.Distance(hit.point, grabbingObject.gameObject.transform.position + Vector3.up); // Not doing the thing >:(((
+                Physics.IgnoreCollision(grabbingObject, GetComponent<Collider>(), true);
+				visualReference.transform.LookAt(grabbingObject.transform.position, Vector3.up);
+				visualReference.transform.eulerAngles = new Vector3(0f, visualReference.transform.eulerAngles.y, 0f);
+                grabbedObjectDistance = Vector3.Distance(transform.position, grabbingObject.gameObject.transform.position);
+                grabbedObjectHeight = grabbingObject.gameObject.transform.position.y;
+                grabStartHeight = transform.position.y;
+				
+                otherPuppet.beingPuppetPulled = true;
+				positionPuppetGrabbed = transform.position;
+				break;
+			case GrabbedType.Prop:
+                grabbing = true;
+                Physics.IgnoreCollision(grabbingObject, GetComponent<Collider>(), true);
+				visualReference.transform.LookAt(grabbingObject.transform.position, Vector3.up);
+				visualReference.transform.eulerAngles = new Vector3(0f, visualReference.transform.eulerAngles.y, 0f);
+                grabbedObjectDistance = Vector3.Distance(transform.position, grabbingObject.gameObject.transform.position);
                 grabbingObject.gameObject.layer = 11;
                 grabbedObjectHeight = grabbingObject.gameObject.transform.position.y;
                 grabStartHeight = transform.position.y;
-                // HELLO harper here. my objects want to know when they're being grabbed (and by who) so bam
+				
                 grabbingObject.gameObject.SendMessage("OnGrab", this, SendMessageOptions.DontRequireReceiver);
-
-            }
-            else
-            {
-                if (stamina > 0)
-                {
-                    // First, we need to find out where we are in relation to our own string
-                    //SetClimbValue();
-
-                    isClimbing = true;
-                    distanceToHook = Vector3.Distance(transform.position, effectiveRoot);
-
-                    rb.velocity = (rb.velocity.normalized * Mathf.Min(rb.velocity.magnitude, 5f)) / 3f;
-
-                    if (isGrounded)
-                    {
-                        conTut.jumpTimer += 1;
-                    }
-
-                }
-            }
-        }
-
-        // Undoing the ignoreraycast change
-        gameObject.layer = layer; // should be 6 but just in case
-
-        if (grabbingObject != null && grabbingObject != this.gameObject)
-        {
-            //grabbingObject.gameObject.transform.position = ((visualReference.transform.forward) * grabbedObjectDistance * (1 + holdDistance)) + transform.position + (Vector3.up * grabbedObjectHeight);
-        }
+				break;
+		}
 
     }
 
@@ -933,46 +897,39 @@ public class PuppetController : MonoBehaviour
     {
         rb.useGravity = true;
 
-        if (isClimbing) {
-            //rb.velocity *= 0.5f;
-            rb.velocity = (transform.position - lastpos) / (Time.fixedDeltaTime);
-            rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y / 2, rb.velocity.z);
-            rb.velocity += Vector3.up * 0.5f; // should give a nice lil' pop upwards after releasing
-        }
-        climbValue = 0;
-        isClimbing = false;
-
-        // grabbing stuff
-
-        if (grabbingObject.gameObject == otherPuppet.gameObject || slingshot)
+        if (grabbedType == GrabbedType.OtherPuppet || slingshot)
         {
             otherPuppet.beingPuppetPulled = false;
-            Physics.IgnoreCollision(grabbingObject, colliderThis, false);
-
-            if (otherPuppet.beingPulled || slingshot) {
-                grabbingObject.attachedRigidbody.velocity = (otherPuppet.thisStringRoot.transform.position - grabbingObject.transform.position).normalized * SlingshotForce;
-                grabbingObject.attachedRigidbody.velocity = new Vector3(grabbingObject.attachedRigidbody.velocity.x, grabbingObject.attachedRigidbody.velocity.y * SlingshotForceYMulti, grabbingObject.attachedRigidbody.velocity.z);
-                grabbingObject.transform.position = grabbingObject.transform.position + (grabbingObject.attachedRigidbody.velocity * Time.fixedDeltaTime); // ensures we get lift if applicable
-                otherPuppet.isGrounded = false;
-                otherPuppet.timeSinceSlingshot = 0;
-            }
+            Physics.IgnoreCollision(grabbingObject, GetComponent<Collider>(), false);
+			
+            grabbingObject.attachedRigidbody.velocity = (otherPuppet.thisStringRoot.transform.position - grabbingObject.transform.position).normalized * SlingshotForce;
+            grabbingObject.attachedRigidbody.velocity = new Vector3(grabbingObject.attachedRigidbody.velocity.x, grabbingObject.attachedRigidbody.velocity.y * SlingshotForceYMulti, grabbingObject.attachedRigidbody.velocity.z);
+            grabbingObject.transform.position = grabbingObject.transform.position + (grabbingObject.attachedRigidbody.velocity * Time.fixedDeltaTime); // ensures we get lift if applicable
+            otherPuppet.isGrounded = false;
+            otherPuppet.timeSinceSlingshot = 0;
+            
 
         }
-        else
+        else if (grabbedType == GrabbedType.Prop)
         {
-            if (grabbingObject != null)
-            {
-                Physics.IgnoreCollision(grabbingObject, colliderThis, false);
-                grabbing = false;
-                if (grabbingObject.gameObject.layer != 6)
-                    grabbingObject.gameObject.layer = 9;
-                //grabbingObject.attachedRigidbody.freezeRotation = true;
-                grabbingObject.gameObject.SendMessage("OnReleased", this, SendMessageOptions.DontRequireReceiver);
-            }
+            Physics.IgnoreCollision(grabbingObject, GetComponent<Collider>(), false);
+            grabbing = false;
+            if (grabbingObject.gameObject.layer != 6)
+                grabbingObject.gameObject.layer = 9;
+            grabbingObject.gameObject.SendMessage("OnReleased", this, SendMessageOptions.DontRequireReceiver);
         }
+		else if (grabbedType == GrabbedType.String) {
+			rb.velocity = (transform.position - lastpos) / (Time.fixedDeltaTime);
+            rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y / 2, rb.velocity.z);
+            rb.velocity += Vector3.up * 0.5f; // should give a nice lil' pop upwards after releasing
+			isClimbing = false;
+			climbValue = 0;
+			
+		}
 
         grabbing = false;
-        grabbingObject = colliderThis;
+		grabbedType = GrabbedType.None;
+        grabbingObject = null;
         grabbedObjectDistance = 0;
     }
 
@@ -1153,7 +1110,7 @@ public class PuppetController : MonoBehaviour
 
                 if (Vector3.Distance(aimDirection.normalized, playerTransform.normalized) > Vector3.Distance(currentDirection.normalized, playerTransform.normalized))
                 {
-                    Debug.Log("We are not close enough, not switching lines");
+                    //Debug.Log("We are not close enough, not switching lines");
                 }
                 else
                 {
