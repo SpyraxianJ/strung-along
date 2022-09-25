@@ -38,10 +38,14 @@ public class StageProp : MonoBehaviour, IResettable
 {
 	[HideInInspector]
 	public Vector3 originalPosition;
+	[HideInInspector]
+	public Quaternion originalRotation;
 	public GameStateManager.Direction stageMoveDirection;
 	
 	public void Init() {
 		originalPosition = transform.position; 
+		originalRotation = transform.rotation;
+		ToggleColliders(false);
 		gameObject.SetActive(false);
 	}
 	
@@ -50,10 +54,16 @@ public class StageProp : MonoBehaviour, IResettable
 		foreach (Collider comp in colliders) {
 			comp.enabled = toggle;
 		}
+		
+		if (TryGetComponent<Rigidbody>(out Rigidbody r)  ) {
+			r.isKinematic = toggle ? false : true;
+			r.useGravity = toggle ? true : false;
+		}
 	}
 	
 	public virtual void Reset() {
 		transform.position = originalPosition;
+		transform.rotation = originalRotation;
 	}
 	
 }
