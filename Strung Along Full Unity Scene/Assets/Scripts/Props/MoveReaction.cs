@@ -73,40 +73,57 @@ public class MoveReaction : Reaction
 			endPos = startPos + _moveVector;
 		}
 		
-		if (lerp != 0.0f && _oneShotRoutine == null) {
-			_oneShotRoutine = StartCoroutine( Wiggle(_wiggleTime) );
+		if (lerp > 0.0f && _oneShotRoutine == null && _progress == 0.0f) {
+			// move from start position to target position
+			_oneShotRoutine = StartCoroutine( WiggleMove(_wiggleTime, false) );
+		} else if (lerp < 0.0f && _oneShotRoutine == null && _progress == 1.0f) {
+			// move from target position back to start position
+			_oneShotRoutine = StartCoroutine( WiggleMove(_wiggleTime, true) );
 		}
 		
 	}
 	
-	IEnumerator Wiggle(float duration) {
+	IEnumerator WiggleMove(float duration, bool reverse) {
 		_progress = 1.0f;
-		float pingPong = Mathf.PingPong(Time.time, 0.05f);
+		float pingPong = 0.0f;
 		Vector3 wiggleAmount = new Vector3(0.25f, 0f, 0f);
 		
-		_target.transform.position = Vector3.Lerp(startPos + wiggleAmount, startPos - wiggleAmount, pingPong / 0.05f);
-		yield return null;
-		
-		if (duration <= 0.0f) {
-			_progress = 0.0f;
-			_oneShotRoutine = StartCoroutine( Move() );
-		} else {
-			_oneShotRoutine = StartCoroutine( Wiggle(duration - Time.deltaTime) );
+		while (duration > 0.0f) {
+			if (reverse) {
+				_target.transform.position = Vector3.Lerp(endPos + wiggleAmount, endPos - wiggleAmount, pingPong / 0.05f);
+			} else {
+				_target.transform.position = Vector3.Lerp(startPos + wiggleAmount, startPos - wiggleAmount, pingPong / 0.05f);
+			}
+			
+			pingPong = Mathf.PingPong(Time.time, 0.05f);
+			duration -= Time.deltaTime;
+			yield return null;
+			
 		}
 		
+		_oneShotRoutine = StartCoroutine( Move(reverse) );
 	}
 	
-	IEnumerator Move() {
-		_progress += Time.deltaTime / _duration;
-		_progress = Mathf.Clamp01(_progress);
-		_target.transform.position = Vector3.Lerp(startPos, endPos, _progress);
-		yield return null;
+	IEnumerator Move(bool reverse) {
+		_progress = reverse ? 1.0f : 0.0f;
 		
-		if (_progress == 1.0f) {
-			StopCoroutine(_oneShotRoutine);
+		if (reverse) {
+			while (_progress != 0.0f) {
+				_progress -= Time.deltaTime / _duration;
+				_progress = Mathf.Clamp01(_progress);
+				_target.transform.position = Vector3.Lerp(startPos, endPos, _progress);
+				yield return null;
+			}
 		} else {
-			_oneShotRoutine = StartCoroutine( Move() );
+			while (_progress != 1.0f) {
+				_progress += Time.deltaTime / _duration;
+				_progress = Mathf.Clamp01(_progress);
+				_target.transform.position = Vector3.Lerp(startPos, endPos, _progress);
+				yield return null;
+			}
 		}
+		
+		_oneShotRoutine = null;
 	}
 	
 	
