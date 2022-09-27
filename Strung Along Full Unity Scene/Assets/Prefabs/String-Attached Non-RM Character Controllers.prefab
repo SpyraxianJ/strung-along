@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2805812319890592802}
   - component: {fileID: 6347273588511497307}
+  - component: {fileID: 226270686211990286}
   m_Layer: 0
   m_Name: Visual
   m_TagString: Untagged
@@ -24,14 +25,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1460472177715267461}
-  m_LocalRotation: {x: 0.08715578, y: 0, z: 0, w: 0.9961947}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -0, z: -0.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3782227381728372954}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 10, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &6347273588511497307
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -84,6 +85,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &226270686211990286
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1460472177715267461}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 315cd769d1e2c7e4982b5707011f90e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  manager: {fileID: 3167654759174068871}
+  spriteRenderer: {fileID: 6347273588511497307}
+  uiColor: {r: 0, g: 0, b: 0, a: 1}
+  uiTightColor: {r: 1, g: 0, b: 0, a: 0}
 --- !u!1 &3167654757878991155
 GameObject:
   m_ObjectHideFlags: 0
@@ -960,7 +977,7 @@ MonoBehaviour:
   puppet1LastFrame: {x: 0, y: 0, z: 0}
   puppet2LastFrame: {x: 0, y: 0, z: 0}
   effectiveRootLastFrame: {x: 0, y: 0, z: 0}
-  lerpToEffectiveRootSpeed: 30
+  lerpToEffectiveRootSpeed: 20
   puppetDistanceEffectiveRootFactor: 1.04
   puppetDistanceEffectiveRootFactorTangled: 2.2
   effectiveRootPuppetPositionInfluence: 0.7
@@ -974,7 +991,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3782227381728372954}
-  - component: {fileID: 4628415905236583493}
   m_Layer: 0
   m_Name: Tangle Icon
   m_TagString: Untagged
@@ -998,22 +1014,6 @@ Transform:
   m_Father: {fileID: 3167654759174068984}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
---- !u!114 &4628415905236583493
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3856148038661118608}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 315cd769d1e2c7e4982b5707011f90e5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  manager: {fileID: 3167654759174068871}
-  spriteRenderer: {fileID: 6347273588511497307}
-  uiColor: {r: 0, g: 0, b: 0, a: 1}
-  uiTightColor: {r: 1, g: 0, b: 0, a: 0}
 --- !u!1001 &3167654757731100471
 PrefabInstance:
   m_ObjectHideFlags: 0

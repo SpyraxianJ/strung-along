@@ -20,6 +20,7 @@ public class StringRoot : MonoBehaviour
 
     [Tooltip("This is how far the connectedObject can go from this object before being pulled back")]
     public float stringLength;
+    public float stringYLength;
     [Tooltip("This is how far the connectedObject can go from this object before it starts to be pulled, ignored on Y")]
     public float stringStretchLength;
     [Tooltip("This is the smallest the string can go from being tangled, should be smaller than string length")]
@@ -68,6 +69,14 @@ public class StringRoot : MonoBehaviour
         // Used for tangleing
         Vector3 effectiveRoot = transform.position;
         float effectiveLength = stringLength;
+        float effectiveYLength = 0;
+        if (stringYLength > 0.05f)
+        {
+            effectiveYLength = stringYLength;
+        }
+        else {
+            effectiveYLength = stringLength;
+        }
         stringStretchLength = stringLength - 0.3f;
 
         if (manager.tangle != 0) {
@@ -88,6 +97,7 @@ public class StringRoot : MonoBehaviour
 
             // Set new length
             effectiveLength = Mathf.Lerp(stringLength, minimumStringLength, (float)Mathf.Abs(manager.tangle) / manager.maxTangle);
+            effectiveYLength = Mathf.Lerp(effectiveYLength, minimumStringLength, (float)Mathf.Abs(manager.tangle) / manager.maxTangle);
 
         }
 
@@ -102,6 +112,14 @@ public class StringRoot : MonoBehaviour
 
             effectiveRoot = transform.position;
             effectiveLength = stringLength;
+            if (stringYLength > 0.05f)
+            {
+                effectiveYLength = stringYLength;
+            }
+            else
+            {
+                effectiveYLength = stringLength;
+            }
 
             distance = Vector3.Distance(effectiveRoot, connectedPoint.position);
             baseDistance = Vector3.Distance(transform.position, connectedPoint.position);
@@ -174,6 +192,18 @@ public class StringRoot : MonoBehaviour
         {
             if (connectedPuppet != null) {
                 connectedPuppet.beingPulled = false;
+
+                // pull if airborne
+                if (connectedPuppet.isGrounded == false) {
+                    Vector3 difference = (effectiveRoot - connectedPoint.position);
+                    difference = new Vector3(difference.x, 0, difference.z);
+
+                    float y = connectedObject.velocity.y;
+                    connectedObject.velocity = new Vector3(connectedObject.velocity.x, y, connectedObject.velocity.z);
+
+                    connectedObject.AddForce(difference * stringForcePerUnit);
+                }
+
             }
         }
 
@@ -217,10 +247,10 @@ public class StringRoot : MonoBehaviour
         // Do all the stuff on the Y axis here
 
         // real root instead of effective used to simplify Y axis stuf and make knot position visual only
-        if (connectedObject.transform.position.y < transform.position.y - effectiveLength)
+        if (connectedObject.transform.position.y < transform.position.y - effectiveYLength)
         {
             connectedObject.velocity = new Vector3(connectedObject.velocity.x, 0, connectedObject.velocity.z);
-            connectedObject.transform.position = new Vector3(connectedObject.transform.position.x, transform.position.y - effectiveLength, connectedObject.transform.position.z);
+            connectedObject.transform.position = new Vector3(connectedObject.transform.position.x, transform.position.y - effectiveYLength, connectedObject.transform.position.z);
             // If we are pulled up, pull in a bit as well
 
             Vector3 difference = (effectiveRoot - connectedPoint.position);
@@ -228,6 +258,11 @@ public class StringRoot : MonoBehaviour
 
             connectedObject.AddForce(difference * 3f);
             connectedObject.velocity = connectedObject.velocity * Mathf.Min(Mathf.Abs((1 - Time.fixedDeltaTime)), 1);
+
+            if (connectedPuppet != null)
+            {
+                connectedPuppet.beingPulled = true;
+            }
         }
 
         if (manager.tangle != 0) // This is done bc we might overwrite this earlier, just putting it back for the line render or anythign else that might need it

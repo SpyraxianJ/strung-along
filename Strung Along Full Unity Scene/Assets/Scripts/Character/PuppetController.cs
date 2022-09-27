@@ -1194,7 +1194,7 @@ public class PuppetController : MonoBehaviour
 
         float lerpMultiplier = 0;
 
-        if (timeSinceSlingshot < 0.5f && isGrounded == false)
+        if ((timeSinceSlingshot < 1f && isGrounded == false) || beingPulled || isClimbing)
         //if (isGrounded == false)
         {
             lerpMultiplier = 1;

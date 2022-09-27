@@ -85,6 +85,8 @@ public class PuppetStringManager : MonoBehaviour
             //    new Vector3(targetEffectiveRoot.x,
             //    Mathf.Lerp(Mathf.Max(puppet1Effective.transform.position.y, puppet2Effective.transform.position.y), Mathf.Min(stringRoot1.transform.position.y, stringRoot2.transform.position.y), -Mathf.Pow(Mathf.Lerp(puppetDistanceEffectiveRootFactor, puppetDistanceEffectiveRootFactorTangled, Mathf.Abs(tangle) / Mathf.Max(0.0001f, maxTangle)), -Vector3.Distance(puppet1Effective.transform.position, puppet2Effective.transform.position)) + 1),
             //   targetEffectiveRoot.z);
+            Vector3 averageRoot = (stringRoot1.transform.position + stringRoot2.transform.position)/2;
+            targetEffectiveRoot = Vector3.Lerp(targetEffectiveRoot, new Vector3(averageRoot.x, targetEffectiveRoot.y, averageRoot.z), 0.5f);
             targetEffectiveRoot = new Vector3(targetEffectiveRoot.x, targetEffectiveRoot.y - 2, targetEffectiveRoot.z);
 
            // end of the mathf.Lerp line uses -A^{-x}+1 where A = puppetDistanceEffectiveRootFactor, put it in https://www.desmos.com/calculator to see it
