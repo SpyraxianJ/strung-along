@@ -463,6 +463,7 @@ MonoBehaviour:
   manager: {fileID: 3167654759174068871}
   lineVisual: {fileID: 3167654758654512374}
   stringLength: 20
+  stringYLength: 0
   stringStretchLength: 0
   minimumStringLength: 3.5
   elasticString: 0
@@ -777,6 +778,7 @@ MonoBehaviour:
   manager: {fileID: 3167654759174068871}
   lineVisual: {fileID: 3167654758976716785}
   stringLength: 20
+  stringYLength: 0
   stringStretchLength: 0
   minimumStringLength: 3.5
   elasticString: 0
@@ -977,7 +979,7 @@ MonoBehaviour:
   puppet1LastFrame: {x: 0, y: 0, z: 0}
   puppet2LastFrame: {x: 0, y: 0, z: 0}
   effectiveRootLastFrame: {x: 0, y: 0, z: 0}
-  lerpToEffectiveRootSpeed: 20
+  lerpToEffectiveRootSpeed: 15
   puppetDistanceEffectiveRootFactor: 1.04
   puppetDistanceEffectiveRootFactorTangled: 2.2
   effectiveRootPuppetPositionInfluence: 0.7

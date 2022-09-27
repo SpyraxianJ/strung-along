@@ -193,17 +193,6 @@ public class StringRoot : MonoBehaviour
             if (connectedPuppet != null) {
                 connectedPuppet.beingPulled = false;
 
-                // pull if airborne
-                if (connectedPuppet.isGrounded == false) {
-                    Vector3 difference = (effectiveRoot - connectedPoint.position);
-                    difference = new Vector3(difference.x, 0, difference.z);
-
-                    float y = connectedObject.velocity.y;
-                    connectedObject.velocity = new Vector3(connectedObject.velocity.x, y, connectedObject.velocity.z);
-
-                    connectedObject.AddForce(difference * stringForcePerUnit);
-                }
-
             }
         }
 
@@ -262,6 +251,17 @@ public class StringRoot : MonoBehaviour
             if (connectedPuppet != null)
             {
                 connectedPuppet.beingPulled = true;
+
+                // pull if airborne
+                if (connectedPuppet.isGrounded == false)
+                {
+                    difference = new Vector3(difference.x, 0, difference.z);
+
+                    float y = connectedObject.velocity.y;
+                    connectedObject.velocity = new Vector3(connectedObject.velocity.x, y, connectedObject.velocity.z);
+
+                    connectedObject.AddForce(difference * stringForcePerUnit);
+                }
             }
         }
 
