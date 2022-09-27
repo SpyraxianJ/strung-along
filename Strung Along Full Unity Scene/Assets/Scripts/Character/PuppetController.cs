@@ -230,6 +230,7 @@ public class PuppetController : MonoBehaviour
     public float grabbedObjectHeight;
     float grabStartHeight;
     public float timeSinceSlingshot;
+    float timeSinceIgnoreLine;
 
     public Vector3 positionPuppetGrabbed;
 
@@ -504,6 +505,7 @@ public class PuppetController : MonoBehaviour
                     }
                     puppetAnimator.Play("Land", 0, 0.5f);
                     Instantiate(landParticles, transform.position, Quaternion.identity);
+                    EstimateGridPoints();
                 }
 
                 isGrounded = true;
@@ -1179,7 +1181,32 @@ public class PuppetController : MonoBehaviour
             newPos = new Vector3(gridPoint1.transform.position.x, newPos.y, gridPoint1.transform.position.z);
         }
 
-        transform.position = Vector3.Lerp(new Vector3(newPos.x, transform.position.y, newPos.z), transform.position, 0.9f);
+        // Check reclaculation
+
+        float pointDistance = Vector3.Distance(new Vector3(gridPoint2.transform.position.x, 0, gridPoint2.transform.position.z), new Vector3(gridPoint1.transform.position.x, 0, gridPoint1.transform.position.z));
+
+        if (Vector3.Distance(new Vector3(gridPoint2.transform.position.x, 0, gridPoint2.transform.position.z), new Vector3(transform.position.x, 0, transform.position.z)) > pointDistance + 0.1f ||
+            Vector3.Distance(new Vector3(gridPoint1.transform.position.x, 0, gridPoint1.transform.position.z), new Vector3(transform.position.x, 0, transform.position.z)) > pointDistance + 0.1f)
+        {
+            Debug.Log("Moved too far from the current line, recalculating grid point");
+            EstimateGridPoints();
+        }
+
+        float lerpMultiplier = 0;
+
+        if (timeSinceSlingshot < 0.5f && isGrounded == false)
+        //if (isGrounded == false)
+        {
+            lerpMultiplier = 1;
+            timeSinceIgnoreLine = 0;
+        }
+        else
+        {
+            lerpMultiplier = Mathf.Lerp(1, 0, timeSinceIgnoreLine * 2f);
+            timeSinceIgnoreLine = timeSinceIgnoreLine + Time.fixedDeltaTime;
+        }
+
+        transform.position = Vector3.Lerp(new Vector3(newPos.x, transform.position.y, newPos.z), transform.position, 0.9f + 0.1f * (lerpMultiplier));
 
     }
 

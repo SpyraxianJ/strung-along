@@ -1379,7 +1379,7 @@ MonoBehaviour:
   grabPressed: 0
   isGrounded: 1
   isClimbing: 0
-  groundedMaxSpeed: 6
+  groundedMaxSpeed: 6.5
   canSlingshot: 1
   SlingshotForce: 60
   SlingshotForceYMulti: 2
@@ -1400,17 +1400,17 @@ MonoBehaviour:
   airborneAcceleration: 20
   airborneDeceleration: 0.205
   airborneDecay: 0.01
-  airborneMaxSpeed: 6
-  initialJumpForce: 38
+  airborneMaxSpeed: 7
+  initialJumpForce: 42
   jumpBoostForce: 0.1
   jumpBoostTime: 0.2
   jumpBoostTimer: 0
   jumpHoldForce: 1.8
-  jumpReleaseForce: -15
+  jumpReleaseForce: -10
   jumpReleaseRisingDrag: 0.08
   jumpRisingDrag: 0.069
   maxFallSpeed: 40
-  gravity: 26.5
+  gravity: 30.5
   coyoteTime: 0.2
   groundedMaxSpeedHardCap: 0
   groundedRayNumber: 20
