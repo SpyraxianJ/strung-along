@@ -44,7 +44,6 @@ public class StringRoot : MonoBehaviour
     [Tooltip("Ignore this, it's used as a debug visual and can be freely removed without effecting functionality")]
     public float debugDistance;
     public float debugeffRange;
-    float stretchTime;
     [HideInInspector]
     public Transform angleRef;
     [HideInInspector]
@@ -173,8 +172,6 @@ public class StringRoot : MonoBehaviour
         }
         else
         {
-            // -1 is used to avoid any strange floating point errors from causing any funny business
-            stretchTime = -1;
             if (connectedPuppet != null) {
                 connectedPuppet.beingPulled = false;
             }
@@ -215,10 +212,6 @@ public class StringRoot : MonoBehaviour
                 puppet.beingPulled = false;
             }
 
-        }
-        else
-        {
-            stretchTime = -1;
         }
 
         // Do all the stuff on the Y axis here

@@ -8,7 +8,7 @@ public class StartGameListener : MonoBehaviour
 {
     public string gameName = "StageScene";
     public Canvas pressAnyKeyCanvas;
-    private bool fadeIn = false, fadeOut = false, menuDone = false;
+    private bool fadeIn = false, menuDone = false;
     public Animator crossFade, musicCrossFade;
 
     private void Start()

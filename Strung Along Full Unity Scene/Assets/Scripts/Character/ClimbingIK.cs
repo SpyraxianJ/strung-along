@@ -8,7 +8,7 @@ public class ClimbingIK : MonoBehaviour
     public HandIKHandler IK;
     public StringRoot root;
     public float distance = 0.8f;
-    public bool enabled;
+    public new bool enabled;
 
     // Start is called before the first frame update
     void Start()

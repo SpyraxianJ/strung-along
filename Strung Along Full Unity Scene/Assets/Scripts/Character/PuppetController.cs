@@ -49,7 +49,6 @@ public class PuppetController : MonoBehaviour
     public bool jumpReleased = true;
     public bool grabPressed;
 
-    float speed = 0;
     [Tooltip("Determines if the puppet is currently on the ground or not, public for unity inspector debugging purposes, can be made private later without issue")]
     public bool isGrounded = true; // Keep public, other things use this as a reference
     public bool isClimbing = false;

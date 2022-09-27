@@ -85,7 +85,7 @@ public class StagelightController : MonoBehaviour
 	
 	IEnumerator FrontPingPong(int iterations) {
 		// bounce the light from left to right, then back.
-		float speed = 0.2f;
+		//float speed = 0.2f;
 		
 		
 		if (iterations > 1) {
