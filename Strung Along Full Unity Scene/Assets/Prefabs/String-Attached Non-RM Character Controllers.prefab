@@ -980,10 +980,11 @@ MonoBehaviour:
   puppet2LastFrame: {x: 0, y: 0, z: 0}
   effectiveRootLastFrame: {x: 0, y: 0, z: 0}
   lerpToEffectiveRootSpeed: 15
-  puppetDistanceEffectiveRootFactor: 1.04
+  puppetDistanceEffectiveRootFactor: 1
   puppetDistanceEffectiveRootFactorTangled: 2.2
   effectiveRootPuppetPositionInfluence: 0.7
   debugeffRange: 0
+  timeNotTangled: 0
 --- !u!1 &3856148038661118608
 GameObject:
   m_ObjectHideFlags: 0
