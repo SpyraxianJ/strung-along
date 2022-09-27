@@ -1005,25 +1005,30 @@ public class PuppetController : MonoBehaviour
     {
 
 
-        float closest = 999;
-        float second = 999;
+        if (gridManager != null) {
 
-        for (int i = 0; i < gridManager.points.Count; i++)
-        {
-            if (Vector3.Distance(transform.position, gridManager.points[i].transform.position) < closest)
+            float closest = 999;
+            float second = 999;
+
+            for (int i = 0; i < gridManager.points.Count; i++)
             {
-                second = closest;
-                gridPoint2 = gridPoint1;
-                closest = Vector3.Distance(transform.position, gridManager.points[i].transform.position);
-                gridPoint1 = gridManager.points[i];
-            }
-            else {
-                if (Vector3.Distance(transform.position, gridManager.points[i].transform.position) < second)
+                if (Vector3.Distance(transform.position, gridManager.points[i].transform.position) < closest)
                 {
-                    second = Vector3.Distance(transform.position, gridManager.points[i].transform.position);
-                    gridPoint2 = gridManager.points[i];
+                    second = closest;
+                    gridPoint2 = gridPoint1;
+                    closest = Vector3.Distance(transform.position, gridManager.points[i].transform.position);
+                    gridPoint1 = gridManager.points[i];
+                }
+                else
+                {
+                    if (Vector3.Distance(transform.position, gridManager.points[i].transform.position) < second)
+                    {
+                        second = Vector3.Distance(transform.position, gridManager.points[i].transform.position);
+                        gridPoint2 = gridManager.points[i];
+                    }
                 }
             }
+
         }
     }
 
