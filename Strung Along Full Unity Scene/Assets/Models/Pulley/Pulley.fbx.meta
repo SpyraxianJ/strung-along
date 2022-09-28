@@ -3,7 +3,32 @@ guid: fb7f7e34f84bfb747b0275d63d0322cc
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Main_Support
+    second: {fileID: 2100000, guid: 4b9ea9bbd94dcfa4e84e563f707c3b08, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Screws
+    second: {fileID: 2100000, guid: 2c1d8fad625364544b3c687ab99edb70, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Small_Supports
+    second: {fileID: 2100000, guid: 52b19f73b2f800841838270f97c5735d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Wheels
+    second: {fileID: 2100000, guid: 52e1e87a54601da4a9638bdafcb43965, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: lambert1
+    second: {fileID: 2100000, guid: d6e44c62c6df2d945a353970655876a8, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
