@@ -807,13 +807,6 @@ public class PuppetController : MonoBehaviour
             {
                 Debug.LogError("No HandIK on " + gameObject);
             }
-			
-			if (grabbedType == GrabbedType.OtherPuppet && Vector3.Distance(positionPuppetGrabbed, transform.position) > 2f)
-            {
-                // automatic release of grabbed puppet.
-                // GrabRelease(true);
-
-            }
 
             if (MathF.Abs(transform.position.y - grabStartHeight) > 0.15f) {
                 Debug.Log("Y position moving too much, letting go of object");
@@ -905,12 +898,15 @@ public class PuppetController : MonoBehaviour
     {
         if (grabbedType == GrabbedType.OtherPuppet)
         {
-            Physics.IgnoreCollision(grabbingObject, GetComponent<Collider>(), false);
-            grabbingObject.attachedRigidbody.velocity = (otherPuppet.thisStringRoot.transform.position - grabbingObject.transform.position).normalized * SlingshotForce;
-			grabbingObject.attachedRigidbody.velocity.Scale(new Vector3(1f, SlingshotForceYMulti, 1f));
-            grabbingObject.transform.position = grabbingObject.transform.position + (grabbingObject.attachedRigidbody.velocity * Time.fixedDeltaTime); // ensures we get lift if applicable
+			Physics.IgnoreCollision(grabbingObject, GetComponent<Collider>(), false);
 			otherPuppet.beingPuppetPulled = false;
-            otherPuppet.timeSinceSlingshot = 0;
+			
+			if (Vector3.Distance(positionPuppetGrabbed, transform.position) > 1.25f) {
+				grabbingObject.attachedRigidbody.velocity = (otherPuppet.thisStringRoot.transform.position - grabbingObject.transform.position).normalized * SlingshotForce;
+				grabbingObject.attachedRigidbody.velocity.Scale(new Vector3(1f, SlingshotForceYMulti, 1f));
+				grabbingObject.transform.position = grabbingObject.transform.position + (grabbingObject.attachedRigidbody.velocity * Time.fixedDeltaTime);
+				otherPuppet.timeSinceSlingshot = 0;
+			}
         }
         else if (grabbedType == GrabbedType.Prop)
         {
@@ -926,7 +922,6 @@ public class PuppetController : MonoBehaviour
             rb.velocity += Vector3.up * 0.5f; // should give a nice lil' pop upwards after releasing
 			isClimbing = false;
 			climbValue = 0;
-			
 		}
 
         grabbing = false;
