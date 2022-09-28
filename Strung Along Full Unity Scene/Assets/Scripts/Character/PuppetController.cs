@@ -384,7 +384,14 @@ public class PuppetController : MonoBehaviour
                 puppetAnimator.SetFloat("ObjectRelativeMovement", 0);
             }
             puppetAnimator.SetBool("StringPulled", beingPulled);
-            puppetAnimator.SetBool("PuppetPulled", beingPuppetPulled);
+			puppetAnimator.SetBool("PuppetPulled", beingPuppetPulled);
+			if (beingPuppetPulled) {
+				puppetAnimator.SetFloat("PuppetPullSpeed", otherPuppet.puppetAnimator.GetFloat("Speed") );
+				
+				visualReference.transform.LookAt(thisStringRoot.transform.position, Vector3.up);
+				visualReference.transform.eulerAngles = new Vector3(0f, visualReference.transform.eulerAngles.y, 0f);
+			}
+            
 
         }
 
