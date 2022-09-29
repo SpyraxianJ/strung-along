@@ -89,6 +89,7 @@ public class Level : MonoBehaviour
 	public Spawnpoint _p1Spawn;
 	public Spawnpoint _p2Spawn;
 	public GridManager _grid;
+	public Tutorial _tutorial;
 	
 	void Start() {
 		_props = new List<StageProp>();
@@ -125,6 +126,11 @@ public class Level : MonoBehaviour
 				prop.GetComponent<StageProp>().Init();
 				
 			}
+		}
+		
+		
+		if (this.TryGetComponent(out Tutorial tut)  ) {
+			_tutorial = tut;
 		}
 		
 		

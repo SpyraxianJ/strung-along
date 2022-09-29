@@ -26,6 +26,8 @@ public class LevelPlayingState : GameState
 		
 		// activate gameplay camera
 		ctx._camera.SwitchCam(1);
+		
+		ctx._tutorial.PlayTutorial(ctx._currentLevel._tutorial);
 	}
 	
 	public override void UpdateState(GameStateManager ctx) {
@@ -68,6 +70,8 @@ public class LevelPlayingState : GameState
 		ctx._player1.GetComponent<PuppetController>().gridManager = null;
 		ctx._player2.GetComponent<PuppetController>().gridManager = null;
 		ctx._camera.SwitchCam(0);
+		ctx._tutorial.EndTutorial();
+		
 		ctx.SwitchState(ctx.UnloadingState);
 	}
 	
@@ -84,6 +88,7 @@ public class LevelPlayingState : GameState
 		ctx._currentLevel.Reset(); // reset all props
 		ctx._p1Anchor.transform.position = ctx._currentLevel._p1Spawn.GetComponent<StageProp>().originalPosition;
 		ctx._p2Anchor.transform.position = ctx._currentLevel._p2Spawn.GetComponent<StageProp>().originalPosition; // make sure anchors are reset too
+		ctx._tutorial.ResetTutorial();
 	}
 	
 	public int GetAttempts() {

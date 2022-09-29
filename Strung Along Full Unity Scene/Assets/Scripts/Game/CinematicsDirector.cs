@@ -49,11 +49,6 @@ public class CinematicsDirector : MonoBehaviour
 		// they can still jump though because its funny
 		player1.GetComponent<Rigidbody>().velocity.Scale( new Vector3(0f, 1f, 0f) );
 		player2.GetComponent<Rigidbody>().velocity.Scale( new Vector3(0f, 1f, 0f) );
-		
-		// zero out the contextual move timer.
-		player1.GetComponent<PuppetContextualTutorial>().movementTimer = 0f;
-		player2.GetComponent<PuppetContextualTutorial>().movementTimer = 0f;
-		
 	}
 	
 	// make puppets turn towards an object.

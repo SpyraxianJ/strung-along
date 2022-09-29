@@ -27,7 +27,6 @@ public class PuppetController : MonoBehaviour
     public GameObject visualReference;
     PuppetAudio audioManager;
     Animator puppetAnimator;
-    PuppetContextualTutorial conTut;
     HandIKHandler ikHandler;
     ClimbingIK climbIK;
 	//[HideInInspector]
@@ -294,7 +293,6 @@ public class PuppetController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-		conTut = GetComponent<PuppetContextualTutorial>();
 		ikHandler = GetComponent<HandIKHandler>();
 		climbIK = GetComponent<ClimbingIK>();
 		puppetAnimator = visualReference.GetComponentInChildren<Animator>();
@@ -321,7 +319,6 @@ public class PuppetController : MonoBehaviour
 
     void FixedUpdate()
     {
-        conTut.movementTimer = move != Vector2.zero ? 0 : conTut.movementTimer;
         if (isClimbing == false)
         {
             // handle movement
@@ -339,7 +336,6 @@ public class PuppetController : MonoBehaviour
             climbIK.enabled = true;
             isGrounded = false;
             ClimbTick();
-            conTut.climbTimer = 0;
         }
 		
 		// force movement to grid
@@ -445,7 +441,6 @@ public class PuppetController : MonoBehaviour
 
         if (isGrounded)
         {
-            conTut.climbTimer = 0;
             transform.position = transform.position - transform.up * groundedDownPerFrame;
 
             if (stamina < 1)
@@ -657,8 +652,6 @@ public class PuppetController : MonoBehaviour
         else
         {
 
-            conTut.climbTimer += Time.fixedDeltaTime;
-
             if (beingPulled == false)
             {
                 // Air movement stuff, using simpler calculations since precision isn't as important
@@ -731,7 +724,6 @@ public class PuppetController : MonoBehaviour
 
     public void StartJump()
     {
-        conTut.jumpTimer = 0;
         airTimer = 0;
         if ((isGrounded || timeSinceGrounded <= coyoteTime) && hasJumped == false)
         {

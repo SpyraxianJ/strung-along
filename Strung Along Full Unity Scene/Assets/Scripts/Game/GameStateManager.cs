@@ -48,6 +48,7 @@ public class GameStateManager : MonoBehaviour
 	[HideInInspector] public StageCamController _camera;
 	[HideInInspector] public StagelightController _lights;
 	[HideInInspector] public CinematicsDirector _cinematics;
+	[HideInInspector] public TutorialListener _tutorial;
 	
 	[Header("Transition Settings")]
 	[Tooltip("Time in seconds it takes for props to move into the level.")]
@@ -87,6 +88,7 @@ public class GameStateManager : MonoBehaviour
 		_database = GetComponent<LevelDatabase>();
 		_camera = FindObjectOfType<StageCamController>();
 		_lights = FindObjectOfType<StagelightController>();
+		_tutorial = FindObjectOfType<TutorialListener>();
 		
 		
         _currentState = EmptyState;
