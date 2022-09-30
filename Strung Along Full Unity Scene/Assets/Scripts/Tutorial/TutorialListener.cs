@@ -26,14 +26,7 @@ public class TutorialListener : MonoBehaviour
 	bool _condition2 = false;
 	bool _exit = false;
 	[Space]
-	public Image _moveTut;
-	public Image _jumpTut;
-    public Image _grabTut;
-	public Image _slingTut;
-	public Image _hangingTut;
-	public Image _tangleTut;
-    
-	
+	public Image[] _tutorialImages;
 	
     // Start is called before the first frame update
     void Start()
@@ -46,14 +39,13 @@ public class TutorialListener : MonoBehaviour
 		
 		_popup.SetActive(false);
 		
-		_currentTutorialType = Tutorials.Move;
-		_moveTut.color = new Color(1, 1, 1, 1);
+		foreach (Image img in _tutorialImages) {
+			img.color = new Color(1, 1, 1, 0);
+		}
 		
-		_jumpTut.color = new Color(1, 1, 1, 0);
-		_grabTut.color = new Color(1, 1, 1, 0);
-		//_slingTut.color = new Color(1, 1, 1, 0);
-		//_hangingTut.color = new Color(1, 1, 1, 0);
-		//_tangleTut.color = new Color(1, 1, 1, 0);
+		_currentTutorialType = 0;
+		_tutorialImages[0].color = new Color(1, 1, 1, 1);
+		
     }
 
     void FixedUpdate()
@@ -100,7 +92,6 @@ public class TutorialListener : MonoBehaviour
 			yield return new WaitUntil( () => _popupAnimator.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.Closed") );
 		}
 		
-		
 	}
 	
 	public void EndTutorial(bool victory) {
@@ -115,7 +106,7 @@ public class TutorialListener : MonoBehaviour
 		if (victory) {
 			_tooty.Cheer(true);
 		
-			yield return new WaitForSeconds(2.0f);
+			yield return new WaitForSeconds(_ctx._victoryTime);
 		
 			_tooty.Cheer(false);
 		}
@@ -145,30 +136,9 @@ public class TutorialListener : MonoBehaviour
 	}
 	
 	Tutorials SetTutorialType(Tutorials tutType) {
-		GetTutorialImage(_currentTutorialType).color = new Color(1, 1, 1, 0);
-		GetTutorialImage(tutType).color = new Color(1, 1, 1, 1);
+		_tutorialImages[(int)_currentTutorialType].color = new Color(1, 1, 1, 0);
+		_tutorialImages[(int)tutType].color = new Color(1, 1, 1, 1);
 		return tutType;
-	}
-	
-	Image GetTutorialImage(Tutorials tutType) {
-		
-		switch (tutType) {
-			case Tutorials.Move:
-				return _moveTut;
-			case Tutorials.Jump:
-				return _jumpTut;
-			case Tutorials.Grab:
-				return _grabTut;
-			case Tutorials.Slingshot:
-				return _slingTut;
-			case Tutorials.HoldString:
-				return _hangingTut;
-			case Tutorials.Tangle:
-				return _tangleTut;
-			default:
-				return null;
-		}
-		
 	}
 	
 	void CheckExitCondition(Tutorials tutType) {

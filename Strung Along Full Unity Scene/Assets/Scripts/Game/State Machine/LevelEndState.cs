@@ -15,8 +15,8 @@ public class LevelEndState : GameState
 			// TODO: flash lights in front of stage
 			ctx._tutorial.EndTutorial(true);
 		} else {
-			ctx._tutorial.EndTutorial(false);
 			_victoryTimer = ctx._victoryTime;
+			ctx._tutorial.EndTutorial(false);
 		}
 	}
 
