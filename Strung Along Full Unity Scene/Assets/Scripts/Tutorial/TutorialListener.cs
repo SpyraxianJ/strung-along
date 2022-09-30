@@ -74,7 +74,11 @@ public class TutorialListener : MonoBehaviour
 	IEnumerator TutorialRoutine() {
 		yield return new WaitForSeconds(_currentTutorial._initialDelay);
 		
-		_tooty.RunToPosition( _currentTutorial._ratPosition );
+		if (_currentTutorial._fromCeiling) {
+			_tooty.GrappleToPosition( _currentTutorial._ratPosition );
+		} else {
+			_tooty.RunToPosition( _currentTutorial._ratPosition );
+		}
 		
 		yield return new WaitUntil( () => _tooty._inPlace );
 		
@@ -91,27 +95,42 @@ public class TutorialListener : MonoBehaviour
 				yield return null;
 			}
 			
-			yield return new WaitForSeconds(2.0f);
+			yield return new WaitForSeconds(1.0f);
 			Popdown();
 			yield return new WaitUntil( () => _popupAnimator.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.Closed") );
 		}
 		
-		_currentTutorial = null;
 		
 	}
 	
-	public void EndTutorial() {
-		if (_currentTutorial) {
-			Popdown();
-			StopAllCoroutines();
+	public void EndTutorial(bool victory) {
+		Popdown();
+		StopAllCoroutines();
+		
+		StartCoroutine( DismissTooty(victory) );
+	}
+	
+	IEnumerator DismissTooty(bool victory) {
+		
+		if (victory) {
+			_tooty.Cheer(true);
+		
+			yield return new WaitForSeconds(2.0f);
+		
+			_tooty.Cheer(false);
+		}
+		
+		if (_currentTutorial._fromCeiling) {
+			_tooty.GrappleHome();
+		} else {
 			_tooty.RunHome();
 		}
 		
+		_currentTutorial = null;
 	}
 	
 	public void ResetTutorial() {
 		if (_currentTutorial) {
-			Popdown();
 			_tooty.Facepalm();
 		}
 	}

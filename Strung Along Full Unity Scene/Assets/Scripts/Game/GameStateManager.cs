@@ -62,6 +62,8 @@ public class GameStateManager : MonoBehaviour
 	public float _deathSlowdown = 0.5f;
 	[Tooltip("Volume effect that fades in when a puppet dies. Also fades in any Image placed as a child.")]
 	public Volume _deathEffect;
+	[Tooltip("Duration of victory fanfare after completing a level.")]
+	public float _victoryTime = 3.0f;
 	
 	[Header("no time for this fancy bullshit")]
 	[Tooltip("Instead of loading 1-1, show level select on game start.")]
@@ -79,6 +81,7 @@ public class GameStateManager : MonoBehaviour
 	
 	[HideInInspector] public Level _nextLevelToLoad = null;
 	[HideInInspector] public Level _currentLevel = null;
+	[HideInInspector] public bool _currentLevelWon = false;
 	[HideInInspector] public int _currentAct = 0;
 	[HideInInspector] public float _totalPlaytime = 0.0f;
 	

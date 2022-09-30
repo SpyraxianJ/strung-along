@@ -54,6 +54,7 @@ public class LevelPlayingState : GameState
 			
 		} else if ( Win(ctx) ) {
 			// invoke any win stuff!
+			ctx._currentLevelWon = true;
 			PlayExit(ctx);
 		} else if (ctx._interrupt) {
 			// the player has requested the game end. rude.
@@ -62,7 +63,7 @@ public class LevelPlayingState : GameState
 		}
 		
 		ctx._totalPlaytime += Time.unscaledDeltaTime;
-		_levelTime += Time.unscaledDeltaTime;
+		_levelTime += Time.deltaTime;
 	}
 	
 	void PlayExit(GameStateManager ctx) {
@@ -70,9 +71,8 @@ public class LevelPlayingState : GameState
 		ctx._player1.GetComponent<PuppetController>().gridManager = null;
 		ctx._player2.GetComponent<PuppetController>().gridManager = null;
 		ctx._camera.SwitchCam(0);
-		ctx._tutorial.EndTutorial();
 		
-		ctx.SwitchState(ctx.UnloadingState);
+		ctx.SwitchState(ctx.EndState);
 	}
 	
 	// to win, both goals need to be active and both puppets need to be alive.

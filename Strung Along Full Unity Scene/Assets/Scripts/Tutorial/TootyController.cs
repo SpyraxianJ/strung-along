@@ -28,7 +28,7 @@ public class TootyController : MonoBehaviour
 	public void RunToPosition(Vector3 point) {
 		StopAllCoroutines();
 		_inPlace = false;
-		// _animator.SetBool("running", true);
+		_animator.SetBool("running", true);
 		StartCoroutine( RunRoutine(point) );
 	}
 	
@@ -46,22 +46,69 @@ public class TootyController : MonoBehaviour
 		
 		transform.eulerAngles = Vector3.zero;
 		_inPlace = true;
-		// _animator.SetBool("running", false);
-		
+		_animator.SetBool("running", false);
 	}
 	
 	public void RunHome() {
 		RunToPosition(_home);
 	}
 	
+	public void GrappleToPosition(Vector3 point) {
+		StopAllCoroutines();
+		_inPlace = false;
+		_animator.SetBool("grappling", true);
+		StartCoroutine( GrappleRoutine(point) );
+	}
+	
+	IEnumerator GrappleRoutine(Vector3 point) {
+		
+		transform.position = new Vector3(point.x, 14f, point.z); // put him in the rafters
+		
+		while ( Vector3.Distance(transform.position, point) > 0.001f ) {
+			transform.position = Vector3.MoveTowards(transform.position, point, _runSpeed * Time.deltaTime);
+			transform.Rotate(Vector3.up, 180f * Time.deltaTime);
+			yield return null;
+		}
+		
+		transform.eulerAngles = Vector3.zero;
+		_inPlace = true;
+		_animator.SetBool("grappling", false);
+	}
+	
+	IEnumerator GrappleRoutine() {
+		
+		Vector3 point = new Vector3(transform.position.x, 14f, transform.position.z);
+		
+		while ( Vector3.Distance(transform.position, point) > 0.001f ) {
+			transform.position = Vector3.MoveTowards(transform.position, point, _runSpeed * Time.deltaTime);
+			transform.Rotate(Vector3.up, 180f * Time.deltaTime);
+			yield return null;
+		}
+		
+		transform.eulerAngles = Vector3.zero;
+		transform.position = _home;
+		_inPlace = true;
+		_animator.SetBool("grappling", false);
+	}
+	
+	public void GrappleHome() {
+		StopAllCoroutines();
+		_inPlace = false;
+		_animator.SetBool("grappling", true);
+		StartCoroutine( GrappleRoutine() );
+	}
+	
 	public void Facepalm() {
-		// _animator.Play("Facepalm");
+		_animator.Play("Facepalm");
+	}
+	
+	public void Cheer(bool cheer) {
+		_animator.SetBool("cheer", cheer);
 	}
 	
 	void OnGrab(PuppetController pup) {
 		pup.GrabRelease(false);
-		
-		// _animator.Play("Poke");
+		_animator.Play("Poke");
 		
 	}
 	
