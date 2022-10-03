@@ -928,8 +928,8 @@ public class PuppetController : MonoBehaviour
         }
 		else if (grabbedType == GrabbedType.String) {
 			rb.velocity = (transform.position - lastpos) / (Time.fixedDeltaTime);
-            rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y / 2, rb.velocity.z);
-            rb.velocity += Vector3.up * 0.5f; // should give a nice lil' pop upwards after releasing
+            rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, rb.velocity.z);
+            rb.velocity += Vector3.up * 1.5f; // should give a nice lil' pop upwards after releasing
 			isClimbing = false;
 			climbValue = 0;
 		}
@@ -943,9 +943,11 @@ public class PuppetController : MonoBehaviour
     public void ClimbTick() {
         airTimer = 0;
 
-        rb.useGravity = false;  
+        rb.useGravity = true;
 
         // Swinging code is adapted from the old, inelastic string code
+
+        rb.AddForce(new Vector3(move.x, 0, move.y) * 10f);
 
         Vector3 difference = (effectiveRoot - transform.position);
 
@@ -963,9 +965,11 @@ public class PuppetController : MonoBehaviour
             Vector3.Project(rb.velocity, thisStringRoot.angleRef2.transform.up) +
             Vector3.Project(rb.velocity, thisStringRoot.angleRef2.transform.right);
 
-        rb.velocity = rb.velocity * (1 - (Time.fixedDeltaTime * 0.5f));// * 0.999f;
+        rb.velocity = rb.velocity * (1 - (Time.fixedDeltaTime * 0.57f));// * 0.999f;
 
-        rb.velocity = new Vector3(rb.velocity.x, oldVel.y, rb.velocity.z);
+        rb.velocity = rb.velocity - Vector3.down * -9.8f * 5f * Time.fixedDeltaTime;
+
+        //rb.velocity = new Vector3(rb.velocity.x, oldVel.y, rb.velocity.z);
 
         float oldY = rb.transform.position.y;
         Vector3 vector = (rb.gameObject.transform.position - rb.transform.position);
@@ -976,9 +980,7 @@ public class PuppetController : MonoBehaviour
         //rb.transform.position = new Vector3(rb.transform.position.x, oldY, rb.transform.position.z);
         transform.position = effectiveRoot + -difference.normalized * distanceToHook;
 
-        rb.velocity = Vector3.Lerp(rb.velocity, oldVel, 1 - swingSpeed);
-
-        rb.AddForce(move * 5f);
+        //rb.velocity = Vector3.Lerp(rb.velocity, oldVel, 1 - swingSpeed);
 
         //stamina -= staminaDrain * Time.fixedDeltaTime;
 
