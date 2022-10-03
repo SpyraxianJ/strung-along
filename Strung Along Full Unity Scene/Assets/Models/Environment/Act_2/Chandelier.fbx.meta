@@ -3,7 +3,22 @@ guid: aaae5dcd2369ce0439fb2cf0a665ad03
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Candle
+    second: {fileID: 2100000, guid: 0fb099901b2f25c4ebd88a002d1c9496, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Chandelier
+    second: {fileID: 2100000, guid: e86972326cff8d44c81fdcc977d59e5c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: wicks
+    second: {fileID: 2100000, guid: 4f08cc359deb7c6448a8fe13014043e1, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
