@@ -27,7 +27,11 @@ public class LevelPlayingState : GameState
 		// activate gameplay camera
 		ctx._camera.SwitchCam(1);
 		
+		// play the tutorial for this level
 		ctx._tutorial.PlayTutorial(ctx._currentLevel._tutorial);
+		// enable/disable slingshotting for this level based on the flag
+		ctx._player1.GetComponent<PuppetController>().canSlingshot = ctx._currentLevel._tutorial._canSlingshot;
+		
 	}
 	
 	public override void UpdateState(GameStateManager ctx) {
@@ -71,6 +75,9 @@ public class LevelPlayingState : GameState
 		ctx._player1.GetComponent<PuppetController>().gridManager = null;
 		ctx._player2.GetComponent<PuppetController>().gridManager = null;
 		ctx._camera.SwitchCam(0);
+		
+		// reset slingshot ability
+		ctx._player1.GetComponent<PuppetController>().canSlingshot = true;
 		
 		ctx.SwitchState(ctx.EndState);
 	}
