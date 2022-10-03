@@ -74,6 +74,7 @@ public class PuppetStringManager : MonoBehaviour
         if (bolConnected)
         {
             timeNotTangled = 0;
+            tangle = Mathf.Min(Mathf.Max(-3, tangle), 3);
         }
         else
         {
