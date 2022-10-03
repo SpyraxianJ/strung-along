@@ -503,9 +503,9 @@ MonoBehaviour:
   puppet1LastFrame: {x: 0, y: 0, z: 0}
   puppet2LastFrame: {x: 0, y: 0, z: 0}
   effectiveRootLastFrame: {x: 0, y: 0, z: 0}
-  lerpToEffectiveRootSpeed: 15
+  lerpToEffectiveRootSpeed: 5
   puppetDistanceEffectiveRootFactor: 1
-  puppetDistanceEffectiveRootFactorTangled: 2.2
+  puppetDistanceEffectiveRootFactorTangled: 2
   effectiveRootPuppetPositionInfluence: 0.7
   debugeffRange: 0
   timeNotTangled: 0

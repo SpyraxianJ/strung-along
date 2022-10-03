@@ -95,10 +95,12 @@ public class PuppetStringManager : MonoBehaviour
             Vector3 targetEffectiveRoot = new Vector3(((puppet1Effective.transform.position + puppet2Effective.transform.position) / 2).x, 
                 Vector3.Lerp((stringRoot1.transform.position + stringRoot2.transform.position) / 2, new Vector3((puppet1Effective.transform.position + puppet2Effective.transform.position).x, (stringRoot1.transform.position + stringRoot2.transform.position).y, (puppet1Effective.transform.position + puppet2Effective.transform.position).z) / 2, effectiveRootPuppetPositionInfluence).y, 
                 ((puppet1Effective.transform.position + puppet2Effective.transform.position) / 2).z);
-            //targetEffectiveRoot =
-            //    new Vector3(targetEffectiveRoot.x,
-            //    Mathf.Lerp(Mathf.Max(puppet1Effective.transform.position.y, puppet2Effective.transform.position.y), Mathf.Min(stringRoot1.transform.position.y, stringRoot2.transform.position.y), -Mathf.Pow(Mathf.Lerp(puppetDistanceEffectiveRootFactor, puppetDistanceEffectiveRootFactorTangled, Mathf.Abs(tangle) / Mathf.Max(0.0001f, maxTangle)), -Vector3.Distance(puppet1Effective.transform.position, puppet2Effective.transform.position)) + 1),
-            //   targetEffectiveRoot.z);
+            targetEffectiveRoot =
+                new Vector3(targetEffectiveRoot.x,
+                Mathf.Lerp(Mathf.Max(puppet1Effective.transform.position.y, puppet2Effective.transform.position.y), Mathf.Min(stringRoot1.transform.position.y, stringRoot2.transform.position.y), -Mathf.Pow(Mathf.Lerp(puppetDistanceEffectiveRootFactor, puppetDistanceEffectiveRootFactorTangled, (Mathf.Abs(tangle) + 0.5f) / Mathf.Max(0.0001f, maxTangle)), -Vector3.Distance(puppet1Effective.transform.position, puppet2Effective.transform.position) - 2) + 1),
+               targetEffectiveRoot.z);
+
+            targetEffectiveRoot = new Vector3(targetEffectiveRoot.x, targetEffectiveRoot.y * 1.05f, targetEffectiveRoot.z);
 
             Vector3 averageRoot = (stringRoot1.transform.position + stringRoot2.transform.position)/2;
             Vector3 averagePuppet = (puppet1Effective.transform.position + puppet2Effective.transform.position) / 2;
