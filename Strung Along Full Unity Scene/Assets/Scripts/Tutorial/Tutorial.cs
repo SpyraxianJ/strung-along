@@ -14,6 +14,8 @@ public class Tutorial : MonoBehaviour
 	public Vector3 _ratPosition = new Vector3(0f, 0f, -4f);
 	[Tooltip("Rat will descend on a rope from the ceiling.\nGood for spots he wouldn't run to.")]
 	public bool _fromCeiling = false;
+	[Tooltip("Whether the Slingshot ability is available on this level.")]
+	public bool _canSlingshot = true;
 	
 	void OnDrawGizmosSelected() {
 		Gizmos.DrawWireCube(_ratPosition + new Vector3(0, 0.5f, 0), Vector3.one);
