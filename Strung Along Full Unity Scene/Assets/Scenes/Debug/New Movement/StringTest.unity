@@ -1175,7 +1175,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &554465595
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2530,7 +2530,7 @@ PrefabInstance:
     - target: {fileID: 3694133943377610563, guid: bca65c23b1594aa4dbebacacfe0c1350, type: 3}
       propertyPath: gridManager
       value: 
-      objectReference: {fileID: 554465596}
+      objectReference: {fileID: 0}
     - target: {fileID: 3694133943377610563, guid: bca65c23b1594aa4dbebacacfe0c1350, type: 3}
       propertyPath: bolCanSlingshot
       value: 1
@@ -2578,7 +2578,7 @@ PrefabInstance:
     - target: {fileID: 6331177286643695836, guid: bca65c23b1594aa4dbebacacfe0c1350, type: 3}
       propertyPath: gridManager
       value: 
-      objectReference: {fileID: 554465596}
+      objectReference: {fileID: 0}
     - target: {fileID: 6331177286643695836, guid: bca65c23b1594aa4dbebacacfe0c1350, type: 3}
       propertyPath: playerIndex
       value: 1

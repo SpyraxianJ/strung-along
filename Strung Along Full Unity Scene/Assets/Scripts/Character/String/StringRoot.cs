@@ -105,7 +105,7 @@ public class StringRoot : MonoBehaviour
         float baseDistance = Vector3.Distance(new Vector3(transform.position.x, connectedPoint.position.y, transform.position.z), connectedPoint.position);
 
         // 0 == 1 is to pause it
-        if (stringLength - baseDistance <= 0 && 0 == 1) // pretend we aren't tangled this frame, since our bounding area isn't limited by out tangled range
+        if (stringLength - baseDistance <= 0) // pretend we aren't tangled this frame, since our bounding area isn't limited by out tangled range
         {
 
             //Debug.Log("lol2 " + effectiveLength);
