@@ -14568,7 +14568,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Build 22/09/2022_1
+  m_Text: PAX Build 3/10/2022_1
 --- !u!222 &1338009739
 CanvasRenderer:
   m_ObjectHideFlags: 0
