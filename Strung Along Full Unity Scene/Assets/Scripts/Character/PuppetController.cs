@@ -240,6 +240,7 @@ public class PuppetController : MonoBehaviour
     bool hasJumped;
     bool stopVel;
     Vector3 lastpos;
+    int grabBreaks;
 
     [Space]
 
@@ -755,11 +756,30 @@ public class PuppetController : MonoBehaviour
             // HARPER: send message to grabbed object each frame
 			grabbingObject.gameObject.SendMessage("OnGrabbing", this, SendMessageOptions.DontRequireReceiver);
 
+            //Debug.LogWarning(Vector3.Distance(grabbingObject.gameObject.transform.position, ((visualReference.transform.forward) * grabbedObjectDistance * (1 + holdDistance)) + transform.position));
+
+            Vector3 val1 = grabbingObject.gameObject.transform.position;
+            Vector3 val2 = ((visualReference.transform.forward) * grabbedObjectDistance * (1 + holdDistance)) + transform.position;
+
+            val1 = new Vector3(val1.x, 0, val1.z);
+            val2 = new Vector3(val2.x, 0, val2.z);
 
             // disable rotation
-            if (Vector3.Distance(grabbingObject.gameObject.transform.position, ((visualReference.transform.forward) * grabbedObjectDistance * (1 + holdDistance)) + transform.position + (Vector3.up * grabbedObjectHeight)) > 1f) {
+            if (Vector3.Distance(val1, val2) > 0.2f && grabbingObject.gameObject == otherPuppet.gameObject) {
                 // we are trying to move it more than a unit in a frame, cancel the grab
+
+                
+                grabBreaks = grabBreaks + 1;
+
+                transform.position = Vector3.Lerp(transform.position - (grabbingObject.gameObject.transform.position - ((visualReference.transform.forward) * grabbedObjectDistance * (1 + holdDistance)) + transform.position), transform.position, 0.95f);
+
+                if (grabBreaks > 1) {
+                    GrabRelease(false);
+                    return;
+                }
             }
+            grabbingObject.attachedRigidbody.velocity = Vector3.zero;
+            grabbingObject.attachedRigidbody.angularVelocity = Vector3.zero;
             grabbingObject.gameObject.transform.position = ((visualReference.transform.forward) * grabbedObjectDistance * (1 + holdDistance)) + transform.position;
             grabbingObject.transform.position = new Vector3(grabbingObject.transform.position.x, grabbedObjectHeight, grabbingObject.transform.position.z);
 			
@@ -810,6 +830,14 @@ public class PuppetController : MonoBehaviour
                 GrabRelease(false);
             }
 
+            PuppetController cont = grabbingObject.GetComponent<PuppetController>();
+
+            if (cont != null) {
+                if (cont.beingPuppetPulled == false) {
+                    GrabRelease(false);
+                }
+            }
+
         }
         else {
             puppetAnimator.SetBool("GrabbingObject", false);
@@ -827,7 +855,9 @@ public class PuppetController : MonoBehaviour
 
     public void GrabStart()
     {
-		LayerMask allGrabMask = grabbingMask | grabbingMaskSlingshot;
+        grabBreaks = 0;
+
+        LayerMask allGrabMask = grabbingMask | grabbingMaskSlingshot;
 		Vector3 grabSpherePosition = (visualReference.transform.position) + (visualReference.transform.forward * 1f) + (Vector3.up * 1f);
         Collider[] grabs = Physics.OverlapSphere(grabSpherePosition, grabDistance / 2f, allGrabMask, QueryTriggerInteraction.Collide );
 		
@@ -874,12 +904,17 @@ public class PuppetController : MonoBehaviour
                 Physics.IgnoreCollision(grabbingObject, GetComponent<Collider>(), true);
 				visualReference.transform.LookAt(grabbingObject.transform.position, Vector3.up);
 				visualReference.transform.eulerAngles = new Vector3(0f, visualReference.transform.eulerAngles.y, 0f);
-                grabbedObjectDistance = Vector3.Distance(transform.position, grabbingObject.gameObject.transform.position);
+                grabbedObjectDistance = 1f;
                 grabbedObjectHeight = grabbingObject.gameObject.transform.position.y;
                 grabStartHeight = transform.position.y;
 				
                 otherPuppet.beingPuppetPulled = true;
 				positionPuppetGrabbed = transform.position;
+
+                if (otherPuppet.grabbing) {
+                    otherPuppet.GrabRelease(false);
+                }
+
 				break;
 			case GrabbedType.Prop:
                 grabbing = true;
@@ -887,7 +922,7 @@ public class PuppetController : MonoBehaviour
 				visualReference.transform.LookAt(grabbingObject.transform.position, Vector3.up);
 				visualReference.transform.eulerAngles = new Vector3(0f, visualReference.transform.eulerAngles.y, 0f);
                 grabbedObjectDistance = Vector3.Distance(transform.position, grabbingObject.gameObject.transform.position);
-                grabbingObject.gameObject.layer = 11;
+                //grabbingObject.gameObject.layer = 11;
                 grabbedObjectHeight = grabbingObject.gameObject.transform.position.y;
                 grabStartHeight = transform.position.y;
 				
@@ -899,6 +934,9 @@ public class PuppetController : MonoBehaviour
 
     public void GrabRelease(bool slingshot)
     {
+
+        grabBreaks = 0;
+
         if (grabbedType == GrabbedType.OtherPuppet)
         {
 			Physics.IgnoreCollision(grabbingObject, GetComponent<Collider>(), false);
@@ -1227,6 +1265,14 @@ public class PuppetController : MonoBehaviour
 
         transform.position = Vector3.Lerp(new Vector3(newPos.x, transform.position.y, newPos.z), transform.position, 0.9f + 0.1f * (lerpMultiplier));
 
+    }
+
+    void OnCollisionStay(Collision collision)
+    {
+        if (beingPuppetPulled == true) {
+            transform.position += new Vector3((transform.position - collision.contacts[0].point).x, 0, (transform.position - collision.contacts[0].point).z).normalized * 0.25f;
+        }
+        Debug.Log(collision.collider);
     }
 
 }

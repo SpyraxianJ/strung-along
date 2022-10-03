@@ -154,18 +154,20 @@ public class TutorialListener : MonoBehaviour
 				_condition2 = _p2.jumpPressed || _condition2;
 				break;
 			case Tutorials.Grab:
-				//_condition1 = both puppets have successfully grabbed an object at least once
+				_condition1 = _p1.grabbing || _condition1;
+				_condition2 = _p2.grabbing || _condition2;
 				break;
 			case Tutorials.Slingshot:
-				//_condition1 = p1 has grabbed or been grabbed by p2
-				//_condition2 = inverse of that lol
+				_condition1 = _p1.timeSinceSlingshot == 0f || _p2.timeSinceSlingshot == 0f || _condition1;
+				_condition2 = true;
 				break;
 			case Tutorials.HoldString:
-				//_condition1 = p1 has grabbed their string while airborne
-				//_condition2 = ayeyadbshjs
+				_condition1 = _p1.isClimbing || _condition1;
+				_condition2 = _p2.isClimbing || _condition2;
 				break;
 			case Tutorials.Tangle:
-				//_condition1 = 
+				_condition1 = _p1.stringManager.bolConnected || _condition1;
+				_condition2 = true;
 				break;
 			
 		}

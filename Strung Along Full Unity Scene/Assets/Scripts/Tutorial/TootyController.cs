@@ -44,7 +44,7 @@ public class TootyController : MonoBehaviour
 			yield return null;
 		}
 		
-		transform.eulerAngles = Vector3.zero;
+		transform.eulerAngles = new Vector3(0f, 180f, 0f);
 		_inPlace = true;
 		_animator.SetBool("running", false);
 	}
@@ -70,7 +70,7 @@ public class TootyController : MonoBehaviour
 			yield return null;
 		}
 		
-		transform.eulerAngles = Vector3.zero;
+		transform.eulerAngles = new Vector3(0f, 180f, 0f);
 		_inPlace = true;
 		_animator.SetBool("grappling", false);
 	}
