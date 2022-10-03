@@ -805,6 +805,11 @@ public class PuppetController : MonoBehaviour
                 GrabRelease(false);
             }
 
+            if (isGrounded == false)
+            {
+                GrabRelease(false);
+            }
+
         }
         else {
             puppetAnimator.SetBool("GrabbingObject", false);
@@ -849,6 +854,12 @@ public class PuppetController : MonoBehaviour
 				grabbedType = GrabbedType.Prop;
 			}
 		}
+
+        // Can't grab objects in the air
+        if (isGrounded == false && grabbedType == GrabbedType.OtherPuppet) {
+            grabbingObject = null;
+            grabbedType = GrabbedType.None;
+        }
 		
 		switch (grabbedType) {
 			case GrabbedType.None:
@@ -899,6 +910,13 @@ public class PuppetController : MonoBehaviour
 				grabbingObject.transform.position = grabbingObject.transform.position + (grabbingObject.attachedRigidbody.velocity * Time.fixedDeltaTime);
 				otherPuppet.timeSinceSlingshot = 0;
 			}
+            if (grabbingObject.GetComponent<PuppetController>().beingPulled)
+            {
+                grabbingObject.attachedRigidbody.velocity = (otherPuppet.thisStringRoot.transform.position - grabbingObject.transform.position).normalized * SlingshotForce;
+                grabbingObject.attachedRigidbody.velocity.Scale(new Vector3(1f, SlingshotForceYMulti, 1f));
+                grabbingObject.transform.position = grabbingObject.transform.position + (grabbingObject.attachedRigidbody.velocity * Time.fixedDeltaTime);
+                otherPuppet.timeSinceSlingshot = 0;
+            }
         }
         else if (grabbedType == GrabbedType.Prop)
         {
