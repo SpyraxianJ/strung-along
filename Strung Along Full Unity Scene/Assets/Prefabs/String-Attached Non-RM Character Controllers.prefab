@@ -276,7 +276,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3167654758055356964
 RectTransform:
   m_ObjectHideFlags: 0
@@ -783,6 +783,7 @@ MonoBehaviour:
   debugeffRange: 0
   angleRef: {fileID: 0}
   angleRef2: {fileID: 0}
+  wiggle: 0
 --- !u!1001 &3167654757731100471
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1319,3 +1320,4 @@ MonoBehaviour:
   debugeffRange: 0
   angleRef: {fileID: 0}
   angleRef2: {fileID: 0}
+  wiggle: 0
