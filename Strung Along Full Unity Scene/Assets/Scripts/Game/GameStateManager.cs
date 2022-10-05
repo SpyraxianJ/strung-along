@@ -30,7 +30,9 @@ public class GameStateManager : MonoBehaviour
 	public const float BOTTOM_BOUNDARY = -10f;
 	public const float SIDE_BOUNDARY = 34f;// the "side" of the level. X coordinate.
 
-	public enum Direction {
+    public LogRecorder logRec;
+
+    public enum Direction {
 		Top,
 		Left,
 		Right,

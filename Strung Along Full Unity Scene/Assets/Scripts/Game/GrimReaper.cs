@@ -9,6 +9,7 @@ public class GrimReaper : MonoBehaviour
 	[HideInInspector]
 	public bool _puppetsCanDie = false;
 	GameStateManager _ctx;
+    public LogRecorder logRec;
 	
     void Start()
     {
@@ -40,6 +41,26 @@ public class GrimReaper : MonoBehaviour
 			} else {
 				_ctx._p1Alive = false;
 			}
+
+            // Hi Tim here, this is a little bit of code to record when players die
+            try
+            {
+                if (logRec != null)
+                {
+                    if (pup.secondPlayer)
+                    {
+                        logRec.Death(_ctx._player2.transform.position, _ctx._player2.GetComponent<Rigidbody>().velocity, false);
+                    }
+                    else
+                    {
+                        logRec.Death(_ctx._player2.transform.position, _ctx._player2.GetComponent<Rigidbody>().velocity, true);
+                    }
+                }
+            }
+            catch (System.Exception)
+            {
+                Debug.LogWarning("No log recorder found");
+            }
 			
 		}
 		

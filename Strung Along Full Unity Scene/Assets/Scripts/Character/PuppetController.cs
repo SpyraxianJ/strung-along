@@ -43,7 +43,7 @@ public class PuppetController : MonoBehaviour
     [Space]
 
 
-    private Rigidbody rb;
+    public Rigidbody rb;
 
     public Vector2 move;
     public bool movePressed;

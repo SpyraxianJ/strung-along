@@ -5,7 +5,7 @@ using UnityEngine;
 public class LevelEndState : GameState
 {
 	float _victoryTimer;
-	
+
     public override void EnterState(GameStateManager ctx) {
 		if (ctx._currentLevelWon) {
 			_victoryTimer = 0f;
@@ -38,7 +38,21 @@ public class LevelEndState : GameState
 			_victoryTimer += Time.deltaTime;
 		} else {
 			ctx.SwitchState(ctx.UnloadingState);
-		}
+
+            // Hi Tim here, this is a little bit of code to record when players win a level
+            try
+            {
+                if (ctx.logRec != null)
+                {
+                    ctx.logRec.Complete(ctx._currentLevel.name);
+                }
+            }
+            catch (System.Exception)
+            {
+                Debug.LogWarning("No log recorder found");
+            }
+
+        }
 		
 	}
 	
