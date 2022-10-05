@@ -14,12 +14,15 @@ public class LogRecorder : MonoBehaviour
 
     public PuppetController p1;
     public PuppetController p2;
+    public GameStateManager gamestate;
 
     [Space]
 
     public float positionTimer = 1f;
     float timer;
     int trueTimer;
+    float levelTimer;
+    float framerate;
 
     [Space]
 
@@ -34,7 +37,7 @@ public class LogRecorder : MonoBehaviour
     {
 
         Directory.CreateDirectory(Application.streamingAssetsPath + "/Logs/");
-        txtDocumentName = Application.streamingAssetsPath + "/Logs/" + (System.DateTime.Now + "").Replace(" ", "_").Replace(":", ";").Replace("/", "-") + ".xls";
+        txtDocumentName = Application.streamingAssetsPath + "/Logs/" + (System.DateTime.Now + "").Replace(" ", "_").Replace(":", ";").Replace("/", "-") + ".txt";
         UpdateRecord();
 
     }
@@ -63,6 +66,7 @@ public class LogRecorder : MonoBehaviour
             Tick(p2.transform.position, p2.rb.velocity, false);
         }
         trueTimer = trueTimer + 1;
+        levelTimer += Time.fixedDeltaTime;
     }
 
     private void Update()
@@ -82,6 +86,8 @@ public class LogRecorder : MonoBehaviour
             UpdateRecord();
 
         }
+
+        framerate = (1.0f / Time.deltaTime);
     }
 
     public void Death(Vector3 position, Vector3 velocity, bool p1)
@@ -93,7 +99,7 @@ public class LogRecorder : MonoBehaviour
                 File.WriteAllText(txtDocumentName, "Start at '" + System.DateTime.Now + "'\n");
             }
 
-            File.AppendAllText(txtDocumentName, "Death\t" + TabbedVector(position) + "\t" + TabbedVector(velocity) + "\t" + p1 + "\t" + trueTimer + "\n");
+            File.AppendAllText(txtDocumentName, "Death\t" + TabbedVector(position) + "\t" + TabbedVector(velocity) + "\t" + p1 + "\t" + gamestate._currentLevel.name + "\t" + trueTimer + "\t" + levelTimer + "\n");
         }
 
     }
@@ -107,7 +113,7 @@ public class LogRecorder : MonoBehaviour
                 File.WriteAllText(txtDocumentName, "Start at '" + System.DateTime.Now + "'\n");
             }
 
-            File.AppendAllText(txtDocumentName, "Tick\t" + TabbedVector(position) + "\t" + TabbedVector(velocity) + "\t" + p1 + "\t" + trueTimer + "\n");
+            File.AppendAllText(txtDocumentName, "Tick\t" + TabbedVector(position) + "\t" + TabbedVector(velocity) + "\t" + p1 + "\t" + gamestate._currentLevel.name + "\t" + trueTimer + "\t" + levelTimer + "\t" + framerate + "\n");
         }
 
     }
@@ -121,7 +127,9 @@ public class LogRecorder : MonoBehaviour
                 File.WriteAllText(txtDocumentName, "Start at '" + System.DateTime.Now + "'\n");
             }
 
-            File.AppendAllText(txtDocumentName, "Level\t" + level + "Complete\t" + System.DateTime.Now + "\n");
+            File.AppendAllText(txtDocumentName, "Level\t" + level + "\tComplete\t" + System.DateTime.Now + "\t" + levelTimer + "\n");
+
+            levelTimer = 0;
         }
 
     }
