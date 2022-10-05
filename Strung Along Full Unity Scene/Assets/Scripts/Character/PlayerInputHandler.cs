@@ -16,7 +16,9 @@ public class PlayerInputHandler : MonoBehaviour
         playerInput = GetComponent<PlayerInput>();
         var players = FindObjectsOfType<PuppetController>();
         var index = playerInput.playerIndex;
-        player = players.FirstOrDefault(p => p.GetPlayerIndex() == index);
+		
+		// i add 1 here because the keyboard is the first player. its fucked yeah.
+        player = players.FirstOrDefault(p => p.GetPlayerIndex() + 1 == index);
     }
 
     public void OnMove(CallbackContext context)

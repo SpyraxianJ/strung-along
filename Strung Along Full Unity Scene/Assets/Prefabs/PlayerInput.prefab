@@ -131,7 +131,7 @@ MonoBehaviour:
     m_ActionId: 74eef98a-e12a-4f9b-80b0-27b3047d7f5a
     m_ActionName: UI/Pause[/Keyboard/p]
   m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
+  m_DefaultControlScheme: Controller
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
