@@ -14,7 +14,7 @@ public class LevelPlayingState : GameState
 	void PlaySetup(GameStateManager ctx) {
 		// reset the level to starting parameters
 		Reset(ctx);
-		_attemptCount = 1;
+		_attemptCount = 0;
 		_levelTime = 0.0f;
 		
 		// set puppets up for gameplay
@@ -37,6 +37,7 @@ public class LevelPlayingState : GameState
 			_deathTimer += Time.unscaledDeltaTime; // count death timer
 			ctx._deathEffect.weight += (Time.unscaledDeltaTime / ctx._deathTime); // fade in death screen effect
 			ctx._deathEffect.GetComponent<CanvasGroup>().alpha += (Time.unscaledDeltaTime / ctx._deathTime); // fade in death image
+			Time.timeScale = 0.0f;
 			
 			if (_deathTimer >= ctx._deathTime) {
 				// death timer reached, respawn the lads.
@@ -50,7 +51,7 @@ public class LevelPlayingState : GameState
 				_deathTimer = 0.0f;
 				ctx._deathEffect.weight = 0.0f;
 				ctx._deathEffect.GetComponent<CanvasGroup>().alpha = 0.0f;
-			}
+			} 
 			
 		} else if ( Win(ctx) ) {
 			// invoke any win stuff!
