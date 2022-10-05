@@ -19,7 +19,8 @@ ModelImporter:
     optimizeGameObjects: 0
     removeConstantScaleCurves: 1
     motionNodeName: 
-    rigImportErrors: 
+    rigImportErrors: "Copied Avatar Rig Configuration mis-match. Transform hierarchy
+      does not match:\n\tTransform 'Hip_Joint' for human bone 'Hips' not found\n"
     rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
@@ -27,7 +28,7 @@ ModelImporter:
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
     importConstraints: 0
-    animationCompression: 1
+    animationCompression: 3
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
@@ -82,8 +83,405 @@ ModelImporter:
   importAnimation: 1
   humanDescription:
     serializedVersion: 3
-    human: []
-    skeleton: []
+    human:
+    - boneName: Bunny_wp_7:Hip_Joint
+      humanName: Hips
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bunny_wp_7:L_Top_Leg_Joint
+      humanName: LeftUpperLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bunny_wp_7:R_Top_Leg_Joint
+      humanName: RightUpperLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bunny_wp_7:L_Knee_Joint
+      humanName: LeftLowerLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bunny_wp_7:R_Knee_Joint
+      humanName: RightLowerLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bunny_wp_7:L_Ankle_Joint
+      humanName: LeftFoot
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bunny_wp_7:R_Ankle_Joint
+      humanName: RightFoot
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bunny_wp_7:Lower_Spine_Joint
+      humanName: Spine
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bunny_wp_7:Middle_Spine_Joint
+      humanName: Chest
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bunny_wp_7:Head_Joint
+      humanName: Head
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bunny_wp_7:L_Shoulder_Joint
+      humanName: LeftUpperArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bunny_wp_7:R_Shoulder_Joint
+      humanName: RightUpperArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bunny_wp_7:L_Elbow_Joint
+      humanName: LeftLowerArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bunny_wp_7:R_Elbow_Joint
+      humanName: RightLowerArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bunny_wp_7:L_Wrist_Joint
+      humanName: LeftHand
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bunny_wp_7:R_Wrist_Joint
+      humanName: RightHand
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bunny_wp_7:L_Toe_Joint
+      humanName: LeftToes
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bunny_wp_7:R_Toe_Joint
+      humanName: RightToes
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bunny_wp_7:Upper_Spine_Joint
+      humanName: UpperChest
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    skeleton:
+    - name: Base Hanging(Clone)
+      parentName: 
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Bunny_wp_7:Master_CTRL
+      parentName: Base Hanging(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Bunny_wp_7:Master_Null
+      parentName: Bunny_wp_7:Master_CTRL
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Bunny_wp_7:Root_Control
+      parentName: Bunny_wp_7:Master_Null
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Bunny_wp_7:RFL_R
+      parentName: Bunny_wp_7:Master_Null
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Bunny_wp_7:RFL_Heel_R_JNT
+      parentName: Bunny_wp_7:RFL_R
+      position: {x: 0.08304255, y: 0.08001538, z: -0.06135571}
+      rotation: {x: 0.27778023, y: 0.6502601, z: 0.27778023, w: 0.6502601}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Bunny_wp_7:RFL_Toe_R_JNT
+      parentName: Bunny_wp_7:RFL_Heel_R_JNT
+      position: {x: -0.1414708, y: -1.9984014e-17, z: -8.8817837e-17}
+      rotation: {x: 6.123234e-17, y: 1, z: -6.123234e-17, w: -6.123234e-17}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Bunny_wp_7:RFL_Ball_R_JNT
+      parentName: Bunny_wp_7:RFL_Toe_R_JNT
+      position: {x: -0.025928732, y: 4.440892e-18, z: -3.5527136e-17}
+      rotation: {x: 0, y: -0, z: -0.2978729, w: 0.9546056}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Bunny_wp_7:RFL_Ankle_R_JNT
+      parentName: Bunny_wp_7:RFL_Ball_R_JNT
+      position: {x: -0.09318532, y: 5.3290704e-17, z: 5.3290704e-17}
+      rotation: {x: -0.21062793, y: 0.67500806, z: 0.21062793, w: 0.67500806}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Bunny_wp_7:RFL_Heel_R_NULL
+      parentName: Bunny_wp_7:RFL_R
+      position: {x: 0.08265888, y: 0.08001538, z: -0.06135571}
+      rotation: {x: 0.39284056, y: -0, z: -0, w: 0.9196066}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Bunny_wp_7:RFL_L
+      parentName: Bunny_wp_7:Master_Null
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Bunny_wp_7:RFL_Heel_L_JNT
+      parentName: Bunny_wp_7:RFL_L
+      position: {x: -0.08356498, y: 0.09020581, z: -0.15186419}
+      rotation: {x: 0.2956369, y: 0.4910381, z: 0.18167798, w: 0.79904544}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Bunny_wp_7:RFL_Toe_JNT
+      parentName: Bunny_wp_7:RFL_Heel_L_JNT
+      position: {x: -0.1414708, y: 8.881784e-18, z: -3.5527136e-17}
+      rotation: {x: 6.123234e-17, y: 1, z: -6.123234e-17, w: -6.123234e-17}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Bunny_wp_7:RFL_Ball_L_JNT
+      parentName: Bunny_wp_7:RFL_Toe_JNT
+      position: {x: -0.025928732, y: -1.3322676e-17, z: -3.5527136e-17}
+      rotation: {x: 2.775558e-17, y: 1.6627606e-17, z: -0.2978729, w: 0.9546056}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Bunny_wp_7:RFL_Ankle_L_JNT
+      parentName: Bunny_wp_7:RFL_Ball_L_JNT
+      position: {x: -0.09318532, y: 0, z: 8.8817837e-17}
+      rotation: {x: -0.21062793, y: 0.67500806, z: 0.21062793, w: 0.67500806}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Bunny_wp_7:RFL_Heel_L_NULL
+      parentName: Bunny_wp_7:RFL_L
+      position: {x: -0.08380065, y: 0.09013287, z: -0.15131369}
+      rotation: {x: 0.2956369, y: 0.49103808, z: 0.18167803, w: 0.7990454}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Bunny_wp_7:Foot_R_CTRL
+      parentName: Bunny_wp_7:Master_Null
+      position: {x: 0.08212271, y: 0.07640836, z: -0.07673897}
+      rotation: {x: 2.4054546e-17, y: -0.39284056, z: 0.9196066, w: -5.6309665e-17}
+      scale: {x: 6.56472, y: 13.266658, z: 13.266658}
+    - name: Bunny_wp_7:Foot_L_CTRL
+      parentName: Bunny_wp_7:Master_Null
+      position: {x: -0.08349542, y: 0.090410344, z: -0.15169446}
+      rotation: {x: 0.3375126, y: -0.21779406, z: -0.080581106, w: 0.9122268}
+      scale: {x: 6.56472, y: 13.266658, z: 13.266658}
+    - name: Bunny_wp_7:Hip_Null
+      parentName: Bunny_wp_7:Master_Null
+      position: {x: -0, y: 0.52774405, z: -0.019817907}
+      rotation: {x: -0.7061828, y: 0.7061828, z: -0.036137998, w: -0.036137998}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Bunny_wp_7:Center_CTRL
+      parentName: Bunny_wp_7:Hip_Null
+      position: {x: 0.0002729475, y: 0, z: 0.000028008824}
+      rotation: {x: 0, y: 0, z: 0.041482873, w: 0.99913925}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Bunny_wp_7:Hip_Joint
+      parentName: Bunny_wp_7:Master_Null
+      position: {x: 5.0282206e-10, y: 0.52746964, z: -0.019817907}
+      rotation: {x: 0.7061827, y: -0.7061828, z: 0.036137994, w: 0.036137994}
+      scale: {x: 1, y: 1.0000001, z: 1.0000001}
+    - name: Bunny_wp_7:Lower_Spine_Joint
+      parentName: Bunny_wp_7:Hip_Joint
+      position: {x: -0.050855387, y: 2.6645352e-17, z: -4.440892e-18}
+      rotation: {x: 0.0000000011641532, y: 0.05320386, z: 0.000000059604645, w: -0.99858373}
+      scale: {x: 0.99999994, y: 1.0000001, z: 1.0000002}
+    - name: Bunny_wp_7:Middle_Spine_Joint
+      parentName: Bunny_wp_7:Lower_Spine_Joint
+      position: {x: -0.0669759, y: 9.924744e-10, z: 4.001577e-12}
+      rotation: {x: 0.0000000019228963, y: -0.028459467, z: -1.5980875e-10, w: 0.9995949}
+      scale: {x: 1.0000002, y: 1.0000002, z: 1.0000005}
+    - name: Bunny_wp_7:Upper_Spine_Joint
+      parentName: Bunny_wp_7:Middle_Spine_Joint
+      position: {x: -0.16214734, y: -0.000000003605498, z: 4.4062663e-11}
+      rotation: {x: -0.002433029, y: 0.055497497, z: 0.00013530235, w: 0.99845594}
+      scale: {x: 1.0000002, y: 1.0000007, z: 1.0000007}
+    - name: Bunny_wp_7:Head_Joint
+      parentName: Bunny_wp_7:Upper_Spine_Joint
+      position: {x: -0.030382704, y: -0.0000000040039834, z: 0.0000000062781047}
+      rotation: {x: -0.0000000088475645, y: -0.017069325, z: 0.000000014908437, w: 0.9998544}
+      scale: {x: 1.0000001, y: 1.0000001, z: 1}
+    - name: Bunny_wp_7:Head_Top_Joint
+      parentName: Bunny_wp_7:Head_Joint
+      position: {x: -0.1541312, y: 1.7135192e-17, z: -3.16588e-16}
+      rotation: {x: 0.7070848, y: -0.7070848, z: 0.0055810376, w: -0.00558103}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Bunny_wp_7:R_Shoulder_Joint
+      parentName: Bunny_wp_7:Upper_Spine_Joint
+      position: {x: 0.016190676, y: -0.10684742, z: -0.00031243023}
+      rotation: {x: -0.69584274, y: -0.71778554, z: -0.017686645, w: -0.016556012}
+      scale: {x: 1.0000001, y: 1.0000004, z: 0.99999994}
+    - name: Bunny_wp_7:R_Elbow_Joint
+      parentName: Bunny_wp_7:R_Shoulder_Joint
+      position: {x: -0.14516918, y: 0.000000015561731, z: 0.000000011678039}
+      rotation: {x: 0.019783063, y: 0.036026027, z: -0.005093721, w: 0.99914205}
+      scale: {x: 1.0000004, y: 0.9999997, z: 0.99999994}
+    - name: Bunny_wp_7:R_Wrist_Joint
+      parentName: Bunny_wp_7:R_Elbow_Joint
+      position: {x: -0.13420582, y: 0, z: 1.0658141e-16}
+      rotation: {x: -0.01260613, y: -0.042647813, z: -0.07969061, w: 0.9958272}
+      scale: {x: 1.0000002, y: 1, z: 1.0000004}
+    - name: Bunny_wp_7:R_Hand_Joint
+      parentName: Bunny_wp_7:R_Wrist_Joint
+      position: {x: -0.037446383, y: 1.4210854e-16, z: -7.105427e-17}
+      rotation: {x: 0.0090401, y: 0.06771817, z: -0.059916887, w: 0.9958627}
+      scale: {x: 1.0000002, y: 1.0000002, z: 1.0000001}
+    - name: Bunny_wp_7:R_Finger_Joint
+      parentName: Bunny_wp_7:R_Hand_Joint
+      position: {x: -0.038133025, y: 4.5270887e-17, z: 8.0008615e-18}
+      rotation: {x: 0.046523307, y: -0.05003057, z: -0.73059833, w: 0.6793812}
+      scale: {x: 1, y: 0.99999994, z: 1.0000002}
+    - name: Bunny_wp_7:L_Shoulder_Joint
+      parentName: Bunny_wp_7:Upper_Spine_Joint
+      position: {x: 0.016190996, y: 0.10684698, z: -0.0003124408}
+      rotation: {x: 0.6956747, y: -0.71789527, z: 0.017057054, w: -0.019290054}
+      scale: {x: 1.0000011, y: 1.0000005, z: 0.9999992}
+    - name: Bunny_wp_7:L_Elbow_Joint
+      parentName: Bunny_wp_7:L_Shoulder_Joint
+      position: {x: -0.14516926, y: 0.000000008392135, z: -0.0000000080379925}
+      rotation: {x: -0.019784221, y: 0.035951275, z: 0.005055425, w: 0.9991449}
+      scale: {x: 0.99999934, y: 0.99999994, z: 1.0000004}
+    - name: Bunny_wp_7:L_Wrist_Joint
+      parentName: Bunny_wp_7:L_Elbow_Joint
+      position: {x: -0.13420533, y: 1.4210854e-16, z: -1.4210854e-16}
+      rotation: {x: 0.012595767, y: -0.04277386, z: 0.07981282, w: 0.9958121}
+      scale: {x: 1.0000004, y: 1, z: 1.0000002}
+    - name: Bunny_wp_7:L_Hand_Joint
+      parentName: Bunny_wp_7:L_Wrist_Joint
+      position: {x: -0.03744681, y: 7.105427e-17, z: 1.4210854e-16}
+      rotation: {x: -0.009040209, y: 0.06771911, z: 0.05990896, w: 0.9958631}
+      scale: {x: 1.0000005, y: 0.99999994, z: 1.0000004}
+    - name: Bunny_wp_7:L_Finger_Joint
+      parentName: Bunny_wp_7:L_Hand_Joint
+      position: {x: -0.03813256, y: -8.631698e-17, z: 1.1465053e-17}
+      rotation: {x: 0.7306013, y: -0.6793778, z: 0.04652373, w: -0.050031424}
+      scale: {x: 1, y: 1.0000004, z: 1.0000002}
+    - name: Bunny_wp_7:L_Top_Leg_Joint
+      parentName: Bunny_wp_7:Hip_Joint
+      position: {x: 0.030039744, y: 0.0703073, z: 0.00079209055}
+      rotation: {x: -0.088427275, y: 0.9931753, z: -0.07518043, w: 0.011463471}
+      scale: {x: 1.0000004, y: 1.0000002, z: 1}
+    - name: Bunny_wp_7:L_Knee_Joint
+      parentName: Bunny_wp_7:L_Top_Leg_Joint
+      position: {x: -0.23026271, y: -9.347203e-17, z: 4.398506e-17}
+      rotation: {x: 0.015787536, y: -0.08925123, z: 0.016342623, w: 0.9957499}
+      scale: {x: 1, y: 1.0000001, z: 1.0000001}
+    - name: Bunny_wp_7:L_Ankle_Joint
+      parentName: Bunny_wp_7:L_Knee_Joint
+      position: {x: -0.21636455, y: -8.3796384e-19, z: 4.3173058e-17}
+      rotation: {x: -0.1077808, y: 0.50913036, z: 0.03635604, w: 0.85314006}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Bunny_wp_7:L_Toe_Joint
+      parentName: Bunny_wp_7:L_Ankle_Joint
+      position: {x: -0.093091026, y: -2.528134e-17, z: -4.0245583e-17}
+      rotation: {x: 0.000000022351736, y: 0.29529426, z: -0.000000007450579, w: 0.9554063}
+      scale: {x: 1.0000002, y: 1.0000002, z: 1}
+    - name: Bunny_wp_7:L_Toe_Tip_Joint
+      parentName: Bunny_wp_7:L_Toe_Joint
+      position: {x: -0.026416395, y: -1.7763568e-17, z: 1.4622366e-17}
+      rotation: {x: -0.0000000049182174, y: -1, z: -0.000000009318446, w: 0}
+      scale: {x: 1.0000001, y: 0.99999994, z: 0.99999994}
+    - name: Bunny_wp_7:L_Heel_Joint
+      parentName: Bunny_wp_7:L_Toe_Tip_Joint
+      position: {x: -0.14104, y: -1.5987211e-16, z: 3.2501098e-17}
+      rotation: {x: 0.000000004918218, y: 1, z: 0.000000009318446, w: 0.000000029802319}
+      scale: {x: 1, y: 1.0000001, z: 1.0000002}
+    - name: Bunny_wp_7:R_Top_Leg_Joint
+      parentName: Bunny_wp_7:Hip_Joint
+      position: {x: 0.03003949, y: -0.07030731, z: 0.00079205737}
+      rotation: {x: 0.08842745, y: 0.9931749, z: 0.075185925, w: 0.011463882}
+      scale: {x: 0.9999997, y: 1.0000001, z: 0.9999997}
+    - name: Bunny_wp_7:R_Knee_Joint
+      parentName: Bunny_wp_7:R_Top_Leg_Joint
+      position: {x: -0.23026255, y: -3.7653033e-17, z: 3.444606e-17}
+      rotation: {x: -0.01578749, y: -0.08925111, z: -0.016343638, w: 0.9957499}
+      scale: {x: 1.0000004, y: 1.0000001, z: 0.9999999}
+    - name: Bunny_wp_7:R_Ankle_Joint
+      parentName: Bunny_wp_7:R_Knee_Joint
+      position: {x: -0.21636496, y: 1.0426715e-17, z: -1.9433968e-16}
+      rotation: {x: 0.10778548, y: 0.5091304, z: -0.03635341, w: 0.8531395}
+      scale: {x: 1.0000005, y: 1.0000001, z: 0.99999994}
+    - name: Bunny_wp_7:R_Toe_Joint
+      parentName: Bunny_wp_7:R_Ankle_Joint
+      position: {x: -0.09309099, y: -8.195647e-19, z: 7.355227e-17}
+      rotation: {x: -0.000000029802319, y: 0.29529443, z: 0.00000006705522, w: 0.9554063}
+      scale: {x: 1.0000002, y: 1.0000004, z: 0.99999994}
+    - name: Bunny_wp_7:R_Toe_Tip_Joint
+      parentName: Bunny_wp_7:R_Toe_Joint
+      position: {x: -0.026416395, y: 1.0431545e-17, z: -5.1949333e-18}
+      rotation: {x: -0.000000045428088, y: -1, z: -0.000000029637462, w: -0.000000089406946}
+      scale: {x: 1.0000001, y: 1.0000001, z: 1.0000004}
+    - name: Bunny_wp_7:R_Heel_Joint
+      parentName: Bunny_wp_7:R_Toe_Tip_Joint
+      position: {x: -0.14103995, y: -1.1079138e-16, z: -8.3885795e-17}
+      rotation: {x: 0.000000045428088, y: 1, z: 0.000000029637462, w: -0.000000089406946}
+      scale: {x: 1.0000004, y: 1.0000002, z: 1.0000004}
+    - name: Bunny_wp_7:Base_Model
+      parentName: Base Hanging(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
     armTwist: 0.5
     foreArmTwist: 0.5
     upperLegTwist: 0.5
@@ -94,13 +492,13 @@ ModelImporter:
     globalScale: 1
     rootMotionBoneName: 
     hasTranslationDoF: 0
-    hasExtraRoot: 0
+    hasExtraRoot: 1
     skeletonHasParents: 1
-  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: 65955f2f7ba696246862e71efb50b1a2, type: 3}
   autoGenerateAvatarMappingIfUnspecified: 1
-  animationType: 2
+  animationType: 3
   humanoidOversampling: 1
-  avatarSetup: 0
+  avatarSetup: 2
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1
   remapMaterialsIfMaterialImportModeIsNone: 0
   additionalBone: 0

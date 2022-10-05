@@ -26,11 +26,12 @@ public class PuppetController : MonoBehaviour
     StaminaBar staminaUI;
     public GameObject visualReference;
     PuppetAudio audioManager;
-    Animator puppetAnimator;
+    public Animator puppetAnimator;
     HandIKHandler ikHandler;
     ClimbingIK climbIK;
 	//[HideInInspector]
     public GridManager gridManager;
+    public SinkingFix sinkFix;
 
     [Space]
 
@@ -241,6 +242,7 @@ public class PuppetController : MonoBehaviour
     bool stopVel;
     Vector3 lastpos;
     int grabBreaks;
+    float busyTimer;
 
     [Space]
 
@@ -403,8 +405,24 @@ public class PuppetController : MonoBehaviour
 
     }
 
+    public void VictoryAnimation(string name, float timer) {
+        busyTimer = timer;
+        puppetAnimator.SetBool("Busy", true);
+        puppetAnimator.Play(name);
+    }
+
     public void AnimationTick()
     {
+
+        if (busyTimer > 0)
+        {
+            busyTimer = busyTimer - Time.fixedDeltaTime;
+            sinkFix.dont = true;
+        }
+        else {
+            puppetAnimator.SetBool("Busy", false);
+            sinkFix.dont = false;
+        }
 
         if (grabbing == false)
         {

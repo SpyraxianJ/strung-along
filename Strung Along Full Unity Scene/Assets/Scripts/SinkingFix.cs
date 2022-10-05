@@ -6,6 +6,7 @@ public class SinkingFix : MonoBehaviour
 {
 
     public float height;
+    public bool dont;
 
     // I hate this script but I have no idea why the character are sinking, so uhhh, here it is
 
@@ -18,10 +19,12 @@ public class SinkingFix : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-        transform.localPosition = new Vector3(transform.localPosition.x, height, transform.localPosition.z);
+        //if (dont == false)
+            //transform.localPosition = new Vector3(transform.localPosition.x, height, transform.localPosition.z);
     }
     void FixedUpdate()
     {
-        transform.localPosition = new Vector3(transform.localPosition.x, height, transform.localPosition.z);
+        //if (dont == false)
+            //transform.localPosition = new Vector3(transform.localPosition.x, height, transform.localPosition.z);
     }
 }
