@@ -268,10 +268,14 @@ public class StringRoot : MonoBehaviour
         if (manager.tangle != 0) // This is done bc we might overwrite this earlier, just putting it back for the line render or anythign else that might need it
         {
             effectiveRoot = manager.effectiveRoot;
+            lineVisual.SetPosition(1, effectiveRoot);
+        }
+        else {
+            lineVisual.SetPosition(1, Vector3.Lerp(lineVisual.GetPosition(1), effectiveRoot, 0.25f));
         }
 
         lineVisual.SetPosition(0, transform.position);
-        lineVisual.SetPosition(1, effectiveRoot);
+        //lineVisual.SetPosition(1, effectiveRoot); move up
         lineVisual.SetPosition(2, connectedVisualPoint.position);
 
         if (connectedPuppet != null) {

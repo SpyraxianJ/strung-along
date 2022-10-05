@@ -32,6 +32,8 @@ public class PuppetController : MonoBehaviour
 	//[HideInInspector]
     public GridManager gridManager;
     public SinkingFix sinkFix;
+    public Transform aniTrs;
+    public GameObject releasePrefab;
 
     [Space]
 
@@ -426,6 +428,8 @@ public class PuppetController : MonoBehaviour
             if (new Vector3(rb.velocity.x, 0, rb.velocity.z).magnitude > 1)
             {
                 puppetAnimator.SetLayerWeight(1, Mathf.Lerp(puppetAnimator.GetLayerWeight(1), 1, 0.015f));
+                //puppetAnimator.SetLayerWeight(2, Mathf.Lerp(puppetAnimator.GetLayerWeight(1), 1, 0.015f));
+                //puppetAnimator.SetLayerWeight(3, Mathf.Lerp(puppetAnimator.GetLayerWeight(1), 1, 0.015f));
             }
             else
             {
@@ -438,7 +442,12 @@ public class PuppetController : MonoBehaviour
         }
         else {
             puppetAnimator.SetLayerWeight(1, Mathf.Lerp(puppetAnimator.GetLayerWeight(1), 0, 0.1f));
+            //puppetAnimator.SetLayerWeight(2, Mathf.Lerp(puppetAnimator.GetLayerWeight(1), 0, 0.1f));
+            //puppetAnimator.SetLayerWeight(3, Mathf.Lerp(puppetAnimator.GetLayerWeight(1), 0, 0.1f));
         }
+
+        //puppetAnimator.Play("Forward", 2, Mathf.Lerp(0, 1, (Vector3.Dot(new Vector3(rb.velocity.x, 0, rb.velocity.z), transform.position) / 60f) / 2f + 0.5f));
+        //puppetAnimator.Play("Right", 3, Mathf.Lerp(0, 1, (Vector3.Dot(new Vector3(rb.velocity.x, 0, rb.velocity.z), transform.position) / 60f) / 2f + 0.5f));
 
 
         if (busyTimer > 0)
@@ -998,6 +1007,7 @@ public class PuppetController : MonoBehaviour
 				grabbingObject.attachedRigidbody.velocity.Scale(new Vector3(1f, SlingshotForceYMulti, 1f));
 				grabbingObject.transform.position = grabbingObject.transform.position + (grabbingObject.attachedRigidbody.velocity * Time.fixedDeltaTime);
 				otherPuppet.timeSinceSlingshot = 0;
+                Instantiate(releasePrefab, grabbingObject.transform.position, grabbingObject.GetComponent<PuppetController>().visualReference.transform.rotation);
 			}
             if (grabbingObject.GetComponent<PuppetController>().beingPulled)
             {
@@ -1005,6 +1015,7 @@ public class PuppetController : MonoBehaviour
                 grabbingObject.attachedRigidbody.velocity.Scale(new Vector3(1f, SlingshotForceYMulti, 1f));
                 grabbingObject.transform.position = grabbingObject.transform.position + (grabbingObject.attachedRigidbody.velocity * Time.fixedDeltaTime);
                 otherPuppet.timeSinceSlingshot = 0;
+                Instantiate(releasePrefab, grabbingObject.transform.position, grabbingObject.GetComponent<PuppetController>().visualReference.transform.rotation);
             }
         }
         else if (grabbedType == GrabbedType.Prop)

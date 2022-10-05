@@ -26,6 +26,7 @@ public class PuppetString : MonoBehaviour
             manager.bolConnected = true;
             manager.effectiveRoot = collision.GetContact(0).point;
             manager.effectiveRootLastFrame = manager.effectiveRoot;
+            manager.StringCollision();
         }
 
         // on collsiion we need to determine if our rotation is clockwise or anti-clockwise so we know which say tangles, and which untangles

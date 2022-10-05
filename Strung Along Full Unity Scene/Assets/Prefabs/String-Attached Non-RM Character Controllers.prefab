@@ -496,6 +496,8 @@ MonoBehaviour:
   string1Ref: {fileID: 3167654757878991165}
   string2Ref: {fileID: 3167654758904775377}
   debugTangleDisplay: {fileID: 3167654757932207533}
+  untangle: {fileID: 7131326017569732560, guid: 2e34e643e3c2c804b9a217f219b22254, type: 3}
+  tangleObj: {fileID: 383720565019135499, guid: 75a598f637828274aba83730b25bc770, type: 3}
   tangle: 0
   maxTangle: 3
   bolConnected: 0

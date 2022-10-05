@@ -17,6 +17,8 @@ public class PuppetStringManager : MonoBehaviour
     public PuppetString string1Ref;
     public PuppetString string2Ref;
     public Text debugTangleDisplay;
+    public GameObject untangle;
+    public GameObject tangleObj;
 
     [Space]
 
@@ -100,6 +102,8 @@ public class PuppetStringManager : MonoBehaviour
                 Mathf.Lerp(Mathf.Max(puppet1Effective.transform.position.y, puppet2Effective.transform.position.y), Mathf.Min(stringRoot1.transform.position.y, stringRoot2.transform.position.y), -Mathf.Pow(Mathf.Lerp(puppetDistanceEffectiveRootFactor, puppetDistanceEffectiveRootFactorTangled, (Mathf.Abs(tangle) + 0.5f) / Mathf.Max(0.0001f, maxTangle)), -Vector3.Distance(puppet1Effective.transform.position, puppet2Effective.transform.position) - 2) + 1),
                targetEffectiveRoot.z);
 
+            targetEffectiveRoot = Vector3.Lerp(targetEffectiveRoot, new Vector3(((puppet1Effective.transform.position + puppet2Effective.transform.position) / 2).x, targetEffectiveRoot.y, ((puppet1Effective.transform.position + puppet2Effective.transform.position) / 2).z), (3 - Mathf.Abs(tangle)) /20f);
+
             targetEffectiveRoot = new Vector3(targetEffectiveRoot.x, targetEffectiveRoot.y * 1.05f, targetEffectiveRoot.z);
 
             Vector3 averageRoot = (stringRoot1.transform.position + stringRoot2.transform.position)/2;
@@ -128,6 +132,7 @@ public class PuppetStringManager : MonoBehaviour
                 if (tangle <= 0) {
                     bolConnected = false;
                     tangle = 0;
+                    Instantiate(untangle, effectiveRoot, Quaternion.identity);
                 }
             }
             else if (startTangle < 0)
@@ -136,6 +141,7 @@ public class PuppetStringManager : MonoBehaviour
                 {
                     bolConnected = false;
                     tangle = 0;
+                    Instantiate(untangle, effectiveRoot, Quaternion.identity);
                 }
             }
             else
@@ -246,7 +252,7 @@ public class PuppetStringManager : MonoBehaviour
 
     public void StringCollision()
     {
-
+        Instantiate(tangleObj, effectiveRoot, Quaternion.identity);
     }
 
 }
