@@ -49,6 +49,7 @@ public class StringRoot : MonoBehaviour
     public Transform angleRef;
     [HideInInspector]
     public Transform angleRef2;
+    public float wiggle;
 
     // Start is called before the first frame update
     void Awake()
@@ -276,7 +277,11 @@ public class StringRoot : MonoBehaviour
 
         lineVisual.SetPosition(0, transform.position);
         //lineVisual.SetPosition(1, effectiveRoot); move up
-        lineVisual.SetPosition(2, connectedVisualPoint.position);
+        lineVisual.SetPosition(2, connectedVisualPoint.position + new Vector3(Random.Range(-1, 1), Random.Range(-1, 1), Random.Range(-1, 1)) * wiggle);
+
+        lineVisual.colorGradient.colorKeys[1].color = Color.Lerp(lineVisual.colorGradient.colorKeys[0].color, Color.white, wiggle / 0.05f);
+
+        wiggle = Mathf.Lerp(wiggle, 0, 0.5f);
 
         if (connectedPuppet != null) {
             connectedPuppet.effectiveRoot = effectiveRoot;

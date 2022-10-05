@@ -819,6 +819,11 @@ public class PuppetController : MonoBehaviour
             val1 = new Vector3(val1.x, 0, val1.z);
             val2 = new Vector3(val2.x, 0, val2.z);
 
+            if (grabbingObject.transform == otherPuppet.transform)
+            {
+                otherPuppet.thisStringRoot.wiggle = (Mathf.Min(Mathf.Max(0, Vector3.Distance(positionPuppetGrabbed, transform.position)), 1.25f)/1.25f) * 0.05f;
+            }
+
             // disable rotation
             if (Vector3.Distance(val1, val2) > 0.2f && grabbingObject.gameObject == otherPuppet.gameObject) {
                 // we are trying to move it more than a unit in a frame, cancel the grab
