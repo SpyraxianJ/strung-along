@@ -403,6 +403,11 @@ public class PuppetController : MonoBehaviour
 
         lastpos = transform.position;
 
+        if (beingPuppetPulled) {
+            Vector3 point = transform.position - effectiveRoot;
+            visualReference.transform.rotation = Quaternion.RotateTowards(visualReference.transform.rotation, Quaternion.LookRotation(new Vector3(point.x, 0, point.y), transform.up), visualRotateSpeed * Time.deltaTime);
+        }
+
     }
 
     public void VictoryAnimation(string name, float timer) {
