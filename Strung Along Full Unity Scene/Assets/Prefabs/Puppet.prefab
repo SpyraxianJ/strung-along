@@ -866,7 +866,7 @@ MonoBehaviour:
   visualRotateSpeed: 2000
   visualAirRotateSpeed: 100
   grabDistance: 2
-  holdDistance: 0.15
+  holdDistance: 0.1
   grabbing: 0
   grabbingObject: {fileID: 0}
   grabbedType: 0

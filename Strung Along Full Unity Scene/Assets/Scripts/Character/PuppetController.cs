@@ -231,6 +231,7 @@ public class PuppetController : MonoBehaviour
     float grabStartHeight;
     public float timeSinceSlingshot;
     float timeSinceIgnoreLine;
+    bool grabJumped;
 
     public Vector3 positionPuppetGrabbed;
 
@@ -243,6 +244,7 @@ public class PuppetController : MonoBehaviour
     Vector3 lastpos;
     int grabBreaks;
     float busyTimer;
+    Vector3 swingVector;
 
     [Space]
 
@@ -419,6 +421,26 @@ public class PuppetController : MonoBehaviour
     public void AnimationTick()
     {
 
+        if (isClimbing)
+        {
+            if (new Vector3(rb.velocity.x, 0, rb.velocity.z).magnitude > 1)
+            {
+                puppetAnimator.SetLayerWeight(1, Mathf.Lerp(puppetAnimator.GetLayerWeight(1), 1, 0.015f));
+            }
+            else
+            {
+                //puppetAnimator.SetLayerWeight(1, Mathf.Lerp(puppetAnimator.GetLayerWeight(1), 0, 0.05f));
+            }
+
+            puppetAnimator.Play("Swing", 1, Mathf.Lerp(0, 1, (Vector3.Dot(new Vector3(rb.velocity.x, 0, rb.velocity.z), swingVector) / 60f )/ 2f + 0.5f ));
+            //puppetAnimator.Play("Swing", 1, Mathf.Lerp(0, 1, (Vector3.Dot(new Vector3(rb.velocity.x, 0, rb.velocity.z), (new Vector3(effectiveRoot.x, 0, effectiveRoot.z) - new Vector3(transform.position.x, 0, transform.position.z))) / 40f) * -0.5f + 0.5f));
+
+        }
+        else {
+            puppetAnimator.SetLayerWeight(1, Mathf.Lerp(puppetAnimator.GetLayerWeight(1), 0, 0.1f));
+        }
+
+
         if (busyTimer > 0)
         {
             busyTimer = busyTimer - Time.fixedDeltaTime;
@@ -429,7 +451,7 @@ public class PuppetController : MonoBehaviour
             sinkFix.dont = false;
         }
 
-        if (grabbing == false)
+        if (grabbing == false && isClimbing == false)
         {
 			if (isGrounded)
             {
@@ -465,6 +487,7 @@ public class PuppetController : MonoBehaviour
 
         if (isGrounded)
         {
+            grabJumped = false;
             transform.position = transform.position - transform.up * groundedDownPerFrame;
 
             if (stamina < 1)
@@ -886,13 +909,16 @@ public class PuppetController : MonoBehaviour
 		
 		grabbingObject = null;
 		grabbedType = GrabbedType.None;
+        float distance = 0;
 		// check all hits: prioritise other puppet.
 		foreach (Collider c in grabs) {
 			bool puppetCheck = (c == otherPuppet.GetComponent<Collider>() && canSlingshot);
 			bool meCheck = (c == GetComponent<Collider>() && !isGrounded && stamina > 0);
 			bool propCheck = !c.GetComponent<PuppetController>();
-			
-			if ( puppetCheck ) {
+            distance = c.contactOffset;
+
+
+            if ( puppetCheck ) {
 				// check grabbing the other puppet.
 				grabbingObject = c;
 				grabbedType = GrabbedType.OtherPuppet;
@@ -901,6 +927,7 @@ public class PuppetController : MonoBehaviour
 				// check grabbing ourselves. can only do this in the air.
 				grabbingObject = c;
 				grabbedType = GrabbedType.String;
+                swingVector = transform.position - effectiveRoot;
 			} else if ( propCheck ) {
 				// check grabbing a non-puppet, so a prop.
 				grabbingObject = c;
@@ -921,7 +948,8 @@ public class PuppetController : MonoBehaviour
                 isClimbing = true;
                 distanceToHook = Vector3.Distance(transform.position, effectiveRoot);
                 rb.velocity = (rb.velocity.normalized * Mathf.Min(rb.velocity.magnitude, 5f)) / 3f;
-				break;
+                visualReference.transform.rotation = Quaternion.RotateTowards(visualReference.transform.rotation, Quaternion.LookRotation(new Vector3(effectiveRoot.x, 0, effectiveRoot.z) - new Vector3(transform.position.x, 0, transform.position.z), transform.up), 1000f);
+                break;
 			case GrabbedType.OtherPuppet:
                 grabbing = true;
                 Physics.IgnoreCollision(grabbingObject, GetComponent<Collider>(), true);
@@ -990,7 +1018,13 @@ public class PuppetController : MonoBehaviour
 		else if (grabbedType == GrabbedType.String) {
 			rb.velocity = (transform.position - lastpos) / (Time.fixedDeltaTime);
             rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, rb.velocity.z);
-            rb.velocity += Vector3.up * 1.5f; // should give a nice lil' pop upwards after releasing
+            rb.velocity += Vector3.up * 4f; // should give a nice lil' pop upwards after releasing
+            if (jumpPressed && grabJumped == false) {
+                rb.velocity = rb.velocity * 1.05f;
+                rb.velocity += Vector3.up * 17f; // bonus pop
+                grabJumped = true;
+                puppetAnimator.Play("JumpStart");
+            }
 			isClimbing = false;
 			climbValue = 0;
 		}
@@ -1048,6 +1082,9 @@ public class PuppetController : MonoBehaviour
         staminaUI.UpdateStaminaVisual(stamina);
 
         if (stamina < 0) {
+            GrabRelease(false);
+        }
+        if (isGrounded) {
             GrabRelease(false);
         }
 
