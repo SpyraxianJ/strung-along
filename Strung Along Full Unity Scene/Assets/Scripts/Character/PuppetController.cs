@@ -285,7 +285,7 @@ public class PuppetController : MonoBehaviour
 
                 //Physics.Raycast(transform.position + pos + transform.up * rayLength, -transform.up, out hit, rayLength, groundMask);
                 Debug.DrawRay(origin, -transform.up * rayLength, Color.white);
-                if (Physics.Raycast(origin, -transform.up, out RaycastHit hit, rayLength, groundMask))
+                if (Physics.Raycast(origin, -transform.up, out RaycastHit hit, rayLength, groundMask, QueryTriggerInteraction.Ignore))
                 {
                     Debug.DrawRay(origin, -transform.up * rayLength, Color.green);
                     rays.Add(hit);
@@ -540,7 +540,7 @@ public class PuppetController : MonoBehaviour
 
             RaycastHit hit;
             Debug.DrawRay(transform.position + transform.up * groundRayLength, -transform.up * groundRayLength, Color.magenta);
-            if (Physics.Raycast(transform.position + transform.up * groundRayLength, -transform.up, out hit, groundRayLength, groundMask))
+            if (Physics.Raycast(transform.position + transform.up * groundRayLength, -transform.up, out hit, groundRayLength, groundMask, QueryTriggerInteraction.Ignore))
             {
                 groundRays.Add(hit);
             }
