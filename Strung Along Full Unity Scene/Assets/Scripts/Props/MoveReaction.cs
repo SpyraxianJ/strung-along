@@ -18,6 +18,7 @@ public class MoveReaction : Reaction
 	float _progress = 0.0f;
 	Vector3 startPos = Vector3.zero;
 	Vector3 endPos = Vector3.zero;
+	bool _fired = false;
 	
 	void OnDrawGizmos() {
 		if (_target != null) {
@@ -73,6 +74,12 @@ public class MoveReaction : Reaction
 			endPos = startPos + _moveVector;
 		}
 		
+		_fired = _fired ? true : false;
+		
+		/**
+		
+		// this implementation required turning the lever a certain direction to activate.
+		// has since been replaced with no direction requirement.
 		if (lerp > 0.0f && _oneShotRoutine == null && _progress == 0.0f) {
 			// move from start position to target position
 			_oneShotRoutine = StartCoroutine( WiggleMove(_wiggleTime, false) );
@@ -80,6 +87,17 @@ public class MoveReaction : Reaction
 			// move from target position back to start position
 			_oneShotRoutine = StartCoroutine( WiggleMove(_wiggleTime, true) );
 		}
+		**/
+		
+		if (lerp != 0.0f && _oneShotRoutine == null && _progress == 0.0f && !_fired) {
+			// move from start position to target position
+			_oneShotRoutine = StartCoroutine( WiggleMove(_wiggleTime, false) );
+		} else if (lerp != 0.0f && _oneShotRoutine == null && _progress == 1.0f && !_fired) {
+			// move from target position back to start position
+			_oneShotRoutine = StartCoroutine( WiggleMove(_wiggleTime, true) );
+		}
+		
+		_fired = false;
 		
 	}
 	
