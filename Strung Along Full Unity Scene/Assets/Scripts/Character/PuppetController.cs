@@ -1348,7 +1348,7 @@ public class PuppetController : MonoBehaviour
         if (beingPuppetPulled == true) {
             transform.position += new Vector3((transform.position - collision.contacts[0].point).x, 0, (transform.position - collision.contacts[0].point).z).normalized * 0.25f;
         }
-        Debug.Log(collision.collider);
+        //Debug.Log(collision.collider);
     }
 
 }

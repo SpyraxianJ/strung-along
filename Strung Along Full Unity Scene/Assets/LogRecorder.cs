@@ -38,7 +38,9 @@ public class LogRecorder : MonoBehaviour
 
         Directory.CreateDirectory(Application.streamingAssetsPath + "/Logs/");
         txtDocumentName = Application.streamingAssetsPath + "/Logs/" + (System.DateTime.Now + "").Replace(" ", "_").Replace(":", ";").Replace("/", "-") + ".txt";
-        UpdateRecord();
+        
+		PlayerPrefs.SetInt("Record", 10);
+		UpdateRecord();
 
     }
 
@@ -71,6 +73,9 @@ public class LogRecorder : MonoBehaviour
 
     private void Update()
     {
+		/**
+		// harper: i've put this under the Admin input controls object. whenever we have the admin controls active,
+		// most likely we're playtesting, so will want to be recording. so it just starts recording on game start.
         if (Input.GetKeyDown(KeyCode.R)) {
             Debug.LogError("Record Key Hit");
 
@@ -86,6 +91,7 @@ public class LogRecorder : MonoBehaviour
             UpdateRecord();
 
         }
+		**/
 
         framerate = (1.0f / Time.deltaTime);
     }
