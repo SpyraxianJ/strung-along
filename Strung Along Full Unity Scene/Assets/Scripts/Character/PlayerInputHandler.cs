@@ -17,8 +17,13 @@ public class PlayerInputHandler : MonoBehaviour
         var players = FindObjectsOfType<PuppetController>();
         var index = playerInput.playerIndex;
 		
-		// i add 1 here because the keyboard is the first player. its fucked yeah.
-        player = players.FirstOrDefault(p => p.GetPlayerIndex() + 1 == index);
+		// if admin is enabled, the keyboard is already "player 1". so increment both player indexes.
+		if ( FindObjectOfType<AdminInputHandler>() ) {
+			player = players.FirstOrDefault(p => p.GetPlayerIndex() + 1 == index);
+		} else {
+			player = players.FirstOrDefault(p => p.GetPlayerIndex() == index);
+		}
+		
     }
 
     public void OnMove(CallbackContext context)

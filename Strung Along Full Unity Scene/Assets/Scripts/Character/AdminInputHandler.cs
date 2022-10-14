@@ -8,7 +8,8 @@ public class AdminInputHandler : MonoBehaviour
 	GameStateManager _ctx;
 	PauseMenu _pause;
 	
-	public float _timeout = 60f;
+	[Tooltip("")]
+	public float _titleScreenTimeout = 60f;
 	float _timeoutTimer = 0f;
 	
     // Start is called before the first frame update
@@ -27,7 +28,7 @@ public class AdminInputHandler : MonoBehaviour
 			_timeoutTimer += Time.deltaTime;
 		}
 		
-		if (_timeoutTimer >= _timeout) {
+		if (_timeoutTimer >= _titleScreenTimeout) {
 			_timeoutTimer = 0;
 			_ctx.QuitToTitle();
 		}
