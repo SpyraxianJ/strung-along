@@ -19,12 +19,12 @@ public class SinkingFix : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-        //if (dont == false)
-            //transform.localPosition = new Vector3(transform.localPosition.x, height, transform.localPosition.z);
+        if (dont == false)
+            transform.localPosition = new Vector3(transform.localPosition.x, height, transform.localPosition.z);
     }
     void FixedUpdate()
     {
-        //if (dont == false)
-            //transform.localPosition = new Vector3(transform.localPosition.x, height, transform.localPosition.z);
+        if (dont == false)
+            transform.localPosition = new Vector3(transform.localPosition.x, height, transform.localPosition.z);
     }
 }
