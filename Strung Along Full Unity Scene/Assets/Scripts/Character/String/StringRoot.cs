@@ -30,6 +30,7 @@ public class StringRoot : MonoBehaviour
 
     [Tooltip("If enabled, the string will have flex, otherwise it will not")]
     public bool elasticString;
+    float stringOverstretched;
 
     [Space]
 
@@ -104,6 +105,14 @@ public class StringRoot : MonoBehaviour
 
         float distance = Vector3.Distance(new Vector3(effectiveRoot.x, connectedPoint.position.y, effectiveRoot.z), connectedPoint.position);
         float baseDistance = Vector3.Distance(new Vector3(transform.position.x, connectedPoint.position.y, transform.position.z), connectedPoint.position);
+
+        if (stringLength < baseDistance + 0.25f && stringLength < distance + 0.25f)
+        {
+            stringOverstretched += Time.fixedDeltaTime;
+        }
+        else {
+            stringOverstretched = 0;
+        }
 
         if (stringLength - baseDistance <= 0) // pretend we aren't tangled this frame, since our bounding area isn't limited by out tangled range
         {
@@ -284,6 +293,11 @@ public class StringRoot : MonoBehaviour
 
         if (connectedPuppet != null) {
             connectedPuppet.effectiveRoot = effectiveRoot;
+        }
+
+        if (stringOverstretched > 0.1f) {
+            //manager.Untangle();
+            stringOverstretched = 0;
         }
 
     }

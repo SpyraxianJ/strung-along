@@ -1367,9 +1367,12 @@ public class PuppetController : MonoBehaviour
     public void Tangle(bool tangle)
     {
         //Debug.Log(stringManager);
-        isClimbing = false;
-        reGrab = true;
-        reGrabNumber = 3;
+
+        if (isClimbing) {
+            isClimbing = false;
+            reGrab = true;
+            reGrabNumber = 3;
+        }
 
         //Debug.Log(distanceToHook);
     }

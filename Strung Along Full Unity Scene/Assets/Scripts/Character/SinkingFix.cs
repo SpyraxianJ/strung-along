@@ -20,11 +20,11 @@ public class SinkingFix : MonoBehaviour
     void LateUpdate()
     {
         if (dont == false)
-            transform.localPosition = new Vector3(transform.localPosition.x, height, transform.localPosition.z);
+            transform.localPosition = Vector3.Lerp(transform.localPosition, new Vector3(transform.localPosition.x, height, transform.localPosition.z), 0.98f);
     }
     void FixedUpdate()
     {
         if (dont == false)
-            transform.localPosition = new Vector3(transform.localPosition.x, height, transform.localPosition.z);
+            transform.localPosition = Vector3.Lerp(transform.localPosition, new Vector3(transform.localPosition.x, height, transform.localPosition.z), 0.98f);
     }
 }

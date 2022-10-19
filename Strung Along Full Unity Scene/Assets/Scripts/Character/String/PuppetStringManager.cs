@@ -84,7 +84,7 @@ public class PuppetStringManager : MonoBehaviour
         }
 
         if (debugTangleDisplay != null) {
-            debugTangleDisplay.text = "Tangle: " + Mathf.Round(tangle * 100)/100 + " (maximum tangle at " + maxTangle + ")";
+            debugTangleDisplay.text = "Tangle: " + Mathf.Round(tangle * 100)/100;
         }
 
         if (bolConnected == true)
@@ -130,12 +130,7 @@ public class PuppetStringManager : MonoBehaviour
             if (startTangle > 0)
             {
                 if (tangle <= 0) {
-                    bolConnected = false;
-                    tangle = 0;
-                    Instantiate(untangle, effectiveRoot, Quaternion.identity);
-
-                    puppet1.GetComponent<PuppetController>().Tangle(false);
-                    puppet2.GetComponent<PuppetController>().Tangle(false);
+                    Untangle();
 
                 }
             }
@@ -143,12 +138,7 @@ public class PuppetStringManager : MonoBehaviour
             {
                 if (tangle >= 0)
                 {
-                    bolConnected = false;
-                    tangle = 0;
-                    Instantiate(untangle, effectiveRoot, Quaternion.identity);
-
-                    puppet1.GetComponent<PuppetController>().Tangle(false);
-                    puppet2.GetComponent<PuppetController>().Tangle(false);
+                    Untangle();
 
                 }
             }
@@ -180,6 +170,15 @@ public class PuppetStringManager : MonoBehaviour
     {
         string1Ref.manager = this;
         string2Ref.manager = this;
+    }
+
+    public void Untangle() {
+        bolConnected = false;
+        tangle = 0;
+        Instantiate(untangle, effectiveRoot, Quaternion.identity);
+
+        puppet1.GetComponent<PuppetController>().Tangle(false);
+        puppet2.GetComponent<PuppetController>().Tangle(false);
     }
 
     public void StringTick(GameObject puppet, GameObject root, GameObject otherpuppet, GameObject otherRoot, Transform reference, Transform otherReference, Vector3 lastFrame, GameObject debugObj)
