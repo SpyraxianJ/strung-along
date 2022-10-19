@@ -76,7 +76,9 @@ public class PuppetController : MonoBehaviour
     [HideInInspector]
     public bool beingPuppetPulled;
     public bool beingPulled;
-    float distanceToHook;
+    public float distanceToHook;
+    bool reGrab;
+    int reGrabNumber;
 
     [Tooltip("This is how much we have climbed up our string currently, used to make it so the string can move and we move with it.")]
     // Goes between 0-1, knot is always at 0.5 if it exists
@@ -326,6 +328,7 @@ public class PuppetController : MonoBehaviour
 
     void FixedUpdate()
     {
+
         if (isClimbing == false)
         {
             // handle movement
@@ -410,6 +413,16 @@ public class PuppetController : MonoBehaviour
         if (beingPuppetPulled) {
             Vector3 point = transform.position - effectiveRoot;
             visualReference.transform.rotation = Quaternion.RotateTowards(visualReference.transform.rotation, Quaternion.LookRotation(new Vector3(point.x, 0, point.y), transform.up), visualRotateSpeed * Time.deltaTime);
+        }
+
+        // Because there is some really stupid strange stuff going on with effectiveroot update lag, this is a silly lil' solution, just a funny little guy
+        if (reGrab)
+        {
+            reGrabNumber = reGrabNumber - 1;
+            if (reGrabNumber <= 0) {
+                reGrab = false;
+                GrabStart();
+            }
         }
 
     }
@@ -833,7 +846,7 @@ public class PuppetController : MonoBehaviour
 
                 transform.position = Vector3.Lerp(transform.position - (grabbingObject.gameObject.transform.position - ((visualReference.transform.forward) * grabbedObjectDistance * (1 + holdDistance)) + transform.position), transform.position, 0.95f);
 
-                if (grabBreaks > 1) {
+                if (grabBreaks > 10) {
                     GrabRelease(false);
                     return;
                 }
@@ -1349,6 +1362,16 @@ public class PuppetController : MonoBehaviour
             transform.position += new Vector3((transform.position - collision.contacts[0].point).x, 0, (transform.position - collision.contacts[0].point).z).normalized * 0.25f;
         }
         //Debug.Log(collision.collider);
+    }
+
+    public void Tangle(bool tangle)
+    {
+        //Debug.Log(stringManager);
+        isClimbing = false;
+        reGrab = true;
+        reGrabNumber = 3;
+
+        //Debug.Log(distanceToHook);
     }
 
 }

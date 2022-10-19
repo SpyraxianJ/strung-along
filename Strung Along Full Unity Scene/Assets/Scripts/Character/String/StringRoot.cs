@@ -105,7 +105,6 @@ public class StringRoot : MonoBehaviour
         float distance = Vector3.Distance(new Vector3(effectiveRoot.x, connectedPoint.position.y, effectiveRoot.z), connectedPoint.position);
         float baseDistance = Vector3.Distance(new Vector3(transform.position.x, connectedPoint.position.y, transform.position.z), connectedPoint.position);
 
-        // 0 == 1 is to pause it
         if (stringLength - baseDistance <= 0) // pretend we aren't tangled this frame, since our bounding area isn't limited by out tangled range
         {
 
@@ -287,6 +286,19 @@ public class StringRoot : MonoBehaviour
             connectedPuppet.effectiveRoot = effectiveRoot;
         }
 
+    }
+
+    public void SetEffectiveRoot() {
+
+        Vector3 effectiveRoot = transform.position;
+        if (manager.tangle != 0) {
+            effectiveRoot = manager.effectiveRoot;
+        }
+
+        if (connectedPuppet != null)
+        {
+            connectedPuppet.effectiveRoot = effectiveRoot;
+        }
     }
 
 }

@@ -133,6 +133,10 @@ public class PuppetStringManager : MonoBehaviour
                     bolConnected = false;
                     tangle = 0;
                     Instantiate(untangle, effectiveRoot, Quaternion.identity);
+
+                    puppet1.GetComponent<PuppetController>().Tangle(false);
+                    puppet2.GetComponent<PuppetController>().Tangle(false);
+
                 }
             }
             else if (startTangle < 0)
@@ -142,6 +146,10 @@ public class PuppetStringManager : MonoBehaviour
                     bolConnected = false;
                     tangle = 0;
                     Instantiate(untangle, effectiveRoot, Quaternion.identity);
+
+                    puppet1.GetComponent<PuppetController>().Tangle(false);
+                    puppet2.GetComponent<PuppetController>().Tangle(false);
+
                 }
             }
             else
@@ -253,6 +261,10 @@ public class PuppetStringManager : MonoBehaviour
     public void StringCollision()
     {
         Instantiate(tangleObj, effectiveRoot, Quaternion.identity);
+        stringRoot1.GetComponent<StringRoot>().SetEffectiveRoot();
+        stringRoot2.GetComponent<StringRoot>().SetEffectiveRoot();
+        puppet1.GetComponent<PuppetController>().Tangle(true);
+        puppet2.GetComponent<PuppetController>().Tangle(true);
     }
 
 }
