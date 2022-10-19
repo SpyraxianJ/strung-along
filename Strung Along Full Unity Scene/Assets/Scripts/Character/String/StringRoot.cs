@@ -25,6 +25,8 @@ public class StringRoot : MonoBehaviour
     public float stringStretchLength;
     [Tooltip("This is the smallest the string can go from being tangled, should be smaller than string length")]
     public float minimumStringLength;
+    public AnimationCurve tightCurve;
+    public AnimationCurve looseCurve;
 
     [Space]
 
@@ -286,6 +288,43 @@ public class StringRoot : MonoBehaviour
         lineVisual.SetPosition(0, transform.position);
         //lineVisual.SetPosition(1, effectiveRoot); move up
         lineVisual.SetPosition(2, connectedVisualPoint.position + new Vector3(Random.Range(-1, 1), Random.Range(-1, 1), Random.Range(-1, 1)) * wiggle);
+
+
+
+        float remainingString = Mathf.Min((effectiveLength - distance), (effectiveLength - baseDistance));
+
+        Debug.Log(remainingString);
+
+        if (manager.tangle != 0)
+        {
+
+            Vector3 number = lineVisual.GetPosition(25);
+
+            for (int i = 0; i < 25; i++)
+            {
+                Vector3 pos = Vector3.Lerp(transform.position, number, (i * 1f) / 25);
+                lineVisual.SetPosition(i, new Vector3(pos.x, Mathf.Lerp(pos.y, pos.y - (Mathf.Lerp(tightCurve.Evaluate((i * 1f) / 25), looseCurve.Evaluate((i * 1f) / 25), remainingString / 20) * 3f), (i * 1f) / 25), pos.z));
+            }
+
+            for (int i = 25; i < 50; i++)
+            {
+                Vector3 pos = Vector3.Lerp(number, connectedVisualPoint.position + new Vector3(Random.Range(-1, 1), Random.Range(-1, 1), Random.Range(-1, 1)) * wiggle, (i * 1f) / 25);
+                lineVisual.SetPosition(i, new Vector3(pos.x, Mathf.Lerp(pos.y, pos.y - (Mathf.Lerp(tightCurve.Evaluate((i * 1f) / 25), looseCurve.Evaluate((i * 1f) / 25), remainingString / 20) * 3f), (i * 1f) / 25), pos.z));
+            }
+
+            lineVisual.SetPosition(25, Vector3.Lerp(number, effectiveRoot, 0.25f));
+
+        }
+        else {
+            for (int i = 0; i < 50; i++)
+            {
+                Vector3 pos = Vector3.Lerp(transform.position, connectedVisualPoint.position + new Vector3(Random.Range(-1, 1), Random.Range(-1, 1), Random.Range(-1, 1)) * wiggle, (i * 1f) / 50);
+                lineVisual.SetPosition(i, new Vector3(pos.x, Mathf.Lerp(pos.y, pos.y - (Mathf.Lerp(tightCurve.Evaluate((i * 1f) / 50), looseCurve.Evaluate((i * 1f) / 50), remainingString / 20) * 5f), (i * 1f) / 50), pos.z));
+            }
+        }
+
+
+
 
         lineVisual.colorGradient.colorKeys[1].color = Color.Lerp(lineVisual.colorGradient.colorKeys[0].color, Color.white, wiggle / 0.05f);
 
