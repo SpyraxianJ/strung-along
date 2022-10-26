@@ -616,13 +616,17 @@ public class PuppetController : MonoBehaviour
 
     void HandleMovement()
     {
-        float relativeMaxSpeedX = Math.Abs(groundedMaxSpeed); // ugly sorry, leave for now bc I may use it later, if it's past May, I probably wont lol
+        float relativeMaxSpeedX = Math.Abs(groundedMaxSpeed); // tee hee i used it
         float relativeMaxSpeedY = Math.Abs(groundedMaxSpeed);
 
         if (grabbing)
         {
             relativeMaxSpeedX = relativeMaxSpeedX / 3;
             relativeMaxSpeedY = relativeMaxSpeedY / 3;
+
+            if (grabbedType == GrabbedType.Prop) {
+                relativeMaxSpeedY = 0;
+            }
         }
 
         if (isGrounded)
