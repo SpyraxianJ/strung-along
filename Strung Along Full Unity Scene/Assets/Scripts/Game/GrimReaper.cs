@@ -10,7 +10,11 @@ public class GrimReaper : MonoBehaviour
 	public bool _puppetsCanDie = false;
 	GameStateManager _ctx;
     public LogRecorder logRec;
-	
+
+    [Space]
+
+    public AudioSource defeatAudio;
+
     void Start()
     {
 		_ctx = GetComponent<GameStateManager>();
@@ -41,6 +45,8 @@ public class GrimReaper : MonoBehaviour
 			} else {
 				_ctx._p1Alive = false;
 			}
+
+            defeatAudio.Play();
 
             // Hi Tim here, this is a little bit of code to record when players die
             try

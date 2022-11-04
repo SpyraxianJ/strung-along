@@ -22,8 +22,13 @@ public class Goal : MonoBehaviour, IResettable
 	
 	float _detectorSize = 1.5f;
 	Vector3 _detector = new Vector3(1.5f, 1.5f, 1.5f);
-	
-	void OnDrawGizmos() {
+
+    [Space]
+    // hi tim here, sorry adding sound effects
+    public AudioSource completeClipP1;
+    public AudioSource completeClipP2;
+
+    void OnDrawGizmos() {
 		Color trans = new Color(0, 0, 0, 0.5f);
 		Gizmos.color = _isPlayer2 ? Color.red - trans : Color.blue - trans;
 		
@@ -86,8 +91,22 @@ public class Goal : MonoBehaviour, IResettable
 		
 		foreach (Collider hit in areaHits) {
 			if (hit.gameObject == _targetPlayer) {
-				// correct puppet!
-				_isActive = true;
+
+
+                if (_lerp < 0.01f) {
+                    // tim stuff sorry
+                    if (_isPlayer2)
+                    {
+                        completeClipP2.Play();
+                    }
+                    else
+                    {
+                        completeClipP1.Play();
+                    }
+                }
+
+                // correct puppet!
+                _isActive = true;
 			} else {
 				// wrong puppet!!!!!!!!!
 				_flicker = true;

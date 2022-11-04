@@ -45,6 +45,7 @@ public class LevelEndState : GameState
                 if (ctx.logRec != null)
                 {
                     ctx.logRec.Complete(ctx._currentLevel.name);
+                    ctx.completeAudio.Play();
                 }
             }
             catch (System.Exception)

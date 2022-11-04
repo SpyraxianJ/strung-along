@@ -27,7 +27,11 @@ public class TutorialListener : MonoBehaviour
 	bool _exit = false;
 	[Space]
 	public Image[] _tutorialImages;
-	
+
+    [Space]
+    // hi tim here, sorry adding sound effects
+    public AudioSource completeClip;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -59,9 +63,9 @@ public class TutorialListener : MonoBehaviour
 			 _currentTutorial = tut;
 			StartCoroutine( TutorialRoutine() );
 		 }
-		
-		
-	}
+
+
+    }
 	
 	IEnumerator TutorialRoutine() {
 		yield return new WaitForSeconds(_currentTutorial._initialDelay);
@@ -129,7 +133,9 @@ public class TutorialListener : MonoBehaviour
 	void Popup() {
 		_popup.SetActive(true);
 		_popupAnimator.SetBool("open", true);
-	}
+        // tim stuff sorry
+        completeClip.Play();
+    }
 	
 	void Popdown() {
 		_popupAnimator.SetBool("open", false);

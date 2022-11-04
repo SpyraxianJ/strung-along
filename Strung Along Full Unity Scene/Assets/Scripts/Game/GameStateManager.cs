@@ -86,7 +86,11 @@ public class GameStateManager : MonoBehaviour
 	[HideInInspector] public bool _currentLevelWon = false;
 	[HideInInspector] public int _currentAct = 0;
 	[HideInInspector] public float _totalPlaytime = 0.0f;
-	
+
+    [Space]
+
+    public AudioSource completeAudio;
+
 
     void Start() {
 		_reaper = GetComponent<GrimReaper>();

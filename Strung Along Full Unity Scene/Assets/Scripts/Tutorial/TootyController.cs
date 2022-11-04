@@ -104,7 +104,7 @@ public class TootyController : MonoBehaviour
 	
 	public void Cheer(bool cheer) {
 		_animator.SetBool("cheer", cheer);
-	}
+    }
 	
 	void OnGrab(PuppetController pup) {
 		pup.GrabRelease(false);
