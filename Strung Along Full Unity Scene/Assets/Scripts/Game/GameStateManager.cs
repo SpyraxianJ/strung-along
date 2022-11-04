@@ -91,6 +91,7 @@ public class GameStateManager : MonoBehaviour
 
     public AudioSource completeAudio;
     public GameObject gameEndVisual;
+    public GameObject levelSound;
 
 
     void Start() {

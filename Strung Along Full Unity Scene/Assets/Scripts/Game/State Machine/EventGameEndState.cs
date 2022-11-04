@@ -10,9 +10,10 @@ public class EventGameEndState : GameState
         // Tim stuff hehe
 
         ctx.gameEndVisual.SetActive(true);
+        ctx.levelSound.SetActive(false);
 
-		
-		ctx._gameEnd = false;
+
+        ctx._gameEnd = false;
 		
 		// we don't have an "end-of-game" planned yet, so just bring up level select.
 		PauseMenu menu = MonoBehaviour.FindObjectOfType<PauseMenu>();
