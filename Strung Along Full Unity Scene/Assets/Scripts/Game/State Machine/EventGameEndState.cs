@@ -6,6 +6,11 @@ public class EventGameEndState : GameState
 {
     public override void EnterState(GameStateManager ctx) {
 		Debug.Log("End of the game! Thanks for playing!!!!");
+
+        // Tim stuff hehe
+
+        ctx.gameEndVisual.SetActive(true);
+
 		
 		ctx._gameEnd = false;
 		

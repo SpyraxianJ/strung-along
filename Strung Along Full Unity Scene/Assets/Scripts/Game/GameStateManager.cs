@@ -90,6 +90,7 @@ public class GameStateManager : MonoBehaviour
     [Space]
 
     public AudioSource completeAudio;
+    public GameObject gameEndVisual;
 
 
     void Start() {
