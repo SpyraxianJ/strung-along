@@ -762,17 +762,17 @@ public class PuppetController : MonoBehaviour
 
     void HandleJump()
     {
+        //continue adding jump force until jump boost timer reaches 0
         if (jumpPressed && jumpBoostTimer > 0)
         {
             jumpBoostTimer -= Time.fixedDeltaTime;
             rb.AddForce(Vector3.up * Mathf.Lerp(0, jumpBoostForce, jumpBoostTimer / jumpBoostTime));
         }
 
-        // Please don't remove this part, it acts independently of the jump boost timer
-
+        //Don't remove this part, it acts independently of the jump boost timer
         if (jumpPressed)
         {
-            rb.AddForce(Vector3.up * jumpHoldForce * Mathf.Lerp(0, 10, timeSinceGrounded));
+            rb.AddForce(jumpHoldForce * Mathf.Lerp(0, 10, timeSinceGrounded) * Vector3.up);
         }
         else
         {
